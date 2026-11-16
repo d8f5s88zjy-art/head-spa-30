@@ -2,8 +2,9 @@
 //   node sprava/testy/e2e.mjs <url koreňa> <priečinok údajov> <priečinok vstupov> <šírka> <výška> <priečinok snímok>
 // Postup ako Mário: prvé nastavenie s kódom zo súboru, prihlásenie, otváracie hodiny, nová akcia s fotkou a cenou
 // (pomalé písanie 3 znaky/s, 2 s rozmýšľania na obrazovke, nahrávanie 1,5 Mbit/s – len na telefóne), úprava ceny,
-// skrytie akcie, nový leták PDF, krok späť, odhlásenie. Po každom úkone overí verejnú stránku, hľadanie a sitemap
-// a že verejné stránky nemajú žiadny kód správy. Na každej obrazovke: bez vodorovného posúvania, polia ≥ 16 px,
+// skrytie akcie, nový leták PDF, krok späť, novinka, sviatok, fotka v galérii, text, telefón, e-mail a pevná linka
+// s vrátením, obrázok do albumu grafiky, skrytie všetkých letákov, odhlásenie. Po každom úkone overí verejnú stránku,
+// hľadanie a sitemap a že verejné stránky nemajú žiadny kód správy. Na každej obrazovke: bez vodorovného posúvania, polia ≥ 16 px,
 // ťukacie plochy ≥ 48 px, bez chýb v konzole, bez anglických slov.
 import { createRequire } from 'module';
 import fs from 'fs';
@@ -350,6 +351,75 @@ try {
   t('kontakt: po vrátení pôvodný mobil', nb((await verejna('kontakt.html')).text).includes('0905 622 223') && !nb((await verejna('index.html')).text).includes('0905 111 222'));
   t('kontakt: po vrátení je obrázok Zavolajte nám späť', (await verejna('kontakt.html')).text.includes('kontakt-zavolajte-480'));
   t('grafiky: po vrátení mobilu sú vizitka, karta a leták so sortimentom späť', (await pocetFig('galeria/index.html')) === 11 && (await verejna('galeria/index.html')).text.includes('vizitka-n') && (await pocetFig('letak.html')) === 3);
+
+  // ---------- 8f. e-mail a pevná linka: obrázok s údajom zmizne, po vrátení je späť ----------
+  // (hodiny sú od kroku 3 zmenené, preto je v albume grafiky 11 obrázkov a na Letáku 3)
+  for (const [pole, hodnota, popis, zmizne, ostane] of [['email', 'predajna@stavebniny-test.sk', 'e-mail', 'kontakt-napiste', 'kontakt-zavolajte-480'],
+    ['pevna', '037 111 22 33', 'pevná linka', 'kontakt-zavolajte', 'kontakt-napiste-480']]) {
+    await s.goto(URL + 'sprava/');
+    await tuk('a.dlazdica:has-text("Telefón a e-mail")');
+    await pis(`input[name=${pole}]`, hodnota);
+    await tuk('button:has-text("Pozrieť náhľad")');
+    await s.waitForSelector('h1:has-text("Náhľad zmeny")');
+    t(`kontakt (${popis}): náhľad ukazuje novú hodnotu`, nb(await s.locator('.zmeny').innerText()).includes(hodnota));
+    await zverejni(`kontakt-${pole}`);
+    const k2 = (await verejna('kontakt.html')).text, g2 = (await verejna('galeria/index.html')).text;
+    t(`kontakt (${popis}): zmena skryje len obrázok s týmto údajom, karta ostane s novou hodnotou`, !k2.includes(zmizne) && k2.includes(ostane) && nb(k2).includes(hodnota));
+    t(`grafiky (${popis}): zmena skryje vizitku, kartu a leták so sortimentom`, (await pocetFig('galeria/index.html')) === 9 && !g2.includes('vizitka') && !g2.includes('karta-n')
+      && !(await verejna('letak.html')).text.includes('letak-stavebniny-richtarik') && (await pocetFig('letak.html')) === 2);
+    await s.goto(URL + 'sprava/');
+    await tuk('a.dlazdica:has-text("História")');
+    await tuk('button:has-text("Vrátiť")');
+    await s.waitForSelector('h1:has-text("Náhľad zmeny")');
+    await zverejni(`kontakt-${pole}-vratenie`);
+    const k3 = (await verejna('kontakt.html')).text;
+    t(`kontakt (${popis}): po vrátení sú oba obrázky a pôvodná hodnota späť`, k3.includes('kontakt-zavolajte-480') && k3.includes('kontakt-napiste-480') && !nb(k3).includes(hodnota));
+    t(`grafiky (${popis}): po vrátení sú vizitka, karta a leták so sortimentom späť`, (await pocetFig('galeria/index.html')) === 11 && (await verejna('galeria/index.html')).text.includes('vizitka-n') && (await pocetFig('letak.html')) === 3);
+  }
+
+  // ---------- 8g. obrázok pridaný do albumu grafiky: v rámiku má obe šírky, na Galérii sa vykreslí a otvorí ----------
+  await s.goto(URL + 'sprava/');
+  await tuk('a.dlazdica:has-text("Fotky v galérii")');
+  const fgg = s.locator('form.nova-fotka:has(input[name=album][value=grafika])');
+  await fgg.locator('input[name=foto]').setInputFiles(`${VST}/letak.jpg`); tuknutia++;
+  await s.waitForSelector('text=Fotka je pripravená', { timeout: 20000 }).catch(() => {});
+  await fgg.locator('input[name=popis]').fill('Skúšobný obrázok do albumu grafiky');
+  await tuk(fgg.locator('button:has-text("Pridať fotku a pozrieť náhľad")'));
+  await s.waitForSelector('h1:has-text("Náhľad zmeny")', { timeout: 60000 });
+  await zverejni('galeria-grafika');
+  v = await verejna('galeria/index.html');
+  const mg = v.text.match(/<img src="\.\.\/(img\/s\/[^"]+-1200\.webp)" srcset="\.\.\/(img\/s\/[^"]+-600\.webp) 600w, \.\.\/img\/s\/[^"]+-1200\.webp 1200w" sizes="[^"]+" alt="Skúšobný obrázok do albumu grafiky"/);
+  t('grafiky: pridaný obrázok je v albume so šírkami 600 a 1200 px', !!mg && v.text.includes('12 obrázkov'));
+  t('grafiky: súbory pridaného obrázka sa načítajú', !!mg && (await verejna(mg[1])).kod === 200 && (await verejna(mg[2])).kod === 200);
+  await s.goto(URL + 'galeria/index.html');
+  const ob = s.locator('img[alt="Skúšobný obrázok do albumu grafiky"]');
+  await ob.scrollIntoViewIfNeeded();
+  await s.waitForFunction(() => { const i = document.querySelector('img[alt="Skúšobný obrázok do albumu grafiky"]'); return i && i.complete && i.naturalWidth > 0; }, null, { timeout: 10000 }).catch(() => {});
+  t('grafiky: pridaný obrázok sa na Galérii vykreslí (menší súbor do rámika)', await ob.evaluate((i) => i.naturalWidth > 0 && i.getBoundingClientRect().width > 40 && /-600\.(webp|avif)$/.test(i.currentSrc)), await ob.evaluate((i) => i.currentSrc.split('/').pop()));
+  await ob.click();
+  await s.waitForSelector('#lb:not([hidden]) img', { timeout: 5000 }).catch(() => {});
+  t('grafiky: ťuk na pridaný obrázok otvorí veľký obrázok', (await s.locator('#lb:not([hidden]) img').count()) === 1 && /-1200\.webp$/.test(await s.locator('#lb img').getAttribute('src') || ''));
+  await s.keyboard.press('Escape');
+
+  // ---------- 8h. skrytie všetkých letákov: časť Letáky a bannery zmizne aj s nadpisom, po zobrazení jedného je späť ----------
+  for (const meno of ['Leták Prečo nakupovať', 'Leták so sortimentom', 'Reklamný banner so sortimentom', 'Široký reklamný banner']) {
+    await s.goto(URL + 'sprava/index.php?s=galeria');
+    const li = s.locator(`ul.fotky li:has(input[name=album][value=letaky]):has(summary:has-text("${meno}"))`);
+    await tuk(li.locator('summary'));
+    await tuk(li.locator('button:has-text("Skryť")'));
+    await s.waitForSelector('h1:has-text("Náhľad zmeny")');
+  }
+  await zverejni('letaky-skryte');
+  v = await verejna('letak.html');
+  t('letáky: po skrytí všetkých zmizne časť aj s nadpisom, stránka ostane', v.kod === 200 && !v.text.includes('Letáky a bannery') && (await pocetFig('letak.html')) === 0 && /<!--s:galeria-letaky--><!--\/s:galeria-letaky-->/.test(v.text) && v.text.includes('Staršie letáky'));
+  await s.goto(URL + 'sprava/index.php?s=galeria');
+  const lz = s.locator('ul.fotky li:has(input[name=album][value=letaky]):has(summary:has-text("Široký reklamný banner"))');
+  await tuk(lz.locator('summary'));
+  await tuk(lz.locator('button:has-text("Zobraziť")'));
+  await s.waitForSelector('h1:has-text("Náhľad zmeny")');
+  await zverejni('letaky-zobrazeny');
+  v = await verejna('letak.html');
+  t('letáky: po zobrazení jedného je časť s nadpisom späť', v.text.includes('Letáky a bannery') && (await pocetFig('letak.html')) === 1 && v.text.includes('banner-super-ceny'));
 
   // ---------- 9. ostatné obrazovky ----------
   for (const [odkaz, meno] of [['Nastavenia', 'nastavenia'], ['Pomoc', 'pomoc']]) {

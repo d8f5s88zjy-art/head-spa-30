@@ -233,8 +233,9 @@ a.deal:hover .thumb{transform:rotate(3deg) translateY(0);opacity:1}
 .cat .n{position:absolute;top:12px;left:12px;z-index:1;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.14em;color:var(--ink);background:rgba(var(--prgb),.92);padding:3px 7px;border-radius:3px}
 @media (max-width:1000px){.cats{grid-template-columns:repeat(3,minmax(0,1fr))}.cat h3,.cat h2.h3{font-size:22px}}
 @media (max-width:720px){.cats{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}.cat h3,.cat h2.h3{font-size:19px}.cat .tx{padding:10px 12px 12px}.cat .brands{display:none}
-  .cat.big{grid-column:span 2;flex-direction:row}.cat.big .ph{width:calc(50% - 4px)}.cat.big .tx{border-top:0;border-left:1px solid var(--line);align-content:center;gap:6px}
+  .cat.big{grid-column:span 2;flex-direction:row}.cat.big .ph{width:calc(50% - 4px);align-self:flex-start}.cat.big .tx{border-top:0;border-left:1px solid var(--line);align-content:center;gap:6px}
   .cat.big p{display:block;font-size:14px;line-height:1.35}}
+@media (max-width:359px){.cat.big p{font-size:13px;line-height:1.3}.cat.big .tx{padding:8px 10px;gap:4px}}   /* popis sa zmestí vedľa štvorca, ilustrácia ostane celá */
 
 /* katalóg: strany kategórií a obsah */
 .sort-note{margin-top:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;padding:22px 26px;background:var(--mortar);border:1px solid var(--line);border-radius:var(--radius)}
@@ -526,7 +527,7 @@ html[data-asistent] footer .bottom{padding-right:64px}
   footer{padding-bottom:calc(16px + 70px + env(safe-area-inset-bottom,0px))}
 }
 .lb[hidden]{display:none}
-.lb{position:fixed;inset:0;z-index:80;background:rgba(var(--prgb),.97);display:grid;place-items:center;padding:24px;grid-template-rows:1fr auto;align-content:center}
+.lb{position:fixed;inset:0;z-index:80;background:rgb(var(--prgb));display:grid;place-items:center;padding:24px;grid-template-rows:1fr auto;align-content:center}
 .lb figure{margin:0;display:grid;gap:12px;justify-items:center;max-width:100%}
 .lb img{max-width:min(calc(100vw - 48px),1400px);max-height:84vh;width:auto;height:auto;border-radius:var(--radius);box-shadow:0 18px 50px rgba(20,18,16,.18)}
 .lb figcaption{color:var(--ink);font-size:15px;text-align:center;display:flex;gap:14px;align-items:center}
@@ -857,13 +858,14 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 .ilu.zl>picture{aspect-ratio:4/3}
 @media (max-width:700px){.ilu.zl{grid-template-columns:minmax(0,1fr)}.ilu.zl>picture{width:100%;max-width:240px}}   /* veta o zľave je dlhá: na telefóne obrázok nad ňou */
 /* Kontakt: obrázok hodín vpravo hore v karte Otváracie hodiny (oblasť hodiny-kontakt); tabuľka a oznamy cez celú šírku */
-.khod{grid-template-columns:minmax(0,1fr) auto;column-gap:12px}
+.khod{grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:center}
 .khod>.hours,.khod>p{grid-column:1/-1}
-.khod-obr{display:block;width:120px;aspect-ratio:4/3;margin:-10px -8px -6px 0;border-radius:var(--radius);overflow:hidden}
+.khod-obr{display:block;width:96px;aspect-ratio:4/3;margin:-12px -8px -6px 0;border-radius:var(--radius);overflow:hidden}
 .khod-obr img{display:block;width:100%;height:100%}
 /* Doprava: auto z obrázka Rozvoz vedľa štyroch bodov (na telefóne pod nimi). Roh pod autom je vo výreze priehľadný,
-   preto má rámik farbu pozadia obrázka – aj v tmavej téme */
-.rozvoz{margin:0;border-radius:var(--radius);overflow:hidden;background:#e3e5e7}
+   preto má rámik farbu podlahy obrázka tesne nad čiarou výrezu (odtiene zľava doprava odčítané z obrázka; jednofarebný
+   svetlý rámik bol pod tieňom auta vidno ako svetlejší klin) – aj v tmavej téme */
+.rozvoz{margin:0;border-radius:var(--radius);overflow:hidden;background:#d3d7da linear-gradient(90deg,#c7cbcc 33%,#bdc1c2 42%,#babdbf 62%,#b7bbbd 72%,#c9cdd0 82%,#d5d9db 92%,#dee0e2)}
 .rozvoz picture{display:block}
 .rozvoz img{display:block;width:100%;height:auto}
 @media (min-width:901px){.doprava-page.s-autom .srv-grid{display:grid;grid-template-columns:minmax(0,1fr) 452px;gap:clamp(28px,4vw,64px);align-items:center}
@@ -875,6 +877,7 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 .figs.lb4 .fig a,.figs.gg .fig a{position:relative;display:block;aspect-ratio:4/3;min-height:0;padding:0}
 .figs.lb4 .fig picture,.figs.gg .fig picture{position:absolute;inset:8px;display:block}
 .figs.lb4 .fig img,.figs.gg .fig img{display:block;width:100%;height:100%;max-height:none;object-fit:contain}
+.figs.lb4,.figs.gg{align-items:start}
 .figs.n6{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
 .figs.gg .fig figcaption{font-size:13px;line-height:1.3}
 @media (max-width:1000px){.figs.n6{grid-template-columns:repeat(4,minmax(0,1fr))}}
@@ -1773,7 +1776,7 @@ html[data-tema="tmava"] .lb img{box-shadow:0 18px 50px rgba(0,0,0,.6)}
 html[data-tema="tmava"] body.home .karta img{box-shadow:0 30px 60px rgba(0,0,0,.6)}
 /* znak RS má vlastný čierny zaoblený podklad (#000): na noci #121110 dostane jemnú svetlú hranu ako ostatné odznaky, aby
    nepôsobil ako tmavší obdĺžnik nalepený na lište (KV-05). Polomer = roh znaku (40 z 720 px šírky, 40 z 350 px výšky). */
-html[data-tema="tmava"] :is(.brand img,.br-znacka img,.flogo){border-radius:5.6%/11.4%;box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+html[data-tema="tmava"] :is(.brand img,.flogo){border-radius:5.6%/11.4%;box-shadow:0 0 0 1px rgba(255,255,255,.2)}
 }
 
 /* ═══ Farebná téma (predvolená; Lajo 10. 11. 2026: „chcem, aby ten podklad bol farebný“ – farby určuje nové logo majiteľa s názvom
@@ -1804,8 +1807,6 @@ html[data-tema="farebna"]{
   --brick:#d73438;--brick-hover:#b92328;--brick-dk:#b92328;--brick-txt:#b92328;--brick-svetla:#f28b7d;--brick-lt:#f8ded9;--brick-pale:#f9cfc9;
   --prgb:246,238,228;--irgb:28,26,27;
   --scena:#f6eee4;   /* farba scény pre podklad prechodu medzi stránkami (zdroj/prechody.js); scény ju prepíšu */
-  /* antracitový obrys bieleho názvu v krídlach uvítania ako v grafike majiteľa (8 smerov + mäkký tieň; em = veľkosť písma názvu) */
-  --o:max(1.5px,.024em);--obrys:var(--o) 0 0 var(--f-antracit),calc(-1*var(--o)) 0 0 var(--f-antracit),0 var(--o) 0 var(--f-antracit),0 calc(-1*var(--o)) 0 var(--f-antracit),calc(.71*var(--o)) calc(.71*var(--o)) 0 var(--f-antracit),calc(-.71*var(--o)) calc(.71*var(--o)) 0 var(--f-antracit),calc(.71*var(--o)) calc(-.71*var(--o)) 0 var(--f-antracit),calc(-.71*var(--o)) calc(-.71*var(--o)) 0 var(--f-antracit),0 .05em .1em rgba(28,26,27,.34)
 }
 @media (max-width:980px){html[data-tema="farebna"]{--lista-v:84px}}
 html[data-tema="farebna"]{scroll-padding-top:calc(var(--lista-v) + 10px)}
@@ -1942,7 +1943,7 @@ html[data-tema="farebna"] body.home .kontakt-teaser .big-tel:hover{color:var(--b
 
 /* ── päta: antracit s červenou linkou hore, dole tmavší pás cez celú šírku ── */
 html[data-tema="farebna"] footer{border-top:0;padding-bottom:0;box-shadow:inset 0 4px 0 var(--f-cervena)}
-html[data-tema="farebna"] :is(.flogo,.br-znacka img){border-radius:5.6%/11.4%;box-shadow:0 0 0 1px rgba(255,255,255,.22)}
+html[data-tema="farebna"] .flogo{border-radius:5.6%/11.4%;box-shadow:0 0 0 1px rgba(255,255,255,.22)}
 html[data-tema="farebna"] footer .bottom{--ink:#fff;--brick-dk:#fff;margin-top:34px;padding-block:16px;border-top:0;background:#131112;color:#fff;box-shadow:0 0 0 100vmax #131112;clip-path:inset(0 -100vmax)}
 html[data-tema="farebna"] footer .bottom a{color:#fff}
 html[data-tema="farebna"] footer .bottom a:hover{color:#fff;text-decoration:underline}

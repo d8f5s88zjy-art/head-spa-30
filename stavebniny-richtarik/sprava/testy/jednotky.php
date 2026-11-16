@@ -385,12 +385,27 @@ $sz = $obl('sluzby-zlavy', 'sluzby.html', Zmena::sKonstantami($Z));
 t('grafiky: zľava bez 3,3 % – karta zliav bez obrázka, veta a tlačidlo ostanú', !str_contains($sz, '<picture') && !str_contains($sz, ' ilu') && str_contains(str_replace("\u{a0}", ' ', $sz), '3 % pri platbe kartou') && str_contains($sz, 'href="akcie/index.html"'));
 $Z['cennik']['zlava'] = 'Zľava so zákazníckou kartou: 15 % pri platbe v hotovosti, 3,3 % pri platbe kartou.';
 t('grafiky: 15 % nie je 5 % (obrázok zliav sa neukáže)', !str_contains($obl('sluzby-zlavy', 'sluzby.html', Zmena::sKonstantami($Z)), '<picture'));
+$Z['cennik']['zlava'] = str_replace('5 % pri platbe v hotovosti', '7 % pri platbe v hotovosti', $D['cennik']['zlava']);
+t('grafiky: zmena jediného čísla zľavy (hotovosť 7 %, „odrátaná 5 % zľava“ ostane) obrázok zliav skryje', $Z['cennik']['zlava'] !== $D['cennik']['zlava'] && str_contains($Z['cennik']['zlava'], '5 %')
+  && !str_contains($obl('sluzby-zlavy', 'sluzby.html', Zmena::sKonstantami($Z)), '<picture'));
+$Z['cennik']['zlava'] = str_replace('odrátaná 5 % zľava', 'odrátaná 4 % zľava', $D['cennik']['zlava']);
+t('grafiky: zmena vety o cenníku bez zmeny zliav obrázok nechá', $Z['cennik']['zlava'] !== $D['cennik']['zlava'] && str_contains($obl('sluzby-zlavy', 'sluzby.html', Zmena::sKonstantami($Z)), 'zlavy-480'));
+// PSČ je na tabuli, vizitke aj zákazníckej karte: pri inom PSČ zmiznú všetky tri, široká tabuľa bez adresy ostane
+$Pm = $D; $Pm['firma']['mesto'] = '949 01 Nitra'; $gg = $obl('galeria-grafika', 'galeria/index.html', Zmena::sKonstantami($Pm));
+t('grafiky: iné PSČ skryje tabuľu s adresou, vizitku aj kartu', !str_contains($gg, 'tabula-vysoka') && !str_contains($gg, 'vizitka') && !str_contains($gg, 'karta-n') && str_contains($gg, 'tabula-siroka') && substr_count($gg, '<figure') === 9);
 // (d) správa: nahradenie zruší podmienku, skrytie funguje aj na celý album grafiky
 $al = fn(array $X, string $id) => array_values(array_filter($X['galeria']['albumy'], fn($a) => $a['id'] === $id))[0];
 [$N, $e] = Obsah::galeria($M, 'nahradit', ['album' => 'grafika', 'foto' => 'vizitka'], ['foto' => nahraj("$VST/letak.jpg")]);
 $nv = array_values(array_filter($al($N, 'grafika')['fotky'], fn($f) => str_starts_with($f['src'], 'img/s/')));
 t('grafiky: nahradená vizitka nemá plati_pri, nechá si popis a je na webe aj s novým mobilom', $e === null && count($nv) === 1 && !isset($nv[0]['plati_pri']) && str_starts_with($nv[0]['popis'], 'Vizitka')
   && str_contains($obl('galeria-grafika', 'galeria/index.html', Zmena::sKonstantami($N)), $nv[0]['src']) && str_contains($obl('galeria-grafika', 'galeria/index.html', Zmena::sKonstantami($N)), '10 obrázkov'), (string)$e);
+// obrázok pridaný v správe: v rámiku albumu má obe šírky (600 a 1200 px) a sizes, veľký obrázok je 1200 px
+[$Pg, $e] = Obsah::galeria($D, 'pridat', ['album' => 'grafika', 'popis' => 'Skúšobný obrázok do albumu grafiky'], ['foto' => nahraj("$VST/letak.jpg")]);
+$np = $e === null ? array_values(array_filter($al($Pg, 'grafika')['fotky'], fn($f) => str_starts_with($f['src'], 'img/s/'))) : [];
+$gg = $e === null ? $obl('galeria-grafika', 'galeria/index.html', Zmena::sKonstantami($Pg)) : '';
+t('grafiky: pridaný obrázok má v albume srcset 600 a 1200 px a sizes', count($np) === 1 && count($np[0]['webp']) === 2 && substr_count($gg, '<figure') === 13
+  && (bool)preg_match('~<img src="\.\./' . preg_quote($np[0]['src'], '~') . '" srcset="\.\./' . preg_quote($np[0]['webp'][0][1], '~') . ' 600w, \.\./' . preg_quote($np[0]['webp'][1][1], '~') . ' 1200w" sizes="[^"]+"~', $gg), (string)$e . ' ' . json_encode($np[0]['webp'] ?? null));
+t('grafiky: pôvodné obrázky albumu majú náhľad AVIF aj WebP so sizes', preg_match_all('~-n\.avif \d+w" sizes="~', $gg) === 12 && preg_match_all('~-n\.webp \d+w" sizes="~', $gg) === 12);
 [$S, $e] = Obsah::galeria($D, 'skryt', ['album' => 'letaky', 'foto' => 'banner-super-ceny'], []);
 t('grafiky: skrytý banner zmizne zo stránky Leták', $e === null && !str_contains($obl('galeria-letaky', 'letak.html', Zmena::sKonstantami($S)), 'banner-super-ceny') && substr_count($obl('galeria-letaky', 'letak.html', Zmena::sKonstantami($S)), '<figure') === 3, (string)$e);
 foreach (['letak-preco-nakupovat', 'letak-stavebniny-richtarik', 'banner-kompletne-systemy'] as $fid) [$S, $e] = Obsah::galeria($S, 'skryt', ['album' => 'letaky', 'foto' => $fid], []);

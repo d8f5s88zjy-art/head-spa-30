@@ -69,16 +69,21 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
     (oblasť `hodiny-kontakt`, `.khod-obr`); „Zdarma výpočet spotreby“ vo výzve pred pätou na Službách (`page(cta_obr=…)`)
     a ikona zliav v karte pod zoznamom služieb pri vete o zľave s podmienkou (oblasť `sluzby-zlavy`, `.kat-cta.zl`);
   - auto z obrázka „Rozvoz stavebného materiálu“ na Doprave vedľa štyroch bodov (`.rozvoz`): výrez **bez nápisu**, lebo jeho
-    druhý riadok má „AVIA 3t“ a Avia je 3,5 t (výrez je mnohouholník, roh s nápisom je priehľadný – `nastroje/grafika_maria.sh`);
+    druhý riadok má „AVIA 3t“ a Avia je 3,5 t (výrez je mnohouholník, roh s nápisom je priehľadný – `nastroje/grafika_maria.sh`; rámik má pod ním odtiene podlahy
+    obrázka, aby roh nebol vidno ako svetlejší klin);
   - dva letáky a dva bannery na stránke Leták v časti „Letáky a bannery“ (oblasť `galeria-letaky`) a logá, tabule, vizitka,
-    zákaznícka karta a päť ilustrácií iného štýlu v albume „Logo a firemná grafika“ v Galérii (oblasť `galeria-grafika`):
-    náhľady v rámikoch, po kliknutí veľký obrázok. Položky sú v `data/galeria.json` (albumy `letaky`, `grafika`, prenesené
+    zákaznícka karta a päť ilustrácií iného štýlu v albume „Logo a firemná grafika“ na konci Galérie, za fotkami predajne
+    a výstav (oblasť `galeria-grafika`): náhľady v rámikoch 4 : 3 zarovnaných hore (letáky dva v rade ako susedné časti
+    stránky, album šesť v rade), po kliknutí veľký obrázok. Obrázok nahraný v správe má v rámiku šírky 600 a 1 200 px
+    (`srcset`, `sizes`). Položky sú v `data/galeria.json` (albumy `letaky`, `grafika`, prenesené
     `nastroje/export_grafika.py`), správa ich vie skryť, nahradiť, popísať a posunúť. Letáky a bannery majú preklepy –
     Lajko o nich vie; opravená verzia od Mária sa vymení 1 : 1 (nový výrez do zdroja pod tým istým menom, alebo „Nahradiť“ v správe).
   **Obrázok s údajom nesmie klamať:** hodiny, ikona zliav, tabuľa s kontaktom, vizitka, karta a oba letáky sa vykreslia len
   vtedy, keď údaje v `data/firma.json` a `data/cennik.json` sú tie, ktoré majú v sebe (`GRAFIKA_UDAJE` v `build.py`,
   `udaje_platia()` v `nastroje/vykreslenie.py` aj `sprava/jadro/Vykreslenie.php`, pri položkách albumov pole `plati_pri`);
-  po zmene v správe obrázok zmizne a text ostane. Všetky sú lenivé, nikde nie sú LCP; opisy (alt) v `texty.OBR_ALT`
+  po zmene v správe obrázok zmizne a text ostane. Pri zľave sa kontrolujú celé spojenia „5 % pri platbe v hotovosti“
+  a „3,3 % pri platbe platobnou kartou“ (zmena jediného čísla obrázok skryje); zákaznícka karta má v podmienke aj PSČ.
+  „Horné Krškany“ na karte a letáku sa nekontroluje (časť obce sa v správe nemení). Všetky sú lenivé, nikde nie sú LCP; opisy (alt) v `texty.OBR_ALT`
   (`ilu:<názov>`), pri albumoch v dátach (`popis`). Zdroj `zdroj/grafika-maria/` (38 výrezov) a výroba
   `bash nastroje/grafika_maria.sh` (len orez, zmenšenie, doostrenie; nič nad skutočný detail snímok).
 - Karty značiek v kategórii (`obsah.py` `_brand`, fotka v `popisy.py` `ZNACKY`): vlastná fotka (z pôvodného webu `p/ID`,
@@ -115,9 +120,10 @@ pásiku) a tlačidlá; znak RS a názov sú od 16. 11. 2026 len v lište (rozlo�
 a `.uv-b` `display:contents`); na počítači je ponuka, odkazy a vyhľadávanie na bielej karte na fotke.
 **Návrat k červenej lište** (keby majiteľ trval na farebnom páse loga): v `site.css` vymeniť tokeny scény `.top` a blok
 „lišta“ za stav z commitu „logo a názov len raz“ a `FARBA` v `build.py` vrátiť na `#1c1a1b`; ostatné svetlé sekcie ostanú.
-Strih zásob sa vo farebnej téme nepoužíva (`site.js`). Uvítanie má červené krídla s antracitovým pásom, znak RS a názov
-živým písmom (`zdroj/uvitanie.*`, cesta `otvorF`: krídla sa rozídu rovno nad úvodom; KZ-01, 11. 11. 2026: znak a názov
-v krídlach zhasnú počas prvej časti otvárania a prvý riadok nadpisu úvodu sa objaví, až keď sú krídla celkom mimo neho –
+Strih zásob sa vo farebnej téme nepoužíva (`site.js`). Uvítanie má od 16. 11. 2026 svetlé krídla bez znaku RS a bez názvu
+(logo a názov sú len v lište nad bránou; v krídlach je len pozdrav, „Poďte ďalej.“ na červenom páse;
+`zdroj/uvitanie.*`, cesta `otvorF`: krídla sa rozídu rovno nad úvodom; KZ-01, 11. 11. 2026: pozdrav
+v krídlach zhasne počas prvej časti otvárania a prvý riadok nadpisu úvodu sa objaví, až keď sú krídla celkom mimo neho –
 kedy, vypočíta `odkryF` z rozmerov a krivky clony –, takže nadpis nikdy nie je prerezaný hranou krídla). Podklad
 prechodu medzi stránkami (`::view-transition`) je po pásoch vo farbe scén novej stránky (`--scena`: svetlý tón, malta,
 antracit päty; skript `zdroj/prechody.js` ich pri `pagereveal`
@@ -151,7 +157,7 @@ prvej obrazovky, na počítači (od 981 px) vpravo od svetlého panela so šikmo
 (v šírke okna ≈ 1 : 1 so zdrojom, nezväčšuje sa na celú výšku); v paneli riadok miesta „Nitra – Horné Krškany“, heslo „Predajňa plná materiálu. Od základov po strechu.“
 (telefón 27–40 px, počítač 40–58 px; znak RS a názov sú len v lište) a tlačidlá Zavolať a Poslať dopyt, na počítači vpravo
 dole biela karta na fotke s ponukou, odkazmi a vyhľadávaním. Strih zásob a tlačidlo Prehrať úvod sa nepoužívajú. Uvítanie:
-červené krídla, znak RS a názov, krídla sa rozídu rovno nad hotovým úvodom (koniec ≈ 1,5 s od navigácie).
+svetlé krídla s pozdravom (bez znaku RS a názvu), rozídu sa rovno nad hotovým úvodom (koniec ≈ 1,5 s od navigácie).
 
 **Stav od 10. 11. 2026 (kolo majiteľa, platí pred staršími údajmi v tejto časti):**
 - Hlavný obraz je fotka 11 od majiteľa (`img/predajna/11-tvarnice-porfix-cesta-*`, **provizórne**, kým majiteľ nepotvrdí
@@ -257,8 +263,9 @@ bránou a fungujú. Texty sú len z overených faktov (rok 1997, adresa, doprava
   v HTML od začiatku. Pri tlači sa prekryv nezobrazí a úvod je v konečnom stave.
 - Poistky: CSS skryje prekryv 4,8 s po prvom vykreslení, aj keby skript zlyhal; skript ho odstráni najneskôr po 9 s
   (pred tempom ×1,5 to bolo 3,2 s a 6 s).
-- Názov firmy v bráne (KF-11): do 1023 px je vedľa znaku v dvoch riadkoch a zmestí sa od 320 px (znak `min(86px, 22vw)`,
-  písmo `min(34px, 8.4vw)`), od 1024 px v jednom riadku; meranie `majitel/oprava/nastroje/snim.mjs` (pravý okraj názvu ≤ krídlo).
+- Znak RS a názov firmy v bráne od 16. 11. 2026 nie sú v žiadnej téme (Lajko: logo a názov len raz; sú v lište, ktorá
+  ostáva nad bránou). Vo farebnej téme je pozdrav 7,4 vw (telefón 15,5 vw), aby sa „Poďte ďalej.“ s červeným pásom
+  zmestilo do krídla v jednom riadku od 320 px.
 - Kód: zdroje sú v `zdroj/uvitanie-head.js` (rozhodnutie v `<head>`), `zdroj/uvitanie.css`, `zdroj/uvitanie.html`
   (prekryv) a `zdroj/uvitanie.js` (riadenie, WAAPI). `build.py:uvitanie_bloky()` ich zmenší na 4 bloky v `index.html`
   (štýl a rozhodnutie v `<head>` pred skriptom `uv-ide`, prekryv ako prvý prvok `<body>`, aby bol pozdrav v prvom
@@ -620,12 +627,12 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
      „Hutvý materiál“, „Kominový systém“, „Dlažby, platy obklady“, „BRUSENÁ TEHLA“, „THELY-LEPIDLÁ-PENY“, „NÁRADIE-PENETRÁRY“,
      „Chemofak“ (Chemolak), skomolené logá značiek, „Strešné rezivo“ nad značkami krytín a nadpisy systémov nad iným
      tovarom, „Doprava zdarma“ bez podmienky. Široký banner: „KOMPLETNÝ … … SYSTÉM“ (chýba slovo), „Doprava sderma“,
-     nečitateľné bočné stĺpce značiek.
+     v zozname reziva „Mranoly“ → Hranoly, nečitateľné bočné stĺpce značiek.
   4. Originály všetkých 38 obrázkov v plnom rozlíšení (JPG, PNG alebo PDF, nie snímky z telefónu): dnešné snímky nesú len
      ≈ 530 – 1 320 px, letáky a bannery sú po zväčšení zle čitateľné.
   5. Ikony bez pevných údajov (hodiny, telefón, e-mail, zľava), ideálne s priehľadným pozadím – alebo počítať s tým, že po
      zmene údajov v správe sa obrázok sám skryje a treba poslať nový.
-  6. Logo vo vektore (SVG, PDF alebo AI) – stále chýba.
+  6. Logo vo vektore (SVG alebo PDF) – stále chýba.
 
 ## Údržba
 - Prostredie: `python3 -m venv venv && venv/bin/pip install lxml`, potom v tomto priečinku `venv/bin/python build.py`.
@@ -750,11 +757,12 @@ skončila, a `noindex`); úplne ju odstráni programátor. Úvod (`index.html`) 
 `sprava_zhoda.py --referencia` preto `index.html` porovnáva po zjednotení medzier.
 
 **Testy správy** (všetky na kópii v `/dev/shm`, nikdy na hostingu ani na repozitári – bez argumentov sa nespustia):
-`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (170 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
+`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (175 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
 prerušený zápis, súbeh, kódy, heslá, oznamy, novinky, galéria, texty, kontakt, grafiky s údajom v obrázku, ceny a úvod),
-`bash sprava/testy/e2e.sh <snímky>` (Playwright 390 × 844 aj 1440 × 900, ≈ 200 kontrol na šírku: celý postup majiteľa
-vrátane novinky, sviatku, fotky v galérii, textu, telefónu a ich vrátenia, s overením verejných stránok a toho,
-že obrázky so starými hodinami alebo telefónom po zmene zmiznú a po vrátení sa vrátia), `bash sprava/testy/bezpecnost.sh`, `python3 sprava/testy/vstupy.py <priečinok>`
+`bash sprava/testy/e2e.sh <snímky>` (Playwright 390 × 844 aj 1440 × 900, ≈ 260 kontrol na šírku: celý postup majiteľa
+vrátane novinky, sviatku, fotky v galérii, textu, telefónu, e-mailu a pevnej linky a ich vrátenia, obrázka pridaného do
+albumu grafiky a skrytia všetkých letákov, s overením verejných stránok a toho, že obrázky so starými hodinami,
+telefónom alebo e-mailom po zmene zmiznú a po vrátení sa vrátia), `bash sprava/testy/bezpecnost.sh`, `python3 sprava/testy/vstupy.py <priečinok>`
 (testovacie súbory). Lokálny server: `php -S 127.0.0.1:<port> -t <kópia> sprava/testy/router.php` (napodobní zákazy
 z `.htaccess`; bez HTTPS funguje len pod `php -S`).
 

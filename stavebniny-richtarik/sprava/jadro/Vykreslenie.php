@@ -369,7 +369,8 @@ final class Vykreslenie
         if (!$fotky) return ['blok' => null];
         $g = $album === 'grafika';
         return ['blok' => ['nadpis' => self::txt($a['nadpis']), 'album' => $g, 'pocet' => $g ? self::obrazky(count($fotky)) : '',
-                           'trieda' => $g ? 'n6 gg' : 'n4 lb4', 'fotky' => $fotky]];
+                           'trieda' => $g ? 'n6 gg' : 'n2 lb4', 'fotky' => $fotky,
+                           'sizes' => $g ? '(max-width:700px) 30vw, (max-width:1000px) 23vw, 180px' : '(max-width:700px) 42vw, 400px']];
     }
 
     // ---------- texty stránok ----------

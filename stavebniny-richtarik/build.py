@@ -1166,7 +1166,7 @@ GALERIA_ALBUMY = [  # (slug zdroja, názov albumu v nadpise a v popisku fotky)
 
 # Prvé sekcie galérie (fotky od majiteľa z img/predajna a fotky areálu z img/uvod) sú v data/galeria.json: správa webu
 # v nich fotky pridáva, nahrádza a skrýva (oblasti galeria-predajna a galeria-dvor). Prenesené nástrojom export_obsah.py.
-# Tretí album „Logo a firemná grafika“ (oblasť galeria-grafika) a album „Letáky a bannery“ na stránke Leták (oblasť
+# Posledný album Galérie „Logo a firemná grafika“ (oblasť galeria-grafika, za fotkami predajne a výstav) a album „Letáky a bannery“ na stránke Leták (oblasť
 # galeria-letaky) sú Máriove grafiky zo 16. 11. 2026 (img/grafika, nastroje/export_grafika.py): náhľady v rámikoch, po kliknutí
 # veľký obrázok; položky s údajom v obrázku majú plati_pri (GRAFIKA_UDAJE) a správa ich vie skryť, nahradiť a popísať.
 
@@ -1190,8 +1190,8 @@ def build_galeria():
     body = f'''<section class="sec"><div class="wrap">
 {oblast('galeria-predajna', V.vykresli('galeria-predajna', path, VD))}
 {oblast('galeria-dvor', V.vykresli('galeria-dvor', path, VD))}
-{oblast('galeria-grafika', V.vykresli('galeria-grafika', path, VD))}
 {secs}
+{oblast('galeria-grafika', V.vykresli('galeria-grafika', path, VD))}
 </div></section>'''
     write(path, page(path, 'Galéria', body, [('index.html', 'Úvod'), (None, 'Galéria')], head=('Galéria', 'Z predajne, skladu a výstav', 'Naša predajňa a sklad v Horných Krškanoch a naše stánky na výstavách Domexpo, Agrokomplex a Gardenia v Nitre.'), head_img='predajna:02-tvarnice-obloha'))
 
@@ -1316,11 +1316,13 @@ KONTAKT_OBR = {'zavolajte': {'mobil': '0905622223', 'pevna': '0376511777'}, 'nap
 # dva letáky). Obrázok nesmie klamať: ukáže sa len vtedy, keď údaje v data/firma.json a data/cennik.json sú tie, ktoré
 # má v sebe (nastroje/vykreslenie.py udaje_platia, to isté v PHP); inak zmizne a text stránky ostane. Hodnoty sú prepísané
 # z obrázkov: hodiny „Po – Pi 7:00 – 16:00, So 7:00 – 12:00“, mobil, pevná linka a e-mail (tie isté ako v KONTAKT_OBR),
-# ulica, PSČ, meno majiteľa a zľava „hotovosť 5 % | karta 3,3 %“. Telefónne čísla sú len ako číslice bez medzier a e-mail
+# ulica, PSČ, meno majiteľa a zľava „hotovosť 5 % | karta 3,3 %“ (kontrolujú sa celé spojenia vety o zľave, aby obrázok
+# zmizol aj pri zmene jediného čísla; druhé „5 %“ vo vete o cenníku nestačí). Telefónne čísla sú len ako číslice bez medzier a e-mail
 # rozdelený pri @ (v komentároch ich nepíšeme): zmena kontaktu v správe ani nastroje/kontakt.py ich tak nenahradí.
 GRAFIKA_UDAJE = {'hodiny': [[[1, 2, 3, 4, 5], '7:00', '16:00'], [[6], '7:00', '12:00']], 'mobil': '0905622223', 'pevna': '0376511777',
                  'email': ['info', 'stavebninyrichtarik.sk'], 'ulica': 'Novozámocká 62/68', 'psc': '949 05',
-                 'majitel': 'Ing. Mário Richtárik - Stavebniny', 'zlava': ['5 %', '3,3 %']}
+                 'majitel': 'Ing. Mário Richtárik - Stavebniny',
+                 'zlava': ['5 % pri platbe v hotovosti', '3,3 % pri platbe platobnou kartou']}
 
 
 def build_kontakt():

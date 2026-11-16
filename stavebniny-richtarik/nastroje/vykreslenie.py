@@ -323,13 +323,16 @@ def galeria_vm(D, album, cesta):
 
 def grafika_vm(D, album, cesta):
     """Albumy Máriových grafík (data/galeria.json: letaky na stránke Leták, grafika v Galérii): náhľady v rámikoch s celým
-    obrázkom, po kliknutí veľký obrázok. Bez položiek na webe sa nevykreslí nič (ani nadpis)."""
+    obrázkom, po kliknutí veľký obrázok. Bez položiek na webe sa nevykreslí nič (ani nadpis). Letáky sú dva v rade ako
+    susedné časti stránky Leták, album v Galérii šesť v rade; sizes je šírka obrázka v rámiku (obrázok nahraný v správe
+    má šírky 600 a 1200 px, prehliadač si vyberie menšiu)."""
     a = next(x for x in D['galeria']['albumy'] if x['id'] == album)
     fotky = [fotka_vm(f, cesta) for f in a['fotky'] if fotka_na_webe(D, f)]
     if not fotky: return {'blok': None}
     v_galerii = album == 'grafika'
     return {'blok': {'nadpis': txt(a['nadpis']), 'album': v_galerii, 'pocet': obrazky(len(fotky)) if v_galerii else '',
-                     'trieda': 'n6 gg' if v_galerii else 'n4 lb4', 'fotky': fotky}}
+                     'trieda': 'n6 gg' if v_galerii else 'n2 lb4', 'fotky': fotky,
+                     'sizes': '(max-width:700px) 30vw, (max-width:1000px) 23vw, 180px' if v_galerii else '(max-width:700px) 42vw, 400px'}}
 
 
 # ---------- texty stránok ----------

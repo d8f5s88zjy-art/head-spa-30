@@ -32,7 +32,7 @@ def pol(i, popis, plati=None):
 LETAKY = {'id': 'letaky', 'nadpis': 'Letáky a bannery', 'fotky': [
     pol('letak-preco-nakupovat', 'Leták Prečo nakupovať u nás', ['hodiny']),
     pol('letak-stavebniny-richtarik', 'Leták so sortimentom predajne', ['ulica', 'pevna', 'mobil', 'email']),
-    pol('banner-kompletne-systemy', 'Reklamný banner so značkami v ponuke'),
+    pol('banner-kompletne-systemy', 'Reklamný banner so sortimentom a značkami'),
     pol('banner-super-ceny', 'Široký reklamný banner so sortimentom')]}
 GRAFIKA = {'id': 'grafika', 'nadpis': 'Logo a firemná grafika', 'fotky': [
     pol('logo-rs-vodorovne', 'Logo RS Richtárik stavebniny, vodorovné'),
@@ -41,7 +41,7 @@ GRAFIKA = {'id': 'grafika', 'nadpis': 'Logo a firemná grafika', 'fotky': [
     pol('tabula-siroka', 'Firemná tabuľa Richtárik Stavebniny'),
     pol('tabula-vysoka', 'Firemná tabuľa s adresou, kontaktom a otváracou dobou', ['ulica', 'psc', 'pevna', 'mobil', 'email', 'hodiny']),
     pol('vizitka', 'Vizitka Ing. Mário Richtárik – Stavebniny', ['majitel', 'ulica', 'psc', 'pevna', 'mobil', 'email']),
-    pol('karta', 'Zákaznícka karta Stavebniny Richtárik', ['ulica', 'pevna', 'mobil', 'email']),
+    pol('karta', 'Zákaznícka karta Stavebniny Richtárik', ['ulica', 'psc', 'pevna', 'mobil', 'email']),
     pol('alt-auto-zlte', 'Ilustrácia: nákladné auto s paletami tehál'),
     pol('alt-sypke-zmesi-ikona', 'Ilustrácia: robotník s lopatou a fúrikom'),
     pol('alt-okna-robotnik', 'Ilustrácia: robotník nesie okno'),

@@ -65,7 +65,7 @@ spolu s logom vo vektore (README, Pre Mária).
 - `img/ilu/rozvoz-452|905.avif|webp` – auto Iveco s hydraulickou rukou z obrázka „Rozvoz stavebného materiálu – AVIA 3t •
   IVECO 8t s mechanickou rukou“ (IMG_0312) na Doprave. **Bez nápisu:** nosnosť Avie je 3,5 t (Lajko 16. 11. 2026). Nápis
   leží šikmo tesne pod autom, preto je výrez mnohouholník – obdĺžnik 905 × 598 bez rohu pod čiarou nad písmenami; roh je
-  priehľadný a rámik na stránke má farbu pozadia obrázka. Pixely auta sa nemenia, nič sa neprekresľuje.
+  priehľadný a rámik na stránke má pod ním odtiene podlahy obrázka (prechod zľava doprava v `site.css`, `.rozvoz`). Pixely auta sa nemenia, nič sa neprekresľuje.
 - `img/grafika/<výrez>-n.avif|webp` (náhľad, dlhšia strana najviac 480 px) a `<výrez>-v.webp` (veľký, najviac skutočný detail
   výrezu) – albumy v `data/galeria.json`:
   - **Letáky a bannery** na stránke Leták: letak-preco-nakupovat (IMG_0310; hodiny), letak-stavebniny-richtarik (IMG_0311;
@@ -73,7 +73,7 @@ spolu s logom vo vektore (README, Pre Mária).
     (zoznam v README, Pre Mária) – Lajko o nich vie a chce ich na webe; sú tam ako náhľady, opisy píšeme správne.
   - **Logo a firemná grafika** v Galérii: logo-rs-vodorovne, logo-rs-pod-sebou, logo-rs-cierna-doska (zdroj dnešného loga
     webu), tabula-siroka, tabula-vysoka (adresa, telefóny, e-mail, otváracia doba), vizitka (meno, adresa, telefóny, e-mail),
-    karta (tá istá zákaznícka karta ako `img/karta-nova-*`, tu šikmý pohľad; adresa, telefóny, e-mail) a päť ilustrácií
+    karta (tá istá zákaznícka karta ako `img/karta-nova-*`, tu šikmý pohľad; adresa s PSČ, telefóny, e-mail) a päť ilustrácií
     iného štýlu: alt-auto-zlte, alt-sypke-zmesi-ikona, alt-okna-robotnik, alt-rezivo-kruh, alt-stresne-krytiny-stvorec.
   Položka s údajom v obrázku má v dátach `plati_pri` a na webe je len dovtedy, kým údaje v správe sú rovnaké ako na nej
   (`GRAFIKA_UDAJE` v `build.py`). Správa vie položku skryť, nahradiť (podmienka tým zaniká), popísať a posunúť.
