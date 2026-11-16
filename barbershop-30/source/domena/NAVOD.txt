@@ -1,0 +1,79 @@
+NOVÝ WEB BARBERSHOP 30 PRE DOMÉNU www.barbershop30.sk – PLNÝ BALÍK
+Verzia {COMMIT}. Web je ten istý ako v poslednom náhľade, navyše s asistentom Barber, voľnými termínmi v okne
+objednávky, vernostnou kartičkou a správou na úpravy webu. Všetko sa zapína až na hostingu a až tebou.
+
+1. ČO JE V BALÍKU A ČO SA NESMIE ZMAZAŤ
+Priečinok NAHRAT-NA-HOSTING. Celý jeho obsah patrí do koreňa domény www.barbershop30.sk, teda tam, kde je dnes
+súbor index.php. Spolu {SUBOROV} súborov, asi {MB} MB.
+   index.html, 404.html, robots.txt, sitemap.xml, assets, karta, en   nový web
+   asistent    asistent Barber a voľné termíny (server)
+   vernost     vernostná kartička (server a admin kartičiek)
+   sprava      prvé nastavenie, nastavenia a úpravy webu
+Na doméne dnes beží rezervačný systém. Patria k nemu index.php, adresy /rezervacia a /admin, súbor .htaccess a priečinky
+css, js, images, fonts, storage a vendor. Tie sa nesmú zmazať ani prepísať. Nový web ide len vedľa nich. Cez FTP
+súbory iba pridať, nič nemazať. Súbor .htaccess na hostingu nemeniť, v balíku preto žiadny pre koreň domény nie je.
+V balíku zámerne nie je stránka rezervacia.html ani priečinok admin: tieto adresy patria rezervačnému systému.
+
+2. PRED NAHRATÍM
+a) Verzia PHP na doméne musí byť 8.2 alebo novšia (odporúčame 8.3). Nastavuje sa v zákazníckom účte hostingu pre
+   celú doménu, takže platí aj pre rezervačný systém. Nemeň ju bez dohody s tým, kto rezervačný systém spravuje.
+   Bez PHP 8.2 nepôjde asistent, voľné termíny ani správa; samotný web áno.
+b) Aby sa na úvodnej adrese otvoril nový web, hosting musí dať prednosť súboru index.html pred index.php
+   (nastavenie DirectoryIndex). Adresa /rezervacia pritom musí fungovať ďalej. Nech to hosting alebo správca
+   rezervačného systému potvrdí písomne ešte pred nahratím.
+c) Hosting by mal zapnúť presmerovanie z http na https na celej doméne.
+d) Povedz správcovi rezervačného systému, že na hostingu pribudnú priečinky asistent, vernost, sprava a vedľa priečinka
+   webu priečinok barbershop30-udaje (alebo v priečinku webu priečinok, ktorého meno sa začína b30-udaje-).
+   Pri jeho práci na hostingu sa nesmú zmazať: sú v nich nastavenia a kartičky klientov.
+
+3. NAHRATIE
+Nahraj celý obsah priečinka NAHRAT-NA-HOSTING do koreňa domény. Len pridávaj. Priečinok asistent/vendor má
+{KNIZNICA} malých súborov, cez FTP to trvá dlhšie. Ak správca súborov hostingu vie rozbaliť ZIP, nahraj ZIP
+a rozbaľ ho tam; je to rýchlejšie a nič sa nestratí.
+
+4. PRVÉ OTVORENIE SPRÁVY
+Otvor https://www.barbershop30.sk/sprava/ (s https na začiatku a lomkou na konci). Ukáže sa kontrola hostingu.
+Keď niečo treba opraviť, správa to napíše vetou, čo urobiť. Pri staršom PHP ukáže len stránku o verzii PHP.
+
+5. KÓD ZO SÚBORU, MENO A HESLO
+Ťukni Vytvoriť kód. Server zapíše jednorazový kód do súboru PRVY-KOD.txt, ktorý vidíš len cez FTP alebo správcu
+súborov hostingu: v priečinku barbershop30-udaje vedľa priečinka webu, alebo v priečinku webu v priečinku, ktorého
+meno sa začína b30-udaje-. Správa ti povie, kde presne. Kód opíš do správy, platí 24 hodín a po použití sa súbor
+sám zmaže. Potom si nastav meno a heslo správy (aspoň 10 znakov).
+Kód, heslá ani kľúč API nikomu neposielaj. Ani nám.
+
+6. ASISTENT BARBER
+Potrebuje kľúč API z účtu prevádzky na platform.claude.com (účet si založ na firmu; za odpovede sa platí z neho,
+podľa použitia). Kľúč vlož len do správy: Nastavenia, Asistent Barber, zaškrtni súhlas a ulož. Kľúč sa už potom
+nikde nezobrazí. Denný strop otázok (predvolene 1 500) je poistka nákladov, môžeš ho znížiť.
+Kým kľúč nie je vložený, asistent sa na webe neukáže. Kľúč odstrániš tým istým miestom, asistent hneď zmizne.
+
+7. VOĽNÉ TERMÍNY V OKNE OBJEDNÁVKY
+Nastavenia, Voľné termíny: zaškrtni Zapnúť a súhlas, ulož a ťukni Vyskúšať. Web číta voľné časy z vášho
+rezervačného systému, nič neobjednáva; objednávku zákazník dokončí v rezervačnom systéme. Keď Vyskúšať ohlási chybu,
+voľné termíny vypni a napíš nám. Kým sú vypnuté, okno ponúkne Zavolať a odkaz na rezervačný systém.
+O zapnutí daj vedieť správcovi rezervačného systému.
+
+8. VERNOSTNÁ KARTIČKA
+Nastavenia, Vernostná kartička: nastav heslo pre recepciu (iné než heslo správy) a ulož. Recepcia sa potom prihlási
+na https://www.barbershop30.sk/vernost/admin/ a nájde tam QR kód pre nového klienta, zápis návštev, odmeny a akcie.
+E‑mail odosielateľa je nepovinný (z neho príde klientovi odkaz na kartičku).
+
+9. ÚPRAVY WEBU
+V správe ťukni Upraviť web. Texty, cenník, tím, galéria, kontakt a hodiny, odpovede asistenta. Uložiť na web: zmena
+je na webe hneď, po slovensky aj po anglicky. Každé uloženie má zálohu; Krok späť na úvode správy vráti posledné
+uloženie (a krok späť sa dá tiež vrátiť). Stiahnuť export: súbor ZIP s tvojimi úpravami. Pošli nám ho vždy, keď
+budeme robiť novú verziu webu, aby v nej tvoje úpravy boli. Nie sú v ňom heslá, kľúč ani kartičky klientov.
+
+10. PO NAHRATÍ NOVŠIEHO BALÍKA
+Nový balík nahráš rovnako (súbory sa prepíšu novými). Potom otvor správu a ťukni Dokončiť aktualizáciu. Dovtedy sú
+asistent, voľné termíny aj kartička na webe vypnuté; nastavenia, kľúč, heslá a kartičky klientov ostávajú.
+
+11. ZABUDNUTÉ HESLO
+Na prihlásení ťukni Zabudnuté heslo: obnoviť prístup. Postup je rovnaký ako na začiatku, kód bude v súbore
+OBNOVA-KOD.txt a platí hodinu. Po zmene hesla sa odhlásia všetky zariadenia.
+
+12. ČO VYSKÚŠAŤ PO NASTAVENÍ
+Úvodnú stránku a /en/. Tlačidlo Objednať sa a celú objednávku v rezervačnom systéme. Prihlásenie do /admin
+rezervačného systému. Ikonu asistenta a jednu otázku. Založenie kartičky na /karta/?nova a prihlásenie recepcie.
+V správe Kontrola hostingu: pošli nám jej snímku, ak tam ostane upozornenie.
