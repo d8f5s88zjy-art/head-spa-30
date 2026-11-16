@@ -17,20 +17,8 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 
-/* HTML bez komentárov a bez odsadenia riadkov; časti v <script>, <style>, <textarea>, <pre> ostanú nedotknuté */
-export function bezKomentarovHtml(html) {
-  const chran = /<(script|style|textarea|pre)\b[\s\S]*?<\/\1\s*>/gi;
-  const cisti = (t) => t.replace(/^[ \t]*<!--(?!\[if)[\s\S]*?-->[ \t]*\r?\n/gm, '').replace(/<!--(?!\[if)[\s\S]*?-->/g, '').replace(/\n[ \t]+/g, '\n');
-  let out = '', i = 0, m;
-  while ((m = chran.exec(html))) { out += cisti(html.slice(i, m.index)) + m[0]; i = m.index + m[0].length; }
-  return out + cisti(html.slice(i));
-}
-
-/* CSS bez komentárov, alebo null, keď súbor má url( alebo /* v reťazci (ponechá sa celý) */
-export function bezKomentarovCss(css) {
-  if (/url\(/.test(css) || /(["'])[^"'\n]*\/\*[^"'\n]*\1/.test(css)) return null;
-  return css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/[ \t]+$/gm, '').replace(/\n{2,}/g, '\n');
-}
+import { bezKomentarovHtml, bezKomentarovCss } from '../../admin/lib/zmensi-jadro.js';   // čisté jadro (to isté použije správa webu na vlastnej doméne)
+export { bezKomentarovHtml, bezKomentarovCss };
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const [DIR, ...rest] = process.argv.slice(2);
