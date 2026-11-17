@@ -37,7 +37,7 @@ function akcie_prve(string $a): void
         case 'kod':
             if (Pristup::overKod('prvy', (string) ($_POST['kod'] ?? ''))) { Pristup::poKode('prvy'); Prostredie::kontroly(true); Ui::presmeruj('', [], 'Kód sedí. Teraz si nastav meno a heslo.'); }
             $k = Pristup::stavKodu();
-            Ui::presmeruj('', [], $k && $k['platne'] ? 'Kód nesedí. Opíš ho presne zo súboru PRVY-KOD.txt (bez medzier, na pomlčkách nezáleží).' : 'Kód už neplatí (vypršal, alebo bolo priveľa pokusov). Vytvor nový.', 'chyba');
+            Ui::presmeruj('', [], $k && $k['platne'] ? 'Kód nesedí. Opíš ho presne zo súboru PRVY-KOD.txt (na medzerách a pomlčkách nezáleží).' : 'Kód už neplatí (vypršal, alebo bolo priveľa pokusov). Zmaž cez FTP súbor PRVY-KOD.txt a vytvor nový kód.', 'chyba');
         case 'ucet':
             if (!Pristup::kodOvereny('prvy')) Ui::presmeruj('', [], 'Overenie kódom vypršalo. Vytvor nový kód.', 'chyba');
             if (!Prostredie::suhrn(kontrola_body())['pripravene']) Ui::presmeruj('', [], 'Najprv treba opraviť povinné body kontroly hostingu.', 'chyba');
@@ -48,7 +48,7 @@ function akcie_prve(string $a): void
             Pristup::prihlas($meno);
             Zmena::zapamatajBalik();                    // verzia balíka, ktorý je na hostingu
             Prepinace::zapis();
-            Ui::presmeruj('nastavenia', [], 'Správa je nastavená. Teraz vyber, čo zapnúť. Každú časť môžeš preskočiť a vrátiť sa k nej neskôr.');
+            Ui::presmeruj('nastavenia', [], 'Správa je nastavená. Teraz vyber, čo zapnúť.');
     }
     Ui::chyba('Neznámy úkon.');
 }
@@ -61,7 +61,7 @@ function obrazovka_prve(): void
     $zaklad = array_filter($body, fn($b) => in_array($b['id'], ['udaje', 'https'], true) && $b['stav'] === 'chyba');
     $h = '<p class="lead">Tu sa zapína asistent Barber, voľné termíny v okne objednávky, vernostná kartička a úpravy webu. Najprv treba dokázať, že máš prístup k hostingu.</p>';
     $h .= '<h2>1. Kontrola hostingu</h2>';
-    if ($su['pripravene']) $h .= '<div class="hlaska ok">Hosting vyhovuje' . ($su['upozornenia'] ? ' (' . $su['upozornenia'] . ' ' . ($su['upozornenia'] === 1 ? 'upozornenie, uvidíš ho' : ($su['upozornenia'] < 5 ? 'upozornenia, uvidíš ich' : 'upozornení, uvidíš ich')) . ' po overení kódu)' : '') . '.</div>';
+    if ($su['pripravene']) $h .= '<div class="hlaska ok">Hosting vyhovuje' . ($su['upozornenia'] ? ' (' . $su['upozornenia'] . ' ' . ($su['upozornenia'] === 1 ? 'upozornenie' : ($su['upozornenia'] < 5 ? 'upozornenia' : 'upozornení')) . ($overeny ? ', pozri nižšie' : ($su['upozornenia'] === 1 ? ', uvidíš ho po overení kódu' : ', uvidíš ich po overení kódu')) . ')' : '') . '.</div>';
     else $h .= '<div class="hlaska chyba">Treba opraviť ' . $su['pocet'] . ' ' . ($su['pocet'] === 1 ? 'vec' : ($su['pocet'] < 5 ? 'veci' : 'vecí')) . ': ' . Ui::e(implode(', ', array_map(fn($b) => $b['nazov'], array_filter($body, fn($b) => $b['povinne'] && $b['stav'] === 'chyba')))) . '. Podrobnosti uvidíš po overení kódu.</div>';
     if ($overeny) $h .= Ui::body($body, true);
     $h .= Ui::tlacidlo('znova', 'Skontrolovať znova', 'tiche');
@@ -92,21 +92,22 @@ function akcie_prihlasenie(string $a): void
 {
     switch ($a) {
         case 'prihlasit':
-            if ($b = Pristup::blokovane()) Ui::presmeruj('', [], $b, 'chyba');
+            if ($b = Pristup::zacniPokus()) Ui::presmeruj('', [], $b, 'chyba');
             $meno = trim((string) ($_POST['meno'] ?? ''));
             if (Pristup::overHeslo($meno, (string) ($_POST['heslo'] ?? ''))) {
                 $zle = Pristup::prihlas(Pristup::menoUctu($meno));
-                Ui::presmeruj('', [], $zle > 0 ? "Od posledného prihlásenia bolo $zle nesprávnych pokusov o prihlásenie." : null, 'var');
+                Ui::presmeruj('', [], $zle > 0 ? 'Od posledného prihlásenia: nesprávne pokusy o prihlásenie ' . $zle . '×.' : null, 'var');
             }
             Pristup::zlyPokus();
             Ui::presmeruj('', [], Pristup::blokovane() ?? 'Meno alebo heslo nie je správne.', 'chyba');
         case 'obnova-kod':
+            if (!Prostredie::udajeChranene()) Ui::presmeruj('obnova', [], 'Priečinok údajov správy sa dá otvoriť z internetu, kód obnovy preto nevytvorím. Napíš tvorcovi webu.', 'chyba');
             if ($e = Pristup::vytvorKod('obnova')) Ui::presmeruj('obnova', [], $e, 'chyba');
             Ui::presmeruj('obnova', [], 'Kód je pripravený v súbore OBNOVA-KOD.txt na hostingu.');
         case 'obnova-over':
             if (Pristup::overKod('obnova', (string) ($_POST['kod'] ?? ''))) { Pristup::poKode('obnova'); Ui::presmeruj('obnova', [], 'Kód sedí. Nastav si nové heslo.'); }
             $k = Pristup::stavKodu();
-            Ui::presmeruj('obnova', [], $k && $k['platne'] ? 'Kód nesedí. Opíš ho presne zo súboru OBNOVA-KOD.txt.' : 'Kód už neplatí. Vytvor nový.', 'chyba');
+            Ui::presmeruj('obnova', [], $k && $k['platne'] ? 'Kód nesedí. Opíš ho presne zo súboru OBNOVA-KOD.txt (na medzerách a pomlčkách nezáleží).' : 'Kód už neplatí (vypršal, alebo bolo priveľa pokusov). Zmaž cez FTP súbor OBNOVA-KOD.txt a vytvor nový kód.', 'chyba');
         case 'obnova-heslo':
             if (!Pristup::kodOvereny('obnova')) Ui::presmeruj('obnova', [], 'Overenie kódom vypršalo. Vytvor nový kód.', 'chyba');
             $meno = (string) (Pristup::ucty()[0]['meno'] ?? '');

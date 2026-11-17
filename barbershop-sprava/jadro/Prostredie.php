@@ -127,7 +127,7 @@ final class Prostredie
         $volne = @disk_free_space(Miesto::u());
         $poz = [];
         if ($pam > 0 && $pam < 128 << 20) $poz[] = 'pamäť PHP je ' . ini_get('memory_limit') . ' (odporúčame aspoň 128M)';
-        if ($cas > 0 && $cas < 60) $poz[] = 'čas behu je ' . $cas . ' s (odporúčame aspoň 60)';
+        if ($cas > 0 && $cas < 60) $poz[] = 'čas behu je ' . $cas . ' s (odporúčame aspoň 60; v zákazníckom účte hostingu pri nastavení PHP zvýš max_execution_time, ak to ide – inak môže zlyhať uloženie veľa fotiek naraz)';
         if ($volne !== false && $volne < 300 << 20) $poz[] = 'voľné miesto ' . round($volne / 1048576) . ' MB';
         if (!function_exists('mail')) $poz[] = 'funkcia mail() je vypnutá (e‑maily s kartičkou nepôjdu)';
         $b[] = self::bod('limity', 'Limity PHP a miesto', $poz ? 'upozornenie' : 'ok', $poz ? self::velke(implode('; ', $poz)) . '.' : 'Pamäť ' . ini_get('memory_limit') . ', čas ' . $cas . ' s' . ($volne !== false ? ', voľné miesto ' . round($volne / 1073741824, 1) . ' GB' : '') . '.', false);
@@ -136,6 +136,9 @@ final class Prostredie
     }
 
     /** K4: súbor z priečinka údajov sa z webu nesmie dať prečítať. */
+    /** D-7: ochrana priečinka údajov sa overí aj pred kódom obnovy (nie len pri prvom nastavení). */
+    public static function udajeChranene(): bool { return self::sondaUdajov()['stav'] !== 'chyba'; }
+
     private static function sondaUdajov(): array
     {
         $nazov = 'Údaje nie sú dostupné z webu';

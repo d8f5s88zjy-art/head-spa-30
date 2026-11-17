@@ -134,9 +134,11 @@ final class Pristup
     private static function zdrz(): void { if (PHP_SAPI !== 'cli') usleep(random_int(300000, 700000)); }
 
     // ---------- heslo ----------
-    public static function chybaHesla(string $h, string $h2, string $meno = ''): ?string
+    public static function chybaHesla(string $h, string $h2, string $meno = '', bool $recepcia = false): ?string
     {
         if ($h !== $h2) return 'Heslá sa nezhodujú. Napíš ho dvakrát rovnako.';
+        // heslo správy a heslo recepcie do adminu kartičiek musia byť rôzne (recepcia nesmie poznať heslo správy)
+        if (!$recepcia && Nastavenia::jeHesloRecepcie($h)) return 'Heslo správy musí byť iné než heslo recepcie do adminu kartičiek.';
         if (mb_strlen($h) < 10) return 'Heslo musí mať aspoň 10 znakov. Pomôžu tri slová, napríklad „noznice-hreben-mostna“.';
         if (mb_strlen($h) > 200) return 'Heslo je príliš dlhé.';
         $m = mb_strtolower($h);
@@ -226,23 +228,44 @@ final class Pristup
         return null;
     }
 
-    public static function zlyPokus(): void
+    /** Pokus o prihlásenie heslom sa započíta adrese ešte PRED overením hesla, pod zámkom súboru: súbežné pokusy
+     *  tak neprejdú popod limit (5 za 15 minút = zámok 15 min, 10 = hodina). Vráti vetu, ak je adresa zamknutá
+     *  (heslo sa potom vôbec neoveruje), inak null. Správne heslo počítadlo zmaže (dobryPokus). */
+    public static function zacniPokus(): ?string
     {
-        $kl = self::klucIp();
-        Ulozisko::uprav(Miesto::u('pristup.php'), function ($n) use ($kl) {
+        $kl = self::klucIp(); $blok = null;
+        Ulozisko::uprav(Miesto::u('pristup.php'), function ($n) use ($kl, &$blok) {
             $t = time(); $p = (array) ($n['pokusy'] ?? []);
             $k = $p[$kl] ?? ['n' => 0, 'do' => 0];
-            if ($t - (int) ($k['t'] ?? $t) > 900 && ($k['do'] ?? 0) < $t) $k = ['n' => 0, 'do' => 0];   // okno 15 minút
+            if (($k['do'] ?? 0) > $t) { $blok = 'Príliš veľa nesprávnych pokusov z tohto pripojenia. Skús to znova o ' . ceil(($k['do'] - $t) / 60) . ' min.'; return $n; }
+            if ($t - (int) ($k['t'] ?? $t) > 900) $k = ['n' => 0, 'do' => 0];   // okno 15 minút
             $k['n']++; $k['t'] = $t;
             if ($k['n'] >= 10) $k['do'] = $t + 3600; elseif ($k['n'] >= 5) $k['do'] = $t + 900;
             $p[$kl] = $k;
             foreach ($p as $kk => $v) if (max((int) ($v['do'] ?? 0), (int) ($v['t'] ?? 0)) < $t - 86400 && $kk !== $kl) unset($p[$kk]);
             $n['pokusy'] = array_slice($p, -2000, null, true);
+            return $n;
+        });
+        return $blok;
+    }
+
+    /** Nesprávne heslo (pokus už započítal zacniPokus): denník, počet pre majiteľa a zdržanie. Celkový strop so
+     *  spomalením: viac než 30 nesprávnych hesiel za 15 minút zo všetkých adries spolu = každý ďalší čaká 2 až 3 s
+     *  (zámok pre všetkých nie je, aby cudzie pokusy nezamkli majiteľa). */
+    public static function zlyPokus(): void
+    {
+        $vela = false;
+        Ulozisko::uprav(Miesto::u('pristup.php'), function ($n) use (&$vela) {
+            $t = time(); $s = (array) ($n['spolu'] ?? []);
+            if ($t - (int) ($s['t'] ?? 0) > 900) $s = ['t' => $t, 'n' => 0];
+            $s['n'] = (int) $s['n'] + 1; $vela = $s['n'] > 30;
+            $n['spolu'] = $s;
             $n['od_prihlasenia'] = min(100000, (int) ($n['od_prihlasenia'] ?? 0) + 1);
             return $n;
         });
         Dennik::zapis('prihlasenie-zle');
         self::zdrz();
+        if ($vela && PHP_SAPI !== 'cli') usleep(random_int(2000000, 3000000));
     }
 
     /** Vymaže počítadlo adresy; vráti počet zlých pokusov od posledného prihlásenia (ukáže sa majiteľovi). */

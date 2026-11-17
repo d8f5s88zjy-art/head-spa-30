@@ -275,7 +275,7 @@ final class Zmena
                 if ($rezim !== 'moje') { $polozky[] = ['druh' => 'zdroj', 'cesta' => $c, 'obsah' => null]; continue; }
                 if ($z[0] === null) continue;
                 $naWebe = is_file(Miesto::w($z[0])) ? (string) file_get_contents(Miesto::w($z[0])) : null;
-                if ($z[1] === 'kod' && ($naWebe === null || !Mapa::kodOk($naWebe, $text))) { $vynechane[] = $c; $polozky[] = ['druh' => 'zdroj', 'cesta' => $c, 'obsah' => null]; continue; }
+                if ($z[1] === 'kod' && ($naWebe === null || !Mapa::kodOk($naWebe, $text, str_ends_with($c, '.php')))) { $vynechane[] = $c; $polozky[] = ['druh' => 'zdroj', 'cesta' => $c, 'obsah' => null]; continue; }
                 $polozky[] = ['druh' => 'web', 'cesta' => $z[0], 'obsah' => $text];
             }
             foreach (array_keys(Mapa::ZOSTAVENE) as $c) {

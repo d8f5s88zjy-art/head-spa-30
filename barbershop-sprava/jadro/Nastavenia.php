@@ -6,7 +6,8 @@ defined('B30S') || exit;
 
 final class Nastavenia
 {
-    const STROP = [100, 5000, 1500];   // denný strop otázok asistenta: najmenej, najviac, predvolene
+    const STROP = [100, 2000, 300];    // denný strop otázok asistenta: najmenej, najviac, predvolene (S-1: strop nákladov)
+    const MAX_TOKENS = 1500;           // strop jednej odpovede asistenta vrátane premýšľania
     const RE_KLUC = '/^sk-ant-[A-Za-z0-9_-]{16,300}$/';
 
     public static function n(): array { return Ulozisko::citaj(Miesto::u('nastavenie.php'), []); }
@@ -103,8 +104,24 @@ final class Nastavenia
         return ['ok' => false, 'text' => 'Čítanie voľných termínov sa nepodarilo (odpoveď ' . $r[0] . ($dovod !== '' ? ', ' . mb_substr($dovod, 0, 120) : '') . '). Odporúčame voľné termíny vypnúť a napísať tvorcovi webu; okno objednávky dovtedy ponúkne Zavolať a rezervačný systém.'];
     }
 
+    /** Dnes (24 h) aspoň 80 % denného stropu: veta pre majiteľa, inak null. */
+    public static function upozornenieStropu(): ?string
+    {
+        $d = self::otazokDnes();
+        if ($d === null || !self::maKluc() || $d < 0.8 * self::strop()) return null;
+        return $d >= self::strop()
+            ? 'Asistent dnes minul denný strop (' . $d . ' z ' . self::strop() . ' otázok) a do zajtra návštevníkom neodpovedá. Ak to nečakáš, pozri útratu v účte na platform.claude.com.'
+            : 'Asistent má za posledných 24 hodín ' . $d . ' z ' . self::strop() . ' otázok denného stropu. Pri strope prestane do zajtra odpovedať.';
+    }
+
     // ---------- vernostná kartička ----------
     public static function vernostHeslo(): bool { return !empty(self::tajne()['vernost_hash']); }
+    /** Je toto heslo zhodou heslo recepcie? (heslo správy musí byť iné) */
+    public static function jeHesloRecepcie(string $h): bool
+    {
+        $x = (string) (self::tajne()['vernost_hash'] ?? '');
+        return $x !== '' && password_verify($h, $x);
+    }
     public static function vernostOd(): int { return (int) (self::tajne()['vernost_od'] ?? 0); }
     public static function vernostEmail(): string { return (string) (self::n()['vernost']['email_od'] ?? ''); }
 
@@ -114,9 +131,9 @@ final class Nastavenia
         if ($email !== '' && (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 120)) return 'E‑mail odosielateľa nevyzerá správne.';
         if ($heslo !== '' || !self::vernostHeslo()) {
             if ($heslo !== $heslo2) return 'Heslá recepcie sa nezhodujú. Napíš ho dvakrát rovnako.';
-            if (mb_strlen($heslo) < 10) return 'Heslo recepcie musí mať aspoň 10 znakov.';
-            if (mb_strlen($heslo) > 200) return 'Heslo recepcie je príliš dlhé.';
-            if (count(array_unique(mb_str_split($heslo))) < 5) return 'Heslo recepcie je príliš jednoduché.';
+            // rovnaké pravidlá ako heslo správy (dĺžka, známe heslá, názov podniku a adresa webu), S-2
+            if ($e = Pristup::chybaHesla($heslo, $heslo2, '', true)) return 'Heslo recepcie: ' . $e;
+            foreach (Pristup::ucty() as $u) if (password_verify($heslo, (string) ($u['hash'] ?? ''))) return 'Heslo recepcie musí byť iné než heslo správy. Recepcia ním nesmie vedieť zmeniť web.';
             $hash = password_hash($heslo, PASSWORD_DEFAULT);
             Ulozisko::uprav(Miesto::u('tajne.php'), function ($d) use ($hash) { $d['vernost_hash'] = $hash; $d['vernost_od'] = time(); return $d; });
         }
@@ -150,7 +167,7 @@ final class Nastavenia
         $kluc = (!empty($t['kluc']) && !empty($n['asistent']['suhlas'])) ? (string) $t['kluc'] : '';
         // lokálna poistka: pod php -S bez falošného API (ANTHROPIC_BASE_URL) sa kľúč nevydá, skutočné API sa nezavolá ani omylom
         if (Miesto::lokalne() && !preg_match('#^http://127\.0\.0\.1:\d{2,5}/?$#', (string) getenv('ANTHROPIC_BASE_URL'))) $kluc = '';
-        $k = ['kluc' => $kluc, 'model' => 'claude-opus-5-5', 'usilie' => 'low', 'sol' => self::sol(),
+        $k = ['kluc' => $kluc, 'model' => 'claude-opus-5-5', 'usilie' => 'low', 'sol' => self::sol(), 'max_tokens' => self::MAX_TOKENS,
               'db' => Miesto::u('asistent/limity.sqlite'), 'cache_dir' => Miesto::u('asistent'),
               'spolu_za_den' => self::strop(), 'proxy' => self::proxy(), 'povody' => Miesto::lokalne() ? [Miesto::povod()] : []];
         $kal = self::adresaKalendara();

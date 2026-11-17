@@ -97,10 +97,10 @@ $ucty = file_get_contents(Miesto::u('ucty.php'));
 over(Pristup::maUcet() && !str_contains($ucty, 'noznice') && preg_match('/\$(argon2id|2y)\$/', $ucty), 'účet: heslo len ako odtlačok');
 over(Pristup::overHeslo('lajko', 'noznice-hreben-mostna') && !Pristup::overHeslo('Lajko', 'zle') && !Pristup::overHeslo('niekto', 'noznice-hreben-mostna'), 'prihlásenie: meno bez ohľadu na veľkosť písmen, zlé heslo a neznáme meno nie');
 over(Pristup::vytvorKod('prvy') !== null, 'po vytvorení účtu sa prvý kód už vytvoriť nedá');
-for ($i = 0; $i < 4; $i++) Pristup::zlyPokus();
+for ($i = 0; $i < 4; $i++) { over(Pristup::zacniPokus() === null, 'pokus ' . ($i + 1) . ' sa smie overiť'); Pristup::zlyPokus(); }
 over(Pristup::blokovane() === null, '4 zlé pokusy: ešte bez zámku');
-Pristup::zlyPokus();
-over(Pristup::blokovane() !== null, '5 zlých pokusov z adresy: zámok');
+over(Pristup::zacniPokus() === null, 'piaty pokus sa ešte overí (započítaný pred overením hesla)'); Pristup::zlyPokus();
+over(Pristup::blokovane() !== null && Pristup::zacniPokus() !== null, '5 zlých pokusov z adresy: zámok, šiesty sa už vôbec neoveruje (D-2: počítadlo pred overením)');
 $_SERVER['REMOTE_ADDR'] = '2001:db8:1:2:aaaa::1'; $a1 = Pristup::odtlacokIp(); $_SERVER['REMOTE_ADDR'] = '2001:db8:1:2:bbbb::9'; $a2 = Pristup::odtlacokIp(); $_SERVER['REMOTE_ADDR'] = '2001:db8:1:3::1'; $a3 = Pristup::odtlacokIp();
 over($a1 === $a2 && $a1 !== $a3 && Pristup::blokovane() === null, 'IPv6 sa počíta po /64; iná adresa nie je zamknutá');
 $_SERVER['REMOTE_ADDR'] = '203.0.113.7';
@@ -136,6 +136,11 @@ over($tel !== $api && Mapa::kodOk($api, $tel), 'pravidlo kódu: zmena telefónu 
 $hod = preg_replace('/const HOURS = \{[^}]*\};/', 'const HOURS = { 1: [10, 20], 2: [10, 20], 3: [10, 20], 4: [10, 20], 5: [10, 20], 6: [8, 12], 0: null };', $app);
 over($hod !== $app && Mapa::kodOk($app, $hod), 'pravidlo kódu: zmena hodín v app.js prejde');
 over(Mapa::kodOk("a 'info@barbershop30.sk' b", "a 'recepcia@salon-nitra.sk' b"), 'pravidlo kódu: zmena e‑mailu prejde');
+// D-3: v PHP sa číslice smú meniť len v textoch, nie v číselných hodnotách (limity a stropy asistenta)
+$jad = file_get_contents("$W/asistent/lib/jadro.php");
+over(Mapa::kodOk($api, $tel, true) && Mapa::kontrola('asistent/api.php', $tel, $api) === null, 'pravidlo kódu PHP: telefón v texte asistent/api.php prejde');
+over(Mapa::kontrola('asistent/api.php', str_replace('$kolo < 3', '$kolo < 300', $api), $api) !== null && Mapa::kontrola('asistent/api.php', str_replace('?? 1500)))', '?? 64000)))', $api), $api) !== null
+     && Mapa::kontrola('asistent/lib/jadro.php', str_replace([', 600, ', ', 86400, '], [', 0, ', ', 0, '], $jad), $jad) !== null, 'pravidlo kódu PHP: okná limitov, max_tokens a počet kôl sa zmeniť nedajú');
 foreach (['pridaný znak' => $api . 'x', 'pridaný riadok' => $api . "\nsystem(\$_GET['x']);", 'úvodzovka' => str_replace('0951 267 203', "0951' . phpinfo() . '267 203", $api), 'bodkočiarka' => str_replace('0951 267 203', '0951; 267 203', $api),
           'e‑mail s úvodzovkou' => "a 'x\"@b.sk' b", 'číslica v mene funkcie' => str_replace('sha256', 'sha1', "hash('sha256', \$x)"), 'zápis znaku' => 'echo "\x41";#\x42', 'odstránený riadok' => substr($api, 0, -40)] as $popis => $novy) {
     $stary = match ($popis) { 'e‑mail s úvodzovkou' => "a 'info@barbershop30.sk' b", 'číslica v mene funkcie' => "hash('sha256', \$x)", 'zápis znaku' => 'echo "\x41";#\x41', default => $api };
@@ -264,7 +269,10 @@ over(!str_contains($d, $kluc) && str_contains(file_get_contents(Miesto::u('tajne
 Nastavenia::ulozKalendar(true, true, 'Lajko');
 over(Nastavenia::preAsistenta()['kalendar']['url'] === 'https://www.barbershop30.sk/rezervacia' && Nastavenia::ulozKalendar(true, false, 'Lajko') !== null, 'kalendár: len so súhlasom, adresa pevná z ciel.json');
 over(Nastavenia::ulozVernost('kratke', 'kratke', '', 'Lajko') !== null && Nastavenia::ulozVernost('recepcia-pult-kava', 'ine', '', 'Lajko') !== null && Nastavenia::ulozVernost('recepcia-pult-kava', 'recepcia-pult-kava', 'zly-email', 'Lajko') !== null, 'kartička: krátke heslo, nezhoda a zlý e‑mail sa odmietnu');
+// S-2, KF-03: heslo recepcie má pravidlá hesla správy a nesmie byť rovnaké ako heslo správy (a naopak)
+foreach (['1234567890', 'heslo12345', 'recepcia30', 'barbershop30', 'noznice-hreben-mostna'] as $slabe) over(Nastavenia::ulozVernost($slabe, $slabe, '', 'Lajko') !== null, "kartička: slabé alebo zhodné heslo recepcie odmietnuté: $slabe");
 over(Nastavenia::ulozVernost('recepcia-pult-kava', 'recepcia-pult-kava', 'karta@barbershop30.sk', 'Lajko') === null, 'kartička: heslo recepcie a e‑mail uložené');
+over(Pristup::chybaHesla('recepcia-pult-kava', 'recepcia-pult-kava', 'Lajko') !== null, 'heslo správy nesmie byť rovnaké ako heslo recepcie');
 $kv = Nastavenia::preVernost();
 over(password_verify('recepcia-pult-kava', $kv['hesla']['barbershop']) && $kv['spustene'] === true && $kv['len'] === ['barbershop'] && $kv['zaklad'] === 'https://www.barbershop30.sk/vernost/' && $kv['karty']['barbershop'] === 'https://www.barbershop30.sk/karta/' && $kv['data'] === Miesto::u('vernost') && !str_contains(file_get_contents(Miesto::u('tajne.php')), 'recepcia-pult-kava'), 'kartička: konfigurácia pre túto doménu, heslo len ako odtlačok');
 Nastavenia::odstranKluc();

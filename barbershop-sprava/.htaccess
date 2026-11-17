@@ -6,6 +6,7 @@
   RewriteEngine On
   RewriteRule ^(jadro|obrazovky|semeno|testy)(/|$) - [F,L]
   RewriteRule (^|/)\.(user\.ini|ht) - [F,L]
+  RewriteRule (^|/)(error_log|php_errorlog)$ - [F,L]
   RewriteRule \.(sha256|sqlite|json|txt|md)$ - [F,L]
   RewriteRule ^$ index.php [L,QSA]
   RewriteRule ^upravy/?$ upravy/index.html [L]

@@ -27,7 +27,7 @@ function akcie_spravy(string $a): void
             $e = Nastavenia::ulozKalendar(!empty($_POST['zapnut']), !empty($_POST['suhlas']), $kto);
             if ($e) Ui::presmeruj('nastavenia', [], $e, 'chyba');
             $r = Prepinace::zapis();
-            $text = !empty($_POST['zapnut']) ? ($r['stav']['objednavka'] !== '' ? 'Voľné termíny sú zapnuté. Ťukni Vyskúšať.' : 'Uložené, ale voľné termíny sú zatiaľ vypnuté: ' . ($r['dovody']['objednavka'] ?? '')) : 'Voľné termíny sú vypnuté. Okno objednávky ponúkne Zavolať a rezervačný systém.';
+            $text = !empty($_POST['zapnut']) ? ($r['stav']['objednavka'] !== '' ? 'Voľné termíny sú zapnuté. Vyskúšaj ich tlačidlom Vyskúšať v časti Voľné termíny nižšie.' : 'Uložené, ale voľné termíny sú zatiaľ vypnuté: ' . ($r['dovody']['objednavka'] ?? '')) : 'Voľné termíny sú vypnuté. Okno objednávky ponúkne Zavolať a rezervačný systém.';
             Ui::presmeruj('nastavenia', [], $text . ($r['chyby'] ? "\n" . implode("\n", $r['chyby']) : ''), $r['chyby'] || (!empty($_POST['zapnut']) && $r['stav']['objednavka'] === '') ? 'var' : 'ok');
         case 'kalendar-skusit':
             $r = Nastavenia::skusKalendar();
@@ -39,7 +39,7 @@ function akcie_spravy(string $a): void
             Ui::presmeruj('nastavenia', [], ($r['stav']['vernost'] ? 'Vernostná kartička je zapnutá. Recepcia sa prihlási na ' . Miesto::zaklad() . 'vernost/admin/ heslom, ktoré si práve nastavil.' : 'Uložené, ale kartička je zatiaľ vypnutá: ' . ($r['dovody']['vernost'] ?? '')) . ($r['chyby'] ? "\n" . implode("\n", $r['chyby']) : ''), $r['stav']['vernost'] && !$r['chyby'] ? 'ok' : 'var');
         case 'vernost-vypnut':
             Nastavenia::vypniVernost();
-            $zverejni('nastavenia', 'Vernostná kartička je vypnutá. Kartičky klientov ostávajú uložené.');
+            $zverejni('nastavenia', 'Vernostná kartička je vypnutá a heslo recepcie zrušené (admin kartičiek sa neotvorí). Kartičky klientov ostávajú uložené; pri opätovnom zapnutí nastav heslo recepcie znova.');
         case 'proxy':
             if ($e = Nastavenia::ulozProxy((string) ($_POST['proxy'] ?? ''))) Ui::presmeruj('nastavenia', [], $e, 'chyba');
             Ui::presmeruj('nastavenia', [], 'Adresy proxy sú uložené.');
@@ -94,6 +94,7 @@ function obrazovka_domov(): void
         . riadok_stavu('Vernostná kartička', $web['vernost'], $ciel['dovody']['vernost'] ?? 'Zapíše sa po ťuknutí na Zapísať nastavenie na web.', 'Prihláška ku kartičke je na webe, recepcia má admin kartičiek.')
         . '</ul>';
     if ($nesedi && !Zmena::novyBalik()) $h .= '<div class="hlaska var">Web sa líši od nastavenia.</div>' . Ui::tlacidlo('zverejnit', 'Zapísať nastavenie na web', 'hlavne');
+    if ($u = Nastavenia::upozornenieStropu()) $h .= '<div class="hlaska var">' . Ui::e($u) . '</div>';
     $h .= '<p class="rad"><a class="tl" href="' . Ui::e(Ui::url('nastavenia')) . '">Nastavenia funkcií</a></p>';
 
     $h .= '<h2>Úpravy webu</h2><p class="lead">Texty, cenník, tím, galéria, kontakt a hodiny, odpovede asistenta. Uloženie je na webe hneď, po slovensky aj po anglicky.</p>'
@@ -117,6 +118,8 @@ function obrazovka_nastavenia(): void
     $ma = Nastavenia::maKluc(); $dnes = Nastavenia::otazokDnes();
     $h .= '<section class="karta" id="asistent"><h2>Asistent Barber</h2><p class="lead">Odpovedá návštevníkom na otázky o službách, cenách a hodinách. Na webe je označený ako AI. Potrebuje kľúč API z účtu prevádzky na platform.claude.com; platí sa za použitie priamo z toho účtu.</p>'
         . ($ma ? '<p class="pozn">Kľúč je uložený od ' . Ui::e(Ui::datumCas(Nastavenia::klucOd())) . '. Z bezpečnosti sa už nezobrazí; nový kľúč ho nahradí.' . ($dnes !== null ? ' Otázok za posledných 24 hodín: ' . $dnes . '.' : '') . '</p>' : '')
+        . (($u = Nastavenia::upozornenieStropu()) ? '<div class="hlaska var">' . Ui::e($u) . '</div>' : '')
+        . '<p class="pozn">Bežná otázka stojí rádovo 1 až 3 centy, najdlhšia asi 20 centov. V účte na platform.claude.com si nastav mesačný limit útraty (napríklad 30 €): po jeho minutí asistent prestane odpovedať a web ponúkne telefón.</p>'
         . $form('asistent',
             '<div class="f"><label for="kluc">' . ($ma ? 'Nový kľúč API (nechaj prázdne, ak sa nemení)' : 'Kľúč API') . '</label><input id="kluc" name="kluc" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…"></div>'
           . '<label class="chk"><input type="checkbox" name="suhlas" value="1"' . (Nastavenia::suhlasAsistent() ? ' checked' : '') . '> Barbershop 30 súhlasí so zapnutím asistenta a s platbou za jeho použitie z účtu prevádzky.</label>'
@@ -139,7 +142,7 @@ function obrazovka_nastavenia(): void
             '<div class="f"><label for="vheslo">' . ($vh ? 'Nové heslo recepcie (nechaj prázdne, ak sa nemení)' : 'Heslo recepcie') . '<small>aspoň 10 znakov</small></label><input id="vheslo" name="heslo" type="password" autocomplete="new-password"></div>'
           . '<div class="f"><label for="vheslo2">Heslo recepcie ešte raz</label><input id="vheslo2" name="heslo2" type="password" autocomplete="new-password"></div>'
           . '<div class="f"><label for="vemail">E‑mail odosielateľa<small>nepovinné; z neho príde klientovi odkaz na kartičku</small></label><input id="vemail" name="email" type="email" autocomplete="off" value="' . Ui::e(Nastavenia::vernostEmail()) . '"></div>', 'Uložiť kartičku')
-        . ($vh ? Ui::tlacidlo('vernost-vypnut', 'Vypnúť kartičku na webe', 'tiche', [], 'nastavenia') : '') . '</section>';
+        . ($vh ? Ui::tlacidlo('vernost-vypnut', 'Vypnúť kartičku a prístup recepcie', 'tiche', [], 'nastavenia') : '') . '</section>';
 
     // úpravy webu
     $h .= '<section class="karta"><h2>Úpravy webu</h2><p class="lead">Sú pripravené, netreba nič zapínať.</p><p class="rad"><a class="tl hlavne" href="upravy/">Upraviť web</a></p></section>';

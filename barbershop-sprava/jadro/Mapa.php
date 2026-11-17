@@ -102,7 +102,7 @@ final class Mapa
             case 'kod':
                 if ($e = self::text($obsah, 1000000)) return $e;
                 if ($naWebe === null) return 'súbor s kódom na webe chýba, nedá sa porovnať';
-                return self::kodOk($naWebe, $obsah) ? null : 'v súbore s kódom sa smú meniť len číslice a e‑mail (telefón, hodiny)';
+                return self::kodOk($naWebe, $obsah, str_ends_with($cesta, '.php')) ? null : 'v súbore s kódom sa smú meniť len číslice a e‑mail (telefón, hodiny)' . (str_ends_with($cesta, '.php') ? ', v PHP len v textoch' : '');
         }
         return 'neznáme pravidlo';
     }
@@ -140,5 +140,21 @@ final class Mapa
         return (string) preg_replace('/(?<![A-Za-z0-9_$\\\\])\d+(?![A-Za-z_])/', '0', $s);
     }
 
-    public static function kodOk(string $stary, string $novy): bool { return hash_equals(sha1(self::kostra($stary)), sha1(self::kostra($novy))); }
+    /** PHP na serveri (D-3): číslice a e‑mail sa smú meniť len v textoch a komentároch (telefón, hodiny v reťazcoch),
+     *  nie v číselných hodnotách programu – tie sú limity a stropy asistenta (okná limitov, max_tokens, počet kôl). */
+    public static function kostraPhp(string $s): string
+    {
+        $out = '';
+        foreach (token_get_all($s) as $t) {
+            if (!is_array($t)) { $out .= $t; continue; }
+            $out .= in_array($t[0], [T_CONSTANT_ENCAPSED_STRING, T_ENCAPSED_AND_WHITESPACE, T_COMMENT, T_DOC_COMMENT, T_INLINE_HTML], true) ? self::kostra($t[1]) : $t[1];
+        }
+        return $out;
+    }
+
+    public static function kodOk(string $stary, string $novy, bool $php = false): bool
+    {
+        return $php ? hash_equals(sha1(self::kostraPhp($stary)), sha1(self::kostraPhp($novy)))
+                    : hash_equals(sha1(self::kostra($stary)), sha1(self::kostra($novy)));
+    }
 }
