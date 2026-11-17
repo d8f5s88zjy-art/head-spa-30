@@ -1,20 +1,13 @@
 <!-- Prekryv uvítania „Brána“ (len index.html, prvý prvok <body>, aby bol pozdrav v prvom vykreslení, RP1-07).
      build.py:uvitanie_bloky() spojí riadky bez medzier; kontrola_uvodu() overí zhodu. Bez triedy br-ide (bez JS, pri
      „obmedziť pohyb“, ďalšia návšteva…) je skrytý (display:none) a skript uvítania ho odstráni. Prekryv .br má aria-hidden,
-     vnútro je inert (bez fokusu a mimo čítačky); .br sám zachytí ťuk, aby sa pod bránou nič nestlačilo. Fotka je ten istý
-     <picture> ako fotka úvodu (rovnaké srcset a sizes, stiahne sa raz). Každé krídlo nesie svoje slovo pozdravu, spára
-     ide medzi nimi. Texty: FAKTY.md A, B, D1, F; štítky len tam, kde ich fotka ukazuje (fotka 11 od majiteľa, 9. 11. 2026; data-tel/data-pc = poloha
-     špendlíka v pomere k celej širokej fotke, bez hodnoty skript štítok odstráni; telefón berie tú istú širokú fotku, súbory
-     -960 a -1290, KV-03). Znak RS ani názov firmy v bráne nie sú (Lajko 16. 11. 2026: logo a názov len raz – sú v lište,
-     ktorá ostáva nad bránou). Farebná téma (predvolená): krídla sú svetlé ako úvod, „Poďte ďalej.“ je na červenom páse
-     ako druhý riadok nadpisu úvodu; okno s fotkou a štítky sa nepoužijú (krídla sa rozídu rovno nad úvodom). Odznak
-     „Skutočná fotka našej predajne v Nitre“ je preč z uvítania aj z úvodu (majiteľ, e-mail 17. 11. 2026: „vymazať“). -->
-<div class="br" aria-hidden="true"><div class="br-in" inert><div class="br-okno"><div class="br-scena"><div class="br-kam">
-<picture><source media="(max-width:700px)" type="image/avif" srcset="img/predajna/11-tvarnice-porfix-cesta-960.avif 960w, img/predajna/11-tvarnice-porfix-cesta-1290.avif 1290w" sizes="120vw"><source media="(max-width:700px)" type="image/webp" srcset="img/predajna/11-tvarnice-porfix-cesta-960.webp 960w, img/predajna/11-tvarnice-porfix-cesta-1290.webp 1290w" sizes="120vw"><source type="image/avif" srcset="img/predajna/11-tvarnice-porfix-cesta-1290.avif 1290w, img/predajna/11-tvarnice-porfix-cesta-1720.avif 1720w" sizes="100vw"><img class="br-foto" src="img/predajna/11-tvarnice-porfix-cesta-1720.webp" srcset="img/predajna/11-tvarnice-porfix-cesta-1290.webp 1290w, img/predajna/11-tvarnice-porfix-cesta-1720.webp 1720w" sizes="100vw" width="1720" height="1314" alt="" fetchpriority="high"></picture>
-<p class="br-st" data-tel=".41 .42" data-pc=".22 .44"><b>Betónové tvárnice</b><span>murovací materiál</span></p>
-<p class="br-st vlavo" data-pc=".72 .40"><b>Materiál na paletách</b><span>v areáli predajne</span></p>
-<p class="br-st vlavo" data-tel=".59 .78" data-pc=".90 .84"><b>Doprava na stavbu</b><span>po celom Slovensku</span></p>
-</div></div></div>
+     vnútro je inert (bez fokusu a mimo čítačky); .br sám zachytí ťuk, aby sa pod bránou nič nestlačilo. Každé krídlo nesie
+     svoje slovo pozdravu, spára ide medzi nimi. Texty: FAKTY.md A, B, D1, F. Znak RS ani názov firmy v bráne nie sú (Lajko
+     16. 11. 2026: logo a názov len raz – sú v lište, ktorá ostáva nad bránou). Úvod je od 17. 11. 2026 v štýle pôvodného webu
+     (tmavá fotka cez celú prvú obrazovku, Lajko: „zachovaj štýl písma a prvú úvodnú“): krídla sú čierne ako úvod, „Poďte
+     ďalej.“ je na červenom páse a krídla sa rozídu rovno nad úvodom; fotka predajne ani štítky v bráne nie sú (majiteľ
+     17. 11. 2026: „Skutočná fotka našej predajne – vymazať“). -->
+<div class="br" aria-hidden="true"><div class="br-in" inert>
 <div class="br-krid br-l"><div class="br-tab"><p class="br-nad"><span>Nitra&nbsp;– Horné Krškany</span> <span>od roku 1997</span></p><p class="br-veta"><span><span>Vitajte.</span></span></p></div></div>
 <div class="br-krid br-p"><div class="br-tab"><p class="br-veta"><span><span>Poďte ďalej.</span></span></p></div></div>
 </div></div>

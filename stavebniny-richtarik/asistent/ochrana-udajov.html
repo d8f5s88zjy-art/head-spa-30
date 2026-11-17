@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
 <title>Asistent na webe – ochrana osobných údajov | Stavebniny Richtárik</title>
 <meta name="description" content="Ochrana osobných údajov pri používaní asistenta na webe Stavebnín Richtárik v Nitre: aké údaje okno asistenta spracúva a na čo.">
 <link rel="icon" href="../img/favicon-32.png" sizes="32x32" type="image/png">
@@ -11,21 +12,21 @@
 <meta property="og:image" content="https://www.stavebninyrichtarik.sk/img/og-stavebniny-richtarik.jpg">
 <!-- NÁVRH TEXTU NA SCHVÁLENIE MAJITEĽOM alebo zodpovednou osobou pre ochranu osobných údajov. Údaje o firme sú
      z pôvodného webu (FAKTY A). Po schválení odstrániť pás .navrh; asistent sa na ostrom webe zapína až potom. -->
-<!--tema: skript témy podkladu zo zdroj/tema-head.js, build.py ho tu obnoví (ochrana_prechody)--><script>(function(h,d){try{var m=/[?&]tema=(farebna|svetla|tmava)\b/.exec(location.search),s=null,t=m?m[1]:'';h.classList.add('js');try{s=window.localStorage;}catch(e){s=null;}if(t&&s){if(t==='farebna')s.removeItem('tema');else s.setItem('tema',t);}if(!t&&s)t=s.getItem('tema')||'';if(t==='tmava'||t==='svetla'){if(t==='tmava')h.setAttribute('data-tema',t);else h.removeAttribute('data-tema');var c=d.querySelector('meta[name="theme-color"]');if(c)c.setAttribute('content',t==='tmava'?'#121110':'#faf8f4');}}catch(e){}})(document.documentElement,document);</script><!--/tema-->
+<!--tema: skript témy podkladu zo zdroj/tema-head.js, build.py ho tu obnoví (ochrana_prechody)--><script>(function(h,d){try{var m=/[?&]tema=(farebna|svetla|tmava)\b/.exec(location.search),s=null,t=m?m[1]:'';h.classList.add('js');try{s=window.localStorage;}catch(e){s=null;}if(t&&s){if(t==='farebna')s.removeItem('tema');else s.setItem('tema',t);}if(!t&&s)t=s.getItem('tema')||'';if(t==='tmava'||t==='svetla'){if(t==='tmava')h.setAttribute('data-tema',t);else h.removeAttribute('data-tema');var c=d.querySelector('meta[name="theme-color"]');if(c)c.setAttribute('content',t==='tmava'?'#111111':'#ffffff');}}catch(e){}})(document.documentElement,document);</script><!--/tema-->
 <style>
 @font-face { font-family: "Barlow"; font-weight: 400; font-display: swap; src: url(../assets/fonts/Barlow-400-latin-ext.woff2) format("woff2"); unicode-range: U+0100-024F; }
 @font-face { font-family: "Barlow"; font-weight: 400; font-display: swap; src: url(../assets/fonts/Barlow-400-latin.woff2) format("woff2"); unicode-range: U+0000-00FF; }
 @font-face { font-family: "Barlow Condensed"; font-weight: 800; font-display: swap; src: url(../assets/fonts/BarlowCondensed-800-latin-ext.woff2) format("woff2"); unicode-range: U+0100-024F; }
 @font-face { font-family: "Barlow Condensed"; font-weight: 800; font-display: swap; src: url(../assets/fonts/BarlowCondensed-800-latin.woff2) format("woff2"); unicode-range: U+0000-00FF; }
 /* tokeny ako v site.css: bez atribútu svetlý papier, data-tema="tmava" čierno-biela, data-tema="farebna" (predvolená, je
-   priamo v <html>) teplý svetlý tón s červenou linkou hore (ako linka bielej lišty webu); skript medzi <!--tema--> nižšie tému len prepne na porovnanie */
-:root { color-scheme: light; --paper: #faf8f4; --ink: #141210; --ink-3: #6b665f; --odkaz: #96291f; --navrh-bg: #fbefed; --navrh-ln: #e6c9c4; --navrh-tx: #7a2118; }
+   priamo v <html>) svetlá šedá s červenou linkou hore (ako linka bielej lišty webu); skript medzi <!--tema--> nižšie tému len prepne na porovnanie */
+:root { color-scheme: light; --paper: #fff; --ink: #141414; --ink-3: #5c5c5c; --odkaz: #b42226; --navrh-bg: #f2f2f2; --navrh-ln: #d6d6d6; --navrh-tx: #921b1f; }
 @media screen {
-  html[data-tema="farebna"] { --paper: #f6eee4; --ink: #1c1a1b; --ink-3: #5f5758; --odkaz: #b92328; --navrh-bg: #f8ded9; --navrh-ln: #e9b9b4; --navrh-tx: #8a1b1f; }
-  html[data-tema="farebna"] body { border-top: 4px solid #d73438; }
-  html[data-tema="farebna"] h1 { padding-bottom: 12px; border-bottom: 4px solid #d73438; }
+  html[data-tema="farebna"] { --paper: #f5f5f5; --ink: #1a1a1a; --ink-3: #595959; --odkaz: #b42226; --navrh-bg: #fff; --navrh-ln: #d4d4d4; --navrh-tx: #921b1f; }
+  html[data-tema="farebna"] body { border-top: 4px solid #d93439; }
+  html[data-tema="farebna"] h1 { padding-bottom: 12px; border-bottom: 4px solid #d93439; }
 }
-@media screen { html[data-tema="tmava"] { color-scheme: dark; --paper: #121110; --ink: #f4f1ec; --ink-3: #b8b2a9; --odkaz: #ef7a66; --navrh-bg: #2b1514; --navrh-ln: #5a2a26; --navrh-tx: #f0b4ac; } }
+@media screen { html[data-tema="tmava"] { color-scheme: dark; --paper: #111; --ink: #f5f5f5; --ink-3: #b3b3b3; --odkaz: #e57679; --navrh-bg: #1c1c1c; --navrh-ln: #444; --navrh-tx: #e57679; } }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.6 "Barlow", "Helvetica Neue", Arial, sans-serif; }
 main { width: min(100%, 46rem); margin: 0 auto; padding: 28px 16px 56px; box-sizing: border-box; }
 h1 { font: 800 clamp(30px, 6vw, 44px)/1 "Barlow Condensed", "Arial Narrow", Arial, sans-serif; text-transform: uppercase; margin: 8px 0 10px; }
@@ -43,7 +44,7 @@ html, ::view-transition { background: var(--paper); }
 html:active-view-transition-type(spat)::view-transition-old(root) { animation-name: vt-von-spat; }
 html:active-view-transition-type(spat)::view-transition-new(root) { animation-name: vt-dnu-spat; }
 html:active-view-transition-type(strih)::view-transition-old(root) { animation: vt-ustup 500ms cubic-bezier(.7,0,.2,1) both; }
-html:active-view-transition-type(strih)::view-transition-new(root) { animation: vt-strih 500ms cubic-bezier(.7,0,.2,1) both; box-shadow: 0 -14px 34px rgba(20,18,16,.08); }
+html:active-view-transition-type(strih)::view-transition-new(root) { animation: vt-strih 500ms cubic-bezier(.7,0,.2,1) both; box-shadow: 0 -14px 34px rgba(18,18,18,.08); }
 @keyframes vt-von { to { opacity: 0; translate: 0 -8px; } }
 @keyframes vt-dnu { from { opacity: 0; translate: 0 16px; } }
 @keyframes vt-von-spat { to { opacity: 0; translate: 0 8px; } }

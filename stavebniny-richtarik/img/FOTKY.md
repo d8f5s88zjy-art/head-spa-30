@@ -30,6 +30,24 @@ Strešné okná (hlavičky katalógu Strešné okná, Fakro, Fakro schody a výl
 (svetlá strecha, otvorené strešné okno); nahrádza tmavú fotku `okna` (hlavičky, dlaždica Strešné okná na úvode a v Katalógu,
 karta Velux). Súbory `okna` ostávajú v repozitári, do balíka nejdú.
 
+## Fotky prvej obrazovky úvodu zo 17. 11. 2026 (`img/uvod/uvod-*`, staré fotky z pôvodného webu)
+Lajko 17. 11. 2026: „zachovaj štýl písma a prvú úvodnú [obrazovku] … aj to, že sa to menilo“. Prvá obrazovka úvodu
+strieda štyri fotky, ktoré boli v pozadí úvodu pôvodného webu (`.hero`): Pexels, licencia Pexels (voľné aj na komerčné
+použitie), zdroje v `img/hd/`. Len orez, zmenšenie (Lanczos) a prevod do AVIF a WebP skriptom `zdroj/uvod_snimky.py`;
+nič nedokreslené, nič odstránené retušou, farby netónované. Fotky sú ilustračné (nie predajňa Stavebnín Richtárik);
+keď majiteľ dodá vlastné fotky z predajne alebo zo stavieb, stačí ich dať do `img/hd/` a upraviť výrezy v skripte.
+
+| súbor v `img/uvod/` | zdroj `img/hd/` | Pexels | výrez (x0, y0, x1, y1) – počítač a tablet / telefón | čo je mimo výrezu |
+|---|---|---|---|---|
+| `uvod-palety-1280|1920`, `-t-480|750` (prvá fotka, LCP) | `hero.webp` 2400 × 1600 | https://www.pexels.com/photo/32865462/ | 0, 560, 2400, 1600 / 240, 0, 990, 1600 | nákladné auto (x 1500–2060, y 300–540) a modrý sud (x 1960–2080, y 40–150) |
+| `uvod-stavba-1280|1920`, `-t-480|710` | `stavba.webp` 2400 × 1347 | https://www.pexels.com/photo/39494022/ | celá / 720, 0, 1430, 1347 | – (telefónny výrez má 710 px, nezväčšuje sa na 750) |
+| `uvod-murar-1280|1920`, `-t-480|750` | `murar.webp` 2400 × 1599 | https://www.pexels.com/photo/30081237/ | celá / 780, 0, 1530, 1599 | – |
+| `uvod-strecha-1230`, `-t-480|750` | `strecha-praca.webp` 2400 × 1600 | https://www.pexels.com/photo/11467876/ | 0, 330, 1230, 1600 / 300, 330, 1050, 1600 | palma (x ≥ 1260), do Nitry nepatrí; široký výrez má 1230 px a nezväčšuje sa |
+
+Zakázané oblasti sú v `zdroj/uvod_snimky.py` (`ZDROJE`) a `build.py` (`kontrola_uvodu`) overí pri každom behu, že ich
+žiadny výrez nezasahuje. Fotka predajne č. 11 (`img/predajna/11-tvarnice-porfix-cesta-*`) v prvej obrazovke už nie je
+(majiteľ: „Skutočná fotka našej predajne – vymazať“), ostáva nižšie na stránke a v prechádzke.
+
 ## Fotky katalógu a logá značiek od majiteľa zo 17. 11. 2026 (`img/kat/`, `img/logo/`)
 
 Pôvod: Ing. Mário Richtárik, e-mail (preposlal Lajko 17. 11. 2026): „Ešte raz Vám posielam všetky fotky, ktoré treba vymeniť

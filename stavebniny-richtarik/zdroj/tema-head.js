@@ -19,7 +19,7 @@
     if (t === 'tmava' || t === 'svetla') {
       if (t === 'tmava') h.setAttribute('data-tema', t); else h.removeAttribute('data-tema');
       var c = d.querySelector('meta[name="theme-color"]');
-      if (c) c.setAttribute('content', t === 'tmava' ? '#121110' : '#faf8f4');
+      if (c) c.setAttribute('content', t === 'tmava' ? '#111111' : '#ffffff');
     }
   } catch (e) {}
 })(document.documentElement, document);

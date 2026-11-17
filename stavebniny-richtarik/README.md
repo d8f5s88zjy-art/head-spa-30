@@ -68,7 +68,7 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 - Štýly a skripty: `assets/site.css`, `assets/site.js` (menu, záloha objavovania blokov pri skrolovaní pre prehliadače
   bez časovej osi posunu, počítadlá, vyhľadávanie, zbalená päta na telefóne, lightbox s listovaním a popiskami – systémové Späť ho zatvorí a neodíde zo stránky, veľmi
   široký obrázok (banner) je na telefóne vo výške súboru a posúva sa prstom do strán (`.lb-siroky`) –, pás
-  značiek s tlačidlom Zastaviť pohyb) a skript prechodov medzi stránkami v `<head>` (zdroj `zdroj/prechody.js`). Úvod je skutočná fotka dvora so strihom zásob (časť Úvod nižšie). Celý web je svetlý
+  značiek s tlačidlom Zastaviť pohyb) a skript prechodov medzi stránkami v `<head>` (zdroj `zdroj/prechody.js`). Úvod je prvá obrazovka v štýle pôvodného webu: veľký nápis na tmavej fotke, fotky sa striedajú (časť Úvod nižšie). Celý web je svetlý
   (papier, malta, betón, tmavý text, tehlová ako akcent): lišta, spodná lišta, menu, päta aj lightbox. Každá podstránka
   má svetlú hlavičku s ostrou fotkou v ráme (`HLAVICKA_FOTO` v `build.py`), skutočné fotky dvora pri tovare, ktorý
   ukazujú. Pohyb celého webu (prechody medzi stránkami, odhalenia pri posune, ovládacie prvky) je v časti Pohyb
@@ -135,59 +135,73 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 
 ## Téma podkladu: farebná (predvolená), svetlý papier a tmavá „čierno-biela“
 
+**Čierno-bielo-červená paleta (Lajko 17. 11. 2026: „urob to celé do čierno-bielo-červenej“).** Farby rozhrania všetkých
+stránok vo všetkých troch témach (lišta, menu, päta, uvítanie, karty, tlačidlá, štítky, pásy sekcií, hľadanie, lightbox,
+asistent, 404, Ochrana údajov, `theme-color`) sú len biela, čierna, neutrálne šedé (R = G = B) na linky, vedľajší text
+a striedanie pásov a červená loga RS, zmeraná z `img/logo-rs-720.png` (najčastejší pixel `#d93439`), v štyroch odtieňoch
+toho istého tónu (358°):
+
+| odtieň | použitie | kontrast |
+|---|---|---|
+| `#d93439` (`--brick`, `--f-cervena`) | tlačidlá s bielym písmom, veľké písmo (názov v lište, „Za super ceny.“, percentá), linky, grafika | biela na nej 4,67 : 1 |
+| `#b42226` (`--brick-txt`, `--brick-dk`, `--brick-hover`) | malé červené písmo na svetlom, tlačidlo pod myšou | na bielej 6,57, na `#e0e0e0` 4,98 |
+| `#921b1f` | tmavší stav pod myšou (šípky prechádzky) | – |
+| `#e57679` (`--brick-svetla`, `--brick-pale`) | malé červené písmo na čiernom (päta, tmavá téma) | na `#111` 6,47, na `#2b2b2b` 4,85 |
+
+Béžové, krémové, pieskové a teplosivé tóny (`#faf8f4`, `#f6eee4`, `#efe3d5`, `#f3f0ea`, `#e6e2dc`, `#dcd7cf`, `#141210`,
+`#181614` …) a ružové plochy sú preč; ružové podklady (`--brick-lt`) sú neutrálne šedé a červený akcent nesie linka alebo
+písmo. Fotky, Máriove grafiky, logá značiek a mapa sa nemenia (sú to obrázky). **Výnimka:** podklad `.rozvoz` pod
+priehľadným rohom grafiky Rozvoz má modrosivé odtiene podlahy obrázka (8 farieb, `site.css`); pri výmene obrázka treba
+podklad prepočítať z jeho okraja a upraviť výnimku `PALETA_VYNIMKY` v `build.py`. Správa obsahu (`sprava/` rozhranie) má
+svoje farby a kontrola ju nečíta.
+- **Kontrola:** `build.py` (`kontrola_farieb`, za kontrolou textov) prejde verejné CSS, JS a HTML (stránky, `zdroj/`, kostry
+  stránok správy `sprava/kostry`, manifest) a každú zapísanú farbu (`#rgb`, `#rrggbb`, `#rrggbbaa`, `%23…` v dátových SVG,
+  `rgb()`/`rgba()`) porovná s paletou (`PALETA_CERVENE` + neutrálne + úplne priehľadné); vypíše „kontrola farieb: OK“ alebo
+  `POZOR` so súborom a riadkom.
+- **Tokeny** (`:root` = svetlá, `html[data-tema="farebna"]`, `html[data-tema="tmava"]`): farebná – stránka `--paper #f5f5f5`,
+  karty `#fff`, malta a hlavičky podstránok `#ebebeb`, betón `#e0e0e0`, linky `#d4d4d4`, písmo `#1a1a1a` / `#383838` /
+  vedľajšie `#595959`, päta `#1a1a1a` so spodným pásom `#0a0a0a` a malým červeným písmom `#e57679`; svetlá – stránka biela,
+  malta `#f5f5f5`, betón `#ebebeb`, linky `#dbdbdb`, písmo `#141414` / `#5c5c5c`; tmavá – podklad `#111`, pásy `#1a1a1a`,
+  karty `#1c1c1c` / `#262626`, linky `#2e2e2e`, písmo `#f5f5f5` / `#d6d6d6` / `#b3b3b3`. `--prgb` / `--irgb` (RGB podkladu
+  a písma pre priesvitné lišty a jemné linky) sú neutrálne.
+- **Farebná téma (predvolená)** je prevažne biela a svetlá (Lajko skôr chcel svetlejší web): biela lišta s červenou linkou
+  dole, svetlé pásy a biele karty, čierna je len úvod (prvá obrazovka) a päta, červená len ako akcent (tlačidlá, linky, štítky, „Za super ceny.“). **Svetlá téma** má ešte viac bielej: výzva pred
+  pätou je biely pás s červenou linkou hore, červeným a čiernym tlačidlom (nie červená plocha). **Tmavá téma** je čierna,
+  biela a červená. Úvod je vo všetkých témach rovnaký (čierny pás s fotkou, časť Úvod).
+- **Merania 17. 11. 2026** (`richtarik/staryuvod/zapis/`, `nastroje/snim.mjs` a `mer.py`, ako 16. 11.: tmavé = L < 35 %,
+  svetlé = L > 80 %, červená = maska HSV; 390 × 844 a 1440 × 900, „obmedziť pohyb“; BAZA 2ea16df7 → teraz): **červená
+  nie je vyššia** – farebná téma, úvod priemer na obrazovku cez celú výšku telefón 7,1 → 6,9 %, počítač 3,1 → 3,0 % (strop
+  zo 16. 11.: 7,5 a 3,3 %), prvá obrazovka úvodu 12,7 → 9,3 % a 6,8 → 4,7 %; ostatné stránky bez zmeny (Katalóg 6,9 / 3,1 %,
+  Kontakt 6,8 / 3,4 %). Svetlá téma po zrušení červenej výzvy: Služby 12,7 → 5,0 % (telefón) a 18,3 → 1,8 % (počítač),
+  Katalóg 10,1 → 5,1 % a 17,3 → 2,1 %, svetlé plochy na podstránkach +4 až +15 bodov. Prvá obrazovka úvodu je čierny pás (tmavé 12 → 67 %
+  na telefóne, 10 → 77 % na počítači) – zámer, ako na pôvodnom webe; zvyšok stránky je svetlý ako predtým. Béžových pixelov
+  (R ≥ G ≥ B, R − B 4–40, jasné; `nastroje/podiel.py`) je na celých stránkach ≈ 2,9 % (predtým 48–67 % vo farebnej a svetlej téme), zvyšok sú fotky; svetlá téma má
+  na celých stránkach 83–86 % svetlých plôch (predtým 75–78 %) a 1,2–2,2 % červenej (predtým 9,8–10,2 %). Pri zmene farieb meranie
+  zopakovať.
+- **Kontrast AA** všade (aj fokus, stavy pod myšou, zakázané): malé písmo ≥ 4,5 : 1, veľké a ovládače ≥ 3 : 1; na červenej
+  loga je písmo vždy čisto biele (priesvitné by malo 4,0); fokus je obrys `--brick` 3 px (na tmavom a v úvode biely, v tmavej
+  téme na škáre `#e57679`).
+
 Web má tri varianty podkladu z jedných komponentov cez tokeny v `assets/site.css`. **Predvolená je farebná téma**
 (Lajo 10. 11. 2026: majiteľ chce farebný podklad podľa svojho nového loga s názvom a zákazníckej karty): atribút
 `data-tema="farebna"` je priamo v `<html>` každej stránky (`build.py` konštanta `TEMA`, `index.html`,
 `asistent/ochrana-udajov.html`), takže web je farebný aj bez JavaScriptu a nič sa neprekresľuje. Svetlý papier (bez
 atribútu) a tmavá „čierno-biela“ (`data-tema="tmava"`) ostávajú len na porovnanie.
 
-**Farebná téma** (časť „Farebná téma“ na konci `site.css`): farby loga – červená `#d73438` (zmeraná), antracit `#1c1a1b`,
-biela. **Od 16. 11. 2026 (Lajko: „skús tam dať viac svetlej farby“; 13. 11. „moc červenej farby“) je svetlá podklad, červená
-značka a akcent, antracit písmo a päta:** stránka má teplý svetlý tón `#f6eee4` s bielymi kartami (úvod, katalóg, hlavička
-podstránky na malte `#efe3d5`, pás faktov, pás značiek, akcie, služby, zľavy a kontakt na úvode, výzva pred pätou na malte
-s červenou linkou, dlhé texty, menu na telefóne). Scény s lokálnymi tokenmi: **biela** lišta hore (znak RS, názov
-„Stavebniny“ antracit a „Richtárik“ červená, položky menu antracit, telefón červené tlačidlo, 4 px červená linka dole)
-a spodná lišta telefónu (biela s červenou linkou hore); **antracit** je už len päta (s červenou linkou hore), štítky na
-fotke úvodu a druhé tlačidlá. Červené akcenty: linka lišty, šikmá hrana úvodu a pásu Doprava, tlačidlá (hlavné vždy červené
-s bielym písmom), pásik druhého riadku hesla, linky nadpiskov, štítky akcií a čísla dlaždíc, tvrdý červený tieň fotky
-v hlavičke podstránky, percentá zľavy. **Merania 16. 11. 2026** (`richtarik/svetlejsie/zapis/`, `nastroje/snim.mjs`
-a `mer.py`: tmavé = L < 35 %, svetlé = L > 80 %, červená = maska HSV; obrazovky 390 × 844 a 1440 × 900): prvá obrazovka
-úvodu tmavé 53 → 13 % (telefón) a 57 → 11 % (počítač), svetlé 12 → 48 % a 9 → 62 %; červená na obrazovku (priemer cez celú
-výšku) úvod 12,0 → 7,5 % a 9,4 → 3,3 %, Kontakt a kategória ≈ 8 % a ≈ 3 %; pri zmene farieb meranie zopakovať. Biele ostrovy
-(vyhľadávanie) majú svetlé tokeny. Biele písmo na červenej loga má 4,73 : 1, preto je na červenej vždy čisto biele (nikdy
-priesvitné); malé červené písmo na svetlom je `#b92328` (5,0 – 6,3 : 1), červená loga `#d73438` na svetlom len veľké písmo
-(názov v lište, percentá) a grafika; v päte je malé červené písmo `#f28b7d`. Úvod: fotka cez celú výšku, svetlý panel so
-šikmou červenou hranou (do 13. 11. 2026 červený, do 16. 11. antracitový), riadok miesta, heslo (druhý riadok na červenom
-pásiku) a tlačidlá; znak RS a názov sú od 16. 11. 2026 len v lište (rozloženie len cez CSS: `.uv` je mriežka, `.uv-a`
-a `.uv-b` `display:contents`); na počítači je ponuka, odkazy a vyhľadávanie na bielej karte na fotke.
-**Návrat k červenej lište** (keby majiteľ trval na farebnom páse loga): v `site.css` vymeniť tokeny scény `.top` a blok
-„lišta“ za stav z commitu „logo a názov len raz“ a `FARBA` v `build.py` vrátiť na `#1c1a1b`; ostatné svetlé sekcie ostanú.
-Strih zásob sa vo farebnej téme nepoužíva (`site.js`). Uvítanie má od 16. 11. 2026 svetlé krídla bez znaku RS a bez názvu
-(logo a názov sú len v lište nad bránou; v krídlach je len pozdrav, „Poďte ďalej.“ na červenom páse;
-`zdroj/uvitanie.*`, cesta `otvorF`: krídla sa rozídu rovno nad úvodom; KZ-01, 11. 11. 2026: pozdrav
-v krídlach zhasne počas prvej časti otvárania a prvý riadok nadpisu úvodu sa objaví, až keď sú krídla celkom mimo neho –
-kedy, vypočíta `odkryF` z rozmerov a krivky clony –, takže nadpis nikdy nie je prerezaný hranou krídla). Podklad
-prechodu medzi stránkami (`::view-transition`) je po pásoch vo farbe scén novej stránky (`--scena`: svetlý tón, malta,
-antracit päty; skript `zdroj/prechody.js` ich pri `pagereveal`
-zapíše ako `background-image` do malého `<style id="vt-pozadie">`, nie ako dedenú vlastnosť na `<html>`, tá by prepočítala
-štýl celej stránky), aby antracitová päta ani pásy na malte pri prelnutí nepreblikli inou farbou. Pásy zhasnú, len čo ich
-nová stránka zakryje (`@keyframes vt-podklad` v `site.css`, 330 ms; pri návrate na počítači ostávajú do konca, lebo tam
-doznievajúci posun stránky nekryje spodná lišta) – inak sa kreslili pod stránkou až do konca prechodu a na telefóne
-predlžovali jeho poslednú snímku. Výška lišty je token
-`--lista-v` (88 px, do 980 px 84 px). Tlač je vždy svetlá (`@media screen`). Tokeny, kontrasty a merania:
-`richtarik/svetlejsie/zapis/ZAPIS.md` (staršie `richtarik/majitel/farebna/TOKENY.md` a `ZAPIS.md`).
-
-**Tmavá téma** (`html[data-tema="tmava"]`, časť „Tmavá téma“ v `site.css`): podklad noc `#121110`, pásy sekcií `#181614`,
-karty `#1b1917`, písmo papierová biela `#f4f1ec`, akcent červená loga `#d73438` len vo veľkom písme, tlačidlách a grafike,
-malé červené písmo je svetlejšia `#ef7a66` (AA). Roly v `:root` (svetlý papier): `--brick-txt` (malé červené písmo),
-`--brick-hover` (tlačidlo pod myšou), `--povrch` a `--povrch-2` (karta a karta pod myšou), `--prgb` (RGB podkladu pre
-priesvitné lišty a odznaky), `--irgb` (RGB písma pre jemné linky a latky brány). Asistent má pravidlá tém na konci
-`assets/asistent.css`, `asistent/ochrana-udajov.html` vlastné tokeny.
+**Scény a mechanizmus farebnej témy** (časť „Farebná téma“ na konci `site.css`): lokálne tokeny majú biela lišta hore
+(znak RS, názov s čiernym obrysom, položky menu, telefón ako červené tlačidlo, 4 px červená linka dole), spodná lišta
+telefónu (biela s červenou linkou hore), päta a ostrov hľadania. Podklad prechodu medzi stránkami (`::view-transition`) je
+po pásoch vo farbe scén novej stránky (`--scena`; skript `zdroj/prechody.js` ich pri `pagereveal` zapíše ako
+`background-image` do malého `<style id="vt-pozadie">`), aby päta ani pásy pri prelnutí nepreblikli inou farbou; pásy
+zhasnú, len čo ich nová stránka zakryje (`@keyframes vt-podklad`, 330 ms). Výška lišty je token `--lista-v` (88 px, do
+980 px 84 px). Tlač je vždy svetlá (`@media screen`). Asistent má pravidlá tém na konci `assets/asistent.css`,
+`asistent/ochrana-udajov.html` vlastné tokeny (rovnaká paleta). Staršie zápisy tokenov (história): `richtarik/svetlejsie/zapis/ZAPIS.md`,
+`richtarik/majitel/farebna/TOKENY.md`, `richtarik/majitel/tema/ZAPIS.md`; paleta 17. 11.: `richtarik/staryuvod/navrh-P/NAVRH.md`.
 
 Prepínanie: skript `zdroj/tema-head.js` (build.py `TEMA_HEAD`, v `index.html` ho vkladá `python3 -I zdroj/tema_vloz.py .`,
 v `asistent/ochrana-udajov.html` značky `<!--tema-->`) beží v `<head>` pred štýlom: `?tema=svetla` odoberie atribút
 (svetlý papier), `?tema=tmava` nastaví tmavú, oboje si zapamätá (`localStorage` `tema`), `?tema=farebna` voľbu zruší, bez
-parametra platí zapamätaná voľba; prepne aj `theme-color` (farebná `#ffffff` – biela lišta, svetlá `#faf8f4`, tmavá `#121110`). Bez JS,
+parametra platí zapamätaná voľba; prepne aj `theme-color` (farebná `#ffffff` – biela lišta, svetlá `#ffffff`, tmavá `#111111`). Bez JS,
 v ráme bez úložiska alebo so zakázaným úložiskom je web farebný (parameter v adrese funguje aj tam). Ten istý skript
 nastaví na `<html>` triedu `js`; bez nej (bez JavaScriptu) sú tlačidlo menu a pole hľadania skryté, lebo by nič nerobili
 (navigácia je v päte). Pri tlači sa netlačí spodná lišta, tlačidlo menu, prechádzka ani tlačidlá výziev. Skript prechodov
@@ -195,86 +209,69 @@ v `index.html` po zmene `zdroj/prechody.js` obnoví `python3 -I zdroj/prechody_v
 Zápis tmavej témy: `richtarik/majitel/tema/ZAPIS.md` a `TOKENY.md`.
 
 ## Úvod
-**Farebná téma (predvolená od 10. 11. 2026) mení rozloženie úvodu a uvítania len cez CSS a jednu cestu v skripte uvítania;
-popis nižšie platí pre svetlú a tmavú tému na porovnanie.** Vo farebnej téme: fotka (provizórne č. 11) vypĺňa celú výšku
-prvej obrazovky, na počítači (od 981 px) vpravo od svetlého panela so šikmou červenou hranou, na telefóne a tablete hore nad ním
-(v šírke okna ≈ 1 : 1 so zdrojom, nezväčšuje sa na celú výšku); v paneli riadok miesta „Nitra – Horné Krškany“, heslo „Predajňa plná materiálu. Od základov po strechu.“
-(telefón 27–40 px, počítač 40–58 px; znak RS a názov sú len v lište) a tlačidlá Zavolať a Poslať dopyt, na počítači vpravo
-dole biela karta na fotke s ponukou, odkazmi a vyhľadávaním. Strih zásob a tlačidlo Prehrať úvod sa nepoužívajú. Uvítanie:
-svetlé krídla s pozdravom (bez znaku RS a názvu), rozídu sa rovno nad hotovým úvodom (koniec ≈ 1,5 s od navigácie).
-
-**Stav od 10. 11. 2026 (kolo majiteľa, platí pred staršími údajmi v tejto časti):**
-- Hlavný obraz je fotka 11 od majiteľa (`img/predajna/11-tvarnice-porfix-cesta-*`, **provizórne**, kým majiteľ nepotvrdí
-  „fotku číslo 5“). Počítač berie `-1290|1720`, telefón (do 700 px) tie isté široké súbory `-960|1290` s výrezom na palety
-  (`object-position: 26% 55%` v ráme, `--x:.44` v uvítaní). Zvislý výrez 663 px sa už nepoužíva: v ráme ho prehliadač
-  zväčšoval 1,76×, široký súbor sa v ráme 390 × 320 px pri DPR 3 zobrazí ≈ 1 : 1 (1 290 px na 1 257 bodov displeja).
-- Nadpis H1 úvodu je riadok miesta „Nitra – Horné Krškany“ (`.h1-miesto`) a heslo „Predajňa plná materiálu. Od základov
-  po strechu.“ (riadky `.ln`; farebná téma telefón 390 px 33 px, počítač 1440 px 55 px; svetlá a tmavá 30 / 48 px).
-  **Znak RS a názov Stavebniny Richtárik sú len v lište hore** (na každej stránke), v úvode sa neopakujú – Lajko
-  16. 11. 2026: „nech sa neopakuje 2 krát“ (má prednosť pred skorším „úvodný názov nech je väčším a s novým logom“
-  z 9. 11. 2026, ktoré plní väčšia lišta). Názov firmy pre vyhľadávače nesie titulok stránky, lišta, og a JSON-LD.
-  Pri výmene loga stačí vymeniť súbory `img/logo-rs-*`.
-- Tempo: všetky časy scenára úvodu, strihu zásob a uvítania nižšie sú **pôvodné hodnoty; dnes platí ich 1,5-násobok**
-  (majiteľ: pomalšie animácie; tabuľka v časti Pohyb a prechody). Odozva na ťuk sa nespomalila.
-
-Úvod (`index.html`, sekcia `.uv`) je len zo skutočných fotiek dvora, bez videa a bez auta. Hlavný obraz je výrez fotky
-dvora `u4` (palety tvárnic pod modrou oblohou): `img/uvod/dvor-p-1290|1720` na šírku (počítač, tablet) a
-`img/uvod/dvor-t-1086|1448` na výšku (telefón), AVIF aj WebP. Je to LCP (`fetchpriority="high"`), viditeľný od prvej
-snímky, pod ním svetlý náhľad 16 px. Pôvod fotiek je v `img/FOTKY.md`.
-- Scenár (čas od začiatku načítania): 0–2,9 s fotka pomaly dosadne (zmenšenie z 1,09 na 1); 0,2–1,05 s sa hore a dole
-  rozostúpia dva svetlé pásy papiera ako okno kina; 0,12–1,06 s vyjde nadpis po riadkoch z drážky
-  („Stavebniny Nitra – Horné Krškany“ ako riadok nad nadpisom, „Dvor plný materiálu. Od základov po strechu.“);
-  1,0–3,0 s dopadnú na dvor za sebou štyri skutočné zábery zásob (ležia rovno, na telefóne najviac 46 % výšky rámu
-  vpravo hore) so štítkom ako na palete (Tehly TermoBRIK, Pórobetón
-  Porfix – fotka bez dokreslených paliet, Dlažby a obrubníky Stadreko, Stavebné rezivo priamo na sklade); 3,32–3,84 s kôpka odíde
-  doprava; 3,62–3,98 s sa vrazí štítok „Náš dvor · Novozámocká 62/68, Nitra“. Potom ostane statický koncový stav
-  a vpravo hore tlačidlo „Prehrať úvod“. (Stály popis fotky „Skutočná fotka našej predajne v Nitre“ je od 17. 11. 2026 preč –
-  majiteľ: „vymazať“; štítok „Naša predajňa“ je vo farebnej téme na počítači hore vpravo na jeho mieste.)
-- Text, telefón, vyhľadávanie, katalóg a akcie fungujú od prvej snímky, nič sa neskrýva ani nečaká. Riadok s hodinami
-  (počítač) zvýrazní dnešný deň (`data-dni`), bez textu „otvorené“. Pri odchode z úvodu ide fotka pomalšie než stránka
-  (CSS `animation-timeline: view()`, nič sa nepripína a posun sa nezamyká).
-- Kód: CSS je v časti „Úvod zo skutočných fotiek dvora“ na konci `assets/site.css` (aj spoločné krivky a dĺžky pohybu
-  `--krivka-*`, `--dlzka-*` a záložné písmo s metrikami Barlow, aby výmena písma neposunula riadky), skript v
-  `assets/site.js` (časť „úvod: strih zásob“) a trieda `uv-ide` zo skriptu v `<head>` úvodu. Animuje sa len
-  `transform` a `opacity`.
-- Strih sa nespustí bez JS, pri „obmedziť pohyb“, pri šetrení dát (`saveData`), druhýkrát v tej istej relácii
-  (`sessionStorage` `uv-videne`) a keď zákazník už posúva. Sám sa nespustí ani po uvítaní (hook odovzdala brána) a keď
-  stránka prišla prechodom alebo Späť/Vpred (trieda `vt`; vtedy sa nehrá ani vstup úvodu): ostane tlačidlo „Prehrať
-  úvod“ a zábery sa stiahnu až po jeho stlačení. Odchod zo stránky bežiaci strih hneď dokončí. Preruší ho posun, koliesko, dotyk, kláves (okrem Tab)
-  a fokus vo vyhľadávaní. Zábery sú v `<template id="uv-zabery">`, takže bez strihu sa vôbec nestiahnu.
-- Výmena záberu: v `index.html` v `<template id="uv-zabery">` zmeniť cesty `img/uvod/zasoba-<názov>-480|720|900`
-  a text štítku (`<b>` a `<span>`); nová fotka musí byť skutočná, bez pridaného či ubraného obsahu, v rovnakých
-  šírkach a s rovnakou fotografickou úpravou (časť Údržba).
-  Počet záberov je 4 (časovanie v CSS `.uv-mont .uv-z:nth-child(n)` a v skripte 830, 1580, 2250 ms; koniec strihu 4,53 s).
-- Vypnutie strihu: zmazať `<template id="uv-zabery">` v `index.html` (ostane fotka, okno kina a nadpis). Vypnutie
-  celého pohybu úvodu: zmazať v skripte v `<head>` `index.html` riadok s triedou `uv-ide`; úvod ostane statický.
-- Poradie sťahovania: ten istý skript v `<head>` pridá triedu `uv-pocka`, kým sa nenačíta fotka dvora (najviac 4 s,
-  pri posune hneď). Dovtedy sa fotky pásu „Na našom dvore v Nitre“ nesťahujú (`.uv-pocka .zas img{display:none}`,
-  dlaždice majú pevný pomer strán, nič sa neposunie), aby na pomalej sieti nebrali pásmo hlavnej fotke. Bez JS sa
-  sťahujú hneď.
+**Prvá obrazovka ako na pôvodnom webe (17. 11. 2026, Lajko: „zachovaj štýl písma a prvú úvodnú [obrazovku] … aj to, že
+sa to menilo, ale urob to tak, nech sa to dá ľahko čítať, ale všetko nové tam nechaj“).** Úvod (`index.html`, sekcia
+`.uv`) je vo všetkých témach rovnaký: tmavá fotka cez celú šírku a výšku prvej obrazovky (pod lištou, na telefóne aj nad
+spodnou lištou) a veľký nápis vľavo dole priamo na nej.
+- Text (zo starého webu a z BAZY, nič nové): riadok nad nadpisom „Stavebniny Richtárik, Nitra. Od roku 1997“ (`.uv-nad`,
+  červená linka) a H1 „Stavebný materiál v celom sortimente. Za super ceny.“ – Barlow Condensed 800, verzálky, šírka 12ch,
+  riadkovanie 0,9, vždy 6 riadkov (STAVEBNÝ / MATERIÁL / V CELOM / SORTIMENTE. / ZA SUPER / CENY.; dvojice „v celom“
+  a „Za super“ sú nezlomiteľné `<span class="nz">`). „v celom sortimente.“ je tenší a svetlošedý (`.thin`, 600, `#d9d9d9`),
+  „Za super ceny.“ červené loga (`em`, `#d93439`). Veľkosť: telefón 52 px (pri 320 px 49 px, pri 320 × 568 46 px), tablet
+  a počítač ako pôvodne `clamp(52px, 9,2vw, 132px)`, najviac toľko, aby sa celý nadpis zmestil na prvú obrazovku
+  (1440 × 900: 117 px, 1920 × 1080: 132 px). Každé slovo je `<span class="w" style="--i:n">` (postupný nábeh).
+  Pod nadpisom (počítač v pravom stĺpci) ostáva všetko nové: hodiny a adresa zo správy (`<!--s:hodiny-uvod-info-->`, od
+  701 px, dnešný deň podčiarknutý), veta zo správy (`<!--s:uvod-lede-->`), Zavolať 0905 622 223, Poslať dopyt, Prezrieť
+  katalóg, Aktuálne akcie a vyhľadávanie (biely ostrov; na počítači sa výsledky otvárajú nad poľom, aby boli celé na prvej
+  obrazovke). Na počítači je vpravo dole „Skroluj“ (`.uv-cue`, ozdoba, `aria-hidden`).
+- Fotky (`.uv-bg`): štyri staré fotky z `img/hd` (Pexels, `img/FOTKY.md`) – palety tvárnic, stavba, murári, strecha –
+  v `img/uvod/uvod-{palety,stavba,murar,strecha}-*.avif|webp`: počítač a tablet široký výrez `-1280|1920` (strecha `-1230`,
+  užší výrez sa nezväčšuje), telefón (do 700 px) vlastný zvislý výrez `-t-480|750` (stavba `-t-710`). Len orez, zmenšenie
+  a prevod formátu skriptom `zdroj/uvod_snimky.py`, nič nedokreslené ani tónované. **Výrezy nesmú zasiahnuť nákladné auto
+  a modrý sud na fotke `hero` ani palmu na fotke `strecha-praca`** (zakázané oblasti v skripte; `build.py` ich pri každom
+  behu overí). Fotka predajne č. 11 a štítok „Naša predajňa“ v prvej obrazovke nie sú (majiteľ 17. 11. 2026: „vymazať“);
+  fotka 11 ostáva nižšie na stránke. Film ani auto v úvode nie sú.
+- Načítanie: prvá fotka (`.uv-f0`, palety) je v HTML s `fetchpriority="high"` (LCP; telefón 96 KB AVIF, počítač 119 KB),
+  ďalšie tri sú v `<template class="uv-dalsie">` a `site.js` (časť „úvod: striedanie fotiek“) ich vloží až po načítaní
+  stránky a po uvítaní v nečinnom čase; striedanie sa zapne triedou `uv-stridaj`, keď sú dekódované. `sizes` počíta
+  s výškou úvodu (široký výrez pokrýva celú výšku).
+- Striedanie ako na pôvodnom webe: cyklus 24 s, každá fotka ≈ 6 s, prelnutie s jemným priblížením (krivka pôvodného
+  `slide`), prvá fotka dosadne s Ken Burns (15 s). Mimo obrazovky a na skrytej karte sa zastaví (`uv-stoj`). Slová
+  nadpisu nabehnú za sebou (posun zdola a prelnutie, 1,35 s, krok 105 ms), riadok nad nadpisom, ponuka, hodiny a Skroluj
+  vyjdú po nich (trieda `uv-ide` zo skriptu v `<head>`; po uvítaní ich spúšťa skript brány).
+- Čitateľnosť: čierny prechod `.uv::before` – telefón a tablet zhora 50 → 74 → 90 % (od 38 % výšky) → 94 %, počítač zľava
+  86 → 80 → 50 → 30 % a zdola 88 % → 0; jemný tieň písma navyše. Meranie v čase (17. 11. 2026, 18 okamihov celého kruhu
+  striedania vrátane prelínaní × 320/390/768/1024/1440/1920 × tri témy, text skrytý, najhorší pixel pozadia pod každým
+  riadkom; `richtarik/staryuvod/zapis/nastroje/kontrast-cas.cjs` + `.py`): biely H1 ≥ 6,55 : 1, tenší riadok ≥ 8,18,
+  „Za super ceny.“ ≥ 3,68 (prah 3), riadok nad nadpisom ≥ 5,22, veta ≥ 8,12, hodiny ≥ 18,5, odkazy ≥ 14,3, Skroluj ≥ 14,1
+  (prah 4,5); tlačidlá majú plný podklad (Zavolať biela na `#d93439` 4,67 : 1, pod myšou `#b42226` 6,57 : 1). Pri inej
+  fotke treba meranie zopakovať. Farby úvodu sú len čierna, biela, šedá `#d9d9d9` a červené z palety.
+- „Obmedziť pohyb“, šetrenie dát a bez JS: jedna fotka bez pohybu, bez nábehu a bez uvítania; text je hneď nepriehľadný
+  (bez JS je skryté len pole hľadania, ktoré by nič nerobilo).
+- Kód: CSS na konci `assets/site.css` (časť „Úvod v štýle pôvodného webu“), skript `assets/site.js` (striedanie),
+  trieda `uv-ide` zo skriptu v `<head>` úvodu. Animuje sa len `transform` a `opacity`.
+- Výmena fotky: upraviť výrez v `zdroj/uvod_snimky.py` (nová fotka musí byť skutočná, bez pridaného či ubraného obsahu;
+  zakázané oblasti doplniť), spustiť `/usr/bin/python3 -I zdroj/uvod_snimky.py .`, cesty v `index.html` (`.uv-f0`
+  a `template.uv-dalsie`) a znova zmerať kontrast v čase. Vypnutie striedania: zmazať `<template class="uv-dalsie">`
+  (ostane prvá fotka).
 - `build.py` úvod neprepíše: `write()` zápis do `index.html` odmietne. `kontrola_uvodu()` na konci behu overí menu
-  a údaje firmy v úvode, jeden H1 s riadkom miesta a heslom bez znaku a názvu firmy (názov je v titulku a v lište práve raz), og obrázok dvora (`img/og-dvor.jpg`) na všetkých stránkach,
-  že žiadny súbor neodkazuje na staré video s autom a že uvítanie v `index.html` sa zhoduje so zdrojom (nižšie).
+  a údaje firmy v úvode, jeden H1 „Stavebný materiál v celom sortimente. Za super ceny.“ po slovách `.w` s dvoma `.nz`
+  a nad ním `.uv-nad` (bez znaku a názvu firmy v H1; názov je v titulku a v lište práve raz), fotky `.uv-f0` (v HTML,
+  `fetchpriority="high"`) a `.uv-f1` až `.uv-f3` (v `template.uv-dalsie`), existenciu súborov `img/uvod`, výrezy (zakázané
+  oblasti), že v prvej obrazovke nie je fotka 11, štítok, rám ani film, og obrázok na všetkých stránkach, žiadny odkaz
+  na staré video s autom a že uvítanie v `index.html` sa zhoduje so zdrojom (nižšie).
 
 ### Uvítanie „Brána“ pred úvodom
-Pri prvej návšteve zákazníka privíta svetlá brána z papiera s pozdravom „Nitra – Horné Krškany · od roku 1997“
-a „Vitajte. Poďte ďalej.“. Krídla sa rozídu do strán (posuvná brána, bez otáčania), za nimi je celá skutočná fotka
-dvora (tá istá ako v úvode) so štítkami na paletách (odznak „Skutočná fotka…“ je od 17. 11. 2026 preč) („Betónové
-tvárnice · murovací materiál“, „Doprava na stavbu · po celom Slovensku“, na počítači aj „Betónové výrobky · na
-paletách“). Fotka sa potom presne usadí do rámu úvodu, vyjde nadpis a ponuka a štítok „Náš dvor“ sa vrazí. Strih zásob
-sa potom sám nespustí, ostane tlačidlo „Prehrať úvod“. Hlavička (logo, menu, telefón) a spodná lišta Zavolať / Cenová ponuka sú celý čas nad
-bránou a fungujú. Texty sú len z overených faktov (rok 1997, adresa, doprava po celom Slovensku, sortiment).
-- Scenár na telefóne (390 × 844, 4G, CPU 4×; F = prvé vykreslenie ≈ 0,8 s): F – F + 0,26 s pozdrav vyjde z drážky
-  (každé krídlo nesie svoje slovo: na počítači „Vitajte.“ vľavo zarovnané k spáre a „Poďte ďalej.“ vpravo od spáry;
-  na telefóne sa brána otvára zvisle, „Vitajte.“ je v hornom krídle nad vodorovnou spárou a „Poďte ďalej.“ v dolnom
-  pod ňou, cez celú šírku, 17,5 vw), F + 0,26 – 0,66 s sa medzi slovami nakreslí tehlová spára; t0 = max(F + 0,38 s, fotka pripravená) ≈ 1,2 s krídla sa za 0,5 s rozídu (na telefóne hore a dole), kamera vojde na
-  1,05; t0 + 0,15 s odznak; t0 + 0,10 / 0,15 s štítky (krúžok špendlíka sa raz rozvlní), zhasnú v t0 + 0,94 s;
-  t0 + 0,60 – 1,12 s usadenie do rámu úvodu (len `transform`, bez posunu rozloženia), t0 + 0,74 / 0,80 s riadky H1,
-  t0 + 0,80 s ponuka; t0 + 1,12 s prelnutie 90 ms a prekryv zmizne, pečiatka „Náš dvor“. Úvod je použiteľný ≈ 2,3 s.
-  Počítač: F ≈ 0,15 s, t0 ≈ 0,55 s, usadenie t0 + 0,56 – 1,0 s (kratšia dráha), použiteľný ≈ 1,6 s. Ak t0 príde
-  neskôr, časy od t0 sa skrátia koeficientom k (najviac na 0,72), aby bol úvod použiteľný do 2,45 s (od 10. 11. 2026 s tempom
-  ×1,5: pozdrav drží 0,57 s, cieľ 3,7 s; namerané bez škrtenia: otvorenie 0,58 s po prvom vykreslení, usadenie +0,90 s
-  telefón / +0,84 s počítač, koniec +1,78 / +1,73 s, spolu ≈ 2,5 s od navigácie; ťuk bránu ukončí do 0,2 s).
+Pri prvej návšteve zákazníka privíta brána s pozdravom „Nitra – Horné Krškany · od roku 1997“ a „Vitajte. Poďte ďalej.“.
+Krídla sú čierne ako úvod (vo všetkých témach, jemné svetlé latky, červená spára, „Poďte ďalej.“ na červenom páse) a
+rozídu sa rovno nad úvodom (posuvná brána, bez otáčania; na telefóne hore a dole). Fotka v bráne ani štítky už nie sú,
+nič navyše sa nestiahne. Hlavička (logo, menu, telefón) a spodná lišta Zavolať / Cenová ponuka sú celý čas nad bránou
+a fungujú. Texty sú len z overených faktov.
+- Scenár (tempo ×1,5): pozdrav drží 0,57 s od prvého vykreslenia; brána sa otvorí, keď je prvá fotka úvodu (`.uv-f0`)
+  dekódovaná (najneskôr 1,35 s po prvom vykreslení, inak rýchla cesta); krídla sa rozídu za 0,75 s, fotka úvodu dosadne
+  (1,06 → 1), riadok nad nadpisom a slová nadpisu vyjdú až vtedy, keď sú krídla celkom mimo nich (KZ-01: nikdy nie sú
+  prerezané hranou krídla, čas sa vypočíta z rozmerov a krivky clony), potom ponuka. Namerané bez škrtenia: otvorenie
+  0,58–0,60 s po prvom vykreslení, krídla mimo za 0,55 s, koniec ≈ 1,5 s od navigácie (telefón 4G CPU 4× ≈ 2,4 s).
 - Rýchla cesta: na pomalej sieti (prvé vykreslenie po 1,5 s) alebo keď fotka nie je včas pripravená, brána len
   pozdraví a otvorí sa rovno na úvod (0,44 s), keď je fotka úvodu vykreslená, najneskôr 0,7 s po prvom vykreslení.
 - Úvod sa otvára hore (Lajko 11. 11. 2026: „Nech sa stránka otvára na úvode“): pri otvorení zvonka (odkaz z WhatsAppu,
@@ -289,28 +286,24 @@ bránou a fungujú. Texty sú len z overených faktov (rok 1997, adresa, doprava
   z podstránky s bfcache aj bez, „obmedziť pohyb“, kotva z vnútra webu).
 - Kotvy v stránke (odkaz „Prezrieť predajňu“ → `#prehliadka`): posun riadi `assets/site.js` (`naKotvu`), lebo sekcie
   s `content-visibility:auto` a obrázky načítavané pri posune menia rozloženie počas cesty a plynulý posun prehliadača
-  zastal na telefóne obrazovku pred rámom prehliadky (rám 808 px pod vrchom okna). Skript pred cestou vykreslí sekcie
-  (trieda `cv-ciel`, `site.css`), v každej snímke znova zmeria polohu cieľa (aj `scroll-padding` a `scroll-margin`)
-  a dôjde presne k nemu za ≈ 0,9 s; ťuk, koliesko alebo kláves cestu zastavia, pri „obmedziť pohyb“ skok bez animácie.
-  Adresa dostane kotvu ako nový záznam histórie (Späť vráti polohu pred kliknutím, Vpred zase k prehliadke).
+  zastal na telefóne obrazovku pred rámom prehliadky. Skript pred cestou vykreslí sekcie (trieda `cv-ciel`, `site.css`),
+  v každej snímke znova zmeria polohu cieľa (aj `scroll-padding` a `scroll-margin`) a dôjde presne k nemu za ≈ 0,9 s;
+  ťuk, koliesko alebo kláves cestu zastavia, pri „obmedziť pohyb“ skok bez animácie. Adresa dostane kotvu ako nový
+  záznam histórie (Späť vráti polohu pred kliknutím, Vpred zase k prehliadke).
 - Kedy sa neukáže: druhá návšteva v tej istej relácii (`sessionStorage` `br-videne`), príchod z inej stránky webu,
-  Späť, Vpred a obnovenie, kotva v adrese pri príchode z inej stránky webu, šetrenie dát, predvykreslenie, okno menšie ako 300 × 420 px, „obmedziť
-  pohyb“ a bez JS (prekryv je v HTML ako prvý prvok `<body>`, bez triedy `br-ide` je skrytý a skript ho odstráni;
-  fotka je tá istá ako v úvode, nič navyše sa nestiahne). Vtedy beží dnešný úvod (trieda `uv-ide`).
-  `?uvitanie` v adrese ho vynúti aj pri ďalšej návšteve (nie pri „obmedziť pohyb“), napr. na ukážku majiteľovi.
+  Späť, Vpred a obnovenie, šetrenie dát, predvykreslenie, okno menšie ako 300 × 420 px, „obmedziť pohyb“ a bez JS
+  (prekryv je v HTML ako prvý prvok `<body>`, bez triedy `br-ide` je skrytý a skript ho odstráni). Vtedy beží dnešný
+  úvod (trieda `uv-ide`). `?uvitanie` v adrese ho vynúti aj pri ďalšej návšteve (nie pri „obmedziť pohyb“), napr. na
+  ukážku majiteľovi.
 - Preskočenie: ťuk, klik, koliesko, kláves (aj Tab), posun, zmena šírky okna alebo skrytie karty. Úvod je hneď
-  v konečnom stave a brána sa prelne za 0,16 s; ťuk na bránu nič pod ňou nestlačí, ťuk na Zavolať v lište alebo na
-  telefón v hlavičke sa normálne vykoná. Po preskočení sa strih zásob nespustí (tlačidlo „Prehrať úvod“ ostane).
-- Asistent na otázky, odložená práca `site.js` (odhalenia, pás značiek…) a tlačidlo „Prehrať úvod“ čakajú na koniec
-  uvítania (udalosť `br-koniec`).
+  v konečnom stave a brána sa prelne za 0,16 s; ťuk na zatvorenú bránu nič pod ňou nestlačí, ťuk na Zavolať v lište
+  alebo na telefón v hlavičke sa normálne vykoná.
+- Asistent na otázky, odložená práca `site.js` (odhalenia, pás značiek…) a striedanie fotiek úvodu čakajú na koniec
+  uvítania (udalosť `br-koniec` `{preskocene, rychlo, t}`).
 - Prístupnosť a SEO: prekryv má `aria-hidden`, vnútro je `inert` (žiadny fokus, mimo čítačky), samotný prekryv
-  zachytí ťuk (inert vrstva by ťuk pustila na odkaz pod ňou). Prvý nadpis v strome je nezmenené H1, obsah úvodu je
-  v HTML od začiatku. Pri tlači sa prekryv nezobrazí a úvod je v konečnom stave.
-- Poistky: CSS skryje prekryv 4,8 s po prvom vykreslení, aj keby skript zlyhal; skript ho odstráni najneskôr po 9 s
-  (pred tempom ×1,5 to bolo 3,2 s a 6 s).
-- Znak RS a názov firmy v bráne od 16. 11. 2026 nie sú v žiadnej téme (Lajko: logo a názov len raz; sú v lište, ktorá
-  ostáva nad bránou). Vo farebnej téme je pozdrav 7,4 vw (telefón 15,5 vw), aby sa „Poďte ďalej.“ s červeným pásom
-  zmestilo do krídla v jednom riadku od 320 px.
+  zachytí ťuk (inert vrstva by ťuk pustila na odkaz pod ňou). Prvý nadpis v strome je H1 úvodu, obsah úvodu je v HTML
+  od začiatku. Pri tlači sa prekryv nezobrazí a úvod je v konečnom stave.
+- Poistky: CSS skryje prekryv 4,8 s po zobrazení, aj keby skript zlyhal; skript ho odstráni najneskôr po 9 s.
 - Kód: zdroje sú v `zdroj/uvitanie-head.js` (rozhodnutie v `<head>`), `zdroj/uvitanie.css`, `zdroj/uvitanie.html`
   (prekryv) a `zdroj/uvitanie.js` (riadenie, WAAPI). `build.py:uvitanie_bloky()` ich zmenší na 4 bloky v `index.html`
   (štýl a rozhodnutie v `<head>` pred skriptom `uv-ide`, prekryv ako prvý prvok `<body>`, aby bol pozdrav v prvom
@@ -318,15 +311,16 @@ bránou a fungujú. Texty sú len z overených faktov (rok 1997, adresa, doprava
   Po zmene zdroja: `python3 -I zdroj/uvitanie_vloz.py .` (bloky v `index.html` nahradí) a `python3 build.py`
   („kontrola úvodu: OK … uvítanie zo zdroja 1×“; kontrola overí aj `aria-hidden`, `inert`, žiadny nadpis, odkaz,
   výkričník ani štítok označenia asistenta v prekryve, jeho skrytie bez `br-ide` a žiadne `rotate`, `perspective` ani
-  `clip-path`). `assets/site.js` čaká na udalosť `br-koniec` (`{preskocene, rychlo, t}`).
+  `clip-path`).
 - Vypnutie: v `zdroj/uvitanie-head.js` `VYP = 1` a vložiť bloky (`uvitanie_vloz.py`), alebo zmazať 4 bloky
   z `index.html` (`<style>` začínajúci `.br{`, skript s `br-ide` v `<head>`, `<div class="br" …>` za `<body>` a skript pred `<main>`)
   a z podmienky skriptu `uv-ide` časť `&&!h.classList.contains("br-ide")`, potom upraviť `kontrola_uvodu()`.
-- Výmena fotky dvora: uvítanie používa ten istý `<picture>` ako úvod (rovnaké `srcset` a `sizes`), pri inom výreze
-  treba v prekryve skontrolovať polohy špendlíkov štítkov (`data-tel`, `data-pc` = poloha v pomere k fotke) a pomer
-  strán v `zdroj/uvitanie.css` (`.br-scena`, `--a`).
-- Test: `richtarik/dokoncenie/nastroje/uvitanie-zf.mjs kontroly` (preskočenie, relácia, obmedziť pohyb, bez JS, kotva,
-  šetrenie dát, iframe, tlač, Späť, šírky 320 – 1920, odovzdanie do rámu, štítky, krídla) a `… vykon` (A/B meranie).
+- Test: `richtarik/staryuvod/zapis/nastroje/uvitanie-zf.mjs kontroly` (27 kontrol: značky a časy otvárania, pozdrav,
+  krídla, slová nadpisu neprerezané krídlom, počas uvítania len prvá fotka a striedanie až po ňom, čítačka, preskočenie
+  do 0,25 s, ťuk nič nestlačí, relácia, kotva, obmedziť pohyb, šetrenie dát, bez JS, tlač, Späť, poistky, šírky 320 – 1920,
+  odovzdanie do úvodu, iframe; adresy NOVY, PRED – ten istý web s `classList.add('br-ide')` nahradeným `void 0` – a HOST
+  v hlavičke skriptu) a `… vykon` (A/B meranie). Starší `richtarik/dokoncenie/nastroje/uvitanie-zf.mjs` patrí k úvodu
+  s fotkou 11 a strihom zásob.
 
 ## Pohyb a prechody
 **Tempo ×1,5 (10. 11. 2026, majiteľ: pomalšie animácie).** Všetko, čo je predstavenie, má 1,5-násobok pôvodnej dĺžky aj
@@ -344,14 +338,14 @@ oneskorenia; odozva na dotyk a myš ostala. Časy uvedené ďalej v tejto časti
 | `--dlzka-odh` / `--dlzka-odh-op` (odhalenie pri posune) | 620 / 520 ms | 930 / 780 ms |
 | `--dlzka-riadok`, `--dlzka-stredna`, `--krok-cas` | 800, 360, 70 ms | 1 200, 540, 105 ms |
 | riadok nadpisu sekcie z drážky, H1 po prechode na telefóne | 560, 440 ms | 840, 660 ms |
-| úvod: okno kina, kamera, strih zásob | 0,85 s, 2,9 s, 3,0 s | 1,28 s, 4,35 s, 4,5 s |
+| úvod: nábeh slov H1, Ken Burns prvej fotky, striedanie fotiek | 0,9 s (krok 70 ms), 10 s, – | 1,35 s (krok 105 ms), 15 s, 24 s (fotka 6 s) |
 | uvítanie Brána (od prvého vykreslenia po koniec) | ≈ 1,6 s | ≈ 2,4 s (`zdroj/uvitanie.js`, `M = 1.5`) |
 | **bez zmeny (odozva):** `--dlzka-tlak` 80 ms, `--dlzka-pusti` 160 ms, `--dlzka-hover` 240 ms, `--dlzka-kratka` 180 ms, lightbox, otvorenie menu 300 ms, výsledky hľadania, okno asistenta 360 ms, preskočenie uvítania, rýchla cesta uvítania 440 ms | | |
 
 Prechod stránky tým trvá 0,75–0,8 s (namerané úvod → katalóg 770–795 ms, predtým 560–650 ms); ťuk, klik alebo kláves ho
 stále ukončí hneď. Obsah na pohyb nečaká: konečný stav je HTML a CSS, „obmedziť pohyb“ a prehliadač bez JS ho vidia hneď.
 Zmeniť tempo: hodnoty v `:root` (`site.css`, časť Pohybový systém, pôvodná hodnota je v komentári pri každej premennej),
-časy úvodu v časti „pohyb úvodu“ a v `site.js` (strih zásob), konštanta `M` v `zdroj/uvitanie.js` a časy v `zdroj/uvitanie.css`
+časy úvodu v časti „pohyb úvodu“ na konci `site.css`, konštanta `M` v `zdroj/uvitanie.js` a časy v `zdroj/uvitanie.css`
 (potom `python3 -I zdroj/uvitanie_vloz.py .` a build).
 
 Jeden pohybový jazyk pre celý web. CSS je v časti „Pohybový systém celého webu“ na konci `assets/site.css` (premenné
@@ -718,7 +712,7 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
 ## Údržba
 - Prostredie: `python3 -m venv venv && venv/bin/pip install lxml`, potom v tomto priečinku `venv/bin/python build.py`.
   Beh vypíše `stránok v sitemap.xml: 76`, `znalosti asistenta z dát: bez zmeny`, `kontrola oblastí správy: OK`,
-  `zhoda Python = PHP: … rozdielov 0`, `kontrola úvodu: OK`, `kontrola textov: OK` a `vygenerovaných stránok HTML: 76`
+  `zhoda Python = PHP: … rozdielov 0`, `kontrola úvodu: OK`, `kontrola textov: OK`, `kontrola farieb: OK` a `vygenerovaných stránok HTML: 76`
   (riadok `vynechané odkazy …` sa vypíše len vtedy, keď zdroj odkazuje na súbor, ktorý už neexistuje). Riadok `POZOR` znamená, že
   `kontrola_uvodu()` v ručnom `index.html` nenašla položku menu alebo údaj firmy z `build.py` (`NAV`, `FIRMA`), alebo
   že `kontrola_textov()` našla titulok, popis či H1 mimo pravidiel (časť Texty a SEO) – treba to opraviť. Po behu
@@ -733,8 +727,9 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   `prehliadka_blok('')` ručne aj do `index.html` a spustiť `asistent/nastroje/otazky_zdroj.py`, ak sa zmenil počet zastávok
   (asistent ho uvádza).
 - Úvod (`index.html`) sa mení ručne (texty, odkazy, karty akcií a noviniek, päta). Po zmene `index.html`, `site.css`
-  alebo `site.js`: `node --check assets/site.js` a prejsť úvod na telefóne aj počítači (strih, Prehrať úvod, posun).
-- Fotky úvodu `img/uvod/` sú hotové webové veľkosti fotiek majiteľa (originály má majiteľ). Novú fotku treba vyrobiť
+  alebo `site.js`: `node --check assets/site.js` a prejsť úvod na telefóne aj počítači (uvítanie, nábeh slov, striedanie fotiek, hľadanie, posun).
+- Fotky prvej obrazovky `img/uvod/uvod-*` vyrába `zdroj/uvod_snimky.py` zo starých fotiek `img/hd` (časť Úvod; výrezy
+  so zakázanými oblasťami, nič nezväčšovať). Ostatné fotky `img/uvod/` sú hotové webové veľkosti fotiek majiteľa (originály má majiteľ). Novú fotku treba vyrobiť
   v tých istých šírkach a formátoch (AVIF aj WebP, ImageMagick, nikdy nezväčšovať): `dvor-p` 1290, 1720 a `dvor-t`
   (výrez na výšku) 1086, 1448; `dvor-predajna` 800, 1200; `pas-dvor` 1280, 1920; `pas-dvor-t` (výrez na výšku) 780,
   1086, 1290; `zasoba-porfix`, `-rezivo`, `-stadreko` 480, 720, 900; `zasoba-tehly` 480, 720, 856 (čísla sú v názve
@@ -864,7 +859,7 @@ z `.htaccess`; bez HTTPS funguje len pod `php -S`).
 Náhľad beží na GitHub Pages v podpriečinku `stavebniny-richtarik/`. Ostrý web je v koreni domény
 https://www.stavebninyrichtarik.sk/ (canonical, sitemap a og:image sú nastavené na túto adresu):
 
-1. `venv/bin/python build.py` – vypíše `stránok v sitemap.xml: 76`, `kontrola úvodu: OK`, `kontrola textov: OK`
+1. `venv/bin/python build.py` – vypíše `stránok v sitemap.xml: 76`, `kontrola úvodu: OK`, `kontrola textov: OK`, `kontrola farieb: OK`
    a žiadne `POZOR`; `index.html` bez zmeny.
 2. `bash nasadenie/balik.sh . <priečinok balíka>` (bez asistenta) alebo
    `ASISTENT_API=https://www.stavebninyrichtarik.sk/asistent/api.php bash nasadenie/balik.sh . <priečinok>` (s ním, až
@@ -923,7 +918,7 @@ https://www.stavebninyrichtarik.sk/ (canonical, sitemap a og:image sú nastaven�
 - Náhľad: `data-asistent="ukazka"` na `<html>` (šablóna v `build.py`, ručne v `index.html`), odpovede vopred
   pripravené, nič sa neposiela. Kým je v okne úvod (sekcia s nadpisom `#h-uvod`, trieda `.hero` alebo atribút
   `data-bez-asistenta`), ikona je skrytá, aby nezakryla jeho tlačidlá. Modul sa načíta lenivo (pri prvom ťuknutí alebo
-  klávese, inak 3,5 s po načítaní a najskôr 5,5 s od začiatku, po strihu úvodu) a nikdy počas posunu (čaká 600 ms
+  klávese, inak 3,5 s po načítaní a najskôr 5,5 s od začiatku, po uvítaní) a nikdy počas posunu (čaká 600 ms
   pokoja), aby preklad modulu nedal dlhú snímku v odhaleniach pri posune; prvý obraz stránky ho nepotrebuje.
 - Vzhľad a pohyb okna sú z webu: papier, malta, tehlová, Barlow; dĺžky a krivky z `site.css` (`--dlzka-dnu`,
   `--krivka-dnu`, `--dlzka-tlak`), žiadna tmavá plocha (ani bublina otázky, ani clona na telefóne), pri „obmedziť

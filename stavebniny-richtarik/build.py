@@ -519,7 +519,7 @@ def breadcrumb_ld(path, crumbs):
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}, ensure_ascii=False) + '</script>\n'
 
 
-FARBA = '#ffffff'   # farba lišty prehliadača (theme-color, manifest): biela lišta webu vo farebnej téme (od 16. 11. 2026, predtým antracit #1c1a1b nad červenou lištou); pri ?tema=svetla ju skript TEMA_HEAD prepíše na #faf8f4, pri ?tema=tmava na #121110
+FARBA = '#ffffff'   # farba lišty prehliadača (theme-color, manifest): biela lišta webu vo farebnej téme (od 16. 11. 2026, predtým antracit #1c1a1b nad červenou lištou); pri ?tema=svetla ju skript TEMA_HEAD prepíše na #ffffff, pri ?tema=tmava na #111111
 TEMA = 'farebna'    # predvolená téma v atribúte data-tema na <html> každej stránky (farebná aj bez JS; zdroj/tema-head.js)
 
 
@@ -1627,8 +1627,32 @@ def kontrola_uvodu():
     if s.count(prehliadka_blok('')) != 1: chyba.append("úvod: komponent prechádzky predajňou nie je v index.html práve raz alebo sa nezhoduje s prehliadka_blok('') (vlož jeho výstup)")
     if bez_og: chyba.append(f'og obrázok {OG_IMG[0]} chýba na {bez_og} z {stranky} stránok')
     h1 = re.findall(r'<h1[ >].*?</h1>', s, re.S)
-    h1_ok = len(h1) == 1 and h1[0].count('<span class="h1-miesto">') == 1 and 'Predajňa plná materiálu' in h1[0] and not re.search(r'<img|<picture|Stavebniny|Richtárik', h1[0])
-    if not h1_ok or 'h1-znacka' in s or 'h1-nazov' in s: chyba.append(f'úvod: H1 {len(h1)}× (má byť 1×: riadok miesta .h1-miesto a heslo „Predajňa plná materiálu“, bez znaku RS a názvu firmy – tie sú len v lište)')
+    # H1 ako na pôvodnom webe (Lajko 17. 11. 2026: zachovať štýl písma a prvú obrazovku): „Stavebný materiál v celom
+    # sortimente. Za super ceny.“, slová v .w (postupný nábeh), riadok „Stavebniny Richtárik, Nitra. Od roku 1997“ je nad
+    # nadpisom mimo H1 (.uv-nad); v H1 nie je znak RS ani názov firmy
+    h1t = re.sub(r'<[^>]+>', '', h1[0]) if h1 else ''
+    h1_ok = len(h1) == 1 and ' '.join(h1t.split()) == 'Stavebný materiál v celom sortimente. Za super ceny.' and h1[0].count('class="w"') == 8 and not re.search(r'<img|<picture|Stavebniny|Richtárik', h1[0])
+    if not h1_ok or 'h1-znacka' in s or 'h1-nazov' in s or s.count('<p class="uv-nad">') != 1: chyba.append(f'úvod: H1 {len(h1)}× (má byť 1×: „Stavebný materiál v celom sortimente. Za super ceny.“ po slovách .w a nad ním .uv-nad, bez znaku RS a názvu firmy)')
+    # dvojice „v celom“ a „Za super“ nelámať (.nz), aby mal nadpis vždy 6 riadkov ako pôvodný
+    if [' '.join(re.sub(r'<[^>]+>', '', x).split()) for x in re.findall(r'<span class="nz">(.*?</span>)</span>', h1[0] if h1 else '')] != ['v celom', 'Za super']:
+        chyba.append('úvod: H1 nemá nezlomiteľné dvojice <span class="nz"> „v celom“ a „Za super“')
+    # prvá obrazovka (17. 11. 2026): fotky img/uvod sa striedajú (prvá v HTML s fetchpriority, ďalšie tri v <template>),
+    # fotka predajne 11, štítok „Naša predajňa“, rám a šikmý panel starého úvodu ani film/auto tam už nie sú
+    sek = re.search(r'<section class="uv"[^>]*>.*?</section>', s, re.S)
+    sek = sek.group(0) if sek else ''
+    if not sek: chyba.append('úvod: chýba sekcia <section class="uv">')
+    else:
+        zakaz = [z for z in ('11-tvarnice', 'uv-dvor', 'uv-ram', 'uv-stitok', 'Naša predajňa', 'img/film', '<video', 'nakladiak') if z in sek]
+        if zakaz: chyba.append('úvod: v prvej obrazovke je ' + ', '.join(zakaz))
+        f0 = re.findall(r'<picture class="uv-f uv-f0">.*?</picture>', sek, re.S)
+        dalsie = re.search(r'<template class="uv-dalsie">(.*?)</template>', sek, re.S)
+        if len(f0) != 1 or 'fetchpriority="high"' not in f0[0] or 'loading="lazy"' in f0[0]: chyba.append('úvod: prvá fotka .uv-f0 nie je práve raz v HTML s fetchpriority="high"')
+        if not dalsie or [int(x) for x in re.findall(r'<picture class="uv-f uv-f(\d)">', dalsie.group(1))] != [1, 2, 3]: chyba.append('úvod: ďalšie tri fotky .uv-f1 až .uv-f3 nie sú v <template class="uv-dalsie">')
+        chybajuce = sorted({u for u in re.findall(r'(img/uvod/[\w.-]+)', sek) if not os.path.exists(os.path.join(OUT, u))})
+        if chybajuce: chyba.append('úvod: chýbajú súbory ' + ', '.join(chybajuce))
+    import importlib.util as _iu   # výrezy fotiek úvodu nesmú zasiahnuť nákladiak ani palmu (zdroj/uvod_snimky.py)
+    _sp = _iu.spec_from_file_location('uvod_snimky', os.path.join(OUT, 'zdroj', 'uvod_snimky.py')); _us = _iu.module_from_spec(_sp); _sp.loader.exec_module(_us)
+    chyba += ['úvod: ' + c for c in _us.kontrola()]
     if s.count('<title>Stavebniny Richtárik') != 1 or len(re.findall(r'<a class="brand"[^>]*aria-label="Stavebniny Richtárik', s)) != 1: chyba.append('úvod: názov firmy nie je v titulku alebo v lište (a.brand) práve raz')
     if s.count(f'{DOMENA}{OG_IMG[0]}') < 2: chyba.append('úvod: og:image alebo JSON-LD image nie je og obrázok webu')
     # uvítanie Brána (zdroj/uvitanie.*): štyri bloky zo zdroja práve raz, prekryv ako prvý prvok <body> (bez triedy br-ide
@@ -1650,6 +1674,49 @@ def kontrola_uvodu():
     if chyba: print('POZOR: kontrola úvodu (doplň ručne):', chyba)
     else: print(f'kontrola úvodu: OK (stránok {stranky}, og obrázok na všetkých, H1 1×, bez starého videa, skript prechodov a témy 1× na každej, uvítanie zo zdroja 1×)')
     return not chyba
+
+
+# Paleta rozhrania verejného webu (Lajko 17. 11. 2026: „urob to celé do čierno-bielo-červenej“): biela, čierna a neutrálne
+# šedé (R = G = B, aj priesvitné), a štyri odtiene červenej z loga RS (zmeraná z img/logo-rs-720.png): #d93439 loga
+# (tlačidlá s bielym písmom, veľké písmo, linky), #b42226 malé písmo na svetlom a tlačidlo pod myšou, #e57679 malé písmo na
+# čiernom, #921b1f tmavší stav pod myšou. Fotky, grafiky majiteľa, logá značiek a mapa sú obrázky, kontrola ich nečíta.
+PALETA_CERVENE = {'#d93439', '#b42226', '#e57679', '#921b1f'}
+# Výnimka: podklad .rozvoz pod priehľadným rohom grafiky Rozvoz (odtiene podlahy obrázka, patria k obrázku). Pri výmene
+# obrázka podklad prepočítať z jeho okraja a výnimku tu upraviť.
+PALETA_VYNIMKY = ('.rozvoz{',)
+
+
+def kontrola_farieb():
+    """Verejné CSS, JS a HTML (stránky, zdroje vkladaných blokov, kostry stránok zo správy, manifest) nesmú mať farbu
+    rozhrania mimo palety: každá zapísaná farba (#rgb, #rrggbb, #rrggbbaa, %23… v dátových SVG, rgb()/rgba()) je neutrálna
+    R = G = B, úplne priehľadná alebo z PALETA_CERVENE. Rozhranie správy (sprava/jadro, sprava/assets) sa nekontroluje."""
+    rx = re.compile(r'(?<![&\w])(?:#|%23)([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b(?![\w-])|rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+%?)\s*)?\)')
+    subory = []
+    for kor, dirs, fs in os.walk(OUT):
+        rel = os.path.relpath(kor, OUT)
+        dirs[:] = [x for x in dirs if x not in ('img', 'pdf', 'subory', 'nasadenie', '__pycache__', '.git', 'data', 'nastroje', 'testy', 'lib', 'znalosti', 'foto-maria', 'grafika-maria')
+                   and not (rel == 'sprava' and x != 'kostry') and not (rel == 'asistent' and x not in ('',))]
+        subory += [os.path.join(kor, f) for f in fs if f.endswith(('.css', '.js', '.html', '.webmanifest')) and not (rel == '.' and f.endswith('.js'))]
+    zle, farieb = [], set()
+    for cesta in subory:
+        t = open(cesta, encoding='utf-8', errors='replace').read()
+        for i, r in enumerate(t.split('\n'), 1):
+            if any(v in r for v in PALETA_VYNIMKY): continue
+            for m in rx.finditer(r):
+                h = m.group(1)
+                if h:
+                    # kotvy a id (href="#…", url(#…)) nie sú farby
+                    if r[max(0, m.start() - 6):m.start()].endswith(('href="', "href='", 'url(')): continue
+                    h = ''.join(x * 2 for x in h) if len(h) == 3 else h
+                    c, a = tuple(int(h[j:j + 2], 16) for j in (0, 2, 4)), (int(h[6:8], 16) if len(h) == 8 else 255)
+                else:
+                    c, a = tuple(int(m.group(j)) for j in (2, 3, 4)), (0 if (m.group(5) or '1').rstrip('%') in ('0', '0.0', '.0') else 1)
+                hx = '#%02x%02x%02x' % c; farieb.add(hx)
+                if a == 0 or c[0] == c[1] == c[2] or hx in PALETA_CERVENE: continue
+                zle.append(f'{os.path.relpath(cesta, OUT)}:{i} {m.group(0)}')
+    if zle: print(f'POZOR: kontrola farieb: {len(zle)} farieb rozhrania mimo palety (čierna, biela, neutrálna šedá, červená loga):', zle[:12])
+    else: print(f'kontrola farieb: OK ({len(subory)} súborov, {len(farieb)} rôznych farieb, len čierna, biela, neutrálne šedé a červené z loga {", ".join(sorted(PALETA_CERVENE))})')
+    return not zle
 
 
 def konstanty():
@@ -1818,4 +1885,5 @@ if __name__ == '__main__':
     if sprava_zhoda.zhoda(): raise SystemExit('build.py: vykreslenie v PHP (sprava/jadro) sa líši od build.py')
     kontrola_uvodu()
     kontrola_textov()
+    kontrola_farieb()
     print('vygenerovaných stránok HTML:', len(ZAPISANE), '(úvod index.html sa upravuje ručne)')

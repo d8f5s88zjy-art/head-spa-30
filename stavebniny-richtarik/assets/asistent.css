@@ -20,7 +20,7 @@
   position: fixed; right: var(--gutter); bottom: calc(var(--asi-dole) + env(safe-area-inset-bottom, 0px)); z-index: 45;
   width: 52px; height: 52px; padding: 0; display: grid; place-items: center;
   border: 2px solid var(--brick); border-radius: 50%; background: #fff; cursor: pointer;
-  box-shadow: 0 8px 22px rgba(20, 18, 16, .18);
+  box-shadow: 0 8px 22px rgba(18,18,18,.18);
   opacity: 0; transform: translateY(12px); transition: opacity var(--asi-cas) var(--asi-krivka), transform var(--asi-cas) var(--asi-krivka);
 }
 .asi-btn.is-on { opacity: 1; transform: none; view-transition-name: asi; }   /* pri prechode medzi stránkami stojí ako lišta (site.css, časť 2) */
@@ -47,7 +47,7 @@ html.pp-vokne .asi-oznam { display: none; }
   position: fixed; right: var(--gutter); bottom: calc(var(--asi-dole) + 64px + env(safe-area-inset-bottom, 0px)); z-index: 46;
   width: min(300px, calc(100vw - 2 * var(--gutter))); padding: 10px 10px 12px 14px;
   border: 1px solid var(--line); border-radius: 6px; border-bottom-right-radius: 2px; background: #fff; color: var(--ink);
-  font: 400 15px/1.45 var(--body); box-shadow: 0 16px 40px rgba(20, 18, 16, .16);
+  font: 400 15px/1.45 var(--body); box-shadow: 0 16px 40px rgba(18,18,18,.16);
   opacity: 0; transform: translateY(12px); transform-origin: 100% 100%;
   transition: opacity var(--dlzka-hover, 240ms) var(--asi-krivka), transform var(--dlzka-hover, 240ms) var(--asi-krivka);
 }
@@ -71,7 +71,7 @@ html.pp-vokne .asi-oznam { display: none; }
   position: fixed; right: var(--gutter); bottom: calc(var(--asi-dole) + 66px + env(safe-area-inset-bottom, 0px)); z-index: 75;
   display: flex; flex-direction: column; width: min(430px, calc(100vw - 2 * var(--gutter))); height: min(620px, calc(100vh - 150px));
   border: 1px solid var(--line); border-top: 4px solid var(--brick); border-radius: 6px; background: var(--paper); color: var(--ink);
-  font: 400 16px/1.5 var(--body); box-shadow: 0 30px 70px rgba(20, 18, 16, .22); overflow: hidden;
+  font: 400 16px/1.5 var(--body); box-shadow: 0 30px 70px rgba(18,18,18,.22); overflow: hidden;
   transform-origin: 100% 100%; animation: asi-in var(--asi-cas) var(--asi-krivka);
 }
 .asi-panel[hidden] { display: none; }
@@ -141,7 +141,7 @@ html.pp-vokne .asi-oznam { display: none; }
   .asi-oznam { bottom: calc(var(--asi-dole) + 58px + env(safe-area-inset-bottom, 0px)); width: min(300px, 62vw); }   /* RP1-12: najviac 62 % šírky */
   .asi-oznam-spytaj, .asi-oznam-tel { padding: 0 8px; }
   .asi-panel { left: 0; right: 0; bottom: 0; width: auto; height: min(78vh, calc(100vh - 64px)); height: min(78dvh, calc(100dvh - 64px)); border-radius: 8px 8px 0 0; border-bottom: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
-  .asi-clona:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 74; background: rgba(243, 240, 234, .82); }
+  .asi-clona:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 74; background: rgba(240,240,240,.82); }
   html.asi-open, html.asi-open body { overflow: hidden; }
   html.asi-klav .asi-panel { top: var(--asi-vt, 0px); bottom: auto; height: var(--asi-vh, 100dvh); border-radius: 0; padding-bottom: 0; animation: none; }
   html.asi-klav .asi-pata { display: none; }
@@ -176,10 +176,10 @@ html.pp-vokne .asi-oznam { display: none; }
   html[data-tema="tmava"] .asi-oznam { box-shadow: 0 16px 40px rgba(0, 0, 0, .5); }
   html[data-tema="tmava"] .asi-u { background: var(--concrete); color: var(--ink); }
   html[data-tema="tmava"] .asi-msg a { color: var(--brick-txt); }
-  html[data-tema="tmava"] .asi-ukazka-pas { color: var(--brick-pale); border-bottom-color: rgba(239, 122, 102, .35); }
+  html[data-tema="tmava"] .asi-ukazka-pas { color: var(--brick-pale); border-bottom-color: rgba(229,118,121,.35); }
   html[data-tema="tmava"] .asi-form textarea { background: var(--concrete); }
   html[data-tema="tmava"] .asi-chips .asi-chip-dalej { background: transparent; }
-  html[data-tema="tmava"] .asi-clona:not([hidden]) { background: rgba(18, 17, 16, .72); }
+  html[data-tema="tmava"] .asi-clona:not([hidden]) { background: rgba(17,17,17,.72); }
 }
 
 /* farebná téma (predvolená; site.css, časť Farebná téma): okno na teplom svetlom tóne s bielymi bublinami, hlavička okna je
@@ -187,7 +187,7 @@ html.pp-vokne .asi-oznam { display: none; }
    zákazníka antracit s bielym písmom; označenie asistenta v červenej hlavičke je biele s červeným písmom (6,35 : 1).
    Clona za oknom na telefóne je svetlý tón stránky. */
 @media screen {
-  html[data-tema="farebna"] .asi-panel { border-top-color: var(--f-antracit); box-shadow: 0 30px 70px rgba(28, 26, 27, .3); }
+  html[data-tema="farebna"] .asi-panel { border-top-color: var(--f-antracit); box-shadow: 0 30px 70px rgba(27,27,27,.3); }
   html[data-tema="farebna"] .asi-hlava { background: var(--f-cervena); border-bottom-color: var(--f-antracit); color: #fff; }
   html[data-tema="farebna"] .asi-hlava h2, html[data-tema="farebna"] .asi-sub { color: #fff; }
   html[data-tema="farebna"] .asi-hlava h2 .asi-ai { background: #fff; color: var(--f-cervena-tm); }
@@ -196,7 +196,7 @@ html.pp-vokne .asi-oznam { display: none; }
   html[data-tema="farebna"] .asi-x { border-color: #fff; }
   html[data-tema="farebna"] .asi-hlava :focus-visible { outline-color: #fff; }
   html[data-tema="farebna"] .asi-u { background: var(--f-antracit); color: #fff; }
-  html[data-tema="farebna"] .asi-clona:not([hidden]) { background: rgba(246, 238, 228, .86); }
+  html[data-tema="farebna"] .asi-clona:not([hidden]) { background: rgba(239,239,239,.86); }
   /* pás „Ukážka na kontrolu“: biely s červenou linkou vľavo ako zvýraznená služba, nie ružový (kontrola 13. 11. 2026, D9) */
   html[data-tema="farebna"] .asi-ukazka-pas { background: var(--povrch); border-bottom-color: var(--line); box-shadow: inset 3px 0 0 var(--f-cervena); color: var(--ink-2); }
 }
