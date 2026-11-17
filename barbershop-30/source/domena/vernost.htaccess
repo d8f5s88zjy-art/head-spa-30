@@ -8,6 +8,7 @@
   RewriteRule ^(config\.php|config\.example\.php|README\.md)$ - [F,L]
   RewriteRule (^|/)\.(user\.ini|ht) - [F,L]
   RewriteRule \.(sqlite|sqlite-wal|sqlite-shm|db)$ - [F,L]
+  RewriteRule (^|/)(error_log|php_errorlog)$ - [F,L]
   RewriteRule ^$ index.html [L]
   RewriteRule ^api/?$ api/index.php [L,QSA]
   RewriteRule ^admin/?$ admin/index.html [L]

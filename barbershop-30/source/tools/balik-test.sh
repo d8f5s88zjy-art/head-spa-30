@@ -79,6 +79,8 @@ skus "ochrana priečinkov: .htaccess a web.config v asistent, vernost, sprava; R
 # 6
 skus "odtlačky asistent/subory.sha256 sedia ($(wc -l < "$B/asistent/subory.sha256") súborov)" '( cd "$B/asistent" && sha256sum --quiet -c subory.sha256 >/dev/null 2>&1 )'
 skus "odtlačky sprava/semeno/subory.sha256 sedia ($(wc -l < "$B/sprava/semeno/subory.sha256") súborov)" '( cd "$B" && sha256sum --quiet -c sprava/semeno/subory.sha256 >/dev/null 2>&1 )'
+NAVYSE_V=$(find "$B/asistent/vendor" -type f \( -name '*.go' -o -name '*.rs' -o -name '*.rb' -o -name '*.py' -o -name '*.java' -o -name '*.cs' -o -name '*.ts' -o -name '*.exs' -o -name '*.neon' -o -name '*.yml' -o -name '*.h' -o -name 'psalm*.xml' -o -name '.editorconfig' \) | head -3)
+skus "v knižnici asistenta nie sú zdroje iných jazykov ani nástroje vývoja" '[ -z "$NAVYSE_V" ]' "$NAVYSE_V"
 skus "knižnica asistenta je úplná (autoload, SDK, HTTP klient)" '[ -f "$B/asistent/vendor/autoload.php" ] && [ -d "$B/asistent/vendor/anthropic-ai/sdk/src" ] && [ -d "$B/asistent/vendor/symfony/http-client" ]'
 echo "súborov: $(find "$B" -type f | wc -l), veľkosť: $(du -sm "$B" | cut -f1) MB (web $(du -sm "$B/assets" | cut -f1) MB, knižnica asistenta $(du -sm "$B/asistent/vendor" | cut -f1) MB, $(find "$B/asistent/vendor" -type f | wc -l) súborov)"
 echo "$ok OK, $zle FAIL"

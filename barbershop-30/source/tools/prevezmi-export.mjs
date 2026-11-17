@@ -5,7 +5,9 @@
 //
 //   node source/tools/prevezmi-export.mjs <export.zip> [--do=<koreň pracovného stromu>] [--bez-testov]
 //
-// 1. overí commit balíka (BALIK.txt) v tomto repozitári a každú cestu proti pevnej tabuľke správy (Mapa) – nič iné sa neprijme,
+// 1. overí commit balíka (BALIK.txt) v tomto repozitári, každú cestu proti pevnej tabuľke správy (Mapa) a obsah každého
+//    súboru tým istým pravidlom, ktoré vynucuje server (Mapa::kontrola: v kóde sa smú meniť len číslice a e‑mail, v PHP
+//    len v textoch, oproti verzii z commitu balíka); symbolické odkazy odmietne a pri súboroch s kódom vypíše rozdiel – nič iné sa neprijme,
 // 2. súbory rozbalí do pracovného stromu; keď sa súbor v repozitári od balíka medzitým zmenil, zlúči ho trojcestne
 //    (git merge-file proti verzii z commitu balíka) a pri konflikte skončí s chybou a nechá súbor <meno>.export na ručné zlúčenie,
 // 3. pripomenie CLAUDE.md pri zmene hodín (na hostingu nie je), vytvorí en/index.html nanovo a spustí otazky.mjs --kontrola,
@@ -46,6 +48,14 @@ try {
   const php = beh('php', ['-r', 'define("B30S", 1); require $argv[1]; echo json_encode(array_keys(array_filter(Mapa::tabulka(), fn($z) => $z[1] !== "citanie")));', path.join(R, 'barbershop-sprava', 'jadro', 'Mapa.php')]);
   if (php.status !== 0) koniec('tabuľka ciest sa nedá načítať (php, barbershop-sprava/jadro/Mapa.php)');
   const tabulka = new Set(JSON.parse(php.stdout));
+  // pravidlo obsahu zo servera (S-3): export príde e‑mailom, teda z nedôveryhodného miesta
+  const MAPA = path.join(R, 'barbershop-sprava', 'jadro', 'Mapa.php');
+  const kontrola = (c, subor, zakladSubor) => {
+    const r = beh('php', ['-r', 'define("B30S", 1); require $argv[1]; $z = $argv[4] === "" ? null : file_get_contents($argv[4]); $e = Mapa::kontrola($argv[2], file_get_contents($argv[3]), $z); echo $e === null ? "OK" : $e;', MAPA, c, subor, zakladSubor || '']);
+    if (r.status !== 0) koniec('pravidlo obsahu sa nedá overiť (php): ' + c);
+    return r.stdout === 'OK' ? null : r.stdout;
+  };
+  for (const c of cesty) if (fs.lstatSync(path.join(T, c)).isSymbolicLink()) koniec('symbolický odkaz v exporte: ' + c);
   const fotka = /^barbershop-30\/assets\/img\/[a-z0-9][a-z0-9-]{0,80}-\d{3,4}\.(?:webp|jpg)$/;
 
   let zmenene = 0, nove = 0, rovnake = 0, konflikty = [];
@@ -60,11 +70,21 @@ try {
       continue;
     }
     if (!tabulka.has(c)) koniec('súbor nie je v zozname súborov, ktoré správa mení: ' + c);
+    if (!fs.lstatSync(zdroj).isFile()) koniec('v exporte nie je obyčajný súbor: ' + c);
     const novy = fs.readFileSync(zdroj, 'utf8');
-    const teraz = fs.existsSync(ciel) ? fs.readFileSync(ciel, 'utf8') : null;
-    if (teraz === novy) { rovnake++; continue; }
     const z = beh('git', ['-C', R, 'show', `${commit}:${c}`]);
     const zaklad = z.status === 0 ? z.stdout : null;
+    // obsah: pravidlo servera proti verzii z commitu balíka (pre kód je to verzia, ktorú správa smela meniť)
+    const zakladSubor = path.join(T, '_kontrola-zaklad');
+    if (zaklad !== null) fs.writeFileSync(zakladSubor, zaklad);
+    const e = kontrola(c, zdroj, zaklad !== null ? zakladSubor : '');
+    if (e) koniec(`obsah súboru nespĺňa pravidlo správy (${e}): ${c}`);
+    if (/\.(php|js)$/.test(c) && zaklad !== null && zaklad !== novy) {
+      const d = beh('git', ['diff', '--no-index', '--no-color', '-U0', zakladSubor, zdroj]);
+      console.log(`súbor s kódom ${c} – zmeny oproti balíku (skontroluj):\n` + d.stdout.split('\n').filter((l) => /^[+-](?![+-])/.test(l)).slice(0, 40).join('\n'));
+    }
+    const teraz = fs.existsSync(ciel) ? fs.readFileSync(ciel, 'utf8') : null;
+    if (teraz === novy) { rovnake++; continue; }
     if (teraz === null || zaklad === null || teraz === zaklad) { fs.mkdirSync(path.dirname(ciel), { recursive: true }); fs.writeFileSync(ciel, novy); zmenene++; continue; }
     // repozitár sa od balíka posunul: trojcestné zlúčenie (naša verzia, verzia balíka, verzia z exportu)
     const a = path.join(T, '_nase'), b = path.join(T, '_zaklad');

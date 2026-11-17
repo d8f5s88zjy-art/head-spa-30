@@ -61,6 +61,10 @@ cp -a "$VENDOR/vendor" "$B/asistent/vendor"
 # z knižníc len to, čo beží: bez histórie, testov, príkladov a skriptov
 find "$B/asistent/vendor" \( -name .git -o -name .github -o -name tests -o -name Tests -o -name test -o -name fixtures -o -name examples -o -name scripts -o -name docs \) -type d -prune -exec rm -rf {} +
 find "$B/asistent/vendor" -type f \( -name '*.md' -o -name '*.dist' -o -name '.gitignore' -o -name '.gitattributes' -o -name 'phpunit.xml*' -o -name '.php-cs-fixer*' -o -name 'composer.lock' -o -name 'composer.json' \) -delete
+# zdroje knižníc v iných jazykoch (standard-webhooks/libraries: Go, Rust, Ruby, Python, Java, C#, Elixir, JS) a nástroje
+# vývoja (phpstan, psalm, editorconfig, yml, hlavičky C) PHP nepotrebuje
+find "$B/asistent/vendor" -path '*/standard-webhooks/standard-webhooks/libraries' -type d -prune -exec rm -rf {} +
+find "$B/asistent/vendor" -type f \( -name '*.neon' -o -name 'psalm*.xml' -o -name '.editorconfig' -o -name '*.yml' -o -name '*.yaml' -o -name '*.h' \) -delete
 
 # ---------- 3. vernostná kartička ----------
 mkdir -p "$B/vernost/data"
