@@ -68,7 +68,7 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 - Štýly a skripty: `assets/site.css`, `assets/site.js` (menu, záloha objavovania blokov pri skrolovaní pre prehliadače
   bez časovej osi posunu, počítadlá, vyhľadávanie, zbalená päta na telefóne, lightbox s listovaním a popiskami – systémové Späť ho zatvorí a neodíde zo stránky, veľmi
   široký obrázok (banner) je na telefóne vo výške súboru a posúva sa prstom do strán (`.lb-siroky`) –, pás
-  značiek s tlačidlom Zastaviť pohyb) a skript prechodov medzi stránkami v `<head>` (zdroj `zdroj/prechody.js`). Úvod je prvá obrazovka v štýle pôvodného webu: veľký nápis na tmavej fotke, fotky sa striedajú (časť Úvod nižšie). Celý web je svetlý
+  značiek s tlačidlom Zastaviť pohyb) a skript prechodov medzi stránkami v `<head>` (zdroj `zdroj/prechody.js`). Úvod je prvá obrazovka v štýle pôvodného webu: veľký nápis na fotke, tma len pod textom, fotky sa striedajú (časť Úvod nižšie). Celý web je svetlý
   (papier, malta, betón, tmavý text, tehlová ako akcent): lišta, spodná lišta, menu, päta aj lightbox. Každá podstránka
   má svetlú hlavičku s ostrou fotkou v ráme (`HLAVICKA_FOTO` v `build.py`), skutočné fotky dvora pri tovare, ktorý
   ukazujú. Pohyb celého webu (prechody medzi stránkami, odhalenia pri posune, ovládacie prvky) je v časti Pohyb
@@ -239,13 +239,27 @@ spodnou lištou) a veľký nápis vľavo dole priamo na nej.
   `slide`), prvá fotka dosadne s Ken Burns (15 s). Mimo obrazovky a na skrytej karte sa zastaví (`uv-stoj`). Slová
   nadpisu nabehnú za sebou (posun zdola a prelnutie, 1,35 s, krok 105 ms), riadok nad nadpisom, ponuka, hodiny a Skroluj
   vyjdú po nich (trieda `uv-ide` zo skriptu v `<head>`; po uvítaní ich spúšťa skript brány).
-- Čitateľnosť: čierny prechod `.uv::before` – telefón a tablet zhora 50 → 74 → 90 % (od 38 % výšky) → 94 %, počítač zľava
-  86 → 80 → 50 → 30 % a zdola 88 % → 0; jemný tieň písma navyše. Meranie v čase (17. 11. 2026, 18 okamihov celého kruhu
-  striedania vrátane prelínaní × 320/390/768/1024/1440/1920 × tri témy, text skrytý, najhorší pixel pozadia pod každým
-  riadkom; `richtarik/staryuvod/zapis/nastroje/kontrast-cas.cjs` + `.py`): biely H1 ≥ 6,55 : 1, tenší riadok ≥ 8,18,
-  „Za super ceny.“ ≥ 3,68 (prah 3), riadok nad nadpisom ≥ 5,22, veta ≥ 8,12, hodiny ≥ 18,5, odkazy ≥ 14,3, Skroluj ≥ 14,1
-  (prah 4,5); tlačidlá majú plný podklad (Zavolať biela na `#d93439` 4,67 : 1, pod myšou `#b42226` 6,57 : 1). Pri inej
-  fotke treba meranie zopakovať. Farby úvodu sú len čierna, biela, šedá `#d9d9d9` a červené z palety.
+- Čitateľnosť – miestny prechod (Lajko 17. 11.: „nech je to viac vidno“): fotka sa nestmavuje celá, tma je len pod
+  textom. Nadpis má pod sebou rozmazané schody podľa dĺžky svojich 6 riadkov (`.uv h1::before`, SVG v desatinách em, takže
+  sedí na každej šírke): biele riadky 46 %, tenší riadok 56 %, „Za super ceny.“ 90 % čiernej. Riadok nad nadpisom, hodiny,
+  ponuka s tlačidlami a odkazmi a Skroluj majú mäkký čierny podklad 57 % (`.uv-nad::after`, `.uv-info::after`,
+  `.uv-b::before` na počítači, `.uv-text::before` cez mriežku na telefóne a tablete, `.uv::after`). Celá plocha má len
+  jemný prechod pod lištou a pri spodnom okraji (`.uv::before`, najviac 32–36 %); jemný tieň písma navyše. Veľkosť
+  nadpisu ostáva (telefón `min(52px, 15.4vw)`, 6 riadkov). Meranie v čase (17. 11. 2026, 32 okamihov celého 24 s kruhu
+  striedania vrátane prelínaní × 320/390/768/1440 × tri témy; každý pixel celého písmena vrátane diakritiky voči pixelu
+  pozadia za ním, bez tieňa písma, ale s prechodmi a podkladmi; nástroje `richtarik/svetlyuvod/zapis/nastroje/meraj.cjs`
+  + `vyhodnot.py kontrast`): biely H1 ≥ 3,55 : 1, tenší riadok ≥ 3,51, „Za super ceny.“ ≥ 3,54 (prah 3), riadok nad
+  nadpisom ≥ 5,61, veta ≥ 5,20, hodiny ≥ 5,41, odkazy ≥ 6,62, Skroluj ≥ 8,97 (prah 4,5); tlačidlá majú plný podklad
+  (Zavolať biela na `#d93439` 4,67 : 1, pod myšou `#b42226` 6,57 : 1). Fotku je vidno (`vyhodnot.py viditelnost`, farebná
+  téma, priemer 8 okamihov): priemerný jas prvej obrazovky 92 z 255 na telefóne 390 a 91 na počítači 1440 (predtým 55 a
+  50, pôvodný web 85 a 89); plocha stmavená menej než na 50 %: 46 % a 64 % (predtým 0 % a 7 %, pôvodný web 5 % a 59 %).
+  Farby úvodu sú len čierna, biela, šedá `#d9d9d9` a červené z palety.
+- **Pri výmene alebo doplnení fotky úvodu** (napr. Máriove fotky do `zdroj/uvod_snimky.py`) treba najprv zmerať, či
+  hustoty tmy ešte stačia: hustoty sú stavané na najjasnejšie pixely terajších 4 fotiek a rezerva nadpisu je len asi
+  0,5 nad prahom 3 : 1. Postup: `FOTO=1 node meraj.cjs <výstup> 32 novy:<port> 320x568,390x844,768x1024,1440x900
+  farebna,svetla,tmava`, potom `python3 -I potreba.py <výstup>` (koľko čiernej treba pod každou skupinou textu; dnes biely
+  nadpis 0,41, tenší riadok 0,52, červený 0,83, malý text 0,45–0,53) a `python3 -I vyhodnot.py kontrast <výstup>` (musí byť
+  0 pod prahom). Ak treba viac, zvýšiť `fill-opacity` v SVG `.uv h1::before` alebo `--uv-tm` v `assets/site.css`.
 - „Obmedziť pohyb“, šetrenie dát a bez JS: jedna fotka bez pohybu, bez nábehu a bez uvítania; text je hneď nepriehľadný
   (bez JS je skryté len pole hľadania, ktoré by nič nerobilo).
 - Kód: CSS na konci `assets/site.css` (časť „Úvod v štýle pôvodného webu“), skript `assets/site.js` (striedanie),
@@ -259,7 +273,9 @@ spodnou lištou) a veľký nápis vľavo dole priamo na nej.
   a nad ním `.uv-nad` (bez znaku a názvu firmy v H1; názov je v titulku a v lište práve raz), fotky `.uv-f0` (v HTML,
   `fetchpriority="high"`) a `.uv-f1` až `.uv-f3` (v `template.uv-dalsie`), existenciu súborov `img/uvod`, výrezy (zakázané
   oblasti), že v prvej obrazovke nie je fotka 11, štítok, rám ani film, og obrázok na všetkých stránkach, žiadny odkaz
-  na staré video s autom a že uvítanie v `index.html` sa zhoduje so zdrojom (nižšie).
+  na staré video s autom, že uvítanie v `index.html` sa zhoduje so zdrojom (nižšie) a že rad fotiek „Skutočné fotografie
+  – V našej predajni v Nitre“ (`section.zasoba`, dlaždice `.zt`, čakanie `uv-pocka`) na úvode nie je a pod prvou
+  obrazovkou ide hneď pás faktov (Lajko 17. 11. 2026: „tento rad fotiek daj preč“).
 
 ### Uvítanie „Brána“ pred úvodom
 Pri prvej návšteve zákazníka privíta brána s pozdravom „Nitra – Horné Krškany · od roku 1997“ a „Vitajte. Poďte ďalej.“.
@@ -375,7 +391,7 @@ v `<head>` pri odchode zo stránky (`pageswap`) a odovzdá ho novej stránke (`p
 - `strih-spat` – Späť zo stránky, na ktorú sa prišlo strihom (aj z menu): zrkadlo strihu, list za 0,42 s odíde nadol
   a predošlá stránka sa vráti zo svojho ústupu. Vpred strih zopakuje. Typ príchodu si skript pamätá pri každej položke
   histórie (`sessionStorage` `vt:<kľúč>`).
-- **zdieľaná fotka** (`foto`): ťuk na dlaždicu katalógu, pásu zásob alebo novinky. Fotka dlaždice za 0,44 s preletí
+- **zdieľaná fotka** (`foto`): ťuk na dlaždicu katalógu, akcie alebo novinky. Fotka dlaždice za 0,44 s preletí
   a zväčší sa na fotku hlavičky stránky (okno mení veľkosť a orezáva). Pri Späť sa fotka hlavičky zmenší späť do dlaždice
   a dlaždica sa ukáže až na konci letu. Ak je v hlavičke iná fotka ako na dlaždici, počas letu sa prelínajú (typ
   `prelnutie`). Zdieľa sa len prvok, z ktorého je medzi hornou a spodnou lištou viditeľných aspoň 60 % (inak by
@@ -472,7 +488,7 @@ pohyb“, bez JS, prehliadač bez View Transitions), `uvod.mjs` a `pozdrav.mjs` 
 | Codrops: Image Layer Animations with Clip-Path – https://tympanus.net/codrops/2023/10/31/image-layer-animations-with-clip-path | strih viacerých záberov | výtlačky cez `transform` |
 | Codrops: Double Image Hover – https://tympanus.net/codrops/2023/03/01/double-image-hover-effects-with-clip-path-animations/ | odozva dlaždice pri myši | šípka a stlačenie, bez druhej fotky |
 | Byggmax – https://www.byggmax.se/ | nástup podľa poradia | podľa stĺpca na časovej osi posunu |
-| Petersen Tegl – https://www.petersen-tegl.dk/ | materiál ako hrdina, štítok palety | papierový štítok v páse zásob |
+| Petersen Tegl – https://www.petersen-tegl.dk/ | materiál ako hrdina, štítok palety | papierový štítok v páse zásob (pás 17. 11. 2026 z úvodu odstránený) |
 | DEV: Accessible marquee – https://dev.to/olpeh/modern-and-accessible-marquee-clone-with-tailwindcss-5abb | pauza a statický pás pri obmedzení pohybu | tlačidlo Zastaviť pohyb, pauza pri fokuse |
 | web.dev: High-performance CSS animations – https://web.dev/articles/animations-guide | len transform a opacity | – |
 | A. Roselli: Don't split words into letters – https://adrianroselli.com/2026/02/you-know-what-just-dont-split-words-into-letters.html | text najviac po riadkoch | – |
@@ -732,7 +748,9 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   so zakázanými oblasťami, nič nezväčšovať). Ostatné fotky `img/uvod/` sú hotové webové veľkosti fotiek majiteľa (originály má majiteľ). Novú fotku treba vyrobiť
   v tých istých šírkach a formátoch (AVIF aj WebP, ImageMagick, nikdy nezväčšovať): `dvor-p` 1290, 1720 a `dvor-t`
   (výrez na výšku) 1086, 1448; `dvor-predajna` 800, 1200; `pas-dvor` 1280, 1920; `pas-dvor-t` (výrez na výšku) 780,
-  1086, 1290; `zasoba-porfix`, `-rezivo`, `-stadreko` 480, 720, 900; `zasoba-tehly` 480, 720, 856 (čísla sú v názve
+  1086, 1290; `zasoba-porfix`, `-rezivo`, `-stadreko` 480, 720, 900; `zasoba-tehly` 480, 720, 856 (rad týchto fotiek
+  na úvode od 17. 11. 2026 nie je; `zasoba-tehly`, `-stadreko`, `-rezivo` sú v hlavičkách akcií a Pezinských tehelní,
+  `zasoba-porfix` nič nepoužíva – ostáva ako náhrada hlavičky Porfix, `img/FOTKY.md`, a do balíka nejde; čísla sú v názve
   súboru; `dvor-t-1448` má po vyrovnaní horizontu 1420 px a `pas-dvor-1920` 1848 px, v `srcset` je skutočná šírka).
   Do fotiek sa nič nepridáva ani neuberá (žiadne dokresľovanie paliet ani tovaru, žiadne generatívne nástroje); smie
   sa len fotografická úprava tónu, farby, svetla, orez a vyrovnanie, tak ako pri elegantnej úprave zo 6. 11. 2026

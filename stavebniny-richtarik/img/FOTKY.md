@@ -106,7 +106,7 @@ Službách. Obrázky s adresou, telefónom, e-mailom, hodinami alebo zľavou sa 
 Na webe už nie sú (súbory ostávajú v repozitári, do balíka nejdú, lebo na ne nič neodkazuje): staré fotky áut zo Služieb
 `img/p/883–885.webp` (modrý LIAZ a Avia z pôvodného webu), `img/ilu/zdarma-vypocet-480|790|1080` (výzva pred pätou na Službách,
 nahradená výrezom pri službe), album Galérie „Materiál v areáli predajne“ (`img/uvod/dvor-predajna-800|1200`,
-`pas-dvor-1280|1920`; zábery zásob z neho sú ďalej na úvode). Plochá karta `img/karta-nova-*` ostáva ako náhradná.
+`pas-dvor-1280|1920`; zábery zásob z neho sú ďalej v hlavičkách akcií). Plochá karta `img/karta-nova-*` ostáva ako náhradná.
 
 ## Propagačné grafiky majiteľa z 16. 11. 2026 (`img/ilu/`, `img/grafika/`)
 
@@ -196,7 +196,8 @@ pracovný priečinok `dizajn2/zapis/nastroje/fotky.sh` (nie balík webu). Nové 
   ostáva montáž – tá istá fotka už nie je na stránke 3×.
 - Akcia Betónové tvárnice a novinka Betónové výrobky: Máriova fotka `predajna/02-tvarnice-obloha` (palety betónových tvárnic)
   namiesto `tehla` (rozbité keramické tehly).
-- Máriove skutočné fotky (sekcia „Skutočné fotografie – V našej predajni v Nitre“, `img/uvod`, `img/predajna`) ostávajú.
+- Máriove skutočné fotky (`img/uvod`, `img/predajna`) ostávajú. Sekcia úvodu „Skutočné fotografie – V našej predajni v Nitre“
+  (rad 4 fotiek `zasoba-*`) je od 17. 11. 2026 z úvodu preč (Lajko: „tento rad fotiek daj preč“); súbory ostávajú.
   `img/predajna/hlavicka/<názov>-720.avif|webp` sú len výrezy 720 × 468 tých istých fotiek pre hlavičku na telefóne (z `-1290`,
   poloha `PREDAJNA_POS`, bez úpravy tónu, AVIF crf 32); ten istý výrez berie aj karta značky Stavebné profily (`06`).
 - Staré súbory `sadrokarton`, `komin` ostávajú v repozitári bez odkazu (`komin` a `sadrokarton` sa už nepoužívajú; balík
@@ -216,7 +217,7 @@ Zápis výroby a manifest: pracovný priečinok `majitel/podklady/assets/` (`MAN
   firmy, 11 tvárnice a Porfix pri ceste, 12 predajňa s regálmi, 13 dlažba v sklade), šírky 480/720/960/1290 a 1720
   (1290 ≈ 1 : 1 so zdrojom, 1720 je zväčšenie 1,33× len na celú šírku okna), vzhľad „Svetlé ráno“ ako ostatné skutočné fotky.
   Použitie: úvod a uvítanie (11, **provizórne**, kým majiteľ nepotvrdí „fotku číslo 5“; telefón berie tie isté široké súbory
-  `-960` a `-1290`, zvislé výrezy `-t-` fotky 11 sa od 10. 11. 2026 nepoužívajú a zo stromu sú preč, výrezy náhradnej fotky 02 ostávajú), pás zásob, hlavičky podstránok,
+  `-960` a `-1290`, zvislé výrezy `-t-` fotky 11 sa od 10. 11. 2026 nepoužívajú a zo stromu sú preč, výrezy náhradnej fotky 02 ostávajú), hlavičky podstránok,
   Kontakt, Doprava a Služby (10), galéria a prechádzka predajňou (zastávky 09, 11, 04, 13, 06, 05, 01, 12, 08 – `build.py` `PRECHADZKA`).
 - `img/logo-rs-360|720.png|webp`, `img/favicon-32.png`, `img/apple-touch-icon.png`, `img/ikona-192|512.png` – nové logo RS
   (tehlový múr s murárskou lyžicou a červené RS na čiernom zaoblenom podklade), vyčistené zo snímky obrazovky.
@@ -258,8 +259,11 @@ Po vyrovnaní horizontu majú dva súbory menej pixelov, než hovorí názov (n�
   verzie zo stavu `bb6bbaeb`. Upravené verzie s generatívne doplnenými paletami vznikli v `6d285c37` („doplnený tovar“)
   a ďalej sa menili v `b46c7d43` a `6bffd83e` (ten stav mal web až do `4b2646bf`); plné zásoby sa nesmú dokazovať
   upravenou fotkou. V strome nie je žiadny súbor s md5 niektorej z 54 upravených verzií. Na Porfixe je teraz vidieť prázdnu a načatú paletu a modré plachty.
-- `zasoba-tehly`, `zasoba-stadreko`, `zasoba-rezivo`: zábery strihu na úvode a pás zásob na úvodnej stránke, obsah bez
-  zmeny (len fotografická úprava vyššie).
+- `zasoba-tehly`, `zasoba-stadreko`, `zasoba-rezivo`: hlavičky akcií Pezinská tehla TermoBRIK, Dlažby a ploty Stadreko,
+  Stavebné rezivo a stránky Pezinské tehelne (rad fotiek na úvodnej stránke je od 17. 11. 2026 preč), obsah bez zmeny
+  (len fotografická úprava vyššie). `zasoba-porfix` (480/720/900 a `hlavicka/zasoba-porfix-720`) dnes nič nepoužíva: ostáva
+  v repozitári ako náhrada hlavičky Porfix (časť FIZOSK vyššie) a do balíka nejde, lebo `nasadenie/balik.sh` vynecháva
+  obrázky, na ktoré nič neodkazuje.
 - Úvodné video s nákladným autom (vyrobené z vygenerovaného klipu) a jeho obrázok pri zdieľaní boli 5. 11. 2026 na
   žiadosť majiteľa odstránené zo stromu aj zo všetkých stránok.
 

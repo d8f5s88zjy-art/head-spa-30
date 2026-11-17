@@ -13,7 +13,7 @@
    päta, spodná lišta a tlačidlá úvodu), strih-spat (Späť zo stránky, na ktorú sa prišlo strihom: list odíde nadol,
    RP2-02), prelnutie (na dlaždici je iná fotka ako v hlavičke), zmenu (prechod z otvoreného menu na telefóne: panel
    odíde doprava ako opona a pod ním už stojí nová stránka, RP2-05).
-   Zdieľané prvky: foto (fotka dlaždice katalógu, zásob, noviniek alebo karty značky ↔ fotka hlavičky), nadpis (názov
+   Zdieľané prvky: foto (fotka dlaždice katalógu, noviniek alebo karty značky ↔ fotka hlavičky), nadpis (názov
    dlaždice ↔ H1, len rovnaký text a len od 701 px, kde je nadpis na dlaždici aj v hlavičke pod fotkou, RP2-04), stitok
    (štítok karty akcie ↔ štítok akcie, od 701 px, RP2-12), ciara (podčiarknutie aktívnej položky menu na počítači),
    menu (otvorený panel menu). Lišta a spodná lišta stoja (CSS).
@@ -37,10 +37,10 @@
   function I(el) { return el.tagName == 'IMG' ? el : el.querySelector('img'); }   // fotka v ráme dlaždice alebo hlavičky
   function F(el) { var i = I(el); return i ? (i.currentSrc || i.src).split('/').pop().replace(/(-\d+)?\.\w+$/, '') : ''; }
   function D(u) {
-    var c = P(u), a = d.querySelectorAll('a.cat,a.zt,a.nov,a.deal,.znacka .zl a'), W = innerWidth > 700, i, x, f, n, s;
+    var c = P(u), a = d.querySelectorAll('a.cat,a.nov,a.deal,.znacka .zl a'), W = innerWidth > 700, i, x, f, n, s;
     for (i = 0; i < a.length; i++) if (P(a[i].href) == c) {
       x = a[i].closest('.znacka') || a[i];
-      f = x.matches('.zt') ? x : x.querySelector('.ph,.zm'); n = W && x.matches('.cat') && x.querySelector('h2,h3'); s = W && x.matches('.deal') && x.querySelector('.tag');
+      f = x.querySelector('.ph,.zm'); n = W && x.matches('.cat') && x.querySelector('h2,h3'); s = W && x.matches('.deal') && x.querySelector('.tag');
       if (f && !I(f)) f = 0;
       if (V(f) || V(n) || V(s)) return { f: V(f) && f, n: V(n) && n, s: V(s) && s };
     }

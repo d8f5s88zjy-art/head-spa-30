@@ -546,11 +546,11 @@ def zmensi_css(s):
 
 def prechody_head():
     """Skript prechodov medzi stránkami (zdroj zdroj/prechody.js bez komentárov) a pravidlá prípravy stránky
-    (Speculation Rules): cieľ dlaždice katalógu, akcie, zásoby alebo novinky sa začne pripravovať pri dotyku
+    (Speculation Rules): cieľ dlaždice katalógu, akcie alebo novinky sa začne pripravovať pri dotyku
     (eagerness conservative = pointerdown), takže fotka hlavičky je pri prechode načítaná. Len stránky .html
     toho istého webu, nikdy PDF, subory/, mailto: ani tel:. Rovnaký blok je ručne v index.html (kontrola_uvodu)."""
     js = zmensi_js(open(os.path.join(ROOT, 'zdroj', 'prechody.js'), encoding='utf-8').read())
-    pravidla = {"prerender": [{"where": {"and": [{"selector_matches": "a.cat, a.deal, a.zt, a.nov"}, {"href_matches": "/*.html"}]}, "eagerness": "conservative"}]}
+    pravidla = {"prerender": [{"where": {"and": [{"selector_matches": "a.cat, a.deal, a.nov"}, {"href_matches": "/*.html"}]}, "eagerness": "conservative"}]}
     return '<script>' + js + '</script>\n<script type="speculationrules">' + json.dumps(pravidla, separators=(',', ':')) + '</script>\n'
 
 
@@ -1636,6 +1636,10 @@ def kontrola_uvodu():
     # dvojice „v celom“ a „Za super“ nelámať (.nz), aby mal nadpis vždy 6 riadkov ako pôvodný
     if [' '.join(re.sub(r'<[^>]+>', '', x).split()) for x in re.findall(r'<span class="nz">(.*?</span>)</span>', h1[0] if h1 else '')] != ['v celom', 'Za super']:
         chyba.append('úvod: H1 nemá nezlomiteľné dvojice <span class="nz"> „v celom“ a „Za super“')
+    # rad fotiek „Skutočné fotografie – V našej predajni v Nitre“ (section.zasoba, dlaždice .zt) je z úvodu preč (Lajko 17. 11.
+    # 2026: „tento rad fotiek daj preč“): pod prvou obrazovkou (.uv) ide hneď pás faktov; fotky zasoba-* ostávajú len pre hlavičky
+    if re.search(r'class="(zasoba|zas|zt)"|h-zasoba|V našej predajni v Nitre|uv-pocka|img/uvod/zasoba-', s) or not re.search(r'<div class="uv-cue"[^>]*>Skroluj</div>\n</section>\n<div class="facts', s):
+        chyba.append('úvod: rad fotiek „V našej predajni v Nitre“ (section.zasoba, .zt, uv-pocka) má byť preč a pod úvodom (.uv) má ísť hneď pás faktov')
     # prvá obrazovka (17. 11. 2026): fotky img/uvod sa striedajú (prvá v HTML s fetchpriority, ďalšie tri v <template>),
     # fotka predajne 11, štítok „Naša predajňa“, rám a šikmý panel starého úvodu ani film/auto tam už nie sú
     sek = re.search(r'<section class="uv"[^>]*>.*?</section>', s, re.S)

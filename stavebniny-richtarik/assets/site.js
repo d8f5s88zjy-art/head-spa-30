@@ -141,7 +141,7 @@
   // Bez JS, pri „obmedziť pohyb“ a bez IntersectionObserver nič nečaká.
   var ODH = 'main .head .eyebrow,main .head h2,main .head .lede,main .head>.btn,main .head>div>.btn,.rv:not(.galeria):not(.karta):not(.facts),.karta,' +
     '.cats>.cat,.deals>.deal,.sub-grid>.sub,.kgrid>.kbox,.facts>div,.disc>div,.srvs>.srv,.cennik>.cen,.band .wrap>*,.onas .tx>*,' +
-    '.kontakt-teaser .grid>div>*,.cta-pas .wrap>div>*,.cta-pas .cta,.zlavy .grid>div:first-child>:not(.disc),.sort-note,.akcia-tag,.novs>.nov,.zt span,.onas .year,' +
+    '.kontakt-teaser .grid>div>*,.cta-pas .wrap>div>*,.cta-pas .cta,.zlavy .grid>div:first-child>:not(.disc),.sort-note,.akcia-tag,.novs>.nov,.onas .year,' +
     '.galeria>a:nth-child(n+9)';   // RP2-09: fotky galérie od 9. v mriežke (prvých 8 odhaľuje časová os posunu v CSS)
   function odhalenia() {
     if (reduce || !('IntersectionObserver' in window)) return;
