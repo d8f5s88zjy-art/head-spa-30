@@ -2,6 +2,7 @@
 /* VERNOSTNÁ KARTA 30 – API. Volanie: api/?a=<akcia>, telo JSON (POST). Verejné akcie slúžia karte klienta a
  * prihláške z webu; akcie admina vyžadujú prihlásenie (relácia), hlavičku X-Vernost-Admin a vlastný pôvod. */
 declare(strict_types=1);
+ini_set('display_errors', '0');   // chyby len do denníka servera, nikdy do odpovede (cesty na disku)
 const VERNOST = true;
 require __DIR__ . '/../lib/jadro.php';
 require __DIR__ . '/../lib/push.php';
@@ -61,7 +62,7 @@ try {
 
 function stav(): never {
   $k = konfig();
-  odpoved(['ok' => true, 'php' => PHP_VERSION, 'sqlite' => extension_loaded('pdo_sqlite'), 'openssl' => extension_loaded('openssl'),
+  odpoved(['ok' => true, 'sqlite' => extension_loaded('pdo_sqlite'), 'openssl' => extension_loaded('openssl'),
     'curl' => extension_loaded('curl'), 'mbstring' => extension_loaded('mbstring'), 'email' => $k['email_od'] !== '',
     'admin' => array_map(fn ($p) => !empty($k['hesla'][$p]), array_combine(prevadzky_tu(), prevadzky_tu())),
     'databaza' => (bool) hodnota(db()->query('SELECT 1')), 'ip_cez_proxy' => ip_cez_proxy()]);
@@ -78,8 +79,9 @@ function email_karta(string $komu, string $p, string $token): void {
 function registracia(): never {
   $v = vstup();
   if (text($v['web'] ?? '', 50) !== '') odpoved(['ok' => true, 'karta' => '']);          // pasca na roboty
-  limit('registracia', 20, 3600);   // viac klientov môže zdieľať jednu IP (mobilní operátori, Wi‑Fi v salóne)
   $p = prevadzka($v['prevadzka'] ?? '');
+  // viac klientov môže zdieľať jednu IP (mobilní operátori, Wi‑Fi v salóne); navyše celkový denný strop prevádzky
+  limit_pokus([[limit_kluc('registracia'), 20, 3600], ["registracia:spolu:$p", 200, 86400]]);
   if (($v['suhlas_karta'] ?? false) !== true) chyba('Kartičku založíme len so súhlasom.');
   $meno = text($v['meno'] ?? '', 80);
   if (mb_strlen($meno) < 2) chyba('Napíš, prosím, meno a priezvisko.');
@@ -98,7 +100,7 @@ function registracia(): never {
   $token = token();
   $pdo->prepare('INSERT INTO klient (prevadzka, meno, telefon, email, token, kod, suhlas_karta, suhlas_spravy, suhlas_spravy_cas, zdroj, vytvorena) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
       ->execute([$p, $meno, $tel, $email, $token, kod_recepcie(), teraz(), $spravy ? 1 : 0, $spravy ? teraz() : null, 'web', teraz()]);
-  zapis_pohyb((int) $pdo->lastInsertId(), 0, 'zalozenie', 'Karta založená pri rezervácii');
+  zapis_pohyb((int) $pdo->lastInsertId(), 0, 'zalozenie', 'Karta založená na webe');
   if ($email !== '') email_karta($email, $p, $token);
   odpoved(['ok' => true, 'existuje' => false, 'karta' => karta_url($token, $p)]);
 }
@@ -201,11 +203,16 @@ function prihlasenie(): never {
   relacia();
   if (($_SERVER['HTTP_X_VERNOST_ADMIN'] ?? '') !== '1') chyba('Zakázané.', 403);
   $v = vstup();
-  limit_kontrola('prihlasenie', 8, 900);                       // počítajú sa len nesprávne heslá
   $p = prevadzka($v['prevadzka'] ?? '');
   $hash = (string) (konfig()['hesla'][$p] ?? '');
-  if ($hash === '') chyba('Admin pre túto prevádzku ešte nie je nastavený (README, časť Nasadenie).', 503);
-  if (!password_verify((string) ($v['heslo'] ?? ''), $hash)) { limit_zapis('prihlasenie'); usleep(400000); chyba('Nesprávne heslo.', 401); }
+  if ($hash === '') chyba(!empty(konfig()['len']) ? 'Kartička je vypnutá. Zapne ju majiteľ v správe webu (Nastavenia, Vernostná kartička).' : 'Admin pre túto prevádzku ešte nie je nastavený (README, časť Nasadenie).', 503);
+  // pokus sa započíta ešte pred overením hesla (atómovo, súbežné pokusy neprejdú popod limit); správne heslo ho vráti.
+  // Adresa (IPv6 po /64): 8 nesprávnych za 15 minút. Prevádzka spolu: 100 za hodinu – hádanie z mnohých adries sa
+  // zastaví (zámok najviac hodinu aj pre recepciu; údaje klientov sú dôležitejšie než pohodlie pri útoku).
+  $ja = limit_kluc('prihlasenie');
+  limit_pokus([[$ja, 8, 900], ["prihlasenie:spolu:$p", 100, 3600]], 'Príliš veľa nesprávnych pokusov. Skús to, prosím, o 15 minút, najneskôr o hodinu.');
+  if (!password_verify((string) ($v['heslo'] ?? ''), $hash)) { usleep(400000); chyba('Nesprávne heslo.', 401); }
+  limit_vrat($ja); limit_vrat("prihlasenie:spolu:$p");
   session_regenerate_id(true);
   udrzba();
   $_SESSION['prevadzka'] = $p; $_SESSION['do'] = time() + 12 * 3600;
@@ -213,6 +220,8 @@ function prihlasenie(): never {
 }
 function odhlasenie(): never { relacia(); $_SESSION = []; session_destroy(); odpoved(['ok' => true]); }
 function ja(): never {
+  // bez cookie relácie nie je čo overiť: relácia (a súbor na disku) sa nezakladá
+  if (!isset($_COOKIE['v30adm'])) odpoved(['ok' => true, 'prihlaseny' => false, 'prevadzka' => '', 'nazov' => '', 'nova' => '', 'prevadzky' => array_map(fn ($x) => $x['nazov'], array_intersect_key(PREVADZKY, array_flip(prevadzky_tu())))]);
   relacia();
   $p = (string) ($_SESSION['prevadzka'] ?? '');
   $ok = $p !== '' && prevadzka_tu($p) && ($_SESSION['do'] ?? 0) >= time();

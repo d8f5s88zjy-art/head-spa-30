@@ -224,7 +224,13 @@ function ip(): string {
   return $r;
 }
 function ip_cez_proxy(): bool { return ip() !== (string) ($_SERVER['REMOTE_ADDR'] ?? ''); }
-function limit_kluc(string $akcia): string { return $akcia . ':' . hash_hmac('sha256', ip(), cesta_db()); }   // IP len ako odtlačok so soľou
+/* návštevník pre limity: IPv4 celá, IPv6 po /64 (jedna prípojka má celý blok, každá jeho adresa by inak bola nový návštevník) */
+function ip_skupina(string $ip): string {
+  if (!str_contains($ip, ':')) return $ip;
+  $b = @inet_pton($ip);
+  return $b === false ? $ip : bin2hex(substr($b, 0, 8)) . '::/64';
+}
+function limit_kluc(string $akcia): string { return $akcia . ':' . hash_hmac('sha256', ip_skupina(ip()), cesta_db()); }   // IP len ako odtlačok so soľou
 function limit_ok(string $akcia, int $max, int $okno, ?string $kluc = null): bool {
   $pdo = db(); $t = time();
   $pdo->prepare('DELETE FROM limit_poziadaviek WHERE cas < ?')->execute([$t - 86400]);                   // odtlačky najviac deň
@@ -238,11 +244,35 @@ function limit_zapis(string $akcia, ?string $kluc = null): void {
 function limit_kontrola(string $akcia, int $max, int $okno): void {
   if (!limit_ok($akcia, $max, $okno)) chyba('Príliš veľa pokusov. Skús to, prosím, o chvíľu.', 429);
 }
-function limit(string $akcia, int $max, int $okno): void { limit_kontrola($akcia, $max, $okno); limit_zapis($akcia); }
+function limit(string $akcia, int $max, int $okno): void { limit_pokus([[limit_kluc($akcia), $max, $okno]]); }
+/* atómový limit: všetky okná sa overia a pokus sa zapíše v jednej transakcii so zámkom (súbežné požiadavky
+   neprejdú popod limit); [[kľúč, najviac, okno v s], …]. Plné okno = 429. */
+function limit_pokus(array $okna, string $sprava = 'Príliš veľa pokusov. Skús to, prosím, o chvíľu.'): void {
+  $pdo = db(); $t = time();
+  $pdo->exec('BEGIN IMMEDIATE');
+  try {
+    $pdo->prepare('DELETE FROM limit_poziadaviek WHERE cas < ?')->execute([$t - 86400]);
+    $s = $pdo->prepare('SELECT COUNT(*) FROM limit_poziadaviek WHERE kluc = ? AND cas > ?');
+    foreach ($okna as [$kluc, $max, $okno]) {
+      $s->execute([$kluc, $t - $okno]);
+      if ((int) hodnota($s) >= $max) { $pdo->exec('ROLLBACK'); chyba($sprava, 429); }
+    }
+    $z = $pdo->prepare('INSERT INTO limit_poziadaviek (kluc, cas) VALUES (?, ?)');
+    foreach (array_unique(array_column($okna, 0)) as $kluc) $z->execute([$kluc, $t]);
+    $pdo->exec('COMMIT');
+  } catch (PDOException $e) { try { $pdo->exec('ROLLBACK'); } catch (PDOException $e2) { /* transakcia už neplatí */ } throw $e; }
+}
+/* zmaže posledný zápis kľúča (správne heslo: pokus sa nepočíta) */
+function limit_vrat(string $kluc): void {
+  db()->prepare('DELETE FROM limit_poziadaviek WHERE rowid = (SELECT MAX(rowid) FROM limit_poziadaviek WHERE kluc = ?)')->execute([$kluc]);
+}
 
 /* ---------- admin: relácia, heslo, ochrana pred podvrhnutou požiadavkou ---------- */
 function relacia(): void {
   if (session_status() === PHP_SESSION_ACTIVE) return;
+  // len id relácie, ktoré vydal server, a len v očakávanom tvare (inak by sa podvrhnutým id dalo čítať chybové hlásenia)
+  ini_set('session.use_strict_mode', '1');
+  if (isset($_COOKIE['v30adm']) && !preg_match('/^[A-Za-z0-9,-]{22,128}$/', (string) $_COOKIE['v30adm'])) unset($_COOKIE['v30adm']);
   $https = str_starts_with(zaklad(), 'https://');
   $dir = dirname(cesta_db()) . '/relacie';
   if (!is_dir($dir)) @mkdir($dir, 0700, true);
