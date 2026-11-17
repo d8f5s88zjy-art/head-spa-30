@@ -2008,3 +2008,6 @@ html[data-tema="farebna"] .lb img{box-shadow:0 18px 50px rgba(27,27,27,.3)}
   @keyframes uv-cue{0%{transform:scaleY(0);transform-origin:50% 0}45%{transform:scaleY(1);transform-origin:50% 0}55%{transform:scaleY(1);transform-origin:50% 100%}100%{transform:scaleY(0);transform-origin:50% 100%}}
 }
 @media print{:root .uv{min-height:0;background:none;color:#000}.uv-bg,.uv::before,.uv-cue{display:none}:root .uv :is(h1,.uv-nad,.lede,.uv-info,.uv-odkazy a){color:#000;text-shadow:none}}
+
+/* krížik na zmazanie v poli hľadania (Chrome, Edge, Android): prehliadač ho kreslí modrou – v palete len neutrálny šedý */
+input[type="search"]::-webkit-search-cancel-button{filter:grayscale(1)}
