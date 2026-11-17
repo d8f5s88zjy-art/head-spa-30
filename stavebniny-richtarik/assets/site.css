@@ -79,9 +79,13 @@ p{max-width:64ch}
 /* čierny obrys písmen názvu pri logu (majiteľ, e-mail 17. 11. 2026: „STAVEBNINY RICHTÁRIK olemovať čiernou“ – žiadal to na
    úvode; lišta je na všetkých stránkach ten istý komponent, preto rovnako všade): osem ostrých tieňov bez rozmazania okolo
    každého písmena, hrúbka --obrys podľa veľkosti písma a hustoty bodov (1 px; telefón vo farebnej téme pri 28 – 30 px 1,25 px – pri DPR 2 – 3
-   celé body displeja; na počítači pri DPR 1 by 1,25 px rozmazalo hrany) */
+   celé body displeja; na počítači pri DPR 1 by 1,25 px rozmazalo hrany). Obrys dostane len farebné alebo svetlé slovo
+   (RICHTÁRIK vo všetkých témach, STAVEBNINY v tmavej téme): čierny obrys na čiernom slove STAVEBNINY (farebná a svetlá
+   téma) nie je vidieť, len zhrubne písmená, spojí ich (VEB, NIN) a zaplní otvory v B a N */
 .lg-nazov{--obrys:1px;--o-:calc(-1 * var(--obrys));
-  text-shadow:var(--obrys) 0 #000,var(--o-) 0 #000,0 var(--obrys) #000,0 var(--o-) #000,var(--obrys) var(--obrys) #000,var(--o-) var(--obrys) #000,var(--obrys) var(--o-) #000,var(--o-) var(--o-) #000}
+  --obrys-tien:var(--obrys) 0 #000,var(--o-) 0 #000,0 var(--obrys) #000,0 var(--o-) #000,var(--obrys) var(--obrys) #000,var(--o-) var(--obrys) #000,var(--obrys) var(--o-) #000,var(--o-) var(--o-) #000}
+.lg-nazov span+span{text-shadow:var(--obrys-tien)}
+@media screen{html[data-tema="tmava"] .lg-nazov span{text-shadow:var(--obrys-tien)}}
 @media (max-width:1279px){.brand img{height:44px}.lg-nazov{font-size:22px}}
 /* 981–1180 px: menu, logo aj názov o stupeň menšie, aby sa lišta nezalomila (menu 9 položiek + telefón) */
 @media (max-width:1180px){.top .wrap{gap:18px}.brand img{height:40px}.lg-nazov{font-size:20px}}

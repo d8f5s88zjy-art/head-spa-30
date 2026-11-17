@@ -30,7 +30,9 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 - Pokyny majiteľa zo 17. 11. 2026 (e-mail „v prílohe Vám posielam, čo ešte treba zmeniť vo webe“, IMG_0347–0348; Lajko:
   „Budeš robiť, čo chce Mário“), druhá časť (prvá: zakladateľ, znenie karty, fotky katalógu a weby výrobcov):
   - **Názov pri logu s čiernym obrysom** (L1, Mário to žiadal na úvode; lišta je na všetkých stránkach ten istý komponent):
-    `.lg-nazov` má osem ostrých tieňov `--obrys` (1 px, telefón vo farebnej téme 1,25 px), vo všetkých troch témach.
+    `.lg-nazov` má osem ostrých tieňov `--obrys` (1 px, telefón vo farebnej téme 1,25 px), vo všetkých troch témach – na
+    farebnom alebo svetlom slove (RICHTÁRIK vždy, STAVEBNINY v tmavej téme); čierne slovo STAVEBNINY vo farebnej a svetlej
+    téme obrys nemá (čierny obrys na čiernom písme nie je vidieť, len spája písmená a zapĺňa otvory v B a N).
   - **Bez štítku „Skutočná fotka našej predajne v Nitre“** (L2) na úvode aj v uvítaní (`zdroj/uvitanie.*`); fotka ostala.
   - **Galéria bez albumu „Materiál v areáli predajne“** (L19, `data/galeria.json` id `dvor`, šablóna aj oblasť
     `galeria-dvor` sú preč, Python aj PHP); fotky `img/uvod/` ostávajú na úvode.
