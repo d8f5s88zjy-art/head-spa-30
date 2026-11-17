@@ -58,3 +58,32 @@ ZNACKY = {
 }
 
 # Popisky produktov bez fotky nechávame z pôvodného webu, dostanú značkovú dlaždicu s logom.
+
+# Odkaz „Web výrobcu“ na karte značky podľa majiteľa (Ing. Mário Richtárik, e-mail 17. 11. 2026, zoznam „čo ešte treba zmeniť
+# vo webe“) – má prednosť pred adresou z pôvodného webu (zdroj/pages.json ostáva ako záznam pôvodného webu).
+# kľúč ako v ZNACKY -> adresa, alebo None = karta bez odkazu na web výrobcu. Adresy sú presne Máriove (www.…), s https,
+# kde stránka https má; www.univerbau.sk má certifikát len pre univerbau.sk, preto http (overené 17. 11. 2026, img/FOTKY.md
+# a README časť Karty značiek).
+WEB_ZNACIEK = {
+    ('fasadny-system', 'univerbau'): 'http://www.univerbau.sk',
+    ('sypke-zmesy', 'univerbau'): 'http://www.univerbau.sk',              # pôvodný web tu mal adresu sakret.sk
+    ('murovaci-material', 'betonárka nadlice'): 'https://www.betonarkanadlice.sk',   # pôvodne dhap.sk
+    ('stresne-kritiny', 'tondach'): 'https://www.wienerberger.sk',        # pôvodne tondach.sk
+    ('dlazby', 'city stone design'): 'https://www.citystonedesign.sk',    # pôvodne dlazby-in.sk (Dlažby IN – City Stone Design)
+    ('dlazby', 'stadreko'): 'https://www.stadreko.sk',
+    ('kominove-systemy', 'stadreko (komínový systém qatro)'): 'https://www.stadreko.sk',   # pôvodne qatro.sk
+    ('kominove-systemy', 'schiedel'): 'https://www.schiedel.sk',
+    ('hutny-material', 'yssel steel'): 'https://www.yssel.sk',           # pôvodne kovodruzstvo.sk
+    ('dvere---okna', 'masonite'): 'https://www.masonite.com',            # pôvodne masonitecz.com
+    ('stavebne-naradie-doplnky', 'slovakia trend'): 'https://www.stendpro.sk',   # pôvodne slovakia-trend.sk
+    ('stavebne-naradie-doplnky', 'ds haco'): 'https://www.hacoslovakia.sk',      # pôvodne ds-haco.sk
+    ('izolacny-material', 'parabit'): None,                              # „Parabit – web vymazať“; značka a opis ostávajú
+}
+
+# Logo na karte značky namiesto loga z pôvodného webu (img/p/<číslo>): cesta pod img/ bez prípony a opis (alt).
+# Zdroj: Máriove e-maily zo 17. 11. 2026 (zdroj/foto-maria/, nastroje/foto_maria.sh, img/FOTKY.md).
+LOGA_ZNACIEK = {
+    ('kominove-systemy', 'stadreko (komínový systém qatro)'): ('logo/stadreko', 'Logo Stadreko'),   # namiesto loga img/p/52
+    ('dlazby', 'stadreko'): ('logo/stadreko', 'Logo Stadreko'),
+    ('izolacny-material', 'easytherm'): ('logo/rg-plast-deva', 'Logo RG plast deva'),   # „Easyterm – dať logo RG plast“
+}

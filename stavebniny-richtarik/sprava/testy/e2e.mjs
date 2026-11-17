@@ -128,6 +128,10 @@ try {
   // Máriove grafiky s údajom v obrázku: pred zmenami sú všetky na webe
   const pocetFig = async c => ((await verejna(c)).text.match(/<figure class="fig"><a href="[^"]*img\/grafika\//g) || []).length;
   t('grafiky: pred zmenami obrázok hodín, 4 letáky a bannery, 12 obrázkov albumu', (await verejna('kontakt.html')).text.includes('kontakt-hodiny-288') && (await pocetFig('letak.html')) === 4 && (await pocetFig('galeria/index.html')) === 12 && (await verejna('galeria/index.html')).text.includes('12 obrázkov'));
+  // pokyny majiteľa 17. 11. 2026: 3D karta (úvod, Služby), tabuľa na Kontakte, piktogramy na Službách
+  { const u = (await verejna('index.html')).text, sl = (await verejna('sluzby.html')).text, ko = (await verejna('kontakt.html')).text;
+    t('grafiky: pred zmenami 3D karta na úvode a na Službách, tabuľa na Kontakte, piktogramy na Službách', u.includes('karta-3d-820') && !u.includes('karta-nova') && sl.includes('karta-3d-480')
+      && ko.includes('tabula-vysoka-k-240') && sl.includes('kontakt-zavolajte-480') && sl.includes('kontakt-napiste-480') && sl.includes('zlavy-480') && sl.includes('sluzba-vypocet-480') && sl.includes('sluzba-poradenstvo-480')); }
 
   // ---------- 3. otváracie hodiny ----------
   await tuk('a.dlazdica:has-text("Otváracie hodiny")');
@@ -146,6 +150,7 @@ try {
   t('grafiky: zmena hodín skryje obrázok hodín na Kontakte, tabuľka ostane', !kh.includes('kontakt-hodiny') && !kh.includes('khod-obr') && /<!--s:hodiny-kontakt--><table class="hours">/.test(kh));
   t('grafiky: zmena hodín skryje leták Prečo nakupovať a tabuľu s otváracou dobou', !(await verejna('letak.html')).text.includes('letak-preco-nakupovat') && (await pocetFig('letak.html')) === 3
     && !(await verejna('galeria/index.html')).text.includes('tabula-vysoka') && (await verejna('galeria/index.html')).text.includes('11 obrázkov'));
+  t('grafiky: zmena hodín skryje tabuľu s otváracou dobou na Kontakte, 3D karta ostane', !kh.includes('tabula-vysoka') && (await verejna('index.html')).text.includes('karta-3d-820'));
   await s.goto(URL + 'kontakt.html'); await s.locator('.khod').scrollIntoViewIfNeeded();
   t('grafiky: karta Otváracie hodiny bez obrázka sa zobrazí', (await s.locator('.khod .hours').isVisible()) && (await s.locator('.khod picture').count()) === 0);
   await s.goto(URL + 'sprava/');
@@ -340,6 +345,11 @@ try {
   t('kontakt: zmena mobilu skryje obrázok Zavolajte nám, karta ostane', !kk.includes('kontakt-zavolajte') && kk.includes('kontakt-napiste-480') && /<h2 class="kk-n">Zavolajte nám<\/h2><a class="big kk-hl" href="tel:\+421905111222">/.test(kk));
   t('grafiky: zmena mobilu skryje aj vizitku, kartu a leták so sortimentom', (await pocetFig('galeria/index.html')) === 9 && (await verejna('galeria/index.html')).text.includes('9 obrázkov')
     && !(await verejna('galeria/index.html')).text.includes('vizitka') && !(await verejna('letak.html')).text.includes('letak-stavebniny-richtarik') && (await pocetFig('letak.html')) === 2);
+  { const u = (await verejna('index.html')).text, sl = (await verejna('sluzby.html')).text;
+    t('grafiky: zmena mobilu – na úvode a na Službách plochá karta namiesto 3D, na Službách bez Zavolajte nám, Napíšte nám ostane', u.includes('karta-nova-671') && !u.includes('karta-3d')
+      && sl.includes('karta-nova-671') && !sl.includes('karta-3d') && !sl.includes('kontakt-zavolajte') && sl.includes('kontakt-napiste-480')); }
+  await s.goto(URL + 'sluzby.html'); await s.locator('.cta-pas').scrollIntoViewIfNeeded();
+  t('Služby: výzva pred pätou s jedným piktogramom sa zobrazí', (await s.locator('.cta-ik picture').count()) === 1 && (await s.locator('.cta-ik picture img').first().isVisible()));
   await s.goto(URL + 'kontakt.html'); await s.locator('.kk2').scrollIntoViewIfNeeded();
   t('kontakt: karta bez obrázka sa zobrazí', (await s.locator('.kk.bez-obr .big').first().isVisible()) && (await s.locator('.kk.bez-obr picture').count()) === 0);
   await s.goto(URL + 'sprava/');
@@ -350,6 +360,8 @@ try {
   await zverejni('kontakt-vratenie');
   t('kontakt: po vrátení pôvodný mobil', nb((await verejna('kontakt.html')).text).includes('0905 622 223') && !nb((await verejna('index.html')).text).includes('0905 111 222'));
   t('kontakt: po vrátení je obrázok Zavolajte nám späť', (await verejna('kontakt.html')).text.includes('kontakt-zavolajte-480'));
+  t('grafiky: po vrátení mobilu je 3D karta späť a na Službách oba piktogramy', (await verejna('index.html')).text.includes('karta-3d-820') && (await verejna('sluzby.html')).text.includes('karta-3d-480')
+    && (await verejna('sluzby.html')).text.includes('kontakt-zavolajte-480'));
   t('grafiky: po vrátení mobilu sú vizitka, karta a leták so sortimentom späť', (await pocetFig('galeria/index.html')) === 11 && (await verejna('galeria/index.html')).text.includes('vizitka-n') && (await pocetFig('letak.html')) === 3);
 
   // ---------- 8f. e-mail a pevná linka: obrázok s údajom zmizne, po vrátení je späť ----------

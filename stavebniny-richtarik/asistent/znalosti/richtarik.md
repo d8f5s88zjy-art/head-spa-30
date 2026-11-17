@@ -7,7 +7,7 @@ Nič iné asistent nevie.
 
 ## Firma
 - Názov: Stavebniny Richtárik. Prevádzkovateľ: Ing. Mário Richtárik - Stavebniny. IČO 45959846, DIČ SK1083167855.
-- Rodinná firma založená v roku 1997. Hlavný profil: predaj a sprostredkovanie stavebného materiálu.
+- Rodinná firma, ktorú založil Zoltán Richtárik v roku 1997. Hlavný profil: predaj a sprostredkovanie stavebného materiálu.
   Majiteľ aj personál majú dlhoročné skúsenosti v stavebníctve; personál predajne je neustále školený.
 - Predajňa a sklad: Novozámocká 62/68, 949 05 Nitra, Horné Krškany (Novozámocká ulica č. 68).
 - Mapa a navigácia: https://www.google.com/maps/search/?api=1&query=Novoz%C3%A1mock%C3%A1+62%2F68%2C+949+05+Nitra
@@ -43,9 +43,9 @@ Nič iné asistent nevie.
 - E-shop ani online objednávku web nemá; objednať sa dá telefonicky, e-mailom alebo v predajni.
 
 ## Zľavy (zákaznícka karta)
-- Z akciových cien je ďalšia zľava so zákazníckou kartou: 5 % pri platbe v hotovosti, 3,3 % pri platbe platobnou
-  kartou. Zákaznícku kartu si zákazník vyzdvihne v predajni.
-- Stavebné firmy, živnostníci a predajne stavebnín majú špeciálne zľavy.
+- Zákaznícka karta: zľava z cien 5 % pri platbe v hotovosti, 3,3 % pri platbe platobnou kartou (majiteľ 17. 11. 2026).
+  Zákaznícku kartu si zákazník vyzdvihne v predajni.
+- Stavebné firmy a živnostníci majú špeciálne zľavy (aj spolupracujúce predajne stavebnín).
 - Ceny v cenníku akcií (28. 1. 2026) platia pri platbe v hotovosti, z ceny je už odrátaná 5 % zľava.
 
 ## Akcie (stránka Akcie, cenník akcií aktualizovaný 28. 1. 2026)
@@ -128,6 +128,11 @@ výrobok práve na sklade, asistent nevie: potvrdí predajňa.
   https://www.stavebninyrichtarik.sk/katalog/fasadny-system.html
 - Farby a laky (interiérové a fasádne farby, laky, lepidlá, riedidlá, tónovacie systémy): Het, Chemolak, Chemos,
   Elastik. https://www.stavebninyrichtarik.sk/katalog/farby-laky.html
+- Weby výrobcov podľa majiteľa (17. 11. 2026; na kartách značiek v katalógu ako „Web výrobcu“): Univerbau
+  www.univerbau.sk, Betonárka Nadlice www.betonarkanadlice.sk, Tondach www.wienerberger.sk, City Stone Design
+  www.citystonedesign.sk, Stadreko (dlažby a komíny) www.stadreko.sk, Schiedel www.schiedel.sk, Yssel Steel www.yssel.sk,
+  Masonite www.masonite.com, Slovakia Trend www.stendpro.sk, DS Haco www.hacoslovakia.sk. Parabit web výrobcu nemá
+  uvedený. Pri značke Easytherm (izolačný materiál) je na webe logo RG plast deva; čo ich spája, web neuvádza.
 
 ## Stránky webu
 <!-- stranky: túto časť dopĺňa nastroje/otazky_zdroj.py podľa stránok, ktoré na webe naozaj sú -->

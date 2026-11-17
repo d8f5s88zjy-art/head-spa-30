@@ -111,8 +111,8 @@ q('sluzby-reklamacia', 'sluzby', 'Ako reklamovať tovar?',
   f'Reklamácie, vrátenie tovaru a faktúry rieši predajňa. Zavolajte na {TEL} alebo napíšte na '
   'info@stavebninyrichtarik.sk.', tel=True)
 q('o-nas', 'sluzby', 'Odkedy fungujete?',
-  ['kto ste', 'o firme', 'rodinná firma', 'história', 'ako dlho existujete', 'odkedy existujete'],
-  'Stavebniny Richtárik sú rodinná firma z Nitry, založená v roku 1997. Hlavným profilom je predaj a '
+  ['kto ste', 'o firme', 'rodinná firma', 'história', 'ako dlho existujete', 'odkedy existujete', 'kto založil firmu'],
+  'Stavebniny Richtárik sú rodinná firma z Nitry, ktorú založil Zoltán Richtárik v roku 1997. Hlavným profilom je predaj a '
   'sprostredkovanie stavebného materiálu. Viac: ' + W + 'o-nas.html')
 
 # ---------- doprava ----------
@@ -139,19 +139,19 @@ q('doprava-termin', 'doprava', 'Kedy mi materiál dovezete?',
 # ---------- zľavy a platba ----------
 q('zlava-karta', 'zlavy', 'Aké zľavy máte so zákazníckou kartou?',
   ['zákaznícka karta', 'aké zľavy dávate', 'zľava 5 %', 'zľava pri platbe v hotovosti', 'ďalšia zľava z akcie', 'zľavy', 'rozdávate zľavy'],
-  'Z akciových cien dostanete so zákazníckou kartou ďalšiu zľavu: 5 % pri platbe v hotovosti a 3,3 % pri platbe '
-  'platobnou kartou. Kartu si vyzdvihnete v predajni.')
+  'So zákazníckou kartou máte zľavu z cien: 5 % pri platbe v hotovosti a 3,3 % pri platbe platobnou kartou. '
+  'Stavebné firmy a živnostníci majú špeciálne zľavy. Kartu si vyzdvihnete v predajni.')
 q('zlava-kartu-ziskam', 'zlavy', 'Ako získam zákaznícku kartu?',
   ['kde dostanem kartu', 'vybavenie karty', 'chcem zákaznícku kartu', 'ako získať zákaznícku kartu'],
-  'Zákaznícku kartu si vyzdvihnete v predajni na Novozámockej 62/68 v Nitre. S ňou máte z akciových cien ďalšiu '
-  'zľavu 5 % v hotovosti alebo 3,3 % kartou.')
+  'Zákaznícku kartu si vyzdvihnete v predajni na Novozámockej 62/68 v Nitre. S ňou máte zľavu z cien '
+  '5 % v hotovosti alebo 3,3 % kartou.')
 q('zlava-cennik', 'zlavy', 'Sú ceny v cenníku akcií už so zľavou?',
   ['ceny v cenníku', 'je v cene zľava', 'cena v hotovosti', 'cenník so zľavou'],
   'Áno. Ceny v cenníku akcií (28. 1. 2026) platia pri platbe v hotovosti, z ceny je už odrátaná 5 % zľava.')
 q('platba-karta', 'zlavy', 'Môžem platiť kartou?',
   ['platba kartou', 'terminál', 'platobná karta', 'berete karty', 'platba', 'ako sa dá platiť'],
-  'Áno, v predajni je platobný terminál (VÚB banka). Platiť môžete aj v hotovosti; pri akciových cenách so '
-  'zákazníckou kartou je zľava 5 % v hotovosti a 3,3 % kartou.')
+  'Áno, v predajni je platobný terminál (VÚB banka). Platiť môžete aj v hotovosti; so zákazníckou '
+  'kartou je zľava z cien 5 % v hotovosti a 3,3 % kartou.')
 q('platba-splatky', 'zlavy', 'Dá sa kúpiť materiál na splátky?',
   ['splátky', 'Quatro', 'úver na materiál', 'kúpa na splátky', 'financovanie'],
   f'Áno, stavebný materiál môžete kúpiť na splátky cez Quatro. Podrobnosti vám povieme v predajni alebo na {TEL}.',

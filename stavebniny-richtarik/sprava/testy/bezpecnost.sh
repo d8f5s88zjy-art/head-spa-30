@@ -12,6 +12,8 @@ mkdir -p "$T/host"; cp -r "$T/balik/web" "$T/host/www"
 start() { (cd "$T/host/www" && PHP_CLI_SERVER_WORKERS=4 env ${1:-} php -d upload_max_filesize=32M -d post_max_size=34M -S 127.0.0.1:$PORT -t "$T/host/www" "$R/sprava/testy/router.php" > "$T/server.log" 2>&1 &); sleep 1; }
 stop() { pkill -f "php .* -S 127.0.0.1:$PORT" > /dev/null 2>&1; wait 2>/dev/null; sleep 0.5; }
 OK=0; ZLE=0
+# grep číta celú odpoveď (nie grep -q): pri dlhej stránke grep -q skončí skôr, curl dostane SIGPIPE a pipefail z toho urobí
+# chybu, hoci odpoveď je správna (stránka Texty, 17. 11. 2026)
 t() { if [ "$2" = "1" ]; then OK=$((OK+1)); echo "  ok   $1"; else ZLE=$((ZLE+1)); echo "  ZLE  $1 ${3:-}"; fi; }
 kod() { curl -s -o /dev/null -w '%{http_code}' "$@"; }
 C="$T/c.txt"; C2="$T/c2.txt"
@@ -57,7 +59,7 @@ t "novinka: značky v názve odmietnuté" "$(curl -s -L -b "$C" -c "$C" -d "_t=$
 T1=$(tok "$C" '?s=galeria')
 t "galéria: album mimo zoznamu odmietnutý" "$(curl -s -L -b "$C" -c "$C" -d "_t=$T1&a=galeria-popis&album=../../sprava-data&foto=x" --data-urlencode 'popis=Skúšobný popis fotky' "$B/sprava/index.php?s=galeria" | grep -q 'Album neexistuje' && echo 1)"
 T1=$(tok "$C" '?s=texty')
-t "texty: šablónové značky {{ }} odmietnuté" "$(curl -s -L -b "$C" -c "$C" -d "_t=$T1&a=texty" --data-urlencode 'uvod_lede={{#x}}Veta na úvode, ktorá je dosť dlhá na kontrolu{{/x}}' "$B/sprava/index.php?s=texty" | grep -q 'nepoužívajte znaky' && echo 1)"
+t "texty: šablónové značky {{ }} odmietnuté" "$(curl -s -L -b "$C" -c "$C" -d "_t=$T1&a=texty" --data-urlencode 'uvod_lede={{#x}}Veta na úvode, ktorá je dosť dlhá na kontrolu{{/x}}' "$B/sprava/index.php?s=texty" | grep 'nepoužívajte znaky' > /dev/null && echo 1)"
 F0=$(sha256sum "$T/host/sprava-data/data/firma.json" | cut -c1-64)
 C3="$T/c3.txt"; T3=$(tok "$C3")
 curl -s -b "$C3" -c "$C3" -o /dev/null -d "_t=$T3&a=kontakt&mobil=0911000000&pevna=037%20651%2017%2077&email=zly@example.com" "$B/sprava/index.php"

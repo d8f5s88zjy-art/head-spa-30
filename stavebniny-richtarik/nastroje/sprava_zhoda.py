@@ -90,7 +90,6 @@ def oblasti_varianty(D):
     f = {'id': 'f1', 'popis': 'Nová fotka „predajne“ & <skúška>', 'velka': 'img/s/2026/11/foto-1a2b3c4d-1200.webp', 'src': 'img/s/2026/11/foto-1a2b3c4d-1200.webp',
          'w': 1200, 'h': 900, 'pos': '', 'webp': [[600, 'img/s/2026/11/foto-1a2b3c4d-600.webp'], [1200, 'img/s/2026/11/foto-1a2b3c4d-1200.webp']], 'avif': [], 'viditelna': True, 'zdroj': 'sprava'}
     X['galeria']['albumy'][0]['fotky'].insert(0, dict(f)); X['galeria']['albumy'][0]['fotky'][3]['viditelna'] = False
-    X['galeria']['albumy'][1]['fotky'] = X['galeria']['albumy'][1]['fotky'][:3]
     nova = {'id': 'nova-novinka', 'stranka': 'novinky/nova-novinka.html', 'zdroj': 'sprava', 'viditelna': True, 'verzia': 1, 'nazov': 'Nová novinka 2026',
             'popis': 'Krátky popis novej novinky s cenou 4,59 € za vrece.', 'na_uvode': True, 'popis_uvod': None,
             'karta': {'druh': 'foto', 'src': f['src'], 'w': 1200, 'h': 900}, 'hlavicka': 'zahrada',
@@ -108,7 +107,8 @@ def oblasti_varianty(D):
                    ('akcia-telo', a['stranka']), ('faq', 'caste-otazky.html'), ('faq-ld', 'caste-otazky.html'), ('novinky-index', 'novinky/index.html'),
                    ('uvod-novinky', 'index.html'), ('novinky-kat', 'katalog/dlazby.html'), ('hlavicka', 'novinky/nova-novinka.html'), ('meta', 'novinky/nova-novinka.html'),
                    ('ld-omrvinky', 'novinky/nova-novinka.html'), ('novinka-doplnok', 'novinky/nova-novinka.html'), ('hlavicka', skryta), ('meta', skryta),
-                   ('galeria-predajna', 'galeria/index.html'), ('galeria-dvor', 'galeria/index.html'), ('sluzby-polozky', 'sluzby.html'),
+                   ('galeria-predajna', 'galeria/index.html'), ('sluzby-polozky', 'sluzby.html'), ('sluzby-kontakt', 'sluzby.html'),
+                   ('uvod-karta', 'index.html'), ('kontakt-tabula', 'kontakt.html'),
                    ('doprava-polozky', 'doprava.html'), ('onas-text', 'o-nas.html'), ('uvod-lede', 'index.html'), ('sluzby-lede', 'sluzby.html'),
                    # Máriove grafiky s údajom v obrázku: zmenený mobil skryje tabuľu s kontaktom, vizitku, kartu a leták so sortimentom
                    ('galeria-letaky', 'letak.html'), ('galeria-grafika', 'galeria/index.html'), ('sluzby-zlavy', 'sluzby.html')]:
@@ -119,12 +119,20 @@ def oblasti_varianty(D):
     von.append(['kontakt-karty', 'kontakt.html', V.vykresli('kontakt-karty', 'kontakt.html', E), E])
     # zmenené hodiny: obrázok hodín na Kontakte, leták „Prečo nakupovať“ a tabuľa s otváracou dobou zmiznú
     H = copy.deepcopy(dict(D, k=K)); H.pop('verzia', None); H['firma']['hodiny'][-1]['do'] = '11:30'
-    for oid, c in [('hodiny-kontakt', 'kontakt.html'), ('galeria-letaky', 'letak.html'), ('galeria-grafika', 'galeria/index.html')]:
+    for oid, c in [('hodiny-kontakt', 'kontakt.html'), ('galeria-letaky', 'letak.html'), ('galeria-grafika', 'galeria/index.html'), ('kontakt-tabula', 'kontakt.html')]:
         von.append([oid, c, V.vykresli(oid, c, H), H])
+    # zmenená ulica: 3D karta na úvode a na Službách ustúpi plochej karte, tabuľa na Kontakte zmizne (pokyny majiteľa 17. 11. 2026)
+    U = copy.deepcopy(dict(D, k=K)); U.pop('verzia', None); U['firma']['ulica'] = 'Novozámocká 70'
+    for oid, c in [('uvod-karta', 'index.html'), ('sluzby-zlavy', 'sluzby.html'), ('kontakt-tabula', 'kontakt.html'), ('sluzby-kontakt', 'sluzby.html')]:
+        von.append([oid, c, V.vykresli(oid, c, U), U])
+    # služby: premenovaná služba bez slova piktogramu je bez obrázka; slovo „výpočet“ v dvoch službách – obrázok len pri prvej
+    S = copy.deepcopy(dict(D, k=K)); S.pop('verzia', None)
+    S['texty']['sluzby'][1][0] = 'Spotreba materiálu zadarmo'; S['texty']['sluzby'][0][0] = 'Výpočet a doprava'; S['texty']['sluzby'][2][0] = 'Výpočet tepelných strát'
+    von.append(['sluzby-polozky', 'sluzby.html', V.vykresli('sluzby-polozky', 'sluzby.html', S), S])
     # zmenená zľava (bez 3,3 %): karta zliav na Službách bez obrázka; skryté všetky letáky: časť Letáky a bannery zmizne celá
     Z = copy.deepcopy(dict(D, k=K)); Z.pop('verzia', None); Z['cennik']['zlava'] = 'Zľava so zákazníckou kartou: 5 % pri platbe v hotovosti, 3 % pri platbe kartou (cenník {datum}).'
     for f in next(a for a in Z['galeria']['albumy'] if a['id'] == 'letaky')['fotky']: f['viditelna'] = False
-    for oid, c in [('sluzby-zlavy', 'sluzby.html'), ('galeria-letaky', 'letak.html')]:
+    for oid, c in [('sluzby-zlavy', 'sluzby.html'), ('galeria-letaky', 'letak.html'), ('sluzby-polozky', 'sluzby.html')]:
         von.append([oid, c, V.vykresli(oid, c, Z), Z])
     return [von, X]
 

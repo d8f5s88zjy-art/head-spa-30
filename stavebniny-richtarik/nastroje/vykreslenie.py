@@ -346,6 +346,23 @@ def polozky_vm(D, zoznam):
     return {'polozky': [{'n': f'{i:02d}', 'nazov': txt(t), 'popis': odkaz_telefon(D, d)} for i, (t, d) in enumerate(zoznam, 1)]}
 
 
+def sluzby_polozky_vm(D):
+    """Služby s Máriovými 3D piktogramami (konštanty sluzby_obr z build.py SLUZBY_OBR): obrázok patrí službe, v ktorej
+    nadpise (malými písmenami) je jeho slovo; každý obrázok najviac raz (prvá zhoda v poradí služieb). Obrázok s údajom
+    (plati_pri, napr. zľava) je na webe len pri zhode údajov; inak je služba bez obrázka. To isté v PHP."""
+    vm = polozky_vm(D, D['texty']['sluzby']); pouzite = set()
+    for p in vm['polozky']:
+        p['obr'] = None
+        n = p['nazov'].lower()
+        for i, o in enumerate(D['k']['sluzby_obr']):
+            if i in pouzite or not any(k in n for k in o['kluce']): continue
+            pouzite.add(i)
+            if udaje_platia(D, o['plati_pri']):
+                p['obr'] = dict({k: o[k] for k in ('src', 'webp', 'avif', 'w', 'h')}, alt=txt(o['alt']))
+            break
+    return vm
+
+
 # ---------- Kontakt: karty Zavolajte nám a Napíšte nám ----------
 def cislice(s):
     return re.sub(r'\D', '', s or '')
@@ -382,6 +399,17 @@ def kontakt_karty_vm(D):
             'email_meno': meno, 'email_domena': domena,
             'obr_tel': cislice(f['mobil']) == o['zavolajte']['mobil'] and cislice(f['pevna']) == o['zavolajte']['pevna'],
             'obr_mail': [meno, domena] == o['napiste']['email']}
+
+
+def karta3d(D):
+    """3D zákaznícka karta (úvod, Služby) má v obrázku adresu, telefóny a e-mail: len pri zhode, inak plochá karta."""
+    return udaje_platia(D, D['k']['grafika_pri']['karta'])
+
+
+def sluzby_kontakt_vm(D):
+    """Výzva pred pätou na Službách: piktogramy Zavolajte nám a Napíšte nám s tou istou podmienkou ako karty Kontaktu."""
+    k = kontakt_karty_vm(D)
+    return {'obr': k['obr_tel'] or k['obr_mail'], 'obr_tel': k['obr_tel'], 'obr_mail': k['obr_mail']}
 
 
 # ---------- znalosti asistenta (R-1) ----------
@@ -460,11 +488,14 @@ def vykresli(oid, cesta, D):
     if oid == 'novinky-index': return sablona('novinky-index', {'karty': [karta_novinky(n, cesta) for n in novinky_viditelne(D)]})
     if oid == 'uvod-novinky': return sablona('uvod-novinky', {'karty': [karta_novinky(n, cesta, True) for n in novinky_viditelne(D) if n.get('na_uvode')][:4]})
     if oid == 'novinky-kat': return sablona('novinky-kat', novinky_kat_vm(D, cesta))
-    if oid in ('galeria-predajna', 'galeria-dvor'): return sablona(oid, galeria_vm(D, oid[8:], cesta))
+    if oid == 'galeria-predajna': return sablona(oid, galeria_vm(D, 'predajna', cesta))
     if oid in ('galeria-letaky', 'galeria-grafika'): return sablona('galeria-grafika', grafika_vm(D, oid[8:], cesta))
-    if oid == 'sluzby-zlavy': return sablona('sluzby-zlavy', {'zlava': zlava(D), 'obr': udaje_platia(D, ['zlava']), 'akcie_href': rel(cesta, 'akcie/index.html')})
+    if oid == 'sluzby-zlavy': return sablona('sluzby-zlavy', {'zlava': zlava(D), 'karta3d': karta3d(D), 'akcie_href': rel(cesta, 'akcie/index.html')})
+    if oid == 'uvod-karta': return sablona('uvod-karta', {'karta3d': karta3d(D)})
+    if oid == 'sluzby-kontakt': return sablona('sluzby-kontakt', sluzby_kontakt_vm(D))
+    if oid == 'kontakt-tabula': return sablona('kontakt-tabula', {'obr': udaje_platia(D, D['k']['grafika_pri']['tabula'])})
     if oid == 'sluzby-lede': return sablona('lede', {'text': txt(D['texty']['sluzby_uvod'])})
-    if oid == 'sluzby-polozky': return sablona('sluzby-polozky', polozky_vm(D, D['texty']['sluzby']))
+    if oid == 'sluzby-polozky': return sablona('sluzby-polozky', sluzby_polozky_vm(D))
     if oid == 'doprava-polozky': return sablona('doprava-polozky', polozky_vm(D, D['texty']['doprava']))
     if oid == 'onas-text': return sablona('odseky', {'odseky': [{'t': txt(x)} for x in D['texty']['onas']]})
     if oid == 'uvod-onas': return sablona('odseky', {'odseky': [{'t': txt(x)} for x in D['texty']['uvod_onas']]})

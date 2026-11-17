@@ -58,22 +58,14 @@ def predajna(m):
             'avif': [[x, f'img/predajna/{m}-{x}.avif'] for x in sir], 'viditelna': True, 'zdroj': 'web'}
 
 
-def dvor(m, cap):
-    sir, (w, h), pos = B.UVOD_FOTO[m]
-    nahl = [x for x in sir if x <= 800] or [sir[0]]
-    nw = nahl[-1]
-    return {'id': m, 'popis': cap, 'velka': f'img/uvod/{m}-{sir[-1]}.webp', 'src': f'img/uvod/{m}-{nw}.webp', 'w': nw, 'h': round(nw * h / w), 'pos': pos,
-            'webp': [[x, f'img/uvod/{m}-{x}.webp'] for x in nahl], 'avif': [[x, f'img/uvod/{m}-{x}.avif'] for x in nahl], 'viditelna': True, 'zdroj': 'web'}
-
-
 zapis('galeria.json', {'albumy': [
-    {'id': 'predajna', 'nadpis': 'Naša predajňa a sklad', 'fotky': [predajna(m) for m in B.GALERIA_PREDAJNA]},
-    {'id': 'dvor', 'nadpis': 'Materiál v areáli predajne', 'fotky': [dvor(m, c) for m, c in B.GALERIA_DVOR]}]})
+    {'id': 'predajna', 'nadpis': 'Naša predajňa a sklad', 'fotky': [predajna(m) for m in B.GALERIA_PREDAJNA]}]})
+# (album „Materiál v areáli predajne“ – id dvor – je od 17. 11. 2026 preč podľa majiteľa)
 
 # ---------- texty stránok ----------
 zapis('texty.json', {
     'uvod_lede': 'Spotrebu spočítame a cenovú ponuku pripravíme zadarmo. Materiál dovezieme vlastnými autami po celom Slovensku, aj autom s mechanickou rukou.',
-    'uvod_onas': ['Stavebniny Richtárik založil Ing. Mário Richtárik v roku 1997. Predávame a sprostredkúvame stavebný materiál, majiteľ aj personál majú dlhoročné skúsenosti v stavebníctve.',
+    'uvod_onas': ['Stavebniny Richtárik založil Zoltán Richtárik v roku 1997. Predávame a sprostredkúvame stavebný materiál, majiteľ aj personál majú dlhoročné skúsenosti v stavebníctve.',
                   'Poradenstvo a cenové ponuky sú u nás zadarmo. Najdôležitejšia je pre nás vaša spokojnosť.'],
     'sluzby_uvod': B.SLUZBY_UVOD,
     'sluzby': [[t, d] for t, d in B.SLUZBY],
@@ -87,4 +79,4 @@ zapis('texty.json', {
 f = json.load(open(os.path.join(DATA, 'firma.json'), encoding='utf-8'))
 f.setdefault('vynimky', [])
 zapis('firma.json', f)
-print('novinky:', len(novinky), '| galéria:', len(B.GALERIA_PREDAJNA), '+', len(B.GALERIA_DVOR), '| texty, vynimky: hotovo')
+print('novinky:', len(novinky), '| galéria:', len(B.GALERIA_PREDAJNA), '| texty, vynimky: hotovo')

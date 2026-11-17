@@ -30,6 +30,66 @@ Strešné okná (hlavičky katalógu Strešné okná, Fakro, Fakro schody a výl
 (svetlá strecha, otvorené strešné okno); nahrádza tmavú fotku `okna` (hlavičky, dlaždica Strešné okná na úvode a v Katalógu,
 karta Velux). Súbory `okna` ostávajú v repozitári, do balíka nejdú.
 
+## Fotky katalógu a logá značiek od majiteľa zo 17. 11. 2026 (`img/kat/`, `img/logo/`)
+
+Pôvod: Ing. Mário Richtárik, e-mail (preposlal Lajko 17. 11. 2026): „Ešte raz Vám posielam všetky fotky, ktoré treba vymeniť
+v katalógu výrobkov“ a zoznam „čo ešte treba zmeniť vo webe“ (katalóg výrobkov – vymeniť fotky, Easyterm – dať logo RG plast,
+komínový systém Stadreko – doplniť logo Stadreko). Prílohy sú len ako snímky obrazovky iPhonu (`IMG_0349` – `IMG_0356`,
+1320 × 2868); výrezy bez rozhrania Mailu (stavový riadok a lišta do y 347, tmavé oddeľovače #2c2c2c, biele okraje, posuvník
+x 1302 – 1311 – pri fotkách s ním x 24 – 1296, plávajúce tlačidlá od y 2638, susedné obrázky), súradnice v
+`zdroj/foto-maria/vyrezy.tsv`, bezstratovo v `zdroj/foto-maria/`, webové veľkosti `bash nastroje/foto_maria.sh` (len orez,
+zmenšenie Lanczos, jemné doostrenie, AVIF a WebP; najväčší súbor = skutočná šírka výrezu). Na snímkach nie sú mená ani údaje
+z hlavičky e-mailu; z obrázkov sa nič nedokresľovalo ani neuberalo.
+
+**Sú to fotky a grafiky výrobcov a dodávateľov, ktoré majiteľ poslal na zverejnenie – súhlas výrobcov (Wienerberger, Isover,
+Chemolak, Univer Bau, Stadreko, RG plast deva a autorov ostatných fotiek) a originály v plnom rozlíšení žiadame od majiteľa.**
+
+| výrez | snímka, miesto | kde na webe |
+|---|---|---|
+| `stresne-kritiny-strecha` | IMG_0355 dole (1272 × 880) | hlavička Strešné krytiny |
+| `sypke-zmesy-univer-bau` | IMG_0356 (1272 × 990) | hlavička Sypké zmesi |
+| `stavebne-rezivo-hranoly` | IMG_0355 hore (1320 × 990) | hlavička Stavebné rezivo |
+| `murovaci-material-porotherm` | IMG_0354 stred (1272 × 882) | hlavička Murovací materiál |
+| `hutny-material-rury` | IMG_0352 (1320 × 993) | hlavička Hutný materiál |
+| `izolacny-material-podkrovie` | IMG_0353 stred (1284 × 1396; web 4 : 3 1284 × 963) | hlavička Izolačný materiál |
+| `fasadny-system-rez` | IMG_0351 (1320 × 1688; web 4 : 3 1320 × 990) | hlavička Fasádny systém |
+| `farby-laky-chemolak` | IMG_0350 (1320 × 1320; web 4 : 3 1320 × 990, s tabuľou Chemolak) | hlavička Farby a laky |
+| `dlazby-vzorkova-plocha` | IMG_0349 (1320 × 878) | hlavička Dlažby a ploty |
+| `podhlady-pvc-pergola` | IMG_0354 dole (1030 × 664, orez nad tlačidlami Mailu, nič nedokreslené) | hlavička Podhľady a PVC (bez loga a bez tvrdení o výrobcovi) |
+| `logo-stadreko` → `img/logo/stadreko.webp` | IMG_0354 hore (biele pole 540 × 527, logo 530 × 96) | karta Stadreko na Komínových systémoch (namiesto loga Qatro `img/p/52`) aj na Dlažbách a plotoch |
+| `logo-rg-plast-deva` → `img/logo/rg-plast-deva.webp` | IMG_0353 dole (1032 × 399) | karta Easytherm na Izolačnom materiáli (opis karty sa nemenil) |
+
+Fotky sú v hlavičke **hlavnej stránky kategórie** (`build.py` `KAT_FOTO`, opis `KAT_FOTO_ALT`); dlaždice skupín na úvode
+a v Katalógu ostávajú Máriove ilustrácie (Lajko 16. 11. 2026) a podstránky značiek majú doterajšie fotky, aby nedostali
+výrobok inej značky. Fotky predajne, ktoré z hlavičiek kategórií zmizli (`predajna:03-baumit-sklad`, `07-univer-bau-sklad`,
+`06-regal-profily`, `uvod:zasoba-tehly`, `-stadreko`, `-rezivo`), ostávajú v repozitári; do balíka idú len súbory, na ktoré
+niečo odkazuje.
+
+## Grafiky majiteľa na stránkach podľa pokynov zo 17. 11. 2026 (`img/ilu/`)
+
+Pôvod: tie isté Máriove grafiky zo 16. 11. 2026 (časť nižšie, `zdroj/grafika-maria/`), e-mail zo 17. 11. 2026 „čo ešte treba
+zmeniť vo webe“: „služby – použiť všetky piktogramy 3D“, „služby – vlastná doprava: vymazať fotky áut, staré fotky“, „použiť 3D
+zákaznícku kartu“, „do stránky dať … naše tabule 3D“, „galéria – materiál v areáli predajne, fotky vymazať“. Nové sú len
+orezy a veľkosti (`bash nastroje/grafika_maria.sh 17-11`; len orez, zmenšenie Lanczos, jemné doostrenie, AVIF a WebP, nič
+sa nezväčšuje, obsah sa nemení):
+
+| súbory | výrez (`zdroj/grafika-maria/`) | orez | kde |
+|---|---|---|---|
+| `sluzba-vypocet-240\|480` | ikona-zdarma-vypocet (IMG_0313) | 960 × 720 + 187 + 0 (celý nápis) | Služby, pri službe Výpočet spotreby zadarmo |
+| `sluzba-poradenstvo-240\|480` | kategoria-poradenstvo (IMG_0297) | 1320 × 1000 + 0 + 190 | Služby, pri službe Poradenstvo zadarmo |
+| `karta-3d-480\|820` | karta (IMG_0312) | 915 × 714 + 214 + 90 (karta s tieňom) | úvod (pás Zľavy) a Služby (karta zliav) |
+| `tabula-vysoka-k-240\|480` | tabula-vysoka (IMG_0311) | 997 × 1617 + 175 + 81 | Kontakt, karta Predajňa a sklad (veľká po kliknutí `img/grafika/tabula-vysoka-v.webp`) |
+| `tabula-siroka-o-480\|820` | tabula-siroka (IMG_0311) | 935 × 480 + 173 + 22 | O nás pod fotkou predajne (veľká `img/grafika/tabula-siroka-v.webp`) |
+
+Ďalej bez nových súborov: ikona zliav `zlavy-288|480` je pri službe Množstevné zľavy (predtým v karte zliav), „Zavolajte nám“
+a „Napíšte nám“ (`kontakt-*-288|480`) vo výzve pred pätou na Službách, auto `rozvoz-452|905` aj v časti Vlastná doprava na
+Službách. Obrázky s adresou, telefónom, e-mailom, hodinami alebo zľavou sa ukážu len pri zhode údajov (`GRAFIKA_PRI`,
+`SLUZBY_OBR`, `KONTAKT_OBR` v `build.py`); namiesto 3D karty je vtedy plochá `img/karta-nova-*` (má tie isté údaje).
+Na webe už nie sú (súbory ostávajú v repozitári, do balíka nejdú, lebo na ne nič neodkazuje): staré fotky áut zo Služieb
+`img/p/883–885.webp` (modrý LIAZ a Avia z pôvodného webu), `img/ilu/zdarma-vypocet-480|790|1080` (výzva pred pätou na Službách,
+nahradená výrezom pri službe), album Galérie „Materiál v areáli predajne“ (`img/uvod/dvor-predajna-800|1200`,
+`pas-dvor-1280|1920`; zábery zásob z neho sú ďalej na úvode). Plochá karta `img/karta-nova-*` ostáva ako náhradná.
+
 ## Propagačné grafiky majiteľa z 16. 11. 2026 (`img/ilu/`, `img/grafika/`)
 
 Pôvod: Ing. Mário Richtárik, e-mail s predmetom „nova zakaznicka karta“ (11 správ), ktorý 16. 11. 2026 preposlal Lajko
@@ -58,10 +118,11 @@ spolu s logom vo vektore (README, Pre Mária).
   710 × 533 okolo hodín a tabuľky, v karte Otváracie hodiny na Kontakte. Ukáže sa len pri týchto hodinách v správe (oznam
   o sviatku ho neskryje).
 - `img/ilu/zdarma-vypocet-480|790|1080.avif|webp` – „Zdarma výpočet spotreby stavebného materiálu“ (IMG_0313, rovnaký obrázok
-  je aj IMG_0305) vo výzve pred pätou na Službách.
+  je aj IMG_0305) vo výzve pred pätou na Službách (od 17. 11. 2026 namiesto neho výrez `sluzba-vypocet` pri službe).
 - `img/ilu/zlavy-288|480.avif|webp` – ikona „Zákazník dostane zľavu: hotovosť 5 % | karta 3,3 %, špeciálne zľavy pre stavebné
   firmy a živnostníkov“ (IMG_0313), orez 800 × 600, v karte zliav na Službách hneď pri vete so zákazníckou kartou ako
-  podmienkou. Ukáže sa len pri zľave 5 % a 3,3 % v `data/cennik.json`.
+  podmienkou (od 17. 11. 2026 pri službe Množstevné zľavy, v karte zliav je 3D zákaznícka karta). Ukáže sa len pri zľave 5 % a 3,3 % v `data/cennik.json`. Od 17. 11. 2026 veta pri ňom hovorí to isté ako
+  ikona a Máriov e-mail: zľava z cien 5 % v hotovosti, 3,3 % platobnou kartou, stavebné firmy a živnostníci špeciálne zľavy.
 - `img/ilu/rozvoz-452|905.avif|webp` – auto Iveco s hydraulickou rukou z obrázka „Rozvoz stavebného materiálu – AVIA 3t •
   IVECO 8t s mechanickou rukou“ (IMG_0312) na Doprave. **Bez nápisu:** nosnosť Avie je 3,5 t (Lajko 16. 11. 2026). Nápis
   leží šikmo tesne pod autom, preto je výrez mnohouholník – obdĺžnik 905 × 598 bez rohu pod čiarou nad písmenami; roh je

@@ -3,9 +3,9 @@
 import re, html, os
 from lxml import html as LH, etree
 try:
-    from popisy import ZNACKY
+    from popisy import ZNACKY, WEB_ZNACIEK, LOGA_ZNACIEK
 except ImportError:
-    ZNACKY = {}
+    ZNACKY, WEB_ZNACIEK, LOGA_ZNACIEK = {}, {}, {}
 from texty import nazov_znacky, OBR_ALT
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -557,21 +557,27 @@ class Parser:
         # odznak s logom len keď je logo čitateľné; prázdny alebo písmenkový odznak vyzerá lacno
         lw, lh = self.S.get(b['logo'], (0, 0)) if b['logo'] else (0, 0)
         citatelne = b['logo'] and lw >= 60 and lh >= 18
+        lg_src, lg_alt = (self._src(b['logo']) if b['logo'] else None), f'Logo {name}'
+        if key in LOGA_ZNACIEK:   # logo od majiteľa (popisy.LOGA_ZNACIEK) namiesto loga z pôvodného webu
+            cesta, lg_alt = LOGA_ZNACIEK[key]
+            lw, lh = _webp_rozmer(os.path.join(ROOT, f'img/{cesta}.webp'))
+            lg_src, citatelne = f'{self.pre}img/{cesta}.webp', lw >= 60 and lh >= 18
         bez = ''
         if src:
-            badge = f'<div class="badge"><img class="lg" src="{self._src(b["logo"])}" alt="Logo {html.escape(name)}" loading="lazy"></div>' if citatelne else ''
+            badge = f'<div class="badge"><img class="lg" src="{lg_src}" alt="{html.escape(lg_alt)}" loading="lazy"></div>' if citatelne else ''
             obr = f'<img src="{src}" alt="{html.escape(zalt)}" loading="lazy" decoding="async">'
             if avif: obr = f'<picture><source type="image/avif" srcset="{avif}">{obr}</picture>'
             media = f'<div class="zm {fit}">{obr}{badge}</div>'
         elif citatelne:
             # Značka bez vlastnej fotky: logo na bielom poli, nie fotka kategórie – tá je v hlavičke a na stránke s 10 značkami by
             # sa opakovala 10× (kontrola 13. 11. 2026, A1: „tá istá fotka 3× za sebou“ pôsobí lacno).
-            media = f'<div class="zm logo"><img class="lg" src="{self._src(b["logo"])}" alt="Logo {html.escape(name)}" loading="lazy"></div>'
+            media = f'<div class="zm logo"><img class="lg" src="{lg_src}" alt="{html.escape(lg_alt)}" loading="lazy"></div>'
         else:
             media = ''; bez = ' bez'   # bez fotky aj čitateľného loga: karta len s textom
         links = ''
         if sub: links += f'<a class="btn small primary" href="{self.rel(self.path, sub[0])}">Podrobnosti a výrobky</a>'
-        if b['url']: links += f'<a class="site" href="{html.escape(b["url"])}" target="_blank" rel="noopener">Web výrobcu</a>'
+        url = WEB_ZNACIEK.get(key, b['url'])   # adresa od majiteľa má prednosť; None = bez odkazu
+        if url: links += f'<a class="site" href="{html.escape(url)}" target="_blank" rel="noopener">Web výrobcu</a>'
         full = html.escape(b['text'])
         body = f'<p class="lede">{html.escape(popis)}</p><details><summary>Celý sortiment</summary><p>{full}</p></details>' if popis else f'<p>{full}</p>'
         return f'<article class="znacka{bez} rv">{media}<div class="bt"><h3>{html.escape(name)}</h3>{body}<div class="zl">{links}</div></div></article>'
@@ -586,6 +592,16 @@ class Parser:
             elif k == 'brands': t.extend(f'{b["name"]} {b["text"]}' for b in v)
             elif k == 'table': t.extend(re.sub(r'<[^>]+>', '', c['html']) for r in v for c in r)
         return html.unescape(' '.join(x for x in t if x))
+
+
+def _webp_rozmer(cesta):
+    """Šírka a výška WebP z hlavičky súboru (to isté ako build.webp_rozmer; obsah.py build neimportuje)."""
+    with open(cesta, 'rb') as f: b = f.read(40)
+    if b[12:16] == b'VP8X': return 1 + int.from_bytes(b[24:27], 'little'), 1 + int.from_bytes(b[27:30], 'little')
+    if b[12:16] == b'VP8 ': return int.from_bytes(b[26:28], 'little') & 0x3fff, int.from_bytes(b[28:30], 'little') & 0x3fff
+    if b[12:16] == b'VP8L':
+        v = int.from_bytes(b[21:25], 'little'); return (v & 0x3fff) + 1, ((v >> 14) & 0x3fff) + 1
+    return (0, 0)
 
 
 def _txt(el):

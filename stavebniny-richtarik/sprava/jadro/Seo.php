@@ -4,7 +4,7 @@ defined('SPRAVA') || exit;
 
 final class Seo
 {
-    const AKCIA_DOPLNOK = 'So zákazníckou kartou ďalšia zľava 5 % v hotovosti alebo 3,3 % kartou.';
+    const AKCIA_DOPLNOK = 'So zákazníckou kartou zľava z cien 5 % v hotovosti alebo 3,3 % kartou.';
 
     private static function d(): array
     {

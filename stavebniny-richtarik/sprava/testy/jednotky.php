@@ -314,14 +314,14 @@ Zmena::priprav(); t('vrátenie novinky zverejnené', Zmena::zverejni() === null)
 t('po vrátení stránka novinky má noindex', str_contains(file_get_contents(Nastavenie::w($n['stranka'])), 'noindex'));
 
 $D = Zmena::zive();
-[$X, $e] = Obsah::galeria($D, 'pridat', ['album' => 'dvor', 'popis' => 'Skúšobná fotka paliet v areáli'], ['foto' => nahraj("$VST/letak.jpg")]);
-t('galéria: nová fotka na začiatku albumu (V3)', $e === null && $X['galeria']['albumy'][1]['fotky'][0]['popis'] === 'Skúšobná fotka paliet v areáli' && str_starts_with($X['galeria']['albumy'][1]['fotky'][0]['src'], 'img/s/'), (string)$e);
-$fid = $X['galeria']['albumy'][1]['fotky'][1]['id'];
-[$Y, $e] = Obsah::galeria($X, 'nahradit', ['album' => 'dvor', 'foto' => $fid], ['foto' => nahraj("$VST/letak.jpg")]);
-t('galéria: nahradená fotka si nechá popis', $e === null && $Y['galeria']['albumy'][1]['fotky'][1]['popis'] === $X['galeria']['albumy'][1]['fotky'][1]['popis'] && $Y['galeria']['albumy'][1]['fotky'][1]['src'] !== $X['galeria']['albumy'][1]['fotky'][1]['src']);
-[$Y, $e] = Obsah::galeria($X, 'skryt', ['album' => 'dvor', 'foto' => $fid], []);
-t('galéria: skrytá fotka zmizne z albumu', $e === null && !str_contains(Vykreslenie::vykresli('galeria-dvor', 'galeria/index.html', Zmena::sKonstantami($Y)), $X['galeria']['albumy'][1]['fotky'][1]['src']));
-t('galéria: krátky popis odmietnutý', Obsah::galeria($D, 'pridat', ['album' => 'dvor', 'popis' => 'x'], [])[1] !== null);
+[$X, $e] = Obsah::galeria($D, 'pridat', ['album' => 'predajna', 'popis' => 'Skúšobná fotka paliet v predajni'], ['foto' => nahraj("$VST/letak.jpg")]);
+t('galéria: nová fotka na začiatku albumu (V3)', $e === null && $X['galeria']['albumy'][0]['fotky'][0]['popis'] === 'Skúšobná fotka paliet v predajni' && str_starts_with($X['galeria']['albumy'][0]['fotky'][0]['src'], 'img/s/'), (string)$e);
+$fid = $X['galeria']['albumy'][0]['fotky'][1]['id'];
+[$Y, $e] = Obsah::galeria($X, 'nahradit', ['album' => 'predajna', 'foto' => $fid], ['foto' => nahraj("$VST/letak.jpg")]);
+t('galéria: nahradená fotka si nechá popis', $e === null && $Y['galeria']['albumy'][0]['fotky'][1]['popis'] === $X['galeria']['albumy'][0]['fotky'][1]['popis'] && $Y['galeria']['albumy'][0]['fotky'][1]['src'] !== $X['galeria']['albumy'][0]['fotky'][1]['src']);
+[$Y, $e] = Obsah::galeria($X, 'skryt', ['album' => 'predajna', 'foto' => $fid], []);
+t('galéria: skrytá fotka zmizne z albumu', $e === null && !str_contains(Vykreslenie::vykresli('galeria-predajna', 'galeria/index.html', Zmena::sKonstantami($Y)), $X['galeria']['albumy'][0]['fotky'][1]['src']));
+t('galéria: krátky popis odmietnutý', Obsah::galeria($D, 'pridat', ['album' => 'predajna', 'popis' => 'x'], [])[1] !== null);
 t('galéria: neznámy album odmietnutý', Obsah::galeria($D, 'pridat', ['album' => '../x', 'popis' => 'Skúšobná fotka'], [])[1] !== null);
 
 $T = $D['texty'];
@@ -356,8 +356,8 @@ t('kontakt: údaje obrázkov v konštantách zmena kontaktu nenahradí', Zmena::
 echo "Grafiky s údajom v obrázku: na webe len pri zhode s údajmi (udaje_platia, plati_pri)\n";
 $D = Zmena::zive(); $DK0 = Zmena::sKonstantami($D);
 $obl = fn(string $oid, string $c, array $DK) => Vykreslenie::vykresli($oid, $c, $DK);
-$hk = $obl('hodiny-kontakt', 'kontakt.html', $DK0); $gl = $obl('galeria-letaky', 'letak.html', $DK0); $gg = $obl('galeria-grafika', 'galeria/index.html', $DK0); $sz = $obl('sluzby-zlavy', 'sluzby.html', $DK0);
-t('grafiky: s pôvodnými údajmi sú všetky na webe (hodiny, zľavy, 4 letáky a bannery, 12 obrázkov albumu)',
+$hk = $obl('hodiny-kontakt', 'kontakt.html', $DK0); $gl = $obl('galeria-letaky', 'letak.html', $DK0); $gg = $obl('galeria-grafika', 'galeria/index.html', $DK0); $sz = $obl('sluzby-polozky', 'sluzby.html', $DK0);
+t('grafiky: s pôvodnými údajmi sú všetky na webe (hodiny, zľavy pri službe, 4 letáky a bannery, 12 obrázkov albumu)',
   str_contains($hk, 'kontakt-hodiny-288') && str_contains($sz, 'zlavy-480') && substr_count($gl, '<figure') === 4 && substr_count($gg, '<figure') === 12 && str_contains($gg, '12 obrázkov'));
 t('grafiky: všetky kľúče údajov platia, neznámy kľúč neplatí, prázdny zoznam platí',
   Vykreslenie::udaje_platia($DK0, ['hodiny', 'mobil', 'pevna', 'email', 'ulica', 'psc', 'majitel', 'zlava']) && !Vykreslenie::udaje_platia($DK0, ['nieco']) && Vykreslenie::udaje_platia($DK0, []));
@@ -375,32 +375,54 @@ t('grafiky: oznam k hodinám (sviatok) obrázok hodín neskryje', (function () u
 $gl = $obl('galeria-letaky', 'letak.html', $DKM); $gg = $obl('galeria-grafika', 'galeria/index.html', $DKM);
 t('grafiky: zmena mobilu skryje leták so sortimentom, leták Prečo nakupovať a bannery ostanú', $e === null && !str_contains($gl, 'letak-stavebniny-richtarik') && str_contains($gl, 'letak-preco-nakupovat') && substr_count($gl, '<figure') === 3, (string)$e);
 t('grafiky: zmena mobilu skryje tabuľu s kontaktom, vizitku a kartu, logá a ilustrácie ostanú', !str_contains($gg, 'tabula-vysoka') && !str_contains($gg, 'vizitka') && !str_contains($gg, 'karta-n') && str_contains($gg, 'logo-rs-vodorovne') && str_contains($gg, 'tabula-siroka') && substr_count($gg, '<figure') === 9 && str_contains($gg, '9 obrázkov'));
-t('grafiky: zmena mobilu obrázok hodín ani zliav neskryje', str_contains($obl('hodiny-kontakt', 'kontakt.html', $DKM), 'kontakt-hodiny-288') && str_contains($obl('sluzby-zlavy', 'sluzby.html', $DKM), 'zlavy-480'));
+t('grafiky: zmena mobilu obrázok hodín ani zliav neskryje', str_contains($obl('hodiny-kontakt', 'kontakt.html', $DKM), 'kontakt-hodiny-288') && str_contains($obl('sluzby-polozky', 'sluzby.html', $DKM), 'zlavy-480'));
+// pokyny majiteľa 17. 11. 2026: 3D karta (úvod, Služby) s náhradou plochou kartou, tabuľa na Kontakte, piktogramy kontaktu na Službách
+t('grafiky: s pôvodnými údajmi 3D karta na úvode aj na Službách, tabuľa na Kontakte, oba piktogramy vo výzve Služieb',
+  str_contains($obl('uvod-karta', 'index.html', $DK0), 'karta-3d-820') && !str_contains($obl('uvod-karta', 'index.html', $DK0), 'karta-nova') && str_contains($obl('sluzby-zlavy', 'sluzby.html', $DK0), 'karta-3d-480')
+  && str_contains($obl('kontakt-tabula', 'kontakt.html', $DK0), 'tabula-vysoka-k-240') && substr_count($obl('sluzby-kontakt', 'sluzby.html', $DK0), '<picture') === 2);
+t('grafiky: zmena mobilu – 3D karta ustúpi plochej (úvod aj Služby), tabuľa zmizne, vo výzve Služieb ostane len Napíšte nám',
+  str_contains($obl('uvod-karta', 'index.html', $DKM), 'karta-nova-671') && !str_contains($obl('uvod-karta', 'index.html', $DKM), 'karta-3d') && str_contains($obl('sluzby-zlavy', 'sluzby.html', $DKM), 'karta-nova-671')
+  && $obl('kontakt-tabula', 'kontakt.html', $DKM) === '' && !str_contains($obl('sluzby-kontakt', 'sluzby.html', $DKM), 'kontakt-zavolajte') && str_contains($obl('sluzby-kontakt', 'sluzby.html', $DKM), 'kontakt-napiste-480'));
+t('grafiky: zmena hodín skryje tabuľu na Kontakte, 3D karta ostane', $obl('kontakt-tabula', 'kontakt.html', $DKH) === '' && str_contains($obl('uvod-karta', 'index.html', $DKH), 'karta-3d'));
+$Ul = $D; $Ul['firma']['ulica'] = 'Novozámocká 70';
+t('grafiky: iná ulica – plochá karta, bez tabule; piktogramy kontaktu ostanú (adresu nemajú)', str_contains($obl('uvod-karta', 'index.html', Zmena::sKonstantami($Ul)), 'karta-nova') && $obl('kontakt-tabula', 'kontakt.html', Zmena::sKonstantami($Ul)) === ''
+  && substr_count($obl('sluzby-kontakt', 'sluzby.html', Zmena::sKonstantami($Ul)), '<picture') === 2);
+$Me = $D; $Me['firma']['email'] = 'predajna@stavebniny-test.sk'; $Me['firma']['mobil'] = '0905 111 222';
+t('grafiky: zmena mobilu aj e-mailu – výzva Služieb bez obrázkov (nič, žiadny prázdny rámik)', $obl('sluzby-kontakt', 'sluzby.html', Zmena::sKonstantami($Me)) === '');
+// piktogramy pri službách: podľa slova v nadpise, každý najviac raz, premenovaná služba bez obrázka
+$sp = $obl('sluzby-polozky', 'sluzby.html', $DK0);
+t('služby: piktogramy Výpočet, Poradenstvo a Zľavy pri svojich službách, každý raz', substr_count($sp, '<picture') === 3 && substr_count($sp, 'sluzba-vypocet-480.webp 480w') === 1
+  && (bool)preg_match('~Výpočet spotreby zadarmo</h2>.*?</div><picture class="srv-obr">.*?sluzba-vypocet~s', $sp) && (bool)preg_match('~Množstevné zľavy</h2>.*?</div><picture class="srv-obr">.*?zlavy-288~s', $sp));
+$Sx = $D; $Sx['texty']['sluzby'][1][0] = 'Spotreba materiálu zadarmo'; $Sx['texty']['sluzby'][2][0] = 'Výpočet tepelných strát';
+$sp = $obl('sluzby-polozky', 'sluzby.html', Zmena::sKonstantami($Sx));
+t('služby: premenovaná služba je bez obrázka, obrázok ide k službe so slovom v nadpise, nie dvakrát', substr_count($sp, '<picture') === 2 && substr_count($sp, 'sluzba-vypocet-480.webp 480w') === 1
+  && (bool)preg_match('~Výpočet tepelných strát</h2>.*?</div><picture class="srv-obr">.*?sluzba-vypocet~s', $sp) && !str_contains($sp, 'sluzba-poradenstvo'));
 [$E, $e] = Obsah::kontakt($D, ['mobil' => $D['firma']['mobil'], 'pevna' => $D['firma']['pevna'], 'email' => 'predajna@stavebniny-test.sk']);
 t('grafiky: zmena e-mailu skryje vizitku, kartu, tabuľu a leták so sortimentom', $e === null && substr_count($obl('galeria-grafika', 'galeria/index.html', Zmena::sKonstantami($E)), '<figure') === 9 && !str_contains($obl('galeria-letaky', 'letak.html', Zmena::sKonstantami($E)), 'letak-stavebniny-richtarik'), (string)$e);
 // N2 (17. 11. 2026): náhľad „Čo sa zmení“ vymenuje obrázky, ktoré po zmene údajov zmiznú (a pri vrátení sa vrátia)
 $rv = fn($A, $B) => implode(' | ', Rozdiel::vety($A, $B));
 $vm = $rv($D, $M); $ve = $rv($D, $E); $vh = $rv($D, $H); $vz = $rv($M, $D);
 t('N2: zmena mobilu – náhľad vymenuje Zavolajte nám, leták so sortimentom, tabuľu, vizitku a kartu',
-  str_contains($vm, 'Z webu sa skryjú obrázky so starým údajom: obrázok Zavolajte nám (Kontakt)') && str_contains($vm, 'Leták so sortimentom predajne (Letáky a bannery)')
+  str_contains($vm, 'Z webu sa skryjú obrázky so starým údajom: obrázok Zavolajte nám (Kontakt a Služby)') && str_contains($vm, 'tabuľa s adresou a otváracou dobou (Kontakt)') && str_contains($vm, '3D zákaznícka karta (úvod a Služby') && str_contains($vm, 'Leták so sortimentom predajne (Letáky a bannery)')
   && str_contains($vm, 'Vizitka') && str_contains($vm, 'Zákaznícka karta') && str_contains($vm, 'Firemná tabuľa s adresou') && !str_contains($vm, 'Napíšte nám') && !str_contains($vm, 'hodín'), $vm);
-t('N2: zmena e-mailu – Napíšte nám áno, Zavolajte nám nie', str_contains($ve, 'obrázok Napíšte nám (Kontakt)') && !str_contains($ve, 'Zavolajte nám'), $ve);
+t('N2: zmena e-mailu – Napíšte nám áno, Zavolajte nám nie', str_contains($ve, 'obrázok Napíšte nám (Kontakt a Služby)') && !str_contains($ve, 'Zavolajte nám'), $ve);
 t('N2: zmena hodín – obrázok hodín, leták Prečo nakupovať a tabuľa, vizitka nie', str_contains($vh, 'obrázok otváracích hodín (Kontakt)') && str_contains($vh, 'Leták Prečo nakupovať u nás') && str_contains($vh, 'Firemná tabuľa') && !str_contains($vh, 'Vizitka'), $vh);
-t('N2: vrátenie mobilu – obrázky sa vrátia', str_contains($vz, 'Na web sa vrátia obrázky: obrázok Zavolajte nám (Kontakt)') && !str_contains($vz, 'skryjú'), $vz);
+t('N2: vrátenie mobilu – obrázky sa vrátia', str_contains($vz, 'Na web sa vrátia obrázky: obrázok Zavolajte nám (Kontakt a Služby)') && !str_contains($vz, 'skryjú'), $vz);
 $V = $D; $V['firma']['vynimky'] = [['od' => '2026-12-24', 'do' => '2026-12-26', 'zatvorene' => true, 'nazov' => 'Vianoce']];
 t('N2: oznam k hodinám (sviatok) o obrázkoch nehovorí', !str_contains($rv($D, $V), 'obrázk') && str_contains($rv($D, $V), 'Vianoce'), $rv($D, $V));
 t('grafiky: údaje obrázkov v konštantách zmena kontaktu nenahradí', Zmena::sKonstantami($M)['k']['grafika_udaje']['mobil'] === '0905622223' && Zmena::sKonstantami($E)['k']['grafika_udaje']['email'] === ['info', 'stavebninyrichtarik.sk']);
 // (c) zľava bez 3,3 %: karta zliav na Službách bez obrázka, veta ostane
 $Z = $D; $Z['cennik']['zlava'] = 'Zľava so zákazníckou kartou: 5 % pri platbe v hotovosti, 3 % pri platbe kartou. Cenník akcií ({datum}).';
-$sz = $obl('sluzby-zlavy', 'sluzby.html', Zmena::sKonstantami($Z));
-t('grafiky: zľava bez 3,3 % – karta zliav bez obrázka, veta a tlačidlo ostanú', !str_contains($sz, '<picture') && !str_contains($sz, ' ilu') && str_contains(str_replace("\u{a0}", ' ', $sz), '3 % pri platbe kartou') && str_contains($sz, 'href="akcie/index.html"'));
+$sz = $obl('sluzby-zlavy', 'sluzby.html', Zmena::sKonstantami($Z)); $spz = $obl('sluzby-polozky', 'sluzby.html', Zmena::sKonstantami($Z));
+t('grafiky: zľava bez 3,3 % – Množstevné zľavy bez ikony zliav, karta zliav s vetou a tlačidlom ostane (3D karta zľavu v obrázku nemá)', !str_contains($spz, 'zlavy-') && str_contains($spz, 'Množstevné zľavy') && substr_count($spz, '<picture') === 2
+  && str_contains($sz, 'karta-3d-480') && str_contains(str_replace("\u{a0}", ' ', $sz), '3 % pri platbe kartou') && str_contains($sz, 'href="akcie/index.html"'));
 $Z['cennik']['zlava'] = 'Zľava so zákazníckou kartou: 15 % pri platbe v hotovosti, 3,3 % pri platbe kartou.';
-t('grafiky: 15 % nie je 5 % (obrázok zliav sa neukáže)', !str_contains($obl('sluzby-zlavy', 'sluzby.html', Zmena::sKonstantami($Z)), '<picture'));
+t('grafiky: 15 % nie je 5 % (obrázok zliav sa neukáže)', !str_contains($obl('sluzby-polozky', 'sluzby.html', Zmena::sKonstantami($Z)), 'zlavy-'));
 $Z['cennik']['zlava'] = str_replace('5 % pri platbe v hotovosti', '7 % pri platbe v hotovosti', $D['cennik']['zlava']);
 t('grafiky: zmena jediného čísla zľavy (hotovosť 7 %, „odrátaná 5 % zľava“ ostane) obrázok zliav skryje', $Z['cennik']['zlava'] !== $D['cennik']['zlava'] && str_contains($Z['cennik']['zlava'], '5 %')
-  && !str_contains($obl('sluzby-zlavy', 'sluzby.html', Zmena::sKonstantami($Z)), '<picture'));
+  && !str_contains($obl('sluzby-polozky', 'sluzby.html', Zmena::sKonstantami($Z)), 'zlavy-'));
 $Z['cennik']['zlava'] = str_replace('odrátaná 5 % zľava', 'odrátaná 4 % zľava', $D['cennik']['zlava']);
-t('grafiky: zmena vety o cenníku bez zmeny zliav obrázok nechá', $Z['cennik']['zlava'] !== $D['cennik']['zlava'] && str_contains($obl('sluzby-zlavy', 'sluzby.html', Zmena::sKonstantami($Z)), 'zlavy-480'));
+t('grafiky: zmena vety o cenníku bez zmeny zliav obrázok nechá', $Z['cennik']['zlava'] !== $D['cennik']['zlava'] && str_contains($obl('sluzby-polozky', 'sluzby.html', Zmena::sKonstantami($Z)), 'zlavy-480'));
 // PSČ je na tabuli, vizitke aj zákazníckej karte: pri inom PSČ zmiznú všetky tri, široká tabuľa bez adresy ostane
 $Pm = $D; $Pm['firma']['mesto'] = '949 01 Nitra'; $gg = $obl('galeria-grafika', 'galeria/index.html', Zmena::sKonstantami($Pm));
 t('grafiky: iné PSČ skryje tabuľu s adresou, vizitku aj kartu', !str_contains($gg, 'tabula-vysoka') && !str_contains($gg, 'vizitka') && !str_contains($gg, 'karta-n') && str_contains($gg, 'tabula-siroka') && substr_count($gg, '<figure') === 9);
@@ -423,7 +445,7 @@ foreach (['letak-preco-nakupovat', 'letak-stavebniny-richtarik', 'banner-komplet
 t('grafiky: album letákov smie ostať prázdny, časť Letáky a bannery potom zmizne celá', $e === null && $obl('galeria-letaky', 'letak.html', Zmena::sKonstantami($S)) === '', (string)$e);
 [$S2, $e] = Obsah::galeria($S, 'zobrazit', ['album' => 'letaky', 'foto' => 'banner-super-ceny'], []);
 t('grafiky: zobrazený banner je späť aj s nadpisom', $e === null && str_contains($obl('galeria-letaky', 'letak.html', Zmena::sKonstantami($S2)), 'Letáky a bannery') && substr_count($obl('galeria-letaky', 'letak.html', Zmena::sKonstantami($S2)), '<figure') === 1, (string)$e);
-$dv = $D; foreach ($al($D, 'dvor')['fotky'] as $f) [$dv, $e] = Obsah::galeria($dv, 'skryt', ['album' => 'dvor', 'foto' => $f['id']], []);
+$dv = $D; foreach ($al($D, 'predajna')['fotky'] as $f) [$dv, $e] = Obsah::galeria($dv, 'skryt', ['album' => 'predajna', 'foto' => $f['id']], []);
 t('grafiky: v albume fotiek musí ostať aspoň jedna fotka (pravidlo platí ďalej)', $e !== null);
 [$P, $e] = Obsah::galeria($D, 'popis', ['album' => 'grafika', 'foto' => 'tabula-vysoka', 'popis' => 'Tabuľa pri vchode do predajne'], []);
 t('grafiky: zmena popisu podmienku nechá', $e === null && array_values(array_filter($al($P, 'grafika')['fotky'], fn($f) => $f['id'] === 'tabula-vysoka'))[0]['plati_pri'] === ['ulica', 'psc', 'pevna', 'mobil', 'email', 'hodiny'], (string)$e);

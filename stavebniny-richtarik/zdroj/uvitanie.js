@@ -4,7 +4,7 @@
    Brána drží zatvorená, kým sa dá prečítať pozdrav (DRZ od prvého vykreslenia) a kým nie je dekódovaná fotka predajne (tá
    istá ako v úvode, žiadne bajty navyše). Celý scenár sa vopred v nečinnom čase vytvorí pozastavený (WAAPI
    s oneskoreniami, beží v kompozítore) a v prvej snímke po t0 sa spustí naraz: krídla sa rozídu do strán, kamera vojde
-   dnu, objaví sa odznak a štítky, okno s fotkou sa usadí presne do rámu úvodu (.uv-ram), vyjde nadpis a ponuka úvodu,
+   dnu, objavia sa štítky, okno s fotkou sa usadí presne do rámu úvodu (.uv-ram), vyjde nadpis a ponuka úvodu,
    prekryv sa prelne a štítok „Naša predajňa“ sa vrazí. Koniec určujú prísľuby finished, nie časovače; na konci sa prekryv
    odstráni a vyšle sa udalosť br-koniec {preskocene, rychlo, t} (strih zásob a asistent v site.js čakajú na ňu).
    Triedy na <html> sa nemenia.
@@ -23,7 +23,7 @@
   // M je tempo: časy scenára OTV, DOK, DOKD a všetky dĺžky v T() sú základné (pôvodné) hodnoty × M; DRZ, CAKAJ a CIEL
   // sú už vynásobené (380, 900 a 2450 × 1,5)
   var M = 1.5, DRZ = 570, CAKAJ = 1350, CAKAJP = 700, POMALE = 1500, CIEL = 3700, KMIN = 0.72, OTV = 500, DOK = 600, DOKD = 520, KONIEC = DOK + DOKD, ZMIZ = 90;
-  var ov, okno, sc, zO, stav = 0, an = [], txt = [], f0 = 0, hotova = 0, vykr = 0, pomala = false, k = 1, tel, vw, cs = getComputedStyle(h), cas = [];
+  var ov, okno, sc, stav = 0, an = [], txt = [], f0 = 0, hotova = 0, vykr = 0, pomala = false, k = 1, tel, vw, cs = getComputedStyle(h), cas = [];
   var far = h.getAttribute('data-tema') === 'farebna';   // farebná téma (predvolená): krídla sa rozídu rovno nad úvodom (otvorF)
   function kr(n) { return cs.getPropertyValue('--krivka-' + n).trim() || 'ease'; }   // krivky pohybového systému (site.css)
   function T(ms) { return Math.round(ms * k * M); }
@@ -80,14 +80,14 @@
     an.concat(txt).forEach(function (a) { a.cancel(); }); an = []; txt = [];   // pripravený celý scenár sa zruší
     stav = 1; k = 1; znacka('br-otvor');
     w.brCas = { f: Math.round(f0), pr: Math.round(hotova), otvor: Math.round(performance.now()), rychlo: 1 };
-    okno.style.visibility = zO.style.visibility = 'hidden';
+    okno.style.visibility = 'hidden';
     kridla(440);   // kratšie ako pri celom scenári: na pomalej sieti už pozdrav trval dosť dlho
     if (far) odkryF(440, kr('vyjazd'));   // farebná téma: ani tu nie sú naraz dva názvy (KZ-01)
     A(ov, [{ opacity: 1 }, { opacity: 0 }], { duration: ZMIZ, delay: 350, fill: 'forwards' });
     hotovo({ rychlo: true });
   }
   // celý scenár sa pripraví vopred v nečinnom čase počas pozdravu: rozmery sa čítajú raz v jednej úlohe (prekryv, rám
-  // úvodu, scéna, fotka úvodu aj s posunom pri odchode a oba odznaky) a všetky animácie sa vytvoria pozastavené (pod
+  // úvodu, scéna, fotka úvodu aj s posunom pri odchode) a všetky animácie sa vytvoria pozastavené (pod
   // zatvorenou bránou nič z nich nevidno); v snímke otvorenia sa už len spustia. Rozmery sa medzitým nemenia (výšky
   // rámu a hlavičky určuje CSS, nie písmo). k sa určí z plánovaného času otvorenia t0.
   var G = 0;
@@ -97,15 +97,13 @@
     if (!ram || !hl) return 0;
     var V = ov.getBoundingClientRect(), R = ram.getBoundingClientRect(), L = sc.getBoundingClientRect(), B = hl.getBoundingClientRect();
     vw = w.innerWidth;
-    var zH = ram.querySelector('.uv-znak'), zo = zO.getBoundingClientRect(), zh = zH ? zH.getBoundingClientRect() : zo;
     // cieľ: fotka v ráme úvodu (object-fit: cover a object-position ako v CSS úvodu)
     var a = L.width / L.height, op = getComputedStyle(hl).objectPosition.split(' ');
     var px = parseFloat(op[0]) / 100, py = parseFloat(op[1] || '50%') / 100;
     var fw = Math.max(B.width, B.height * a), F = { x: B.left + (B.width - fw) * px, y: B.top + (B.height - fw / a) * py, w: fw };
-    var ZV = tel ? 1.3 : 1.8;   // odznak „Skutočná fotka…“ je počas uvítania väčší, pri usadení prejde na odznak úvodu
     // usadenie: okno (celý prekryv) sa zmenší na rám úvodu a scéna vo vnútri opačne, aby fotka ostala v pomere strán;
     // rozloženie sa nemení (len transform), takže nevzniká posun rozloženia (CLS); 13 kľúčových snímok krivky ease in-out
-    var N = 12, ko = [], ks = [], kz = [], i, q, p, wx, wy, sx, sy, Dx, Dy, Dw;
+    var N = 12, ko = [], ks = [], i, q, p, wx, wy, sx, sy, Dx, Dy, Dw;
     for (i = 0; i <= N; i++) {
       q = i / N; p = q < 0.5 ? 4 * q * q * q : 1 - Math.pow(2 - 2 * q, 3) / 2;
       wx = (R.left - V.left) * p; wy = (R.top - V.top) * p;
@@ -113,7 +111,6 @@
       Dx = L.left + (F.x - L.left) * p - V.left; Dy = L.top + (F.y - L.top) * p - V.top; Dw = L.width + (F.w - L.width) * p;
       ko.push({ offset: q, transform: 'translate(' + wx + 'px,' + wy + 'px) scale(' + sx + ',' + sy + ')' });
       ks.push({ offset: q, transform: 'translate(' + ((Dx - wx) / sx - (L.left - V.left)) + 'px,' + ((Dy - wy) / sy - (L.top - V.top)) + 'px) scale(' + (Dw / (sx * L.width)) + ',' + (Dw / (sy * L.width)) + ')' });
-      kz.push({ offset: q, transform: 'translate(' + (zh.left - zo.left) * p + 'px,' + (zh.top - zo.top) * p + 'px) scale(' + (ZV + (1 - ZV) * p) + ')' });
     }
     k = Math.min(1, Math.max(KMIN, (CIEL - t0) / ((KONIEC + 120) * M)));
     var vy = kr('vyjazd'), dok = { duration: T(DOKD), delay: T(DOK), easing: 'linear', fill: 'both' };
@@ -121,9 +118,6 @@
     // kamera vojde dnu (1 → 1,05) a pri usadení sa vráti
     A(ov.querySelector('.br-kam'), [{ offset: 0, transform: 'none', easing: kr('kamera') }, { offset: Math.min(600, DOK) / KONIEC, transform: 'scale(1.05)' },
       { offset: DOK / KONIEC, transform: 'scale(1.05)', easing: 'cubic-bezier(.65,0,.35,1)' }, { offset: 1, transform: 'none' }], { duration: T(KONIEC), fill: 'both' });
-    // odznak sa objaví a pri usadení prejde presne na odznak úvodu
-    A(zO, [{ opacity: 0 }, { opacity: 1 }], { duration: T(260), delay: T(150), fill: 'both' });
-    A(zO, kz, dok);
     // štítky vyjdú za sebou (krúžok špendlíka sa raz rozvlní) a zhasnú, keď fotka ide do rámu (na počítači sa fotka
     // zmenší menej, štítky ostanú čitateľné dlhšie)
     [].forEach.call(ov.querySelectorAll('.br-st'), function (s, j) {
@@ -210,7 +204,7 @@
 
   try {
     ov = ov0;
-    okno = ov.querySelector('.br-okno'); sc = ov.querySelector('.br-scena'); zO = ov.querySelector('.uv-znak');
+    okno = ov.querySelector('.br-okno'); sc = ov.querySelector('.br-scena');
     tel = w.matchMedia('(max-width:700px)').matches;   // rozmery sa tu nečítajú (vynútili by prepočet štýlov počas načítania)
     if (!tel) { DOK = 560; DOKD = 440; KONIEC = DOK + DOKD; }   // počítač: veľký rám, fotka sa usádza na kratšiu vzdialenosť
     ov.querySelector('.br-kam').style.transformOrigin = tel ? '48% 50%' : '82% 52%';   // úbežník cesty medzi paletami (fotka 11, v pomere k celej širokej fotke)

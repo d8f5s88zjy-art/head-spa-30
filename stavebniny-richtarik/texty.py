@@ -147,7 +147,7 @@ STRANKY = {
 
     # akcie (H1 = výrobok a výhoda, iný ako H1 v katalógu)
     'akcie/betonove-tvarnice.html': dict(h1='Betónové tvárnice v akcii', t='Betónové tvárnice v akcii',
-        d='Akcia betónové tvárnice: šalovacie od 1,28 € a stĺpové od 1,57 € za kus s DPH. So zákazníckou kartou ďalšia zľava 5 % v hotovosti alebo 3,3 % kartou.'),
+        d='Akcia betónové tvárnice: šalovacie od 1,28 € a stĺpové od 1,57 € za kus s DPH. So zákazníckou kartou zľava z cien 5 % v hotovosti alebo 3,3 % kartou.'),
     'akcie/cement-325-r.html': dict(h1='Cement v akcii od 4,42 €', t='Cement 325 R a 425 R v akcii',
         d='Akcia cement 325 R a 425 R: vrece 25 kg za 4,42 € a 5,18 € s DPH, cena platí pri platbe v hotovosti. Stavebniny Richtárik, Nitra – Horné Krškany.'),
     'akcie/dlazby-ploty-stadreko.html': dict(h1='Dlažby a ploty Stadreko v akcii', t='Dlažby a ploty Stadreko v akcii',
@@ -226,7 +226,7 @@ def popis(path, nazov, druh, veta=''):
               'znacka': f'{nazov} v Stavebninách Richtárik v Nitre.' + (f' {veta}.' if veta else ''),
               'akcia': f'Akcia {nazov}: {veta}.' if veta else f'Akcia {nazov}.',
               'novinka': f'{nazov}: {veta}.' if veta else f'{nazov}.'}.get(druh, f'{nazov}.')
-    if druh == 'akcia': doplnky = ['So zákazníckou kartou ďalšia zľava 5 % v hotovosti alebo 3,3 % kartou.'] + DOPLNKY
+    if druh == 'akcia': doplnky = ['So zákazníckou kartou zľava z cien 5 % v hotovosti alebo 3,3 % kartou.'] + DOPLNKY
     else: doplnky = list(DOPLNKY)
     d = zaklad
     if len(d) > 155:   # príliš dlhá veta: skrátiť na celé vety
@@ -456,6 +456,7 @@ OBR_ALT = {
     'ilu:poradenstvo': 'Ilustrácia: predavač radí zákazníkovi nad plánom, nápis Poradenstvo v stavebninách',
     'ilu:rozvoz': 'Ilustrácia: nákladné auto Iveco s hydraulickou rukou vezie palety tehál, reziva a cementu',
     'ilu:zdarma-vypocet': 'Ilustrácia: kalkulačka nad plánom stavby, palety tehál a dreva a vrecia cementu, nápis Zdarma výpočet spotreby stavebného materiálu',
+    'ilu:zlavy': 'Ilustrácia: platobná karta, bankovky, mince a znak percent, nápis Zákazník dostane zľavu: hotovosť 5 %, karta 3,3 %. Špeciálne zľavy pre stavebné firmy a živnostníkov',
 }
 
 # Galéria: opis každej fotky (5 až 15 slov, len to, čo je na fotke vidieť). Fotky areálu a predajne sú skutočné fotky

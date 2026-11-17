@@ -1,1 +1,1 @@
-{{#polozky}}<article class="srv rv"><i>{{n}}</i><div><h2 class="h3">{{nazov}}</h2><p>{{{popis}}}</p></div></article>{{/polozky}}
+{{#polozky}}<article class="srv rv{{#obr}} s-obr{{/obr}}"><i>{{n}}</i><div><h2 class="h3">{{nazov}}</h2><p>{{{popis}}}</p></div>{{#obr}}<picture class="srv-obr"><source type="image/avif" srcset="{{avif}}" sizes="(max-width:700px) 200px, 160px"><img src="{{src}}" srcset="{{webp}}" sizes="(max-width:700px) 200px, 160px" width="{{w}}" height="{{h}}" alt="{{alt}}" loading="lazy" decoding="async"></picture>{{/obr}}</article>{{/polozky}}

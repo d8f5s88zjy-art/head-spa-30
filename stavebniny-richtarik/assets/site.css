@@ -76,6 +76,12 @@ p{max-width:64ch}
 .brand img{display:block;height:48px;width:auto}
 .lg-nazov{display:grid;font-family:var(--display);font-weight:800;font-size:24px;line-height:.86;letter-spacing:.01em;text-transform:uppercase;white-space:nowrap}
 .lg-nazov span+span{color:var(--brick)}
+/* čierny obrys písmen názvu pri logu (majiteľ, e-mail 17. 11. 2026: „STAVEBNINY RICHTÁRIK olemovať čiernou“ – žiadal to na
+   úvode; lišta je na všetkých stránkach ten istý komponent, preto rovnako všade): osem ostrých tieňov bez rozmazania okolo
+   každého písmena, hrúbka --obrys podľa veľkosti písma a hustoty bodov (1 px; telefón vo farebnej téme pri 28 – 30 px 1,25 px – pri DPR 2 – 3
+   celé body displeja; na počítači pri DPR 1 by 1,25 px rozmazalo hrany) */
+.lg-nazov{--obrys:1px;--o-:calc(-1 * var(--obrys));
+  text-shadow:var(--obrys) 0 #000,var(--o-) 0 #000,0 var(--obrys) #000,0 var(--o-) #000,var(--obrys) var(--obrys) #000,var(--o-) var(--obrys) #000,var(--obrys) var(--o-) #000,var(--o-) var(--o-) #000}
 @media (max-width:1279px){.brand img{height:44px}.lg-nazov{font-size:22px}}
 /* 981–1180 px: menu, logo aj názov o stupeň menšie, aby sa lišta nezalomila (menu 9 položiek + telefón) */
 @media (max-width:1180px){.top .wrap{gap:18px}.brand img{height:40px}.lg-nazov{font-size:20px}}
@@ -779,7 +785,8 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 @media (max-width:900px){.facts.n3 div:nth-child(-n+2){border-bottom:0}.facts.n3 div:nth-child(2){border-right:1px solid var(--line)}}
 @media (max-width:560px){.facts.n3 b{font-size:32px}.facts.n3 span{font-size:13px}}
 /* pás faktov s jedným prvkom zľavy (Lajko 13. 11. 2026: „zľavy z cien, ďalšia zľava z cien“ – fakt bol dvakrát za sebou):
-   1997 · Zákaznícka karta (ďalšia zľava z akciových cien: 5 % v hotovosti, 3,3 % kartou) · 40+. Počítač tri stĺpce (karta
+   1997 · Zákaznícka karta (zľava z cien: 5 % v hotovosti, 3,3 % kartou; tretí riadok špeciálne zľavy pre stavebné firmy
+   a živnostníkov – majiteľ 17. 11. 2026) · 40+. Počítač tri stĺpce (karta
    v strede dvojnásobná), do 900 px 1997 a 40+ vedľa seba a karta pod nimi cez celú šírku. Platí vo všetkých témach. */
 .facts.fk{grid-template-columns:minmax(0,1fr) minmax(0,2.1fr) minmax(0,1fr)}
 .facts.fk>div{border-right:1px solid var(--line);border-bottom:0}
@@ -792,6 +799,10 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 .facts.fk .f-zlavy li{display:grid;gap:4px;margin:0;padding:0}
 .facts.fk .f-zlavy b{font-size:clamp(40px,3.6vw,56px)}
 .facts.fk .f-zlavy span{max-width:16ch}
+/* tretí riadok karty: ten istý vzor (nadpis písmom čísel, pod ním popis), cez celú šírku zoznamu, menšie písmo, lebo je to slovo */
+.facts.fk .f-zlavy .f-firmy{grid-column:1/-1;padding-top:clamp(10px,1.4vw,16px);border-top:1px solid var(--line)}
+.facts.fk .f-zlavy .f-firmy b{font-size:clamp(24px,2.2vw,32px);line-height:1.05;text-transform:uppercase;letter-spacing:.01em}
+.facts.fk .f-zlavy .f-firmy span{max-width:none}
 @media (max-width:900px){
   .facts.fk{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .facts.fk>div:first-child{border-right:1px solid var(--line)}
@@ -809,9 +820,13 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
   .facts.fk:not(.n3) .f-co{text-wrap:balance}
   .facts.fk:not(.n3) .f-zlavy{grid-column:2;grid-row:1/span 2;margin:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2vw,32px)}
   .facts.fk:not(.n3) .f-zlavy b{font-size:clamp(44px,4vw,60px);white-space:nowrap}
+  .facts.fk:not(.n3) .f-zlavy .f-firmy b{font-size:clamp(26px,2vw,32px)}
 }
 @media (max-width:700px){.facts.fk .f-zlavy b{font-size:40px}.facts.fk .f-co{font-size:20px}}
 @media (max-width:359px){.facts.fk .f-zlavy{gap:14px}.facts.fk .f-zlavy b{font-size:34px}}
+@media (max-width:700px){.facts.fk .f-zlavy .f-firmy b{font-size:24px}}
+@media (max-width:359px){.facts.fk .f-zlavy .f-firmy b{font-size:22px}}
+.facts.fk .f-zlavy:has(.f-firmy){row-gap:clamp(12px,1.4vw,18px)}
 /* úvod, O nás: štítok „Od roku 1997“ tehlový (nie tmavé pole) */
 .onas .year{background:var(--brick)}
 .onas .year small{color:#fff}
@@ -861,11 +876,39 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 @media (max-width:359px){.ilu{grid-template-columns:88px minmax(0,1fr);column-gap:12px;padding:16px 14px}}
 /* ---------- Ďalšie grafiky od majiteľa (16. 11. 2026; img/ilu a img/grafika, img/FOTKY.md). Obrázky s údajom (hodiny, zľava,
    kontakt) vykresľuje šablóna len vtedy, keď údaje platia – bez obrázka musí rozloženie držať rovnako. ---------- */
-/* Služby: karta zliav pod zoznamom služieb (oblasť sluzby-zlavy); obrázok 4 : 3 ako ikony Kontaktu */
+/* Služby: karta zliav pod zoznamom služieb (oblasť sluzby-zlavy) s 3D zákazníckou kartou (majiteľ 17. 11. 2026; pri zmene
+   adresy, telefónu či e-mailu v správe doterajšia plochá karta – .kplocha, bez rámika, s jemným tieňom) */
 .kat-cta.zl{margin-top:28px;max-width:848px}
 .ilu.zl{grid-template-columns:240px minmax(0,1fr)}
-.ilu.zl>picture{aspect-ratio:4/3}
-@media (max-width:700px){.ilu.zl{grid-template-columns:minmax(0,1fr)}.ilu.zl>picture{width:100%;max-width:240px}}   /* veta o zľave je dlhá: na telefóne obrázok nad ňou */
+.ilu.zl>picture{aspect-ratio:auto}
+.ilu.zl>picture img{height:auto}
+.ilu.zl>.kplocha{overflow:visible}
+.ilu.zl>.kplocha img{border-radius:3.5%/5.5%;box-shadow:0 10px 24px rgba(20,18,16,.22)}
+@media (max-width:700px){.ilu.zl{grid-template-columns:minmax(0,1fr)}.ilu.zl>picture{width:100%;max-width:320px}}   /* veta o zľave je dlhá: na telefóne obrázok nad ňou */
+/* Služby: 3D piktogram pri službe (oblasť sluzby-polozky, SLUZBY_OBR): jednotný rámik 4 : 3, 160 px vpravo od textu, na
+   telefóne 200 px pod textom; obrázok celý (object-fit cover len dorovná pomer 1,32 : 1 pri Poradenstve) */
+.srv.s-obr{grid-template-columns:64px minmax(0,1fr) 160px}
+.srv-obr{display:block;width:160px;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;align-self:start;background:#e3e5e6}
+.srv-obr img{display:block;width:100%;height:100%;object-fit:cover}
+@media (max-width:700px){.srv.s-obr{grid-template-columns:64px minmax(0,1fr)}.srv-obr{grid-column:2;width:min(200px,100%)}}
+/* Služby, časť Vlastná doprava: veta a auto z grafiky Rozvoz (to isté .rozvoz ako na Doprave); od 901 px vedľa seba */
+@media (min-width:901px){.sl-doprava{display:grid;grid-template-columns:minmax(0,1fr) 452px;gap:clamp(28px,4vw,64px);align-items:center}}
+@media (max-width:900px){.sl-doprava .rozvoz{margin-top:18px}}
+/* úvod, pás Zákaznícka karta: 3D karta (oblasť uvod-karta) má tieň a perspektívu v obrázku – bez natočenia a tieňa navyše */
+.karta .k3d img{transform:none;box-shadow:none;border-radius:var(--radius)}
+.karta:hover .k3d img{transform:none}
+html[data-tema] body.home .karta .k3d img{box-shadow:none}
+/* Kontakt: tabuľa s adresou, telefónmi a otváracou dobou vpravo v karte Predajňa a sklad (oblasť kontakt-tabula), po
+   kliknutí veľká; bez nej (iné údaje v správe) je karta ako predtým */
+.kpred:has(>.ktab){grid-template-columns:minmax(0,1fr) 112px;column-gap:16px}
+.kpred:has(>.ktab)>:not(.ktab){grid-column:1}
+.kpred:has(>.ktab)>.btn{grid-column:1/-1}   /* tlačidlo pod tabuľou cez celú šírku karty (na telefóne by tabuľu prekrylo) */
+.ktab{grid-column:2;grid-row:1/span 2;align-self:start;display:block;width:112px;border-radius:var(--radius);overflow:hidden}
+.ktab img{display:block;width:100%;height:auto}
+@media (max-width:359px){.kpred:has(>.ktab){grid-template-columns:minmax(0,1fr) 88px}.ktab{width:88px}}
+/* O nás: široká tabuľa RICHTÁRIK Stavebniny pod fotkou predajne (TABULA_ONAS) */
+.o-nas-page .figs.n1{gap:14px}
+.o-nas-page .ftab picture{display:block}
 /* Kontakt: obrázok hodín vpravo hore v karte Otváracie hodiny (oblasť hodiny-kontakt); tabuľka a oznamy cez celú šírku */
 .khod{grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:center}
 .khod>.hours,.khod>p{grid-column:1/-1}
@@ -891,14 +934,18 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 .figs.gg .fig figcaption{font-size:13px;line-height:1.3}
 @media (max-width:1000px){.figs.n6{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (max-width:700px){.figs.n6{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.figs.gg .fig picture{inset:5px}.figs.gg .fig figcaption{font-size:12px}}
-/* Služby: výzva pred pätou s grafikou „Zdarma výpočet“ (len tam, page(cta_obr)) – od 641 px obrázok | nadpis, text, tlačidlá
-   (obrázok 240–340 px, výzva je doplnok, nie druhý banner), pod 641 px obrázok nad textom najviac 360 px: 360 × DPR 3 = 1080 =
-   najväčší súbor, takže sa nikde nezväčšuje (kontrola vzhľadu KV-1; sizes v build.py build_sluzby musia sedieť s týmito šírkami) */
-.cta-pas.s-obr .wrap{grid-template-columns:clamp(240px,26vw,340px) minmax(0,1fr);gap:22px clamp(28px,4vw,56px)}
-.cta-pas.s-obr .wrap>picture{grid-row:1/3;display:block;border-radius:var(--radius);overflow:hidden}
-.cta-pas.s-obr .wrap>picture img{display:block;width:100%;height:auto}
-.cta-pas.s-obr .cta{grid-column:2}
-@media (max-width:640px){.cta-pas.s-obr .wrap{grid-template-columns:minmax(0,1fr)}.cta-pas.s-obr .wrap>picture{grid-row:auto;max-width:360px}.cta-pas.s-obr .cta{grid-column:auto}}
+/* Služby: výzva pred pätou s piktogramami Zavolajte nám a Napíšte nám (len tam, page(cta_obr), oblasť sluzby-kontakt; majiteľ
+   17. 11. 2026 „služby – použiť všetky piktogramy 3D“) – od 641 px dva rámiky 4 : 3 po 160 px vľavo | nadpis, text, tlačidlá,
+   pod 641 px vedľa seba nad textom. Bez obrázkov (iný telefón či e-mail v správe) je výzva ako na ostatných stránkach (:has). */
+.cta-pas.s-obr .wrap:has(>.cta-ik){grid-template-columns:auto minmax(0,1fr);gap:22px clamp(28px,4vw,56px)}
+.cta-ik{grid-row:1/3;display:grid;grid-template-columns:repeat(2,160px);gap:12px;align-content:center}
+.cta-ik:has(>picture:only-child){grid-template-columns:160px}
+.cta-ik>picture{display:block;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden}
+.cta-ik img{display:block;width:100%;height:100%}
+.cta-pas.s-obr .wrap:has(>.cta-ik) .cta{grid-column:2}
+@media (max-width:900px){.cta-ik{grid-template-columns:120px;grid-auto-rows:auto}.cta-ik:has(>picture:only-child){grid-template-columns:120px}}
+@media (max-width:640px){.cta-pas.s-obr .wrap:has(>.cta-ik){grid-template-columns:minmax(0,1fr)}.cta-ik{grid-row:auto;grid-template-columns:repeat(2,minmax(0,160px))}
+  .cta-ik:has(>picture:only-child){grid-template-columns:minmax(0,160px)}.cta-pas.s-obr .wrap:has(>.cta-ik) .cta{grid-column:auto}}
 /* ── Prechádzka predajňou (.pp; build.py prehliadka_blok a PRECHADZKA, site.js, zdroj/prechadzka.js; majiteľ 9. 11. 2026:
    prezrieť si predajňu ako v Google Mapách, Lajo 10. 11.: zo skutočných fotiek, s pohybom medzi miestami, priamo na našej
    stránke). Náhľad je fotka prvej zastávky s tlačidlom; po kliknutí sa v javisku (.pp-javisko) otvorí scéna (.pp-scena):
@@ -1062,18 +1109,7 @@ body.home .disc span{color:var(--ink-2)}
 .sluzby-page .srv-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,72px);align-items:start}
 .sluzby-page .srv-grid .lede{font-size:clamp(18px,1.5vw,21px);color:var(--ink-2);position:sticky;top:110px}
 .sluzby-page .sh{margin:clamp(36px,5vw,64px) 0 16px}
-.auta{display:flex;flex-wrap:wrap;gap:12px}
-.auta a{display:block;height:300px;flex:none;border-radius:var(--radius);overflow:hidden;background:var(--concrete)}
-.auta img{height:100%;width:auto;transition:transform .5s}
-@media (hover:hover){.auta a:hover img{transform:scale(1.02)}}
 @media (max-width:900px){.sluzby-page .srv-grid{grid-template-columns:minmax(0,1fr)}.sluzby-page .srv-grid .lede{position:static}}
-@media (max-width:700px){
-  .auta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
-  .auta a{height:auto}
-  .auta a:first-child{grid-row:span 2}
-  .auta a:not(:first-child){aspect-ratio:4/3}
-  .auta img{width:100%;height:100%;object-fit:cover}
-}
 /* ---------- Novinky: nadpisy tmavé, tehlový akcent len pri nadpise 2. úrovne, fotky v mriežke bez rámov (nezväčšené),
    logo bez rámu ---------- */
 .novinka-page h3.sh,.novinka-page h2.h3.sh{color:var(--ink);font-size:21px}
@@ -1155,11 +1191,6 @@ html{scroll-padding-top:90px}
   background:var(--concrete) var(--lq-p) 50% 55%/cover no-repeat}
 .uv-dvor{position:absolute;inset:0;display:block}
 .uv-dvor img{width:100%;height:100%;object-fit:cover;object-position:50% 55%}
-/* stály popis fotky (aj pre čítačku): papierový odznak vľavo hore */
-.uv-znak{position:absolute;z-index:4;left:var(--gutter);top:16px;margin:0;max-width:calc(100% - 2 * var(--gutter) - 56px);
-  font-family:var(--display);font-weight:700;font-size:13px;line-height:1.25;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
-  background:rgba(var(--prgb),.94);padding:5px 10px 5px 26px;border-radius:3px}
-.uv-znak::before{content:"";position:absolute;left:10px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--brick)}
 /* štítok ako na palete: papier, tehlová hrana, tmavé písmo (žiadny tmavý prechod cez fotku) */
 .uv-stitok{position:absolute;z-index:4;left:var(--gutter);bottom:20px;margin:0;display:grid;gap:1px;max-width:none;
   background:var(--paper);color:var(--ink);padding:9px 16px 10px 14px;border-left:6px solid var(--brick);border-radius:2px;
@@ -1224,8 +1255,6 @@ html{scroll-padding-top:90px}
      prehliadač zväčšoval 1,76×, KV-03), výrez vodorovne na palety a červený Porfix */
   .uv-ram{height:clamp(150px,calc(100svh - 483px),430px);background-position:26% 55%}
   .uv-dvor img{object-position:26% 55%}
-  .uv-znak{top:10px;font-size:11px;letter-spacing:.1em;padding:4px 8px 4px 22px;max-width:calc(100% - 2 * var(--gutter) - 58px)}
-  .uv-znak::before{left:8px;width:7px;height:7px;margin-top:-3.5px}
   .uv-stitok{bottom:12px;padding:6px 12px 7px 10px;border-left-width:5px}
   .uv-stitok b{font-size:20px}.uv-stitok span{font-size:11.5px}
   /* telefón: výtlačok najviac 46 % výšky rámu, v hornej polovici vpravo, mimo štítku „Naša predajňa“ vľavo dole */
@@ -1256,7 +1285,6 @@ html{scroll-padding-top:90px}
   .uv-text{padding-block:12px 14px}
   .uv .cta .btn{font-size:15px;letter-spacing:.02em;padding:0 8px}
   .uv .hero-search input{font-size:14px;padding-left:42px}
-  .uv-znak{letter-spacing:.06em}
 }
 
 /* ── pohyb úvodu: trieda uv-ide (skript v <head>, len „bez obmedzenia pohybu“), bez JS nič ─────────────────────── */
@@ -1739,7 +1767,7 @@ a,button,summary{-webkit-tap-highlight-color:transparent}
 .doprava-page .txt ul{margin:2px 0 8px}
 .caste-page .sh{margin:clamp(28px,4vw,48px) 0 10px}
 .caste-page .kat-cta{margin-top:clamp(28px,4vw,48px)}
-.sluzby-page .sh+.txt{margin-top:12px}.sluzby-page .txt+.auta{margin-top:18px}
+.sluzby-page .sh+.sl-doprava{margin-top:12px}
 .ceny-akcie>.sh{font-size:clamp(20px,2vw,26px)}
 a[href^="tel:"]{white-space:nowrap}
 
@@ -1773,7 +1801,7 @@ html[data-tema="tmava"] .cta-pas p{color:var(--ink-2)}
 html[data-tema="tmava"] .cta-pas .btn.primary{background:var(--brick);border-color:var(--brick);color:#fff}
 html[data-tema="tmava"] .cta-pas .btn.primary:hover{background:var(--brick-hover);border-color:var(--brick-hover)}
 /* fotky v rámoch majú svetlú hranu, aby nesplývali s podkladom (žiadne tmavé „duchárstvo“); pás Doprava linky hore a dole */
-html[data-tema="tmava"] :is(.ph-foto,.zt,.galeria a,.kdvor picture,.onas .ph,.kontakt-teaser .ph,.sluzby .ph,.auta a,.uv-ram,.ilu>picture,.kk>picture,.cta-pas.s-obr .wrap>picture,.rozvoz,.khod-obr){box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+html[data-tema="tmava"] :is(.ph-foto,.zt,.galeria a,.kdvor picture,.onas .ph,.kontakt-teaser .ph,.sluzby .ph,.uv-ram,.ilu>picture,.kk>picture,.cta-ik>picture,.rozvoz,.khod-obr,.srv-obr,.ktab,.o-nas-page .ftab a){box-shadow:0 0 0 1px rgba(255,255,255,.14)}
 html[data-tema="tmava"] .ph-foto{box-shadow:0 0 0 1px rgba(255,255,255,.14),0 18px 40px rgba(0,0,0,.45)}
 html[data-tema="tmava"] .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 /* biele ostrovy: tlačený obsah ostáva na bielej (logá značiek, malé fotky výrobkov z pôvodného webu, letáky, obrázky v rámoch) */
@@ -1782,7 +1810,7 @@ html[data-tema="tmava"] :is(.fig a,.fig span,.letak a,.logos){border-color:rgba(
 html[data-tema="tmava"] .prod-media .tile{background-color:var(--povrch-2)}
 html[data-tema="tmava"] .tbl th{background:var(--povrch-2)}
 /* štítky a odznaky na fotke: tmavý papier so svetlou hranou (aj výtlačky strihu zásob a štítky brány) */
-html[data-tema="tmava"] :is(.uv-stitok,.zt span,.br-st,.uv-znak,.uv-znova,.uv-tc,.cat .n,.sluzby .ph figcaption){box-shadow:0 0 0 1px rgba(255,255,255,.18),0 10px 26px rgba(0,0,0,.4)}
+html[data-tema="tmava"] :is(.uv-stitok,.zt span,.br-st,.uv-znova,.uv-tc,.cat .n,.sluzby .ph figcaption){box-shadow:0 0 0 1px rgba(255,255,255,.18),0 10px 26px rgba(0,0,0,.4)}
 html[data-tema="tmava"] .uv-z{background:var(--povrch);box-shadow:0 0 0 1px rgba(255,255,255,.22),0 12px 26px rgba(0,0,0,.5)}
 html[data-tema="tmava"] .uv-znova:hover{background:var(--povrch-2)}
 /* lightbox a zákaznícka karta: tiene tmavšie (na noci by svetlé nebolo vidieť) */
@@ -1884,9 +1912,9 @@ html[data-tema="farebna"] .nav a{color:var(--f-antracit)}
 @media (max-width:1279px){html[data-tema="farebna"] .top .wrap{--lg-v:60px;--lg-p:30px;gap:16px}html[data-tema="farebna"] .nav{gap:13px;font-size:16px}}
 @media (max-width:1180px){html[data-tema="farebna"] .top .wrap{--lg-v:58px;--lg-p:29px;gap:14px}html[data-tema="farebna"] .nav{gap:11px;font-size:15px;letter-spacing:.03em}html[data-tema="farebna"] .top .tel{font-size:18px;padding:8px 11px}}
 @media (min-width:981px) and (max-width:1100px){html[data-tema="farebna"] .top .wrap{--lg-v:56px;--lg-p:28px;gap:12px}html[data-tema="farebna"] .nav{gap:9px;font-size:14px;letter-spacing:.02em}html[data-tema="farebna"] .top .tel{font-size:17px;padding:8px 9px}}
-@media (max-width:980px){html[data-tema="farebna"] .top .wrap{min-height:76px;--lg-v:56px;--lg-p:30px}html[data-tema="farebna"] .brand{gap:11px}}
+@media (max-width:980px){html[data-tema="farebna"] .top .wrap{min-height:76px;--lg-v:56px;--lg-p:30px}html[data-tema="farebna"] .brand{gap:11px}html[data-tema="farebna"] .lg-nazov{--obrys:1.25px}}
 @media (max-width:389px){html[data-tema="farebna"] .top .wrap{--lg-v:54px;--lg-p:28px}html[data-tema="farebna"] .brand{gap:9px}}
-@media (max-width:359px){html[data-tema="farebna"] .top .wrap{--lg-v:46px;--lg-p:24px}}
+@media (max-width:359px){html[data-tema="farebna"] .top .wrap{--lg-v:46px;--lg-p:24px}html[data-tema="farebna"] .lg-nazov{--obrys:1px}}
 html[data-tema="farebna"] .side-in{top:calc(var(--lista-v) + 14px)}
 /* menu na telefóne: svetlý tón stránky s červenou linkou hore, položky antracit, telefóny tmavšia červená (5,5 : 1) */
 html[data-tema="farebna"] .drawer{border-top:4px solid var(--f-cervena)}
@@ -1990,8 +2018,6 @@ html[data-tema="farebna"] .uv .uv-ram::before{content:"";position:absolute;inset
 html[data-tema="farebna"] .uv .uv-ram::after{content:none}
 html[data-tema="farebna"] .uv :is(.uv-zabery,.uv-znova,.uv-tc){display:none}
 /* popis fotky a štítok predajne: antracit s bielym písmom, štítok s červenou hranou; na telefóne pod sebou vľavo hore */
-html[data-tema="farebna"] .uv .uv-znak{background:rgba(28,26,27,.9);color:#fff;max-width:calc(100% - 2 * var(--gutter))}
-html[data-tema="farebna"] .uv .uv-znak::before{background:var(--f-cervena)}
 html[data-tema="farebna"] .uv-ram>.uv-stitok{background:var(--f-antracit);color:#fff;border-left-color:var(--f-cervena);box-shadow:0 10px 26px rgba(28,26,27,.3);top:40px;bottom:auto;transform-origin:0 0}
 html[data-tema="farebna"] .uv-ram>.uv-stitok span{color:#fff}
 /* text: svetlý panel (papier) so šikmou červenou hranou 6 px, presah 30 px do fotky; text začína pod hranou */
@@ -2037,8 +2063,8 @@ html[data-tema="farebna"] .uv .uv-info>span+span::before{color:var(--ink-3)}
   html[data-tema="farebna"] .uv .uv-ram{grid-area:1/1}
   html[data-tema="farebna"] .uv .uv-dvor{left:40%}
   html[data-tema="farebna"] .uv .uv-dvor img{object-position:38% 55%}
-  html[data-tema="farebna"] .uv .uv-znak{left:auto;right:var(--gutter);top:20px}
-  html[data-tema="farebna"] .uv-ram>.uv-stitok{left:auto;right:var(--gutter);top:58px;transform-origin:100% 0}
+  /* odznak „Skutočná fotka…“ nad štítkom je preč (majiteľ 17. 11. 2026), štítok je hore ako predtým odznak */
+  html[data-tema="farebna"] .uv-ram>.uv-stitok{left:auto;right:var(--gutter);top:20px;transform-origin:100% 0}
   html[data-tema="farebna"] .uv .uv-text{grid-area:1/1;align-self:center;margin-top:0;padding-block:clamp(24px,4vh,48px);display:grid;grid-template-columns:minmax(0,53fr) minmax(0,47fr);grid-template-rows:auto auto auto;align-items:stretch;justify-items:start}
   html[data-tema="farebna"] .uv .uv-text::before,html[data-tema="farebna"] .uv .uv-text::after{content:none}
   html[data-tema="farebna"] .uv h1{grid-area:1/1;font-size:clamp(40px,3.8vw,58px)}

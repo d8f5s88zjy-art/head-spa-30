@@ -34,8 +34,10 @@ final class Rozdiel
     {
         if (!isset($D['k'])) $D = Zmena::sKonstantami($D);   // údaje webu a konceptu konštanty nenesú
         $k = Vykreslenie::kontakt_karty_vm($D);
-        $m = ['k-tel' => ['obrázok Zavolajte nám (Kontakt)', $k['obr_tel']], 'k-mail' => ['obrázok Napíšte nám (Kontakt)', $k['obr_mail']],
+        $m = ['k-tel' => ['obrázok Zavolajte nám (Kontakt a Služby)', $k['obr_tel']], 'k-mail' => ['obrázok Napíšte nám (Kontakt a Služby)', $k['obr_mail']],
               'k-hod' => ['obrázok otváracích hodín (Kontakt)', Vykreslenie::udaje_platia($D, ['hodiny'])],
+              'k-tab' => ['tabuľa s adresou a otváracou dobou (Kontakt)', Vykreslenie::udaje_platia($D, $D['k']['grafika_pri']['tabula'])],
+              'karta3d' => ['3D zákaznícka karta (úvod a Služby, namiesto nej bude doterajšia plochá karta)', Vykreslenie::karta3d($D)],
               's-zl' => ['ikona zliav (Služby)', Vykreslenie::udaje_platia($D, ['zlava'])]];
         foreach ($D['galeria']['albumy'] as $a) foreach ($a['fotky'] as $f)
             if (!empty($f['plati_pri']) && ($f['viditelna'] ?? true))
@@ -54,7 +56,7 @@ final class Rozdiel
         }
         $v = [];
         if ($skr) $v[] = 'Z webu sa skryjú obrázky so starým údajom: ' . implode(', ', $skr)
-            . '. Obrázky v Galérii a letáky nahradíte novými vo Fotkách v galérii (Nahradiť inou fotkou), obrázky na Kontakte a v Službách vymení programátor.';
+            . '. Obrázky v Galérii a letáky nahradíte novými vo Fotkách v galérii (Nahradiť inou fotkou), obrázky na úvode, na Kontakte a v Službách vymení programátor.';
         if ($vrat) $v[] = 'Na web sa vrátia obrázky: ' . implode(', ', $vrat) . '.';
         return $v;
     }

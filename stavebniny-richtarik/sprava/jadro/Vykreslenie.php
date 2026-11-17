@@ -424,6 +424,39 @@ final class Vykreslenie
         return ['polozky' => $p];
     }
 
+    /** Služby s Máriovými 3D piktogramami (to isté ako nastroje/vykreslenie.py sluzby_polozky_vm). */
+    public static function sluzby_polozky_vm(array $D): array
+    {
+        $vm = self::polozky_vm($D, $D['texty']['sluzby']); $pouzite = [];
+        foreach ($vm['polozky'] as &$p) {
+            $p['obr'] = null;
+            $n = mb_strtolower($p['nazov']);
+            foreach (array_values($D['k']['sluzby_obr']) as $i => $o) {
+                if (isset($pouzite[$i])) continue;
+                $ok = false;
+                foreach ($o['kluce'] as $k) if (str_contains($n, $k)) $ok = true;
+                if (!$ok) continue;
+                $pouzite[$i] = true;
+                if (self::udaje_platia($D, $o['plati_pri'])) $p['obr'] = array_intersect_key($o, array_flip(['src', 'webp', 'avif', 'w', 'h'])) + ['alt' => self::txt($o['alt'])];
+                break;
+            }
+        }
+        unset($p);
+        return $vm;
+    }
+
+    /** 3D zákaznícka karta (úvod, Služby): len pri zhode adresy, telefónov a e-mailu, inak plochá karta. */
+    public static function karta3d(array $D): bool
+    {
+        return self::udaje_platia($D, $D['k']['grafika_pri']['karta']);
+    }
+
+    public static function sluzby_kontakt_vm(array $D): array
+    {
+        $k = self::kontakt_karty_vm($D);
+        return ['obr' => $k['obr_tel'] || $k['obr_mail'], 'obr_tel' => $k['obr_tel'], 'obr_mail' => $k['obr_mail']];
+    }
+
     private static function odseky(array $zoznam): array
     {
         return ['odseky' => array_map(fn($x) => ['t' => self::txt($x)], $zoznam)];
@@ -518,11 +551,14 @@ final class Vykreslenie
                 $nv = array_slice(array_values(array_filter(self::novinky_viditelne($D), fn($n) => !empty($n['na_uvode']))), 0, 4);
                 return $S('uvod-novinky', ['karty' => array_map(fn($n) => self::karta_novinky($n, $cesta, true), $nv)]);
             case 'novinky-kat': return $S('novinky-kat', self::novinky_kat_vm($D, $cesta));
-            case 'galeria-predajna': case 'galeria-dvor': return $S($oid, self::galeria_vm($D, substr($oid, 8), $cesta));
+            case 'galeria-predajna': return $S($oid, self::galeria_vm($D, 'predajna', $cesta));
             case 'galeria-letaky': case 'galeria-grafika': return $S('galeria-grafika', self::grafika_vm($D, substr($oid, 8), $cesta));
-            case 'sluzby-zlavy': return $S('sluzby-zlavy', ['zlava' => self::zlava($D), 'obr' => self::udaje_platia($D, ['zlava']), 'akcie_href' => self::rel($cesta, 'akcie/index.html')]);
+            case 'sluzby-zlavy': return $S('sluzby-zlavy', ['zlava' => self::zlava($D), 'karta3d' => self::karta3d($D), 'akcie_href' => self::rel($cesta, 'akcie/index.html')]);
+            case 'uvod-karta': return $S('uvod-karta', ['karta3d' => self::karta3d($D)]);
+            case 'sluzby-kontakt': return $S('sluzby-kontakt', self::sluzby_kontakt_vm($D));
+            case 'kontakt-tabula': return $S('kontakt-tabula', ['obr' => self::udaje_platia($D, $D['k']['grafika_pri']['tabula'])]);
             case 'sluzby-lede': return $S('lede', ['text' => self::txt($D['texty']['sluzby_uvod'])]);
-            case 'sluzby-polozky': return $S('sluzby-polozky', self::polozky_vm($D, $D['texty']['sluzby']));
+            case 'sluzby-polozky': return $S('sluzby-polozky', self::sluzby_polozky_vm($D));
             case 'doprava-polozky': return $S('doprava-polozky', self::polozky_vm($D, $D['texty']['doprava']));
             case 'onas-text': return $S('odseky', self::odseky($D['texty']['onas']));
             case 'uvod-onas': return $S('odseky', self::odseky($D['texty']['uvod_onas']));

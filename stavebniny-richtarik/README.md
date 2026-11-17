@@ -6,8 +6,11 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 
 ## Čo web obsahuje
 - Úvod s vyhľadávaním, akciami, katalógom, zľavami, službami, novinkami a kontaktom. Pás faktov pod fotkami predajne má tri
-  prvky: 1997 · Zákaznícka karta (ďalšia zľava z akciových cien: 5 % pri platbe v hotovosti, 3,3 % pri platbe platobnou kartou –
-  jeden prvok, nie dva rovnaké riadky; Lajko 13. 11. 2026) · 40+ značiek; ten istý pás je na O nás (`FAKTY_ONAS`, `.facts.fk`).
+  prvky: 1997 · Zákaznícka karta (zľava z cien: 5 % pri platbe v hotovosti, 3,3 % pri platbe platobnou kartou a tretí riadok
+  „Špeciálne zľavy pre stavebné firmy a živnostníkov“ `.f-firmy` – znenie podľa majiteľa 17. 11. 2026, predtým „ďalšia zľava
+  z akciových cien“; jeden prvok, nie dva rovnaké riadky – Lajko 13. 11. 2026) · 40+ značiek; ten istý pás je na O nás (`FAKTY_ONAS`, `.facts.fk`).
+  To isté znenie má veta zľavy v `data/cennik.json` (akcie, Leták, karta zliav na Službách), doplnok popisov akcií
+  (`texty.popis`, `Seo::AKCIA_DOPLNOK`), Časté otázky a asistent.
   Na širokom okne (od 1300 px, úvod) sú 5 % a 3,3 % vpravo v rade s 1997 a 40+. Čísla zľavy sú na úvode len v tomto páse:
   sekcia Zľavy nižšie („Zákaznícka karta a zľavy pre firmy“) hovorí o karte a špeciálnych zľavách pre firmy, živnostníkov
   a predajne, percentá neopakuje (kontrola 13. 11. 2026).
@@ -24,6 +27,27 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
 - Vyhľadávanie v celom katalógu bez ohľadu na diakritiku (`assets/index.json`).
 - Asistent na otázky (okno vpravo dole, v náhľade ukážka z overených častých otázok, na ostrom webe len so serverom;
   časť Asistent na otázky a `asistent/README.md`).
+- Pokyny majiteľa zo 17. 11. 2026 (e-mail „v prílohe Vám posielam, čo ešte treba zmeniť vo webe“, IMG_0347–0348; Lajko:
+  „Budeš robiť, čo chce Mário“), druhá časť (prvá: zakladateľ, znenie karty, fotky katalógu a weby výrobcov):
+  - **Názov pri logu s čiernym obrysom** (L1, Mário to žiadal na úvode; lišta je na všetkých stránkach ten istý komponent):
+    `.lg-nazov` má osem ostrých tieňov `--obrys` (1 px, telefón vo farebnej téme 1,25 px), vo všetkých troch témach.
+  - **Bez štítku „Skutočná fotka našej predajne v Nitre“** (L2) na úvode aj v uvítaní (`zdroj/uvitanie.*`); fotka ostala.
+  - **Galéria bez albumu „Materiál v areáli predajne“** (L19, `data/galeria.json` id `dvor`, šablóna aj oblasť
+    `galeria-dvor` sú preč, Python aj PHP); fotky `img/uvod/` ostávajú na úvode.
+  - **Služby** (L21, L22, L23): pri službách 3D piktogramy (Výpočet spotreby ← „Zdarma výpočet“, Poradenstvo ←
+    „Poradenstvo v stavebninách“, Množstevné zľavy ← „Zľavy“; `SLUZBY_OBR`, oblasť `sluzby-polozky`, priradenie podľa slova
+    v nadpise služby), v karte zliav 3D zákaznícka karta, v časti Vlastná doprava auto z grafiky Rozvoz namiesto starých fotiek
+    áut `img/p/883–885` (už nie sú v balíku), vo výzve pred pätou „Zavolajte nám“ a „Napíšte nám“ (oblasť `sluzby-kontakt`).
+    Každý obrázok je na stránke raz (auto len vo Vlastnej doprave, nie aj pri službe Doprava na stavbu; „Zdarma výpočet“ len
+    pri službe, výzva pred pätou ho už nemá). Otváracie hodiny na Službách nie sú, ich piktogram ostáva na Kontakte.
+  - **3D zákaznícka karta** (L23, výrez `karta` z IMG_0312, `img/ilu/karta-3d-*`) na úvode (oblasť `uvod-karta`) a na Službách
+    namiesto plochej `img/karta-nova-*`; pri inej adrese, PSČ, telefóne alebo e-maile v správe sa ukáže plochá karta
+    (`GRAFIKA_PRI['karta']`; plochá karta má tie isté údaje – nová adresa či číslo znamená novú kartu od majiteľa).
+  - **Tabule 3D** (L24): vysoká tabuľa (adresa, telefóny, e-mail, otváracia doba) na Kontakte v karte Predajňa a sklad (oblasť
+    `kontakt-tabula`, len pri zhode údajov `GRAFIKA_PRI['tabula']`), široká „RICHTÁRIK Stavebniny“ na O nás pod fotkou predajne
+    (`TABULA_ONAS`, bez údajov); obe ostávajú aj v Galérii. Opravené akciové letáky zatiaľ nemáme (Pre Mária).
+  - Overené bez zmeny: auto na Doprave (L20), ilustrácia dlaždice Podhľady a PVC (L18); ilustrácia „Dlažby + obklady“ v štýle
+    série (L17) chýba – Pre Mária. 3D názvy „RICHTÁRIK STAVEBNINY“ a obrázok s miestom 3D karty (prílohy e-mailu) nemáme.
 
 ## Ako sa web stavia
 - Zdroj: `zdroj/pages.json` (obsah 83 stránok pôvodného webu) a `zdroj/obrazky.json`
@@ -63,13 +87,17 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
     5 / 3 / 2 stĺpce so štvorcovým obrázkom (z ilustrácie sa nič neorezáva), prvá dlaždica je na telefóne naležato. Dlažby
     a ploty majú zatiaľ Máriov obrázok dlažby iného štýlu (`dlazby-*`), výmena za sériový 1 : 1 pod tým istým menom.
     Blok `.cats` v ručnom `index.html` je výstup `dlazdice('index.html', cisla=True)`. Hlavičky kategórií
-    (`HLAVICKA_FOTO`, `KAT[..][4]`), fotky tovaru a galéria majú ďalej skutočné fotky;
+    (`HLAVICKA_FOTO`, `KAT[..][4]`; od 17. 11. 2026 pri 10 kategóriách Máriove fotky `KAT_FOTO`), fotky tovaru a galéria
+    majú ďalej skutočné fotky;
   - výzva „Potrebujete cenu na konkrétne množstvo?“ (`.kat-cta.ilu`) na 15 stránkach kategórií (`KAT_ILUSTRACIA`; podstránky
     značiek ju nemajú) a Poradenstvo vo výzve „Nenašli ste, čo hľadáte?“ v Katalógu (`.sort-note.ilu`);
   - karty Zavolajte nám a Napíšte nám na Kontakte (oblasť `kontakt-karty`, `.kk2`) a hodiny v karte Otváracie hodiny
-    (oblasť `hodiny-kontakt`, `.khod-obr`); „Zdarma výpočet spotreby“ vo výzve pred pätou na Službách (`page(cta_obr=…)`)
-    a ikona zliav v karte pod zoznamom služieb pri vete o zľave s podmienkou (oblasť `sluzby-zlavy`, `.kat-cta.zl`);
-  - auto z obrázka „Rozvoz stavebného materiálu“ na Doprave vedľa štyroch bodov (`.rozvoz`): výrez **bez nápisu**, lebo jeho
+    (oblasť `hodiny-kontakt`, `.khod-obr`) a vysoká tabuľa v karte Predajňa a sklad (oblasť `kontakt-tabula`, `.ktab`);
+    na Službách od 17. 11. 2026 „Zdarma výpočet“, Poradenstvo a ikona zliav (s podmienkou) pri službách (oblasť
+    `sluzby-polozky`, `.srv-obr`), 3D zákaznícka karta v karte zliav (oblasť `sluzby-zlavy`, `.kat-cta.zl`), auto Rozvoz vo
+    Vlastnej doprave a „Zavolajte nám“ s „Napíšte nám“ vo výzve pred pätou (`page(cta_obr=…)`, oblasť `sluzby-kontakt`,
+    `.cta-ik`); 3D karta aj na úvode (oblasť `uvod-karta`) a široká tabuľa na O nás (`TABULA_ONAS`);
+  - auto z obrázka „Rozvoz stavebného materiálu“ na Doprave vedľa štyroch bodov a na Službách (`rozvoz_figura()`, `.rozvoz`): výrez **bez nápisu**, lebo jeho
     druhý riadok má „AVIA 3t“ a Avia je 3,5 t (výrez je mnohouholník, roh s nápisom je priehľadný – `nastroje/grafika_maria.sh`; rámik má pod ním odtiene podlahy
     obrázka, aby roh nebol vidno ako svetlejší klin);
   - dva letáky a dva bannery na stránke Leták v časti „Letáky a bannery“ (oblasť `galeria-letaky`) a logá, tabule, vizitka,
@@ -92,6 +120,16 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
   Máriova `predajna:<názov>` alebo ilustračná z `img/`), inak **logo značky na bielom poli** (`.zm.logo`), bez loga len text
   (`.znacka.bez`). Fotka kategórie sa na kartách neopakuje – je v hlavičke stránky (do 13. 11. 2026 mala Izolácia tú istú
   fotku 10× za sebou, sadrokartón 3×).
+  **Odkaz „Web výrobcu“ a logá podľa majiteľa (e-mail 17. 11. 2026):** `popisy.WEB_ZNACIEK` má prednosť pred adresou
+  z pôvodného webu (`zdroj/pages.json` sa nemení, je záznamom pôvodného webu), `None` = karta bez odkazu (Parabit);
+  `popisy.LOGA_ZNACIEK` dá karte logo z `img/logo/` s vlastným opisom (Stadreko na Komínových systémoch aj na Dlažbách
+  namiesto loga Qatro `img/p/52`, RG plast deva pri Easytherm na Izolačnom materiáli). Adresy: Univerbau (Sypké zmesi aj
+  Fasádny systém) `http://www.univerbau.sk` – https tam má certifikát len pre `univerbau.sk`, preto http –, Betonárka
+  Nadlice `https://www.betonarkanadlice.sk`, Tondach `https://www.wienerberger.sk`, City Stone Design
+  `https://www.citystonedesign.sk`, Stadreko `https://www.stadreko.sk`, Schiedel `https://www.schiedel.sk`, Yssel Steel
+  `https://www.yssel.sk`, Masonite `https://www.masonite.com`, Slovakia Trend `https://www.stendpro.sk` (17. 11. 2026 sa
+  z tohto prostredia nedal otvoriť – overiť v prehliadači), DS Haco `https://www.hacoslovakia.sk` (robotovi vracia 403).
+  Ostatné adresy sú z pôvodného webu.
 
 ## Téma podkladu: farebná (predvolená), svetlý papier a tmavá „čierno-biela“
 
@@ -188,7 +226,8 @@ snímky, pod ním svetlý náhľad 16 px. Pôvod fotiek je v `img/FOTKY.md`.
   vpravo hore) so štítkom ako na palete (Tehly TermoBRIK, Pórobetón
   Porfix – fotka bez dokreslených paliet, Dlažby a obrubníky Stadreko, Stavebné rezivo priamo na sklade); 3,32–3,84 s kôpka odíde
   doprava; 3,62–3,98 s sa vrazí štítok „Náš dvor · Novozámocká 62/68, Nitra“. Potom ostane statický koncový stav
-  a vpravo hore tlačidlo „Prehrať úvod“. Celý čas je stály popis fotky „Skutočná fotka nášho dvora v Nitre“.
+  a vpravo hore tlačidlo „Prehrať úvod“. (Stály popis fotky „Skutočná fotka našej predajne v Nitre“ je od 17. 11. 2026 preč –
+  majiteľ: „vymazať“; štítok „Naša predajňa“ je vo farebnej téme na počítači hore vpravo na jeho mieste.)
 - Text, telefón, vyhľadávanie, katalóg a akcie fungujú od prvej snímky, nič sa neskrýva ani nečaká. Riadok s hodinami
   (počítač) zvýrazní dnešný deň (`data-dni`), bez textu „otvorené“. Pri odchode z úvodu ide fotka pomalšie než stránka
   (CSS `animation-timeline: view()`, nič sa nepripína a posun sa nezamyká).
@@ -218,7 +257,7 @@ snímky, pod ním svetlý náhľad 16 px. Pôvod fotiek je v `img/FOTKY.md`.
 ### Uvítanie „Brána“ pred úvodom
 Pri prvej návšteve zákazníka privíta svetlá brána z papiera s pozdravom „Nitra – Horné Krškany · od roku 1997“
 a „Vitajte. Poďte ďalej.“. Krídla sa rozídu do strán (posuvná brána, bez otáčania), za nimi je celá skutočná fotka
-dvora (tá istá ako v úvode) s odznakom „Skutočná fotka nášho dvora v Nitre“ a štítkami na paletách („Betónové
+dvora (tá istá ako v úvode) so štítkami na paletách (odznak „Skutočná fotka…“ je od 17. 11. 2026 preč) („Betónové
 tvárnice · murovací materiál“, „Doprava na stavbu · po celom Slovensku“, na počítači aj „Betónové výrobky · na
 paletách“). Fotka sa potom presne usadí do rámu úvodu, vyjde nadpis a ponuka a štítok „Náš dvor“ sa vrazí. Strih zásob
 sa potom sám nespustí, ostane tlačidlo „Prehrať úvod“. Hlavička (logo, menu, telefón) a spodná lišta Zavolať / Cenová ponuka sú celý čas nad
@@ -571,8 +610,8 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   16. 11. 2026: Máriove grafiky IMG_0312 „Rozvoz stavebného materiálu … Iveco 8t s mechanickou rukou“ a leták IMG_0310;
   pôvodný web mal raz LIAZ, raz Iveco): úvod, Služby (text služby aj veta pri autách) a Doprava píšu „Iveco 8 t“, LIAZ nikde.
   Dnešné biele Iveco je na Máriovej fotke `predajna:10-auta-firmy` (hlavička Služieb a Dopravy). Staršie fotky áut z pôvodnej
-  stránky Služby (`img/p/883–885`) ukazujú modré auto LIAZ, preto majú popis bez značky a veta s Ivecom stojí pred nimi ako
-  text, nie ako ich popis.
+  stránky Služby (`img/p/883–885`, modrý LIAZ) sú od 17. 11. 2026 preč (majiteľ: „vymazať fotky áut, staré fotky“), vo Vlastnej
+  doprave je auto z grafiky Rozvoz bez nápisu.
   Asistent značku nemenuje (stráž v `asistent/nastroje/otazky.mjs`), Časté otázky ostávajú „nákladné auto 8 t“, aby sa
   zhodovali s databázou asistenta. Avia je **3,5 t** (rozhodol Lajko 16. 11. 2026; Máriove grafiky píšu „Avia 3t“, preto je obrázok auta na Doprave len vo výreze bez nápisu a oprava na obrázkoch je v zozname Pre Mária nižšie).
 - **Typografia** (`texty._typografia`, beží automaticky na každej stránke): m², m³, €, „5 %“, pomlčka s medzerami,
@@ -619,16 +658,23 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   je lenivý. Máriove grafiky (`img/ilu/`, `img/grafika/`) vyrobí `bash nastroje/grafika_maria.sh`
   zo `zdroj/grafika-maria/`; nová grafika = nový výrez do zdroja, riadok v skripte a nové meno súboru (cache na rok;
   pri výmene 1 : 1 pod starým menom ju návštevník, ktorý tu už bol, uvidí až po vypršaní cache). Dlaždice skupín: 15 ilustrácií
-  spolu 105 kB (AVIF 480 px) namiesto 1,1 – 1,3 MB fotiek.
-- **Otvorené otázky majiteľa** (predvolené znenie sa nemení): staré akcie bez dátumu, znenie zľavy 5 % / 3,3 %
-  (Máriova ikona IMG_0313 píše „HOTOVOSŤ 5 % | KARTA 3,3 %“ bez podmienky; na webe je preto pri vete s podmienkou), Nero Ebono
+  spolu 105 kB (AVIF 480 px) namiesto 1,1 – 1,3 MB fotiek. Fotky kategórií od majiteľa (17. 11. 2026, `img/kat`) vyrobí
+  `bash nastroje/foto_maria.sh` zo `zdroj/foto-maria/` (aj logá `img/logo/`).
+- **Otvorené otázky majiteľa** (predvolené znenie sa nemení): staré akcie bez dátumu, veta cenníka „Ceny v cenníku akcií
+  platia pri platbe v hotovosti, z ceny je už odrátaná 5 % zľava“ – platí ešte pri zľave z cien 5 % (17. 11. 2026 ponechaná), Nero Ebono
   alebo Ebano, hosting a HTTPS (časť HTTPS a presmerovania). Z Máriových grafík zo 16. 11. 2026 (texty webu sa podľa nich
   nemenia, kým ich nepotvrdí): „Týždenné zľavy na určený druh tovaru“ a „Objektové a množstevné zľavy“ (IMG_0310), „Kvalitná
   montáž“ čoho (IMG_0310), fax na pevnej linke (IMG_0312, IMG_0310), značky Kremix, Heluz, Ruukki, Budmat, Vital a „Doprava
   zdarma“ bez podmienky (banner IMG_0314). Vyriešené: 8 t auto je Iveco (IMG_0312, IMG_0310; 16. 11. 2026); Avia je 3,5 t
-  (Lajko 16. 11. 2026).
+  (Lajko 16. 11. 2026); znenie zákazníckej karty – zľava z cien 5 % v hotovosti, 3,3 % pri platbe platobnou kartou, stavebné
+  firmy a živnostníci špeciálne zľavy (Mário, e-mail 17. 11. 2026); firmu založil Zoltán Richtárik v roku 1997 (Mário,
+  e-mail 17. 11. 2026; text O nás na webe aj v úvode, správa ho mení v Textoch – obchodný názov prevádzkovateľa „Ing. Mário
+  Richtárik - Stavebniny“ ostáva); obrys názvu, štítok „Skutočná fotka…“, album „Materiál v areáli predajne“, staré fotky
+  áut, 3D piktogramy, 3D karta a tabule (Mário, e-mail 17. 11. 2026). Nové (17. 11. 2026): kde presne majú byť 3D názvy
+  „RICHTÁRIK STAVEBNINY“ a 3D karta (obrázky s pokynmi z e-mailu nemáme), opravené akciové letáky, ilustrácia „Dlažby +
+  obklady“ v štýle série; fotka predajne na úvode pod zmazaným štítkom ostáva (Lajko rozhodne).
 - **Pre Mária** (čo od neho potrebujeme k obrázkom; dovtedy sú na webe tak, ako ich poslal). Dokument na poslanie
-  Máriovi s náhľadmi vyznačených chýb a otázkami: `richtarik/dokoncenie/final/pre-maria.pdf` (17. 11. 2026, zdroj vedľa neho).
+  Máriovi s náhľadmi vyznačených chýb a otázkami: `richtarik/mario4/final/pre-maria.pdf` (17. 11. 2026 po jeho zozname zmien, zdroj vedľa neho; predošlý `richtarik/dokoncenie/final/pre-maria.pdf`).
   1. Obrázok auta „Rozvoz stavebného materiálu“: nápis „AVIA 3t“ opraviť na „AVIA 3,5 t“ (rovnako v letáku „Prečo
      nakupovať u nás“). Dovtedy je na Doprave len auto bez nápisu; s opravenou verziou ukážeme celý obrázok.
   2. Ilustráciu **Dlažby** v štýle série: na Máriovom letáku so sortimentom už je ikona „BETÓNOVÉ DLAŽBY“ v štýle série
@@ -649,8 +695,23 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   7. Odpovede (web ich dovtedy netvrdí, časť Otvorené otázky vyššie): čo patrí do skupiny **Podhľady a PVC** (ilustrácia
      ukazuje podhľad, fotka a texty stránky výrobky z recyklovaného plastu); „Doprava zdarma“ – pri akom tovare a za akej
      podmienky; predávate značky Kremix, Heluz, Ruukki, Budmat, Vital; platia „Týždenné zľavy na určený druh tovaru“
-     a „Objektové a množstevné zľavy“; „Kvalitná montáž“ – čoho; je 037 651 17 77 aj fax; zľava 5 % / 3,3 % – len so
-     zákazníckou kartou a z akciových cien, „KARTA“ = platba kartou; na karte „949 05 Nitra 5“ – ponechať, alebo „949 05 Nitra“.
+     a „Objektové a množstevné zľavy“; „Kvalitná montáž“ – čoho; je 037 651 17 77 aj fax; ~~zľava 5 % / 3,3 % – len so
+     zákazníckou kartou a z akciových cien~~ (zodpovedané 17. 11. 2026: zľava z cien, 3,3 % pri platbe platobnou kartou);
+     platí pri zľave z cien ešte veta „Ceny v cenníku akcií platia pri platbe v hotovosti, z ceny je už odrátaná 5 % zľava“;
+     O nás – veta „…, aby rozšíril služby, ktoré dovtedy v stavebníctve ponúkal“ ostala z pôvodného webu, sedí aj na
+     zakladateľa Zoltána Richtárika?; na karte „949 05 Nitra 5“ – ponechať, alebo „949 05 Nitra“.
+  8. K zmenám zo 17. 11. 2026 (katalóg): originály poslaných fotiek a log (dnes snímky z Mailu, ≈ 1 000 – 1 300 px) a súhlas
+     výrobcov so zverejnením ich fotiek (`img/FOTKY.md`); fotka tehál na Murovacom materiáli je z palety Wienerberger
+     Porotherm, ktorý medzi značkami kategórie nie je – predávate ho (doplniť značku), alebo poslať inú fotku?; Easytherm
+     a logo RG plast deva – je RG plast deva výrobca/dodávateľ Easythermu (opis karty sa nemenil)?; pergola na Podhľadoch a PVC
+     – čo z nej predávate (web o nej nič netvrdí)?; podstránka Tondach má z pôvodného webu odkaz na PDF „Tondach Prehľad
+     produktov 2009“ na starej doméne tondach.sk, ktorá 17. 11. 2026 neodpovedala – zmazať, alebo nahradiť iným
+     prospektom? (odkaz Web výrobcu na karte už vedie na www.wienerberger.sk); www.stendpro.sk sa odtiaľto nedal otvoriť –
+     overiť adresu.
+  9. K zmenám zo 17. 11. 2026 (druhá časť): opravené akciové letáky a bannery (pošlite opravené súbory – dovtedy sú na webe
+     tie s preklepmi, bod 3); ilustrácia „Dlažby + obklady“ v štýle série (bod 2); obrázok s pokynmi, kam dať 3D názvy
+     „RICHTÁRIK STAVEBNINY“, a obrázok s miestom 3D zákazníckej karty (prílohy e-mailu k nám neprišli – dnes je 3D karta na
+     úvode a na Službách namiesto plochej); Parabit – stačí bez odkazu na web výrobcu, alebo celú značku z katalógu dať preč?
 
 ## Údržba
 - Prostredie: `python3 -m venv venv && venv/bin/pip install lxml`, potom v tomto priečinku `venv/bin/python build.py`.
@@ -681,15 +742,23 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   (`img/FOTKY.md`). Nová fotka dostane tú istú úpravu, aby mala sada jeden tón; „plné zásoby“ ukazuje len skutočná
   fotka. Pri rovnakom názve sa na hostingu prejaví až po vypršaní cache (rok), preto novú fotku radšej pod novým názvom.
 - Fotky v hlavičkách podstránok: `HLAVICKA_FOTO` v `build.py` (stránka → `uvod:<názov>` skutočná fotka dvora,
-  `p:<číslo>` fotka z pôvodného webu, `<názov>` ilustračná fotka kategórie z `img/hd`). Ilustračná fotka sa používa vo
+  `kat:<názov>` fotka kategórie od majiteľa z `img/kat`, `p:<číslo>` fotka z pôvodného webu, `<názov>` ilustračná fotka
+  kategórie z `img/hd`). **Hlavné stránky 10 kategórií** (Strešné krytiny, Sypké zmesi, Stavebné rezivo, Murovací materiál,
+  Hutný materiál, Izolačný materiál, Fasádny systém, Farby a laky, Dlažby a ploty, Podhľady a PVC) majú od 17. 11. 2026
+  Máriove fotky (`KAT_FOTO`, opisy `KAT_FOTO_ALT`; majiteľ: „katalóg výrobkov – vymeniť fotky za tie, čo som poslal“).
+  Podstránky značiek si nechali doterajšiu fotku (aby nedostali tovar inej značky). Zdroj `zdroj/foto-maria/` (bezstratové
+  výrezy zo snímok, `vyrezy.tsv`), výroba `bash nastroje/foto_maria.sh`: šírky 480, 720, 960 a skutočná šírka výrezu
+  (1030 – 1320 px, nič sa nezväčšuje), vysoké výrezy orezané na 4 : 3, výrez 720 × 468 pre telefón v `img/kat/hlavicka/`.
+  Predošlé fotky predajne v hlavičkách týchto kategórií ostali v repozitári (do balíka idú len použité súbory). Ilustračná fotka sa používa vo
   verzii 1200 px (`img/hd/<názov>-1200.webp`, ImageMagick, kvalita 80); pre novú ju treba vyrobiť rovnako (celú sadu – najväčšia šírka, -1200, dlaždica 900 × 600 a výrez -720 pre telefón –
   vyrobí `richtarik/dizajn2/zapis/nastroje/fotky.sh`; v `srcset` je skutočná šírka najväčšieho súboru). Rám má na
   počítači najviac 520 px, na telefóne celú šírku obsahu a výšku 230 px; fotka musí mať aspoň 1,6-násobok šírky rámu.
   Dlaždice kategórií (úvod aj Katalóg) skladá `dlazdice()`; od 16. 11. 2026 majú Máriove ilustrácie skupín
   (`KAT_ILUSTRACIA`, `img/ilu`), skutočné fotky sú po rozkliknutí v hlavičke kategórie. Na úvode sa dlaždice menia ručne
   (vložiť výstup `dlazdice('index.html', cisla=True)`).
-- Služby (`SLUZBY`), fotky dvora v galérii (`GALERIA_DVOR`) a pás faktov O nás (`FAKTY_ONAS`) sú v `build.py`; texty
-  sú zo zdroja alebo z úvodu, nové treba overiť rovnako.
+- Služby (texty v `data/texty.json`, piktogramy `SLUZBY_OBR`), pás faktov O nás (`FAKTY_ONAS`) a tabuľa na O nás
+  (`TABULA_ONAS`) sú v `build.py`; texty sú zo zdroja alebo z úvodu, nové treba overiť rovnako. Podmienky 3D karty a tabule
+  na Kontakte sú v `GRAFIKA_PRI` (kľúče ako `plati_pri` v `data/galeria.json`).
 - Hosting: `python3 -I nasadenie/presmerovania.py . nasadenie` vyrobí znova `htaccess.txt`, `web.config.txt`
   a `presmerovania.tsv` (po pridaní PDF do `pdf/`, zmene stránok alebo `DOMENA`) a vypíše kontrolu (časť HTTPS
   a presmerovania).
@@ -707,10 +776,11 @@ po zmene obrazoviek správy snímky a PDF vyrobiť znova); architektúra a výsl
 
 **Ako to funguje.** Návštevník dostáva len statické súbory ako doteraz – na verejných stránkach nie je žiadny skript,
 štýl, cookie ani odkaz správy. Obsah, ktorý správa mení, je v stránkach v označených oblastiach
-`<!--s:ID-->…<!--/s:ID-->` (273 oblastí, spolu ≈ 18 kB na 77 stránkach; od 16. 11. 2026 aj karty Zavolajte nám a Napíšte
+`<!--s:ID-->…<!--/s:ID-->` (275 oblastí, spolu ≈ 18 kB na 77 stránkach; od 16. 11. 2026 aj karty Zavolajte nám a Napíšte
 nám na Kontakte – `kontakt-karty`: Máriova grafika s číslom alebo e-mailom v obrázku sa ukáže, len kým sú v `data/firma.json`
 údaje z obrázka, `KONTAKT_OBR` v `build.py`; po zmene telefónu či e-mailu ostane karta bez obrázka. Rovnako ostatné grafiky
-s údajom: obrázok hodín v `hodiny-kontakt`, ikona zliav v `sluzby-zlavy` a položky albumov `galeria-letaky`
+s údajom: obrázok hodín v `hodiny-kontakt`, ikona zliav v `sluzby-polozky`, 3D karta v `uvod-karta` a `sluzby-zlavy`
+(namiesto nej plochá karta), tabuľa v `kontakt-tabula`, piktogramy kontaktu v `sluzby-kontakt` a položky albumov `galeria-letaky`
 a `galeria-grafika` s poľom `plati_pri` – `GRAFIKA_UDAJE`, `udaje_platia()`; v správe má taká položka poznámku „nie je na
 webe“ a po nahradení novým obrázkom podmienka zaniká. Albumy grafiky smú ostať prázdne, ich časť potom z webu zmizne celá). Pravda o ňom sú údaje `data/*.json` (`firma`
 s hodinami a oznamami, `cennik`, `akcie`, `caste`, `novinky`, `galeria`, `texty`, `verzia`). Oblasti skladajú tie isté šablóny `sprava/sablony/*.html` v Pythone

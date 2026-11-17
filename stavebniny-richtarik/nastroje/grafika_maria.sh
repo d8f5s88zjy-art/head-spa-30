@@ -44,6 +44,10 @@ urob() {   # urob <výrez> <cieľ> <orez WxH+X+Y alebo „stvorec“ alebo „ce
   done
 }
 
+if [[ ${1:-} == 17-11 ]]; then
+  source <(sed -n '/^cast_17_11() {/,/^}/p' "$0"); cast_17_11; exit 0
+fi
+
 # séria ilustrácií skupín tovaru: dlaždice skupín na úvode a v Katalógu (do 480 px) a výzva „Potrebujete cenu…“ na
 # stránkach kategórií (200 a 400 px); Dlažby sú zatiaľ z obrázka iného štýlu (alt-dlazby), kým Mário nepošle sériový
 for p in sypke-zmesi murovaci-material stresne-krytiny izolacny-material kominovy-system stresne-okna hutny-material \
@@ -108,3 +112,19 @@ album alt-sypke-zmesi-ikona 660
 album alt-okna-robotnik 530
 album alt-rezivo-kruh 660
 album alt-stresne-krytiny-stvorec 530
+
+# Pokyny majiteľa zo 17. 11. 2026 („služby – použiť všetky piktogramy 3D“, „použiť 3D zákaznícku kartu“, „naše tabule 3D“):
+# rovnaké výrezy, len iný orez a veľkosti (najviac skutočný detail výrezu, nič sa nezväčšuje). Spustenie len tejto časti:
+#   bash nastroje/grafika_maria.sh 17-11
+# Služby, rámik 4 : 3 pri službe (oblasť sluzby-polozky): „Zdarma výpočet“ celý obrázok s nápisom (960 × 720 zo stredu)
+# a Poradenstvo (1320 × 1000 okolo postavičiek a pultu, v rámiku 4 : 3 object-fit cover – o 0,7 % výšky menej); ikona zliav je hotová (zlavy-288|480)
+# 3D zákaznícka karta (úvod a Služby): karta s tieňom bez prázdneho okraja, 915 × 714 → do 820 px (detail výrezu ≈ 0,9)
+# tabule: vysoká (adresa, telefóny, e-mail, hodiny) na Kontakte 997 × 1617 → do 480 px, široká na O nás 935 × 480 → do 820 px
+cast_17_11() {
+  urob ikona-zdarma-vypocet sluzba-vypocet 960x720+187+0 240 480
+  urob kategoria-poradenstvo sluzba-poradenstvo 1320x1000+0+190 240 480
+  urob karta karta-3d 915x714+214+90 480 820
+  urob tabula-vysoka tabula-vysoka-k 997x1617+175+81 240 480
+  urob tabula-siroka tabula-siroka-o 935x480+173+22 480 820
+}
+cast_17_11
