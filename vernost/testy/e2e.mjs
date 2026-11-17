@@ -157,7 +157,10 @@ cookie = cookieB;
 console.log('prehliadač');
 const b = await chromium.launch();
 const vonku = (ctx) => ctx.route(/^https?:\/\/(?!127\.0\.0\.1)/, (rt) => (rt.request().resourceType() === 'document' ? rt.fulfill({ contentType: 'text/html', body: '<p>mimo testu</p>' }) : rt.abort()));
-async function prihlaska(webUrl, cesta, nazov, jazyk, meno, tel) {
+// Barbershop 30 od 9. 11. 2026 (L3, okno objednávky): odkaz Objednať sa otvorí okno objednávky (app.js ho zachytí skôr
+// ako prihláška, ktorá je na document) a prihláška kartičky sa pýta až pri odchode do rezervačného systému z okna
+// (odkaz s data-obj-priamo; bez servera kalendára je to „rezervačný systém“ pri kroku 0). HEAD SPA 30 okno nemá.
+async function prihlaska(webUrl, cesta, nazov, jazyk, meno, tel, cezOkno = false) {
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'sk-SK' });
   await vonku(ctx);
   await ctx.route(`${Z}${cesta}*`, async (rt) => { const res = await rt.fetch(); let t = await res.text(); t = t.replace(/((?:prihlaska|vernost)\.js" data-prevadzka="\w+")/, `$1 data-api="${API}" data-zapnute`); await rt.fulfill({ response: res, body: t }); });
@@ -165,7 +168,15 @@ async function prihlaska(webUrl, cesta, nazov, jazyk, meno, tel) {
   const chyby = []; p.on('pageerror', (e) => chyby.push(e.message));
   await p.goto(`${Z}${cesta}${jazyk ? `?lang=${jazyk}` : ''}`, { waitUntil: 'load' });
   await p.waitForTimeout(jazyk ? 1800 : 400);
-  const sel = 'a[href*="barbershop30.sk/rezervacia"], a[href*="booqme.app/"][href*="rezerv"], a[data-booking-link]';
+  const sel = cezOkno ? '.obj[open] a[data-obj-priamo][href*="barbershop30.sk/rezervacia"]'
+    : 'a[href*="barbershop30.sk/rezervacia"], a[href*="booqme.app/"][href*="rezerv"], a[data-booking-link]';
+  const okno = async () => {
+    if (!cezOkno || await p.locator('.obj[open]').count()) return;
+    await p.evaluate(() => document.querySelector('a[href*="barbershop30.sk/rezervacia"]:not([data-obj-priamo])').click());
+    await p.waitForSelector('.obj[open] a[data-obj-priamo]', { timeout: 10000 });
+    over(!(await p.isVisible('#v30p[open]')), `${nazov}: Objednať sa otvorí okno objednávky, nie prihlášku`);
+  };
+  await okno();
   await p.evaluate((s) => document.querySelector(s).click(), sel);
   await p.waitForSelector('#v30p[open]');
   over(!(await p.isVisible('#v30meno')) && !(await p.isChecked('#v30chcem')), `${nazov}: dialóg, nič nezaškrtnuté`);
@@ -175,6 +186,7 @@ async function prihlaska(webUrl, cesta, nazov, jazyk, meno, tel) {
   over(/booqme|barbershop30/.test(popup.url()) && reg.length === 0, `${nazov}: bez súhlasu rovno rezervácia, nič neodoslané`, popup.url());
   await popup.close();
   await p.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
+  await okno();
   // dvojklik na Rezervovať: druhý klik nesmie zaškrtnúť súhlas ani zavrieť dialóg
   await p.evaluate((s) => { const a = document.querySelector(s); a.click(); setTimeout(() => document.querySelector('#v30chcem').click(), 120); }, sel);
   await p.waitForTimeout(400);
@@ -183,6 +195,7 @@ async function prihlaska(webUrl, cesta, nazov, jazyk, meno, tel) {
   const zastavene0 = await p.evaluate((s) => new Promise((hotovo) => { addEventListener('click', (e) => { const bolo = e.defaultPrevented; e.preventDefault(); hotovo(bolo); }, { once: true }); document.querySelector(s).click(); }), sel);
   over(!zastavene0 && !(await p.isVisible('#v30p[open]')), `${nazov}: po zatvorení bez voľby ide rezervácia rovno`);
   await p.evaluate(() => sessionStorage.clear());
+  await okno();
   await p.evaluate((s) => document.querySelector(s).click(), sel);
   await p.waitForSelector('#v30p[open]');
   await p.waitForTimeout(550);
@@ -203,6 +216,7 @@ async function prihlaska(webUrl, cesta, nazov, jazyk, meno, tel) {
   // syntetický klik nemá aktiváciu používateľa (prehliadač by okno zablokoval), preto len overíme, že prihláška klik nechá tak
   const zastavene = await p.evaluate((s) => new Promise((hotovo) => { addEventListener('click', (e) => { const bolo = e.defaultPrevented; e.preventDefault(); hotovo(bolo); }, { once: true }); document.querySelector(s).click(); }), sel);
   over(!zastavene && !(await p.isVisible('#v30p[open]')), `${nazov}: s kartičkou ide rezervácia rovno`);
+  if (cezOkno) { await p.keyboard.press('Escape'); await p.waitForFunction(() => !document.querySelector('.obj[open]'), null, { timeout: 3000 }); }
   const [popup3] = await Promise.all([p.waitForEvent('popup'), p.locator('footer [data-vernost-karta]').click()]);
   over(popup3.url() === ulozena, `${nazov}: pätička otvorí uloženú kartičku`);
   over(chyby.length === 0, `${nazov}: bez chýb JS`, chyby.join(' | '));
@@ -216,9 +230,9 @@ async function prihlaska(webUrl, cesta, nazov, jazyk, meno, tel) {
   over(!zastavene && !(await p.isVisible('#v30p[open]')), 'bez data-zapnute prihláška mlčí a rezervácia ide rovno');
   await ctx.close();
 }
-const bs = await prihlaska(Z, '/barbershop-30/index.html', 'barbershop', '', 'Peter Novák', '0907 555 666');
+const bs = await prihlaska(Z, '/barbershop-30/index.html', 'barbershop', '', 'Peter Novák', '0907 555 666', true);
 over(/Kartička je pripravená, Peter!/.test(bs.nadpis), 'barbershop: potvrdenie po slovensky', bs.nadpis);
-const bsEn = await prihlaska(Z, '/barbershop-30/index.html', 'barbershop', 'en', 'John Smith', '+44 7700 900123');
+const bsEn = await prihlaska(Z, '/barbershop-30/index.html', 'barbershop', 'en', 'John Smith', '+44 7700 900123', true);
 over(/Your card is ready, John!/.test(bsEn.nadpis), 'barbershop EN: dialóg po anglicky', bsEn.nadpis);
 const hs = await prihlaska(Z, '/index.html', 'headspa', '', 'Jana Kováčová', '0911 222 333');
 over(/Kartička je pripravená, Jana!/.test(hs.nadpis), 'headspa: potvrdenie', hs.nadpis);

@@ -124,7 +124,8 @@ try {
     // Esc zatvorí a fokus sa vráti na tlačidlo
     await page.keyboard.press('Escape');
     ok(await panel.isHidden(), `${kind}: Esc zatvorí okno`);
-    ok(await page.evaluate(() => document.activeElement && document.activeElement.classList.contains('asi-btn')), `${kind}: fokus späť na tlačidle`);
+    // fokus sa vracia až po vykreslení zavretého okna (C4: rAF + setTimeout), nie v tej istej úlohe ako Esc
+    ok(await page.waitForFunction(() => document.activeElement && document.activeElement.classList.contains('asi-btn'), null, { timeout: 1000 }).then(() => true, () => false), `${kind}: fokus späť na tlačidle`);
     // rozhovor ostane po obnovení stránky (sessionStorage)
     await page.reload({ waitUntil: 'load' });
     await page.mouse.move(310, 310).catch(() => {});
@@ -182,8 +183,11 @@ try {
     const ctx = await browser.newContext({ locale: 'sk-SK', viewport: { width: 360, height: 780 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
     const page = await ctx.newPage();
     const url = `${srv.origin}/index.html?uvod=off&film=off&hudba=off&asistent=${encodeURIComponent(API)}`;
+    // bublina sa ukáže len na mieste bez textu stránky (36bd00e9) a na telefóne až so spodnou lištou (pri karte úvodu
+    // je lišta skrytá a pod bublinou je text karty): začiatok scény Vstup dnu, kde je pri ikone fotka záberu
+    const naFotku = () => page.evaluate(() => { const s = document.getElementById('vstup-dnu'); scrollTo({ top: Math.round(s.getBoundingClientRect().top + scrollY), behavior: 'instant' }); });
     await page.goto(url, { waitUntil: 'load' });
-    await page.evaluate(() => window.scrollTo(0, 30));
+    await naFotku();
     const btn = page.locator('.asi-btn');
     await btn.waitFor({ state: 'visible', timeout: 8000 });
     ok(await btn.locator('img[src*="logo-30-barbershop"]').count() === 1 && (await btn.locator('.asi-ai').innerText()).trim() === 'AI' && /Barber/.test(await btn.getAttribute('aria-label')), 'Barber: ikona je logo so štítkom AI');
@@ -200,17 +204,17 @@ try {
     ok(await page.locator('.asi-oznam').isHidden() && await page.locator('.asi-hlava .asi-volaj[href="tel:+421951267203"]').isVisible(), 'Barber: Spýtať sa otvorí okno, Zavolať je v hlavičke');
     ok(/Barber/.test(await page.locator('#asi-h').innerText()) && /AI asistent/.test(await page.locator('.asi-sub').innerText()), 'Barber: v okne meno a AI asistent');
     await page.locator('.asi-hlava .asi-x').click();
-    ok(await page.evaluate(() => document.activeElement && document.activeElement.classList.contains('asi-btn')), 'Barber: po zavretí fokus na ikone');
+    ok(await page.waitForFunction(() => document.activeElement && document.activeElement.classList.contains('asi-btn'), null, { timeout: 1000 }).then(() => true, () => false), 'Barber: po zavretí fokus na ikone');
     // zavretie bubliny krížikom: ďalšia návšteva ju 14 dní neukáže
     await page.evaluate(() => sessionStorage.removeItem('b30.barber.oznam.raz'));
     await page.reload({ waitUntil: 'load' });
-    await page.evaluate(() => window.scrollTo(0, 30));
+    await naFotku();
     await oznam.waitFor({ state: 'visible', timeout: 15000 });
     await page.locator('.asi-oznam-x').click();
     ok(await page.locator('.asi-oznam').isHidden() && await page.evaluate(() => Number(localStorage.getItem('b30.barber.oznam')) > 0), 'Barber: krížik bublinu zavrie a zapamätá');
     await page.evaluate(() => sessionStorage.removeItem('b30.barber.oznam.raz'));
     await page.reload({ waitUntil: 'load' });
-    await page.evaluate(() => window.scrollTo(0, 30));
+    await naFotku();
     await btn.waitFor({ state: 'visible', timeout: 8000 });
     await sleep(10500);
     ok(await page.locator('.asi-oznam').isHidden(), 'Barber: zavretá bublina sa znova neukáže');
