@@ -1,0 +1,64 @@
+STAVEBNINY RICHTÁRIK – NAHRATIE WEBU NA HOSTING
+================================================
+Tento súbor vyrobil nasadenie/balik.sh vedľa balíka. Platí pre hosting Forpsi (Linux odporúčaný, Windows funguje).
+Podrobnosti: README.md v repozitári, časti Nasadenie, Správa webu (Inštalácia na Forpsi) a HTTPS a presmerovania.
+
+ČO JE V TOMTO PRIEČINKU
+-----------------------
+  stavebniny-richtarik-web.zip            celý web v jednom ZIPe (len bez CASTI=…)
+  stavebniny-richtarik-web-1.zip … -N.zip  ten istý web v častiach do 40 MB (len s CASTI=…); každú časť
+                                           rozbaľte do toho istého priečinka (koreň webu), na poradí nezáleží;
+                                           všetky časti spolu = presne celý web (zoznam a sha256 overené skriptom)
+  zoznam.txt                              zoznam všetkých súborov webu
+  SHA256SUMS.txt                          odtlačky súborov webu (kontrola: v koreni webu sha256sum -c SHA256SUMS.txt)
+  ku-korenu/.htaccess                     nastavenie servera pre Linux (Apache) – patrí do koreňa webu
+  ku-korenu/web.config                    to isté pre Windows (IIS) – na Linuxe ho nenahrávajte
+  web/                                    ten istý obsah rozbalený (na nahratie FTP klientom priamo)
+
+1. KAM
+------
+  Obsah balíka (nie priečinok web/ ako taký, ale to, čo je v ňom: index.html, assets/, img/, …) patrí do
+  koreňa webu domény. Na Forpsi je to priečinok www domény (README uvádza /<doména>/www; presnú cestu ukáže
+  zákaznícky účet Forpsi alebo FTP – na skutočnom účte sme ju neoverovali).
+  Odporúčaný spôsob: FTP klient (napr. FileZilla alebo WinSCP) – nahrať obsah web/ do www.
+  WebFTP (webftp.forpsi.com) sa hodí na rozbalenie menších ZIPov; celý ZIP má okolo 150 MB a limit nahratia
+  vo WebFTP nepoznáme – preto sú tu časti do 40 MB. Či WebFTP ZIP na serveri rozbalí, sme neoverili.
+  Potom ku-korenu/.htaccess nahrať do www ako .htaccess (Linux), na Windows hostingu ku-korenu/web.config ako web.config.
+  (Bez neho nefungujú presmerovania starých adries .aspx, stránka 404 ani hlavičky rýchleho načítania.)
+
+2. ČO SA NESMIE PREPÍSAŤ ANI ZMAZAŤ (pri druhom a každom ďalšom nahratí)
+-----------------------------------------------------------------------
+  img/s/ a pdf/s/       fotky a PDF, ktoré Mário nahral v správe (v balíku sú len ochranné súbory .htaccess
+                        a web.config – tie prepísať smiete, nahrávky nie)
+  sprava-data/          priečinok vedľa www (na Windows www/sprava-data-<32 znakov>/): účet a heslo Mária,
+                        všetky údaje správy, história a zálohy. Nikdy ho nemažte ani neprepisujte.
+  .htaccess v koreni    ak ste ho na hostingu upravili (napr. zapnutá kanonická adresa https), nahrajte znova
+                        upravenú verziu, nie pôvodnú z balíka.
+  V FTP klientovi NEPOUŽÍVAJTE „synchronizovať“, „zrkadliť“ ani „zmazať na serveri, čo nie je lokálne“ –
+  zmazali by nahrávky Mária a údaje správy. Nahrávajte len prepísaním súborov.
+  Pred každým ďalším balíkom: v správe Nastavenia → Stiahnuť zálohu a v repozitári import
+  (python3 -I nastroje/sprava_import.py <záloha.zip>), až potom nový balík (SPRAVA=1 SPRAVA_REVIZIA=…).
+  Inak by nový balík prepísal Máriove zmeny (správa to po prihlásení ukáže a vie ich vrátiť).
+
+3. PRVÉ PRIHLÁSENIE DO SPRÁVY (spolu s Máriom)
+---------------------------------------------
+  a) Doména musí mať zapnuté HTTPS (certifikát v zákazníckom účte Forpsi). Bez neho správa ukáže len návod.
+  b) Otvorte https://www.stavebninyrichtarik.sk/sprava/ – správa najprv skontroluje server (HTTPS, PHP 8.1 – 8.5,
+     zápis do priečinkov, ochrana údajov). Ak hlási zápis, na Linuxe nastavte priečinkom webu práva 757
+     (FTP: pravé tlačidlo → Práva).
+  c) Ťuknite „Vytvoriť overovací kód“. Správa zapíše súbor PRVY-KOD.txt do priečinka sprava-data (vedľa www).
+     Otvorte ho cez FTP alebo webftp.forpsi.com, kód opíšte do správy (platí 24 hodín, 5 pokusov).
+  d) Mário si zvolí meno a heslo (aspoň 10 znakov). Žiadne predvolené heslo ani účet neexistuje.
+     Zabudnuté heslo: „Zabudli ste heslo?“ → súbor OBNOVA-KOD.txt rovnakým spôsobom.
+  e) Návod pre Mária k správe je v PDF navod-sprava.pdf (dostane ho od vás).
+
+4. KONTROLA PO NAHRATÍ
+----------------------
+  [ ] https://www.stavebninyrichtarik.sk/ sa otvorí, úvod má fotky, menu funguje (telefón aj počítač)
+  [ ] Kontakt, Galéria (otvoriť fotku, Späť ju zavrie), Akciový leták, Katalóg – hľadanie „cement“ nájde výsledky
+  [ ] stará adresa …/sk/akcie.aspx presmeruje (301) na …/akcie/index.html
+  [ ] neexistujúca adresa (napr. …/neexistuje.html) ukáže stránku 404 webu
+  [ ] …/sprava/ – kontrola servera bez červených bodov
+  [ ] v Google Search Console odoslať sitemap: https://www.stavebninyrichtarik.sk/sitemap.xml
+  [ ] keď HTTPS funguje pre www aj holú doménu: zapnúť kanonickú adresu (README, HTTPS a presmerovania)
+      a .htaccess nahrať znova

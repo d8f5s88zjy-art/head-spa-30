@@ -28,6 +28,37 @@ final class Rozdiel
         return $m;
     }
 
+    /** Obrázky s údajom v obrázku (telefón, e-mail, adresa, hodiny, zľava) → či sú pri údajoch $D na webe. Kľúč je id,
+     *  hodnota [názov pre Mária, na webe]. Položky albumov len viditeľné; to isté rozhoduje vykreslenie (udaje_platia). */
+    private static function obrazkyUdajov(array $D): array
+    {
+        if (!isset($D['k'])) $D = Zmena::sKonstantami($D);   // údaje webu a konceptu konštanty nenesú
+        $k = Vykreslenie::kontakt_karty_vm($D);
+        $m = ['k-tel' => ['obrázok Zavolajte nám (Kontakt)', $k['obr_tel']], 'k-mail' => ['obrázok Napíšte nám (Kontakt)', $k['obr_mail']],
+              'k-hod' => ['obrázok otváracích hodín (Kontakt)', Vykreslenie::udaje_platia($D, ['hodiny'])],
+              's-zl' => ['ikona zliav (Služby)', Vykreslenie::udaje_platia($D, ['zlava'])]];
+        foreach ($D['galeria']['albumy'] as $a) foreach ($a['fotky'] as $f)
+            if (!empty($f['plati_pri']) && ($f['viditelna'] ?? true))
+                $m['g-' . $a['id'] . '-' . $f['id'] . '-' . $f['src']] = [$f['popis'] . ' (' . $a['nadpis'] . ')', Vykreslenie::udaje_platia($D, $f['plati_pri'])];
+        return $m;
+    }
+
+    /** N2 (17. 11. 2026): pri zmene telefónu, e-mailu, hodín alebo zľavy náhľad povie, ktoré obrázky z webu zmiznú alebo sa vrátia. */
+    private static function obrazkyVety(array $A, array $B): array
+    {
+        $oa = self::obrazkyUdajov($A); $ob = self::obrazkyUdajov($B); $skr = []; $vrat = [];
+        foreach ($ob as $id => [$n, $na]) {
+            if (!isset($oa[$id])) continue;   // nová, nahradená alebo inak zmenená položka – hlási ju časť galéria
+            if ($oa[$id][1] && !$na) $skr[] = $n;
+            elseif (!$oa[$id][1] && $na) $vrat[] = $n;
+        }
+        $v = [];
+        if ($skr) $v[] = 'Z webu sa skryjú obrázky so starým údajom: ' . implode(', ', $skr)
+            . '. Obrázky v Galérii a letáky nahradíte novými vo Fotkách v galérii (Nahradiť inou fotkou), obrázky na Kontakte a v Službách vymení programátor.';
+        if ($vrat) $v[] = 'Na web sa vrátia obrázky: ' . implode(', ', $vrat) . '.';
+        return $v;
+    }
+
     /** Vety o zmene z údajov $A (teraz na webe) na $B (koncept). */
     public static function vety(array $A, array $B): array
     {
@@ -40,6 +71,7 @@ final class Rozdiel
         foreach (array_diff($va, $vb) as $x) $v[] = 'Odstránený oznam: ' . $x;
         foreach (['mobil' => 'Mobil', 'pevna' => 'Pevná linka', 'email' => 'E-mail'] as $k => $n)
             if ($A['firma'][$k] !== $B['firma'][$k]) $v[] = "$n: {$A['firma'][$k]} → {$B['firma'][$k]} (na všetkých stránkach)";
+        array_push($v, ...self::obrazkyVety($A, $B));
         // akcie
         $aa = self::podlaId($A['akcie']['akcie']); $ab = self::podlaId($B['akcie']['akcie']);
         foreach ($ab as $id => $b) {

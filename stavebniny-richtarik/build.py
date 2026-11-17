@@ -707,7 +707,9 @@ def foto_hlavicky(path, spec):
         if os.path.exists(os.path.join(ROOT, f'img/hd/{meno}-1200.webp')):
             w, h = webp_rozmer(os.path.join(ROOT, f'img/hd/{meno}-1200.webp'))
             w2 = webp_rozmer(os.path.join(ROOT, f'img/hd/{meno}.webp'))[0]   # skutočná šírka (fotka výrobcu má 1613 px, nie 2400)
-            img = f'<img src="{pre}img/hd/{meno}-1200.webp" srcset="{pre}img/hd/{meno}-1200.webp 1200w, {pre}img/hd/{meno}.webp {w2}w" sizes="{FOTO_SIZES}" width="{w}" height="{h}" alt="" fetchpriority="high">'
+            # -600 len pri fotkách s jemnou štruktúrou (zdroj/hlavicky.sh, KVALITA): rám na počítači má 520 px (A-3, 17. 11. 2026)
+            s600 = f'{pre}img/hd/{meno}-600.webp 600w, ' if os.path.exists(os.path.join(ROOT, f'img/hd/{meno}-600.webp')) else ''
+            img = f'<img src="{pre}img/hd/{meno}-1200.webp" srcset="{s600}{pre}img/hd/{meno}-1200.webp 1200w, {pre}img/hd/{meno}.webp {w2}w" sizes="{FOTO_SIZES}" width="{w}" height="{h}" alt="" fetchpriority="high">'
         else:
             w, h = webp_rozmer(os.path.join(ROOT, f'img/hd/{meno}.webp'))
             img = f'<img src="{pre}img/hd/{meno}.webp" width="{w}" height="{h}" alt="" fetchpriority="high">'
@@ -1329,13 +1331,14 @@ def build_kontakt():
     p = 'kontakt.html'
     # nadpisy .kbox sú priamo <h2 class="h3">: nad nimi sú h2 kariet kontakt-karty, takže nadpisy() by ich nechala ako h3
     # pod „Napíšte nám“ (kontrola regresií R-1, 16. 11. 2026)
+    # fotka predajne .kdvor: na počítači pás cez celú šírku pod kartami, Navigovať len raz v karte Predajňa a sklad (KV-3, 17. 11. 2026)
     body = f'''<section class="sec kontakt-page"><div class="wrap">
 {oblast('kontakt-karty', V.vykresli('kontakt-karty', p, VD))}
 <div class="kgrid">
   <div class="kbox"><h2 class="h3">Predajňa a sklad</h2><address>{FIRMA['majitel']}<br>{FIRMA['ulica']}<br>{FIRMA['mesto']}</address><a class="btn ghost small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a></div>
   <div class="kbox khod"><h2 class="h3">Otváracie hodiny</h2>{oblast('hodiny-kontakt', V.vykresli('hodiny-kontakt', p, VD))}</div>
   <div class="kbox kfir"><h2 class="h3">Firemné údaje a platba</h2><address>IČO {FIRMA['ico']}<br>DIČ {FIRMA['dic']}<br>Platba kartou (terminál VÚB banky)<br>Nákup na splátky (Quatro)</address></div>
-  <figure class="kdvor">{predajna_picture('', '02-tvarnice-obloha', '(max-width:700px) calc(100vw - 36px), 600px')}<figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><span class="cta"><a class="btn primary small" href="{FIRMA['mapa']}" target="_blank" rel="noopener">Navigovať do predajne</a><a class="btn ghost small" href="#prehliadka">{PP_ODKAZ}</a></span></figcaption></figure>
+  <figure class="kdvor">{predajna_picture('', '02-tvarnice-obloha', '(max-width:700px) calc(100vw - 36px), (max-width:900px) 600px, 1200px')}<figcaption><span>Novozámocká 62/68, Nitra, Horné Krškany</span><span class="cta"><a class="btn ghost small" href="#prehliadka">{PP_ODKAZ}</a></span></figcaption></figure>
 </div>
 {prehliadka_sekcia('')}
 <div class="txt rv kpartner"><p>Odkaz na stavebnú firmu z Nitry: <a href="{FIZOSK}" target="_blank" rel="noopener">Stavebná firma FIZO SK – www.fizosk.sk</a>.</p></div>

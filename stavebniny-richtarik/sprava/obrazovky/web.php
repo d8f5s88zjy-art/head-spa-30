@@ -206,17 +206,17 @@ function obrazovka_pomoc(): void
 <h2>Nový cenník akcií v PDF</h2>
 <p>Cenník a letáky → Nahrať nový cenník. Ak sa ceny v tabuľkách zmenili, nechajte „Zatiaľ ich skryť“ a ceny potom prepíšte pri akciách. Web nikdy neukáže starú cenu s dátumom nového cenníka.</p>
 <h2>Otváracie hodiny, sviatok, dovolenka</h2>
-<p>Bežné hodiny: Otváracie hodiny a sviatky → zaškrtnite dni a časy → Pozrieť náhľad → Zverejniť. Zmenia sa naraz na všetkých stránkach.</p>
+<p>Bežné hodiny: Otváracie hodiny a sviatky → zaškrtnite dni a časy → Pozrieť náhľad → Zverejniť. Zmenia sa naraz na všetkých stránkach. Z webu sa pritom skryjú obrázky s dnešnými hodinami (hodiny na Kontakte, leták Prečo nakupovať u nás, tabuľa s adresou); náhľad ich vymenuje.</p>
 <p>Sviatok alebo dovolenka: na tej istej obrazovke dole vyplňte dátum od – do, vyberte „Zatvorená“ alebo iný čas a napíšte názov (napríklad Vianoce). Bežné hodiny sa nemenia. Po poslednom dni oznam z webu sám zmizne.</p>
 <h2>Novinka</h2>
 <p>Novinky → + Pridať novinku → názov, krátky popis, text, fotky alebo PDF → Pozrieť náhľad → Zverejniť. Pri starej novinke môžete zmeniť názov, popis, pridať text a fotky, alebo ju skryť.</p>
 <h2>Fotky v galérii</h2>
 <p>Fotky v galérii → pri albume Predajňa alebo Areál ťuknite Pridať fotku a napíšte, čo je na nej. Pri fotke ťuknite na jej popis: môžete ju nahradiť inou, zmeniť popis, posunúť alebo skryť.</p>
-<p>Na tej istej obrazovke sú aj vaše letáky a bannery (stránka Akciový leták) a logá, tabule, vizitka a karta (album Logo a firemná grafika v Galérii). Opravený leták nahrajte cez „Nahradiť inou fotkou“, nepotrebný skryte. Obrázok, na ktorom je telefón, e-mail alebo otváracie hodiny, sa na webe ukazuje, len kým sú tieto údaje v správe rovnaké; po zmene údajov nahrajte nový obrázok.</p>
+<p>Na tej istej obrazovke sú aj vaše letáky a bannery (stránka Akciový leták) a logá, tabule, vizitka a karta (album Logo a firemná grafika v Galérii). Opravený leták nahrajte cez „Nahradiť inou fotkou“, nepotrebný skryte. Obrázok, na ktorom je telefón, e-mail, adresa alebo otváracie hodiny (leták Prečo nakupovať u nás, leták so sortimentom, tabuľa s adresou, vizitka, zákaznícka karta), sa na webe ukazuje, len kým sú tieto údaje v správe rovnaké ako na ňom. Po zmene údajov sa sám skryje a v správe pri ňom uvidíte „nie je na webe“; keď nahráte nový obrázok so správnymi údajmi, bude na webe znova. Keď zmenu údajov vrátite v Histórii, starý obrázok sa vráti sám.</p>
 <h2>Texty stránok</h2>
 <p>Texty stránok → upravte vetu alebo odsek na Úvode, v Službách, O nás alebo v Doprave → Pozrieť náhľad → Zverejniť. Vzhľad stránky ostáva.</p>
 <h2>Telefón a e-mail</h2>
-<p>Telefón a e-mail → prepíšte číslo alebo e-mail → Pozrieť náhľad → Zverejniť. Zmení sa na všetkých stránkach naraz, aj na tlačidlách Zavolať a v údajoch pre Google. Obrázky „Zavolajte nám“ a „Napíšte nám“ na stránke Kontakt majú číslo a e-mail v obrázku, preto sa po zmene skryjú, kým programátor nepripraví nové.</p>
+<p>Telefón a e-mail → prepíšte číslo alebo e-mail → Pozrieť náhľad → Zverejniť. Zmení sa na všetkých stránkach naraz, aj na tlačidlách Zavolať a v údajoch pre Google. Obrázky s číslom alebo e-mailom v obrázku sa po zmene z webu skryjú a náhľad ich vymenuje: „Zavolajte nám“ a „Napíšte nám“ na Kontakte (nové pripraví programátor), vizitka, zákaznícka karta a tabuľa s adresou v Galérii a leták so sortimentom (nahradíte ich sami vo Fotkách v galérii).</p>
 <h2>Pomýlil som sa</h2>
 <p>História a Vrátiť späť → pri zmene je napísané, čo sa zmenilo → ťuknite Vrátiť → Zverejniť. Vrátiť sa dá aj vrátenie. Nová akcia alebo novinka sa pri vrátení skryje (stránka ostane s vetou, že skončila); úplne ju zmaže programátor.</p>
 <h2>Odhlásenie</h2>

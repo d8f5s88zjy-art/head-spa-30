@@ -40,7 +40,8 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
   text, zoznam, obrázky, logá, tabuľka, značky, galéria) a vykreslí ich ako moderné
   komponenty: produktové karty, karty značiek, kroky s obrázkom, figúry s popiskom.
 - Štýly a skripty: `assets/site.css`, `assets/site.js` (menu, záloha objavovania blokov pri skrolovaní pre prehliadače
-  bez časovej osi posunu, počítadlá, vyhľadávanie, zbalená päta na telefóne, lightbox s listovaním a popiskami, pás
+  bez časovej osi posunu, počítadlá, vyhľadávanie, zbalená päta na telefóne, lightbox s listovaním a popiskami – systémové Späť ho zatvorí a neodíde zo stránky, veľmi
+  široký obrázok (banner) je na telefóne vo výške súboru a posúva sa prstom do strán (`.lb-siroky`) –, pás
   značiek s tlačidlom Zastaviť pohyb) a skript prechodov medzi stránkami v `<head>` (zdroj `zdroj/prechody.js`). Úvod je skutočná fotka dvora so strihom zásob (časť Úvod nižšie). Celý web je svetlý
   (papier, malta, betón, tmavý text, tehlová ako akcent): lišta, spodná lišta, menu, päta aj lightbox. Každá podstránka
   má svetlú hlavičku s ostrou fotkou v ráme (`HLAVICKA_FOTO` v `build.py`), skutočné fotky dvora pri tovare, ktorý
@@ -77,7 +78,8 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
     stránky, album šesť v rade), po kliknutí veľký obrázok. Obrázok nahraný v správe má v rámiku šírky 600 a 1 200 px
     (`srcset`, `sizes`). Položky sú v `data/galeria.json` (albumy `letaky`, `grafika`, prenesené
     `nastroje/export_grafika.py`), správa ich vie skryť, nahradiť, popísať a posunúť. Letáky a bannery majú preklepy –
-    Lajko o nich vie; opravená verzia od Mária sa vymení 1 : 1 (nový výrez do zdroja pod tým istým menom, alebo „Nahradiť“ v správe).
+    Lajko o nich vie; opravená verzia od Mária sa vymení cez „Nahradiť inou fotkou“ v správe, alebo novým výrezom do zdroja
+  (pod tým istým menom len kým web nie je na hostingu, potom pod novým menom – cache na rok; `img/FOTKY.md`).
   **Obrázok s údajom nesmie klamať:** hodiny, ikona zliav, tabuľa s kontaktom, vizitka, karta a oba letáky sa vykreslia len
   vtedy, keď údaje v `data/firma.json` a `data/cennik.json` sú tie, ktoré majú v sebe (`GRAFIKA_UDAJE` v `build.py`,
   `udaje_platia()` v `nastroje/vykreslenie.py` aj `sprava/jadro/Vykreslenie.php`, pri položkách albumov pole `plati_pri`);
@@ -146,7 +148,9 @@ Prepínanie: skript `zdroj/tema-head.js` (build.py `TEMA_HEAD`, v `index.html` h
 v `asistent/ochrana-udajov.html` značky `<!--tema-->`) beží v `<head>` pred štýlom: `?tema=svetla` odoberie atribút
 (svetlý papier), `?tema=tmava` nastaví tmavú, oboje si zapamätá (`localStorage` `tema`), `?tema=farebna` voľbu zruší, bez
 parametra platí zapamätaná voľba; prepne aj `theme-color` (farebná `#ffffff` – biela lišta, svetlá `#faf8f4`, tmavá `#121110`). Bez JS,
-v ráme bez úložiska alebo so zakázaným úložiskom je web farebný (parameter v adrese funguje aj tam). Skript prechodov
+v ráme bez úložiska alebo so zakázaným úložiskom je web farebný (parameter v adrese funguje aj tam). Ten istý skript
+nastaví na `<html>` triedu `js`; bez nej (bez JavaScriptu) sú tlačidlo menu a pole hľadania skryté, lebo by nič nerobili
+(navigácia je v päte). Pri tlači sa netlačí spodná lišta, tlačidlo menu, prechádzka ani tlačidlá výziev. Skript prechodov
 v `index.html` po zmene `zdroj/prechody.js` obnoví `python3 -I zdroj/prechody_vloz.py .`. Prepínač v rozhraní nie je.
 Zápis tmavej témy: `richtarik/majitel/tema/ZAPIS.md` a `TOKENY.md`.
 
@@ -606,7 +610,13 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   `PREDAJNA_POS`, AVIF crf 32 – zdroj je snímka obrazovky; od 13. 11. 2026, bez nich si telefón s DPR 3 bral `-1290`,
   napr. 99 kB namiesto 41 kB; karta značky s Máriovou fotkou berie ten istý výrez); meno súboru bez „-720“ je rovnaké ako pri dlaždici, takže
   prechod medzi stránkami ju berie ako tú istú fotku. Po výmene fotky dvora alebo ilustračnej fotky treba skript
-  spustiť znova. Prednačítané sú len 2 písma nadpisov. Máriove grafiky (`img/ilu/`, `img/grafika/`) vyrobí `bash nastroje/grafika_maria.sh`
+  spustiť znova. Prednačítané sú len 2 písma nadpisov (800); úvod `index.html` má navyše `BarlowCondensed-600-latin`
+  (lišta a tlačidlá – bez neho sa pri prvej návšteve s uvítaním na počítači posunulo menu o 10 px, CLS 0,005 → 0,0005;
+  podstránky ho nemajú, posun tam nie je a LCP by stúpol o ≈ 0,1 s). Fotky hlavičiek s jemnou štruktúrou (dlažba, fasáda)
+  majú v `zdroj/hlavicky.sh` vlastnú kvalitu (`KVALITA`, AVIF 4 : 4 : 4) a na počítači verziu `img/hd/<názov>-600.webp`
+  (dlažba na telefóne 139 → 93 kB, na počítači 482 → 85 kB). Náhľady letákov v kartách akcií (`nahlad` v `data/akcie.json`)
+  sú zmenšeniny `img/p/<číslo>-400.webp` (karta ich ukazuje v šírke 150 px; spolu 1 MB → 0,3 MB), leták na stránke akcie
+  je lenivý. Máriove grafiky (`img/ilu/`, `img/grafika/`) vyrobí `bash nastroje/grafika_maria.sh`
   zo `zdroj/grafika-maria/`; nová grafika = nový výrez do zdroja, riadok v skripte a nové meno súboru (cache na rok;
   pri výmene 1 : 1 pod starým menom ju návštevník, ktorý tu už bol, uvidí až po vypršaní cache). Dlaždice skupín: 15 ilustrácií
   spolu 105 kB (AVIF 480 px) namiesto 1,1 – 1,3 MB fotiek.
@@ -617,22 +627,30 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   montáž“ čoho (IMG_0310), fax na pevnej linke (IMG_0312, IMG_0310), značky Kremix, Heluz, Ruukki, Budmat, Vital a „Doprava
   zdarma“ bez podmienky (banner IMG_0314). Vyriešené: 8 t auto je Iveco (IMG_0312, IMG_0310; 16. 11. 2026); Avia je 3,5 t
   (Lajko 16. 11. 2026).
-- **Pre Mária** (čo od neho potrebujeme k obrázkom; dovtedy sú na webe tak, ako ich poslal):
+- **Pre Mária** (čo od neho potrebujeme k obrázkom; dovtedy sú na webe tak, ako ich poslal). Dokument na poslanie
+  Máriovi s náhľadmi vyznačených chýb a otázkami: `richtarik/dokoncenie/final/pre-maria.pdf` (17. 11. 2026, zdroj vedľa neho).
   1. Obrázok auta „Rozvoz stavebného materiálu“: nápis „AVIA 3t“ opraviť na „AVIA 3,5 t“ (rovnako v letáku „Prečo
      nakupovať u nás“). Dovtedy je na Doprave len auto bez nápisu; s opravenou verziou ukážeme celý obrázok.
-  2. Ilustráciu **Dlažby** v štýle série (sivá postavička na podstavci s nápisom „DLAŽBY“), aby sedela k ostatným 14.
+  2. Ilustráciu **Dlažby** v štýle série: na Máriovom letáku so sortimentom už je ikona „BETÓNOVÉ DLAŽBY“ v štýle série
+     (sivý podstavec, dlažba) – prosíme ten súbor v plnom rozlíšení, nie nový obrázok.
   3. Opravené verzie oboch letákov a oboch bannerov. Leták „Prečo nakupovať u nás“: „Peradenstvo“ → Poradenstvo, na mape
      „Horné Kiškany“ → Horné Krškany, „Avia 3t“ → Avia 3,5 t, „po - pia“ → Po – Pi. Leták so sortimentom: „PODHLADY“ →
-     PODHĽADY, „MUROVACÍ MATERIÁL“ je dvakrát, na fotke „Naša značka“ je „Stevabalny“. Veľký banner: „PVC, pedhlady“,
-     „Hutvý materiál“, „Kominový systém“, „Dlažby, platy obklady“, „BRUSENÁ TEHLA“, „THELY-LEPIDLÁ-PENY“, „NÁRADIE-PENETRÁRY“,
-     „Chemofak“ (Chemolak), skomolené logá značiek, „Strešné rezivo“ nad značkami krytín a nadpisy systémov nad iným
-     tovarom, „Doprava zdarma“ bez podmienky. Široký banner: „KOMPLETNÝ … … SYSTÉM“ (chýba slovo), „Doprava sderma“,
-     v zozname reziva „Mranoly“ → Hranoly, nečitateľné bočné stĺpce značiek.
+     PODHĽADY, „MUROVACÍ MATERIÁL“ je dvakrát (druhý pri dverách), na fotke „Naša značka“ je „Stevabalny“. Veľký banner:
+     „PVC, pedhlady“, „Hutvý materiál“, „Kominový systém“, „Dlažby, platy obklady“, „BRUSENÁ TEHLA“, „STAVEBNÁ CHEMIA“ →
+     CHÉMIA, „THELY-LEPIDLÁ-PENY“, „NÁRADIE-PENETRÁRY“, „Chemofak“ (Chemolak), skomolené logá značiek, „Strešné rezivo“
+     nad značkami krytín, „KOMPLETNÝ ZATEPĽOVACÍ SYSTÉM“ nad komínom a „KOMPLETNÝ SADROKARTÓNOVÝ SYSTÉM“ nad strechou.
+     Široký banner: „KOMPLETNÝ … … SYSTÉM“ (chýba slovo), „Doprava sderma“, v zozname reziva „Mranoly“ → Hranoly,
+     nečitateľné bočné stĺpce značiek.
   4. Originály všetkých 38 obrázkov v plnom rozlíšení (JPG, PNG alebo PDF, nie snímky z telefónu): dnešné snímky nesú len
      ≈ 530 – 1 320 px, letáky a bannery sú po zväčšení zle čitateľné.
   5. Ikony bez pevných údajov (hodiny, telefón, e-mail, zľava), ideálne s priehľadným pozadím – alebo počítať s tým, že po
      zmene údajov v správe sa obrázok sám skryje a treba poslať nový.
   6. Logo vo vektore (SVG alebo PDF) – stále chýba.
+  7. Odpovede (web ich dovtedy netvrdí, časť Otvorené otázky vyššie): čo patrí do skupiny **Podhľady a PVC** (ilustrácia
+     ukazuje podhľad, fotka a texty stránky výrobky z recyklovaného plastu); „Doprava zdarma“ – pri akom tovare a za akej
+     podmienky; predávate značky Kremix, Heluz, Ruukki, Budmat, Vital; platia „Týždenné zľavy na určený druh tovaru“
+     a „Objektové a množstevné zľavy“; „Kvalitná montáž“ – čoho; je 037 651 17 77 aj fax; zľava 5 % / 3,3 % – len so
+     zákazníckou kartou a z akciových cien, „KARTA“ = platba kartou; na karte „949 05 Nitra 5“ – ponechať, alebo „949 05 Nitra“.
 
 ## Údržba
 - Prostredie: `python3 -m venv venv && venv/bin/pip install lxml`, potom v tomto priečinku `venv/bin/python build.py`.
@@ -682,7 +700,10 @@ k nim (sviatok, dovolenka, iné hodiny od – do), novinky (nové aj pôvodné: 
 galérie Predajňa a Areál a obrázky v albumoch grafiky (Letáky a bannery na stránke Leták, Logo a firemná grafika
 v Galérii), vybrané texty Úvodu, Služieb, O nás a Dopravy a telefón a e-mail: adresa
 `https://www.stavebninyrichtarik.sk/sprava/`, na telefóne aj na počítači. Návod pre majiteľa krok za krokom je v správe
-(Pomoc) a v `richtarik/sprava/zapis/NAVOD.md`; architektúra a výsledky testov v `richtarik/sprava/zapis/ZAPIS.md`.
+(Pomoc) a v PDF pre majiteľa `richtarik/dokoncenie/final/navod-sprava.pdf` (17. 11. 2026, 11 kapitol vrátane galérie,
+letákov a bannerov, telefónu a e-mailu so skrývaním obrázkov a textov; zdroj `richtarik/dokoncenie/final/navod/navod.html`, snímky
+zo skutočnej správy na kópii `navod/nastroje/spusti.sh` – plné Chromium so slovenčinou, `LANGUAGE=sk`, PDF `navod/nastroje/vyrob.sh`;
+po zmene obrazoviek správy snímky a PDF vyrobiť znova); architektúra a výsledky testov v `richtarik/sprava/zapis/ZAPIS.md`.
 
 **Ako to funguje.** Návštevník dostáva len statické súbory ako doteraz – na verejných stránkach nie je žiadny skript,
 štýl, cookie ani odkaz správy. Obsah, ktorý správa mení, je v stránkach v označených oblastiach
@@ -700,7 +721,8 @@ a `sitemap.xml`, pri zmene telefónu alebo e-mailu nahradí ich staré podoby vo
 (`sprava/jadro/Kontakt.php`; pri importe to isté v zdrojoch repozitára `nastroje/kontakt.py`) a ak je na hostingu
 asistent, zosúladí jeho znalosti s hodinami a častými otázkami. Oznam k hodinám má na webe `data-do` a `site.js`
 ho po poslednom dni skryje (bez JS ostane viditeľný aj s dátumom); bežné hodiny a ich údaje pre Google sa nemenia.
-Každá zmena ide cez náhľad so zoznamom „Čo sa zmení“ (pred → po, uloží sa aj do Histórie) → kontroly (H1, titulky a popisy pre Google a ich jedinečnosť, odkazy, rozmery obrázkov,
+Každá zmena ide cez náhľad so zoznamom „Čo sa zmení“ (pred → po, uloží sa aj do Histórie; pri zmene telefónu, e-mailu
+alebo hodín aj veta, ktoré obrázky s údajom v obrázku z webu zmiznú alebo sa vrátia – `Rozdiel::obrazkyVety`) → kontroly (H1, titulky a popisy pre Google a ich jedinečnosť, odkazy, rozmery obrázkov,
 JSON-LD, značky) → zálohu → denník prerušeného zápisu → premenovanie → overenie odtlačkov a dá sa vrátiť v Histórii.
 
 **build.py** číta `data/` (`data_sprava.py`), oblasti v ručnom `index.html` prepíše z údajov (zvyšok súboru nemení),
@@ -757,7 +779,7 @@ skončila, a `noindex`); úplne ju odstráni programátor. Úvod (`index.html`) 
 `sprava_zhoda.py --referencia` preto `index.html` porovnáva po zjednotení medzier.
 
 **Testy správy** (všetky na kópii v `/dev/shm`, nikdy na hostingu ani na repozitári – bez argumentov sa nespustia):
-`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (175 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
+`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (180 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
 prerušený zápis, súbeh, kódy, heslá, oznamy, novinky, galéria, texty, kontakt, grafiky s údajom v obrázku, ceny a úvod),
 `bash sprava/testy/e2e.sh <snímky>` (Playwright 390 × 844 aj 1440 × 900, ≈ 260 kontrol na šírku: celý postup majiteľa
 vrátane novinky, sviatku, fotky v galérii, textu, telefónu, e-mailu a pevnej linky a ich vrátenia, obrázka pridaného do
@@ -778,9 +800,17 @@ https://www.stavebninyrichtarik.sk/ (canonical, sitemap a og:image sú nastaven�
    `popisy.py`, `texty.py`, `README.md`, `OBNOVA-*.md`, `img/FOTKY.md`, `nasadenie/`) a bez obrázkov, na ktoré nič
    neodkazuje; skript skontroluje lokálne odkazy a súbory starého videa a vyrobí aj zip. Na hosting sa nahrá
    **obsah** balíka do koreňa domény (FTP/SFTP). PDF v `pdf/` idú celé, lebo na ne vedú presmerovania starých adries.
-3. Na hostingu: `nasadenie/htaccess.txt` ako `.htaccess` (Apache) alebo `nasadenie/web.config.txt` ako `web.config`
-   (IIS) – 301 zo starých adries `.aspx` a `files/N.pdf`, vlastná 404. Kanonická adresa a HTTPS: časť HTTPS
-   a presmerovania nižšie.
+   So správou: `SPRAVA=1 SPRAVA_REVIZIA=<revízia z data/verzia.json>` (časť Správa webu). `CASTI=40` namiesto jedného
+   ZIPu (≈ 150 MB) vyrobí časti `stavebniny-richtarik-web-1.zip` … `-5.zip`, každú do 40 MB a samostatne
+   rozbaliteľnú do koreňa webu (na poradí nezáleží); skript ich rozbalí a porovná zoznam a sha256 s `web/` (riadok
+   `časti spolu = web/: … zhodné`). Vedľa balíka vždy zapíše `NAVOD-NAHRATIE.txt` (zo `nasadenie/navod-nahratie.txt`:
+   čo kam, čo sa nesmie prepísať ani zmazať – `img/s/`, `pdf/s/`, `sprava-data*`, upravený `.htaccess`, žiadna
+   synchronizácia v FTP klientovi –, prvé prihlásenie do správy, kontrola po nahratí), `SHA256SUMS.txt` a
+   `ku-korenu/.htaccess` a `ku-korenu/web.config`.
+3. Na hostingu: `ku-korenu/.htaccess` (Apache) alebo `ku-korenu/web.config` (IIS) z balíka – kópie
+   `nasadenie/htaccess.txt` a `web.config.txt` – do koreňa webu: 301 zo starých adries `.aspx` a `files/N.pdf`,
+   vlastná 404. Nie sú v ZIPe zámerne (ďalšie nahratie by prepísalo upravený `.htaccess`). Kanonická adresa a HTTPS:
+   časť HTTPS a presmerovania nižšie.
 4. Hlavičky (sú v oboch súboroch): gzip a brotli pre HTML, CSS, JS, JSON a SVG; `Cache-Control: max-age=31536000,
    immutable` pre `img/`, `pdf/`, `subory/` a písma, `max-age=600` pre HTML, `site.css`, `site.js` a `index.json`
    (názvy bez verzie). Fotku pod rovnakým názvom zákazníci po výmene uvidia až po roku – meniť názov.

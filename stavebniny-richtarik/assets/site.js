@@ -419,8 +419,16 @@
       setTimeout(function () { f(false); }, 250);
     }
     function z(r, q) { var s = r.width / q.width; return 'translate(' + (r.left + r.width / 2 - q.left - q.width / 2) + 'px,' + (r.top + r.height / 2 - q.top - q.height / 2) + 'px) scale(' + s + ')'; }
+    // A-2 (17. 11. 2026): veľmi široký obrázok (banner, pomer strán nad 2,5) by na telefóne vyšiel len ≈ 90 px vysoký.
+    // Do 700 px ho lightbox ukáže vo výške súboru (najviac 60 % obrazovky) a posúva sa prstom do strán (.lb-siroky).
+    // Pomer sa berie z width/height náhľadu (hneď, bez skoku), po načítaní zo samotného súboru.
+    function pomer(a) { var t = a && a.querySelector('img'), w = t && +t.getAttribute('width'), h = t && +t.getAttribute('height'); return w && h ? w / h : 0; }
+    function siroky(k) { lb.classList.toggle('lb-siroky', k > 2.5 && innerWidth <= 700); var f = lb.querySelector('figure'); if (f) f.scrollLeft = 0; }
+    img.addEventListener('load', function () { if (img.naturalWidth && img.naturalHeight) siroky(img.naturalWidth / img.naturalHeight); });
+    addEventListener('resize', function () { if (!lb.hidden && img.naturalWidth) siroky(img.naturalWidth / img.naturalHeight); });
     function nastav(i) {   // obsah fotky bez zobrazenia (skrytá do dekódovania)
       cur = (i + links.length) % links.length; var a = links[cur];
+      siroky(pomer(a));
       img.style.opacity = 0;
       img.src = a.getAttribute('href'); img.alt = caption(a) || 'Fotografia';
       cap.textContent = caption(a); cnt.textContent = links.length > 1 ? (cur + 1) + ' / ' + links.length : '';
@@ -447,6 +455,7 @@
       var vymen = function () {
         if (t !== tok) return;   // medzitým ďalšie listovanie alebo zatvorenie
         if (odch) { odch.cancel(); odch = null; }
+        siroky(pomer(a));
         img.src = u; img.alt = caption(a) || 'Fotografia'; img.style.opacity = ''; fc.style.opacity = '';
         cap.textContent = caption(a); cnt.textContent = links.length > 1 ? (cur + 1) + ' / ' + links.length : '';
         if (smer && pohyb) img.animate([{ opacity: .25, transform: 'translateX(' + (smer * 28) + 'px)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: KRIVKA, fill: 'backwards' });
@@ -463,9 +472,16 @@
     }
     // každý odkaz na zväčšenie má meno pre čítačku: popisok fotky, inak „Zväčšiť fotografiu“
     poPrechode(function () { all().forEach(function (a) { if (!a.getAttribute('aria-label')) { var c = caption(a); a.setAttribute('aria-label', c ? 'Zväčšiť: ' + c : 'Zväčšiť fotografiu'); } }); });
+    // A-1 (17. 11. 2026): systémové Späť (gesto na telefóne, tlačidlo prehliadača) zatvorí fotku, neodíde zo stránky.
+    // Otvorenie pridá do histórie krok s tou istou adresou; Späť ho zoberie a lightbox sa zatvorí. Zatvorenie krížikom,
+    // Escape alebo ťuknutím mimo fotky ten krok vráti (history.back), takže druhé Späť odíde zo stránky ako doteraz.
+    var vHist = false;
+    function hist() { if (vHist) return; try { history.pushState({ lb: 1, h: history.state }, ''); vHist = true; } catch (x) {} }
+    function histSpat() { if (!vHist) return; vHist = false; try { if (history.state && history.state.lb) history.back(); } catch (x) {} }
+    addEventListener('popstate', function () { if (!vHist) return; vHist = false; if (!lb.hidden) close(true); });
     function openLb(a) {
       var r = pohyb ? nahlad(a) : null;
-      links = all(); spat = a;
+      links = all(); spat = a; hist();
       var t = nastav(links.indexOf(a));
       lb.hidden = false; lb.querySelector('.lb-x').focus();
       if (pohyb) fc.style.opacity = 0;
@@ -481,8 +497,9 @@
       predcitaj();
     }
     function zavri() { if (odch) { odch.cancel(); odch = null; } lb.hidden = true; tok++; img.src = ''; img.style.opacity = ''; fc.style.opacity = ''; if (spat) { spat.focus({ preventScroll: true }); spat = null; } }
-    function close() {
+    function close(zHist) {
       if (lb.hidden || lb.inert) return;   // počas zatvárania druhé zatvorenie nič nerobí
+      if (zHist !== true) histSpat();
       var r = pohyb ? nahlad(links[cur]) : null, q = img.getBoundingClientRect();
       if (!pohyb) return zavri();
       var an = [lb.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: 'linear' })];
@@ -495,13 +512,14 @@
       e.preventDefault(); openLb(a);
     });
     lb.addEventListener('click', function (e) { if (e.target === lb || e.target.tagName === 'FIGURE') close(); });
-    lb.querySelector('.lb-x').addEventListener('click', close);
+    lb.querySelector('.lb-x').addEventListener('click', function () { close(); });
     prev.addEventListener('click', function () { show(cur - 1, -1); });
     next.addEventListener('click', function () { show(cur + 1, 1); });
     var tx = 0;
-    lb.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+    // ťah po širokom obrázku (.lb-siroky) ho posúva, nelistuje; listuje sa šípkami
+    lb.addEventListener('touchstart', function (e) { tx = e.target.closest && e.target.closest('.lb-siroky figure') ? null : e.touches[0].clientX; }, { passive: true });
     lb.addEventListener('wheel', function (e) { e.preventDefault(); }, { passive: false });   // stránka pod lightboxom sa neposúva
-    lb.addEventListener('touchend', function (e) { var dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50 && links.length > 1) show(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); });
+    lb.addEventListener('touchend', function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50 && links.length > 1) show(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); });
     d.addEventListener('keydown', function (e) {
       if (lb.hidden) return;
       if (e.key === 'Tab') pasca(lb, e);

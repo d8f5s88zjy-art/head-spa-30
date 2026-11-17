@@ -7,11 +7,23 @@
 # Výstup: img/uvod/hlavicka/<názov>-720.avif|webp a img/hd/hlavicka/<názov>-720.avif|webp. Meno súboru bez „-720“
 # je rovnaké ako pri dlaždici, takže prechod medzi stránkami (zdroj/prechody.js, F()) ju berie ako tú istú fotku.
 # Použitie (v priečinku webu): bash zdroj/hlavicky.sh   (potrebuje ImageMagick a ffmpeg s libaom-av1)
+# Len vybrané fotky: LEN="dlazba fasada" bash zdroj/hlavicky.sh (ostatné súbory sa neprepíšu).
+# Fotky s jemnou štruktúrou (dlažba, fasáda) majú pri rovnakej kvalite 3× viac bajtov než ostatné hlavičky; preto majú
+# vyššie crf a nižšiu kvalitu WebP (KVALITA nižšie) a na počítači aj verziu 600 px (img/hd/<názov>-600.webp, build.py ju
+# pridá do srcset, keď existuje): rám má na počítači 520 px, bez nej si prehliadač bral 1200 px (dlažba 482 kB).
+# Kontrola 17. 11. 2026 (A-3): dlažba v hlavičke na telefóne 139 kB → pozri ZAPIS kola dokončenie.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 SIR=720; VYS=468
+LEN=${LEN:-}
+declare -A KVALITA=([dlazba]="40 60 yuv444p" [fasada]="38 64 yuv444p")   # crf AVIF, kvalita WebP a vzorkovanie farby; ostatné 28 78 yuv420p
+# (yuv444p: pri 4:2:0 a vyššom crf dostala sivá dlažba ružovkasté fľaky – farbu nesmieme meniť)
+chcem() { [ -z "$LEN" ] || [[ " $LEN " == *" $1 "* ]]; }
 vyrez() {   # vyrez <zdroj> <cieľ bez prípony> <x 0–1> <y 0–1>
-  local src=$1 out=$2 px=$3 py=$4 w h cw ch x y
+  local src=$1 out=$2 px=$3 py=$4 w h cw ch x y meno crf q pf
+  meno=$(basename "$out"); meno=${meno%-$SIR}
+  chcem "$meno" || return 0
+  read -r crf q pf <<< "${KVALITA[$meno]:-28 78 yuv420p}"
   read -r w h < <(identify -format '%w %h\n' "$src")
   # výrez s pomerom 720:468 v plnej šírke alebo výške zdroja, posunutý ako object-position
   if [ $((w * VYS)) -gt $((h * SIR)) ]; then ch=$h; cw=$((h * SIR / VYS)); else cw=$w; ch=$((w * VYS / SIR)); fi
@@ -19,9 +31,9 @@ vyrez() {   # vyrez <zdroj> <cieľ bez prípony> <x 0–1> <y 0–1>
   mkdir -p "$(dirname "$out")"
   convert "$src" -crop "${cw}x${ch}+${x}+${y}" +repage -resize "${SIR}x${VYS}>" -strip "$out.png"
   # WebP cez ffmpeg (ImageMagick 6 pri WebP kvalitu ignoruje), AVIF ako ostatné fotky webu (libaom, still-picture)
-  ffmpeg -v error -y -i "$out.png" -c:v libwebp -quality 78 -compression_level 6 "$out.webp"
-  ffmpeg -v error -y -i "$out.png" -vf "scale=out_color_matrix=bt601:out_range=full,format=yuv420p" -c:v libaom-av1 \
-    -still-picture 1 -crf 28 -cpu-used 3 -row-mt 1 -color_range pc -colorspace smpte170m "$out.avif"
+  ffmpeg -v error -y -i "$out.png" -c:v libwebp -quality "$q" -compression_level 6 "$out.webp"
+  ffmpeg -v error -y -i "$out.png" -vf "scale=out_color_matrix=bt601:out_range=full,format=$pf" -c:v libaom-av1 \
+    -still-picture 1 -crf "$crf" -cpu-used 3 -row-mt 1 -color_range pc -colorspace smpte170m "$out.avif"
   rm -f "$out.png"
   echo "$out: výrez ${cw}x${ch}+${x}+${y} z ${w}x${h}, webp $(stat -c %s "$out.webp") B, avif $(stat -c %s "$out.avif") B"
 }
@@ -35,4 +47,10 @@ vyrez img/uvod/dvor-predajna-1200.webp  img/uvod/hlavicka/dvor-predajna-$SIR   0
 # ilustračné fotky kategórií (img/hd, stred), len tie, ktoré sú v hlavičke niektorej stránky (po behu build.py)
 for m in $(grep -rhoE 'img/hd/[a-z-]+-1200\.webp' --include='*.html' . | sed -E 's#.*/([a-z-]+)-1200\.webp#\1#' | sort -u); do
   vyrez "img/hd/$m-1200.webp" "img/hd/hlavicka/$m-$SIR" 0.5 0.5
+  # verzia 600 px pre rám 520 px na počítači, len pri fotkách s vlastnou kvalitou (celá fotka, bez výrezu)
+  if [ -n "${KVALITA[$m]:-}" ] && chcem "$m"; then
+    read -r _ q _ <<< "${KVALITA[$m]}"
+    ffmpeg -v error -y -i "img/hd/$m-1200.webp" -vf scale=600:-2:flags=lanczos -c:v libwebp -quality "$q" -compression_level 6 "img/hd/$m-600.webp"
+    echo "img/hd/$m-600.webp: $(identify -format '%wx%h' "img/hd/$m-600.webp"), $(stat -c %s "img/hd/$m-600.webp") B"
+  fi
 done

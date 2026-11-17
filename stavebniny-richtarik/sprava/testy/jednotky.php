@@ -378,6 +378,17 @@ t('grafiky: zmena mobilu skryje tabuľu s kontaktom, vizitku a kartu, logá a il
 t('grafiky: zmena mobilu obrázok hodín ani zliav neskryje', str_contains($obl('hodiny-kontakt', 'kontakt.html', $DKM), 'kontakt-hodiny-288') && str_contains($obl('sluzby-zlavy', 'sluzby.html', $DKM), 'zlavy-480'));
 [$E, $e] = Obsah::kontakt($D, ['mobil' => $D['firma']['mobil'], 'pevna' => $D['firma']['pevna'], 'email' => 'predajna@stavebniny-test.sk']);
 t('grafiky: zmena e-mailu skryje vizitku, kartu, tabuľu a leták so sortimentom', $e === null && substr_count($obl('galeria-grafika', 'galeria/index.html', Zmena::sKonstantami($E)), '<figure') === 9 && !str_contains($obl('galeria-letaky', 'letak.html', Zmena::sKonstantami($E)), 'letak-stavebniny-richtarik'), (string)$e);
+// N2 (17. 11. 2026): náhľad „Čo sa zmení“ vymenuje obrázky, ktoré po zmene údajov zmiznú (a pri vrátení sa vrátia)
+$rv = fn($A, $B) => implode(' | ', Rozdiel::vety($A, $B));
+$vm = $rv($D, $M); $ve = $rv($D, $E); $vh = $rv($D, $H); $vz = $rv($M, $D);
+t('N2: zmena mobilu – náhľad vymenuje Zavolajte nám, leták so sortimentom, tabuľu, vizitku a kartu',
+  str_contains($vm, 'Z webu sa skryjú obrázky so starým údajom: obrázok Zavolajte nám (Kontakt)') && str_contains($vm, 'Leták so sortimentom predajne (Letáky a bannery)')
+  && str_contains($vm, 'Vizitka') && str_contains($vm, 'Zákaznícka karta') && str_contains($vm, 'Firemná tabuľa s adresou') && !str_contains($vm, 'Napíšte nám') && !str_contains($vm, 'hodín'), $vm);
+t('N2: zmena e-mailu – Napíšte nám áno, Zavolajte nám nie', str_contains($ve, 'obrázok Napíšte nám (Kontakt)') && !str_contains($ve, 'Zavolajte nám'), $ve);
+t('N2: zmena hodín – obrázok hodín, leták Prečo nakupovať a tabuľa, vizitka nie', str_contains($vh, 'obrázok otváracích hodín (Kontakt)') && str_contains($vh, 'Leták Prečo nakupovať u nás') && str_contains($vh, 'Firemná tabuľa') && !str_contains($vh, 'Vizitka'), $vh);
+t('N2: vrátenie mobilu – obrázky sa vrátia', str_contains($vz, 'Na web sa vrátia obrázky: obrázok Zavolajte nám (Kontakt)') && !str_contains($vz, 'skryjú'), $vz);
+$V = $D; $V['firma']['vynimky'] = [['od' => '2026-12-24', 'do' => '2026-12-26', 'zatvorene' => true, 'nazov' => 'Vianoce']];
+t('N2: oznam k hodinám (sviatok) o obrázkoch nehovorí', !str_contains($rv($D, $V), 'obrázk') && str_contains($rv($D, $V), 'Vianoce'), $rv($D, $V));
 t('grafiky: údaje obrázkov v konštantách zmena kontaktu nenahradí', Zmena::sKonstantami($M)['k']['grafika_udaje']['mobil'] === '0905622223' && Zmena::sKonstantami($E)['k']['grafika_udaje']['email'] === ['info', 'stavebninyrichtarik.sk']);
 // (c) zľava bez 3,3 %: karta zliav na Službách bez obrázka, veta ostane
 $Z = $D; $Z['cennik']['zlava'] = 'Zľava so zákazníckou kartou: 5 % pri platbe v hotovosti, 3 % pri platbe kartou. Cenník akcií ({datum}).';

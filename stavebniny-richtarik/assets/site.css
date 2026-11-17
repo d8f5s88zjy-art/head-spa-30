@@ -495,7 +495,7 @@ footer .bottom{display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;just
 footer .bottom a{display:inline}
 /* asistent (data-asistent): posledný riadok päty nekončí pod jeho ikonou vpravo dole; od prvého vykreslenia, bez posunu */
 html[data-asistent] footer .bottom{padding-right:64px}
-@media (max-width:640px){html[data-asistent] footer .bottom{padding-right:56px}}
+@media (max-width:640px){html[data-asistent] footer .bottom{padding-right:calc(var(--gutter) + 52px)}}
 @media (max-width:900px){
   footer .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   footer a{display:flex;align-items:center;min-height:44px;padding:0}
@@ -538,6 +538,12 @@ html[data-asistent] footer .bottom{padding-right:64px}
 .lb-p{left:18px}.lb-nx{right:18px}
 .lb-n[hidden]{display:none}
 @media (max-width:700px){.lb-n{top:auto;bottom:16px;transform:none;height:44px}.lb img{max-height:72vh}}
+/* široký banner na telefóne (site.js pridá .lb-siroky pri pomere strán nad 2,5 do 700 px): obrázok vo výške súboru,
+   posúva sa prstom do strán, popisok ostáva vľavo na mieste (A-2, 17. 11. 2026) */
+.lb.lb-siroky{padding-inline:0}
+.lb.lb-siroky figure{width:100vw;max-width:100vw;overflow-x:auto;overscroll-behavior-x:contain;touch-action:pan-x pinch-zoom;justify-items:start;padding-inline:16px;box-sizing:border-box}
+.lb.lb-siroky img{max-width:none;max-height:none;height:min(343px,60vh);width:auto}
+.lb.lb-siroky figcaption{position:sticky;left:16px;max-width:calc(100vw - 32px);text-align:left}
 
 /* tieň lišty; objavovanie pri posune je v Pohybovom systéme (časť 4), trieda .rv už nič neskrýva */
 .top.scrolled{box-shadow:0 6px 24px rgba(20,18,16,.08)}
@@ -821,6 +827,9 @@ body.home .kontakt-teaser .hours b{color:var(--ink)}
 @media (max-width:900px){.kgrid .kfir{grid-column:1/-1}.kdvor{grid-template-columns:minmax(0,1fr);max-width:600px}
   .kdvor figcaption{flex-direction:row;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}}
 @media (max-width:520px){.kdvor figcaption .cta{width:100%}.kdvor figcaption .btn{flex:1 1 100%}}
+/* na počítači fotka predajne ako pás cez celú šírku pod kartami, popis v jednom riadku pod ňou (KV-3) */
+@media (min-width:901px){.kdvor{grid-template-columns:minmax(0,1fr)}.kdvor picture{aspect-ratio:1290/500}
+  .kdvor figcaption{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}}
 .kk2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px}
 .kk{position:relative;display:grid;grid-template-columns:240px minmax(0,1fr);align-items:center;gap:24px;background:var(--povrch);border:1px solid var(--line);border-radius:var(--radius);padding:12px 22px 12px 12px;transition:border-color .2s}
 .kk.bez-obr{grid-template-columns:minmax(0,1fr);padding:24px}
@@ -1602,6 +1611,11 @@ main>section:not(.page-head)+section,main>section:not(.page-head)+div,main>div+s
 .album+.album{margin-top:16px}
 .cta-pas{content-visibility:auto;contain-intrinsic-size:auto 300px}
 footer{content-visibility:auto;contain-intrinsic-size:auto 480px}
+/* bez JavaScriptu (trieda js nastaví skript témy v <head>): tlačidlo menu a pole hľadania by nič nerobili (A-5) */
+html:not(.js) .menu-btn,html:not(.js) .search{display:none}
+/* tlač (A-4): bez spodnej lišty, tlačidla menu, pásika posunu, prechádzky (interaktívna plocha) a tlačidiel výzvy;
+   lišta hore nie je pripnutá, takže sa netlačí cez obsah na každej strane */
+@media print{.mbar,.menu-btn,.progress,.pp,.cta-pas .btn,.kdvor .cta,.asi-btn,.asi-okno,.lb{display:none!important}.top{position:static!important}}
 @media print{main>section:not(.page-head)+section,main>section:not(.page-head)+div,main>div+section,.album+.album,.cta-pas,footer{content-visibility:visible}
 /* kotva v stránke (site.js naKotvu): pred posunom sa vykreslia všetky sekcie, aby cieľ neušiel nižšie */
 html.cv-ciel main>section:not(.page-head)+section,html.cv-ciel main>section:not(.page-head)+div,html.cv-ciel main>div+section,html.cv-ciel .cta-pas,html.cv-ciel footer{content-visibility:visible}

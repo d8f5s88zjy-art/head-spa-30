@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 # Balík na nahratie na hosting (koreň domény): len to, čo web pri behu potrebuje, zoznam súborov, zip a kontroly.
 # Použitie (v priečinku webu): bash nasadenie/balik.sh . <výstupný priečinok>
-# Výstup: <výstup>/web/ (obsah na nahratie), <výstup>/zoznam.txt, <výstup>/stavebniny-richtarik-web.zip.
+# Výstup: <výstup>/web/ (obsah na nahratie), <výstup>/zoznam.txt, <výstup>/SHA256SUMS.txt, <výstup>/stavebniny-richtarik-web.zip,
+# <výstup>/ku-korenu/.htaccess a web.config (nastavenie servera z nasadenie/htaccess.txt, web.config.txt – do koreňa webu)
+# a <výstup>/NAVOD-NAHRATIE.txt (čo kam, čo sa nesmie prepísať, prvé prihlásenie do správy, kontrola po nahratí).
+# CASTI=40: namiesto jedného ZIPu časti stavebniny-richtarik-web-1.zip … -N.zip, každá najviac 40 MB (1 MB = 10^6 B)
+# a samostatne rozbaliteľná do koreňa webu; skript ich rozbalí do skúšobného priečinka a porovná zoznam a sha256
+# s web/. Nepoužíva sa delený archív (zip -s), ten WebFTP nerozbalí.
 # Do balíka nepatrí: zdroj/ (pages.json, obrazky.json, prechody.js), build.py, obsah.py, popisy.py, texty.py, __pycache__/, README.md,
 # OBNOVA-*.md, img/FOTKY.md, nasadenie/ (nastavenie servera sa nahrá zvlášť, README časť Nasadenie), .gitignore
 # a obrázky v img/, na ktoré nič neodkazuje.
@@ -18,7 +23,7 @@ SRC="$(cd "$1" && pwd)"; OUT="$2"
 [ -f "$SRC/index.html" ] && [ -f "$SRC/assets/site.js" ] || { echo "CHYBA: $SRC nie je priečinok webu"; exit 1; }
 mkdir -p "$OUT"; OUT="$(cd "$OUT" && pwd)"
 case "$OUT" in "$SRC"|"$SRC"/*) echo "CHYBA: výstup nesmie byť v priečinku webu"; exit 1;; esac
-rm -rf "$OUT/web" "$OUT/zoznam.txt" "$OUT/stavebniny-richtarik-web.zip"; mkdir -p "$OUT/web"
+rm -rf "$OUT/web" "$OUT/zoznam.txt" "$OUT/SHA256SUMS.txt" "$OUT/ku-korenu" "$OUT/NAVOD-NAHRATIE.txt" "$OUT"/stavebniny-richtarik-web*.zip; mkdir -p "$OUT/web"
 tar -C "$SRC" \
   --exclude=./zdroj --exclude=./__pycache__ --exclude=./build.py --exclude=./obsah.py --exclude=./popisy.py --exclude=./texty.py \
   --exclude=./README.md --exclude='./OBNOVA-*.md' --exclude=./img/FOTKY.md --exclude=./nasadenie --exclude=./.gitignore \
@@ -128,5 +133,44 @@ for dp, dn, fn in os.walk(R):
                 if not os.path.exists(os.path.normpath(cesta)): bad.append((os.path.relpath(p, R), x))
 print('lokálnych odkazov', n, 'chýbajúcich', len(bad), bad[:10])
 EOF
-(cd "$OUT/web" && zip -qr -X "$OUT/stavebniny-richtarik-web.zip" .)
-echo "zip: $(du -h "$OUT/stavebniny-richtarik-web.zip" | cut -f1) $OUT/stavebniny-richtarik-web.zip"
+(cd "$OUT/web" && find . -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum | sed 's|  \./|  |' > "$OUT/SHA256SUMS.txt")
+# nastavenie servera vedľa balíka (nie v ňom: pri ďalšom nahratí by prepísalo upravený .htaccess na hostingu)
+mkdir -p "$OUT/ku-korenu"; cp "$SRC/nasadenie/htaccess.txt" "$OUT/ku-korenu/.htaccess"; cp "$SRC/nasadenie/web.config.txt" "$OUT/ku-korenu/web.config"
+if [ -z "${CASTI:-}" ]; then
+  (cd "$OUT/web" && zip -qr -X "$OUT/stavebniny-richtarik-web.zip" .)
+  echo "zip: $(du -h "$OUT/stavebniny-richtarik-web.zip" | cut -f1) $OUT/stavebniny-richtarik-web.zip"
+  LIMIT=40
+else
+  case "$CASTI" in ''|*[!0-9]*) echo "CHYBA: CASTI musí byť číslo (MB)"; exit 1;; esac
+  LIMIT=$CASTI
+  # časti: najprv všetko okrem img/, pdf/ a subory/ (stránky, štýly, správa), potom priečinky po abecede; súčet
+  # nekomprimovaných veľkostí + 1 kB na súbor (hlavičky ZIPu) je horná hranica veľkosti ZIPu, takže limit platí vždy
+  python3 -I - "$OUT/web" "$OUT" "$CASTI" <<'EOF5'
+import os, sys, subprocess
+R, OUT, MB = sys.argv[1], sys.argv[2], int(sys.argv[3]); LIM = MB * 1000 * 1000
+fs = []
+for dp, dn, fn in os.walk(R):
+    for f in fn:
+        p = os.path.join(dp, f); fs.append((os.path.relpath(p, R).replace(os.sep, '/'), os.path.getsize(p)))
+fs.sort(key=lambda x: (x[0].split('/')[0] in ('img', 'pdf', 'subory'), x[0]))
+casti = [[]]; vel = [0]
+for r, s in fs:
+    if s + 1024 > LIM: print('CHYBA: súbor', r, 'je väčší ako limit časti'); sys.exit(1)
+    if vel[-1] + s + 1024 > LIM: casti.append([]); vel.append(0)
+    casti[-1].append(r); vel[-1] += s + 1024
+for i, c in enumerate(casti, 1):
+    z = os.path.join(OUT, f'stavebniny-richtarik-web-{i}.zip')
+    subprocess.run(['zip', '-qX', z, '-@'], cwd=R, input=('\n'.join(c) + '\n').encode(), check=True)
+    v = os.path.getsize(z)
+    if v > LIM: print('CHYBA: časť', i, 'má', v, 'B'); sys.exit(1)
+    print(f'časť {i}: {len(c)} súborov, {v / 1e6:.1f} MB ({c[0]} … {c[-1]})')
+EOF5
+  # kontrola: všetky časti rozbalené do jedného priečinka = presne web/ (zoznam a sha256)
+  T=$(mktemp -d); for z in "$OUT"/stavebniny-richtarik-web-*.zip; do unzip -qo "$z" -d "$T"; done
+  (cd "$T" && find . -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum | sed 's|  \./|  |') > "$T.sha"
+  if cmp -s "$T.sha" "$OUT/SHA256SUMS.txt"; then echo "časti spolu = web/: $(wc -l < "$T.sha") súborov, zoznam aj sha256 zhodné"
+  else echo "CHYBA: rozbalené časti sa líšia od web/"; diff "$T.sha" "$OUT/SHA256SUMS.txt" | head; rm -rf "$T" "$T.sha"; exit 1; fi
+  rm -rf "$T" "$T.sha"
+fi
+sed "s/{LIMIT}/$LIMIT/g" "$SRC/nasadenie/navod-nahratie.txt" > "$OUT/NAVOD-NAHRATIE.txt"
+echo "vedľa balíka: ku-korenu/.htaccess, ku-korenu/web.config, NAVOD-NAHRATIE.txt, SHA256SUMS.txt"

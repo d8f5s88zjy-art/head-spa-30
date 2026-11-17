@@ -68,7 +68,7 @@ spolu s logom vo vektore (README, Pre Mária).
   priehľadný a rámik na stránke má pod ním odtiene podlahy obrázka (prechod zľava doprava v `site.css`, `.rozvoz`). Pixely auta sa nemenia, nič sa neprekresľuje.
 - `img/grafika/<výrez>-n.avif|webp` (náhľad, dlhšia strana najviac 480 px) a `<výrez>-v.webp` (veľký, najviac skutočný detail
   výrezu) – albumy v `data/galeria.json`:
-  - **Letáky a bannery** na stránke Leták: letak-preco-nakupovat (IMG_0310; hodiny), letak-stavebniny-richtarik (IMG_0311;
+  - **Letáky a bannery** na stránke Leták: letak-preco-nakupovat (IMG_0310 vľavo; hodiny), letak-stavebniny-richtarik (IMG_0310 vpravo, x 661 – `zdroj/grafika-maria/vyrezy.tsv`;
     adresa, telefóny, e-mail), banner-kompletne-systemy (IMG_0314), banner-super-ceny (IMG_0314). Majú preklepy a chyby
     (zoznam v README, Pre Mária) – Lajko o nich vie a chce ich na webe; sú tam ako náhľady, opisy píšeme správne.
   - **Logo a firemná grafika** v Galérii: logo-rs-vodorovne, logo-rs-pod-sebou, logo-rs-cierna-doska (zdroj dnešného loga
@@ -79,8 +79,11 @@ spolu s logom vo vektore (README, Pre Mária).
   (`GRAFIKA_UDAJE` v `build.py`). Správa vie položku skryť, nahradiť (podmienka tým zaniká), popísať a posunúť.
 - Známe rozdiely, ktoré obrázok neskrývajú: zápis čísla „037/ 6511 777“, „Tel./fax“ (web fax neuvádza), „Nitra 5“ na karte,
   „Avia 3t“ v letáku „Prečo nakupovať u nás“ (malé písmo v náhľade; oprava je v zozname Pre Mária).
-- Výmena za opravenú verziu: nový výrez do `zdroj/grafika-maria/` pod tým istým menom a `bash nastroje/grafika_maria.sh`
-  (mená súborov sa nemenia), alebo „Nahradiť inou fotkou“ v správe.
+- Výmena za opravenú verziu: „Nahradiť inou fotkou“ v správe (nový súbor dostane nové meno od servera), alebo v repozitári
+  nový výrez do `zdroj/grafika-maria/` pod **novým menom**, riadok v `nastroje/grafika_maria.sh`, nové meno v dátach
+  (`data/galeria.json`, `KAT_ILUSTRACIA`) a `build.py` – rovnako ako README (Texty a SEO): obrázky majú na hostingu cache
+  na rok, pri výmene pod tým istým menom by ju návštevník, ktorý už na webe bol, videl až po roku. Kým web nie je na
+  hostingu (dnes), smie sa obrázok vymeniť aj 1 : 1 pod tým istým menom.
 
 ## Výmena fotiek 13. 11. 2026 (Lajko: „fotky zmeniť, Porfix odtiaľ ber fotky, sadrokartón fotka“)
 

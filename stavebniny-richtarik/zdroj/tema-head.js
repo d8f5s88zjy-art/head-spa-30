@@ -6,10 +6,13 @@
    voľba. Prepne aj farbu lišty prehliadača (theme-color). V ráme bez úložiska (sandbox) alebo so zakázaným úložiskom platí
    len parameter v adrese. Zdroj skriptu, ktorý build.py:TEMA_HEAD zmenší a vloží do <head> každej stránky pred štýl
    (index.html cez zdroj/tema_vloz.py, asistent/ochrana-udajov.html medzi značky <!--tema-->; kontrola_uvodu() overí zhodu).
-   Tokeny: site.css, časti „Tmavá téma“ a „Farebná téma“; zápis: richtarik/majitel/farebna/ZAPIS.md. */
+   Tokeny: site.css, časti „Tmavá téma“ a „Farebná téma“; zápis: richtarik/majitel/farebna/ZAPIS.md.
+   Trieda js na <html> (17. 11. 2026, A-5): bez JavaScriptu sa skryje tlačidlo menu a pole hľadania, ktoré by nič nerobili
+   (site.css html:not(.js)); navigácia ostáva v päte a v odkazoch stránky. */
 (function (h, d) {
   try {
     var m = /[?&]tema=(farebna|svetla|tmava)\b/.exec(location.search), s = null, t = m ? m[1] : '';
+    h.classList.add('js');
     try { s = window.localStorage; } catch (e) { s = null; }
     if (t && s) { if (t === 'farebna') s.removeItem('tema'); else s.setItem('tema', t); }
     if (!t && s) t = s.getItem('tema') || '';

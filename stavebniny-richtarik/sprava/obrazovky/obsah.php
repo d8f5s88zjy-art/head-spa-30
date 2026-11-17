@@ -31,7 +31,8 @@ function obrazovka_hodiny(): void
             . '<label class="cas"><span>od</span><input type="time" name="den[' . $d . '][od]" value="' . Ui::e($o ? $dni[$d][0] : '07:00') . '" step="900"></label>'
             . '<label class="cas"><span>do</span><input type="time" name="den[' . $d . '][do]" value="' . Ui::e($o ? $dni[$d][1] : '16:00') . '" step="900"></label></fieldset>';
     }
-    $h .= '<div class="dole"><button class="tl hlavne siroke" type="submit">Pozrieť náhľad</button></div></form>' . vynimky_html($D);
+    $h .= '<p class="pomocka">Na troch obrázkoch sú dnešné hodiny priamo v obrázku: hodiny na stránke Kontakt, leták Prečo nakupovať u nás a tabuľa s adresou v Galérii. Keď bežné hodiny zmeníte, z webu sa skryjú (náhľad ich vymenuje); oznam o sviatku alebo dovolenke ich neskryje. Leták a tabuľu potom nahradíte novými vo Fotkách v galérii.</p>'
+       . '<div class="dole"><button class="tl hlavne siroke" type="submit">Pozrieť náhľad</button></div></form>' . vynimky_html($D);
     Ui::stranka('Otváracie hodiny', $h);
 }
 
