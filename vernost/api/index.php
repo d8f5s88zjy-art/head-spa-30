@@ -405,7 +405,8 @@ function a_sprava_posli(string $p): never {
 }
 
 function a_nastavenia(string $p): never {
-  odpoved(['ok' => true, 'body_za_navstevu' => (int) nastavenie($p, 'body_za_navstevu', '1'), 'email' => konfig()['email_od'] !== '']);
+  // sprava: hosting s jednou prevádzkou, ktorý nastavuje správa webu (www.barbershop30.sk) – iné znenia v admine
+  odpoved(['ok' => true, 'body_za_navstevu' => (int) nastavenie($p, 'body_za_navstevu', '1'), 'email' => konfig()['email_od'] !== '', 'sprava' => !empty(konfig()['len'])]);
 }
 function a_nastavenia_uloz(string $p): never {
   $v = vstup(); $b = (int) ($v['body_za_navstevu'] ?? 1);

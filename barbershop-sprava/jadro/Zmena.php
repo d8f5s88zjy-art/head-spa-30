@@ -253,6 +253,31 @@ final class Zmena
         return ($n['verzia_balika']['commit'] ?? null) !== (self::verziaBalika()['commit'] ?? '') || ($n['verzia_balika']['cas'] ?? null) !== (self::verziaBalika()['cas'] ?? '');
     }
 
+    /** KF-01: verejné súbory, ktoré sa líšia od toho, čo správa naposledy zverejnila (napr. ten istý balík nahratý znova
+     *  cez FTP prepíše index.html, en/, znalosti asistenta… pôvodnými súbormi). Prepínače na stránkach sa nerátajú. */
+    public static function webPrepisany(): array
+    {
+        $bez = ['asistent' => '', 'objednavka' => '', 'vernost' => false];
+        $norm = function (string $c, string $t) use ($bez) {
+            if (!isset(Prepinace::STRANKY[$c])) return $t;
+            try { return Prepinace::nastav($t, $bez); } catch (Throwable $e) { return $t; }
+        };
+        $lisi = [];
+        foreach (self::upravene() as $c) {
+            $z = Mapa::zdroj($c);
+            if ($z === null || $z[0] === null) continue;
+            $w = Miesto::w($z[0]);
+            if (!is_file($w) || $norm($z[0], (string) file_get_contents($w)) !== $norm($z[0], (string) file_get_contents(Miesto::u('zdroj/' . $c)))) $lisi[] = $z[0];
+        }
+        foreach (array_keys(Mapa::ZOSTAVENE) as $c) {
+            $f = Miesto::u('zostavene/' . $c);
+            if (!is_file($f)) continue;
+            $w = Miesto::w($c);
+            if (!is_file($w) || $norm($c, (string) file_get_contents($w)) !== $norm($c, (string) file_get_contents($f))) $lisi[] = $c;
+        }
+        return array_values(array_unique($lisi));
+    }
+
     /** Zapamätá verziu balíka, ktorý je na hostingu (prvé nastavenie; zdroj sa nemení). */
     public static function zapamatajBalik(): void
     {

@@ -20,6 +20,7 @@ import { kopiaPreWeb } from '../assets/asistent-otazky.js';
 /* vrstva ukladania: GitHub (web na GitHub Pages, predvolene) alebo hosting (správa na vlastnej doméne, <html data-ulozisko="hosting">);
    obe majú rovnaké rozhranie: prihlas, hlava, citaj, zapis, urlSuboru, human, texty (ulozisko-github.js, ulozisko-hosting.js) */
 const U = (await import(document.documentElement.dataset.ulozisko === 'hosting' ? './ulozisko-hosting.js' : './ulozisko-github.js')).default;
+const NA_HOSTINGU = U.meno === 'hosting';   // správa na vlastnej doméne (sprava/upravy/), nie admin na GitHub Pages
 const P = 'barbershop-30/';
 const LIVE = U.zive;
 const LANGS = ['en', 'uk', 'hu', 'sr', 'pl', 'de', 'cs'];
@@ -226,7 +227,7 @@ function textyTab() {
     if (vRamci(x)) { const k = norm(x.text); if (!rezRamec.has(k)) rezRamec.set(k, []); rezRamec.get(k).push(x); } else rezVlastne.push(x);
   }
   const bloky = [];
-  const blok = (p, x) => h('div', { class: 'blk', 'data-hladaj': plain(x.text) }, h('p', { class: 'kind' }, druh(x) + (p.ciele.length > 1 ? ' · aj na rezervačnej stránke' : '')), vstup(p, '', { area: norm(x.text).length > 60 }));
+  const blok = (p, x) => h('div', { class: 'blk', 'data-hladaj': plain(x.text) }, h('p', { class: 'kind' }, druh(x) + (p.ciele.length > 1 && !NA_HOSTINGU ? ' · aj na rezervačnej stránke' : '')), vstup(p, '', { area: norm(x.text).length > 60 }));
   for (const [k, list] of skup) {
     const nazov = NAZOV_SEKCIE[k] || k;
     const box = h('div', { 'data-sekcia': k }, h('h2', {}, nazov));
@@ -250,8 +251,11 @@ function textyTab() {
     const p = pole({ id: `r:${x.start}`, tab: 'texty', label: `Rezervačná stránka: ${short(x.text, 40)}`, orig: x.text, ciele: [{ f: F.rez, seg: x }] });
     rez.append(blok(p, x));
   }
-  bloky.push(rez);
-  chips.append(h('button', { class: 'chip', type: 'button', onclick: () => rez.scrollIntoView({ behavior: 'smooth', block: 'start' }) }, 'Rezervačná stránka'));
+  // na vlastnej doméne rezervačná stránka v balíku nie je (/rezervacia patrí rezervačnému systému): sekcia sa neukazuje (KF-07)
+  if (!NA_HOSTINGU) {
+    bloky.push(rez);
+    chips.append(h('button', { class: 'chip', type: 'button', onclick: () => rez.scrollIntoView({ behavior: 'smooth', block: 'start' }) }, 'Rezervačná stránka'));
+  }
   zoz.append(...bloky);
   hladaj.addEventListener('input', () => {
     const q = plain(hladaj.value);
@@ -262,7 +266,7 @@ function textyTab() {
 /* cenník: služby podľa data-sluzba, zmena ide do oboch súborov, prekladov a znalostí asistenta */
 function cennikTab() {
   const s = sec('cennik');
-  s.append(h('h1', {}, 'Cenník'), h('p', { class: 'lead' }, 'Názov, popis, dĺžka a cena každej služby. Zmena sa ukáže na webe aj na rezervačnej stránke a asistent Barber dostane nové ceny. Ceny v rezervačnom systéme barbershop30.sk zmeň aj tam.'));
+  s.append(h('h1', {}, 'Cenník'), h('p', { class: 'lead' }, `Názov, popis, dĺžka a cena každej služby. Zmena sa ukáže na webe${NA_HOSTINGU ? ' (aj v úvode a po anglicky)' : ' aj na rezervačnej stránke'} a asistent Barber dostane nové ceny. Ceny v rezervačnom systéme barbershop30.sk zmeň aj tam.`));
   for (const r of base.cennik) {
     const n = pole({ id: `c:${r.id}:meno`, tab: 'cennik', label: `Cenník: ${norm(r.meno.text)} (názov)`, orig: r.meno.text, sluzba: r.id, cast: 'meno' });
     const d = r.popis ? pole({ id: `c:${r.id}:popis`, tab: 'cennik', label: `Cenník: ${norm(r.meno.text)} (popis)`, orig: r.popis.text, sluzba: r.id, cast: 'popis' }) : null;
@@ -282,7 +286,7 @@ function cennikTab() {
 function timTab() {
   const s = sec('tim');
   const zoz = h('div');
-  s.append(h('h1', {}, 'Tím'), h('p', { class: 'lead' }, 'Meno, rola (Barber alebo Barberka), krátky popis a fotka. Fotku vyber z telefónu alebo počítača, admin ju zmenší. Zmena sa ukáže na webe aj na rezervačnej stránke a asistent dostane nový zoznam tímu.'), zoz,
+  s.append(h('h1', {}, 'Tím'), h('p', { class: 'lead' }, `Meno, rola (Barber alebo Barberka), krátky popis a fotka. Fotku vyber z telefónu alebo počítača, ${NA_HOSTINGU ? 'správa' : 'admin'} ju zmenší. Zmena sa ukáže na webe${NA_HOSTINGU ? '' : ' aj na rezervačnej stránke'} a asistent dostane nový zoznam tímu.`), zoz,
     h('div', { class: 'btns' }, h('button', { class: 'btn quiet', type: 'button', onclick: () => { tim.push({ k: null, meno: '', nove: true, zmaz: false, foto: null }); kresliTim(zoz); obnov(); } }, '+ Pridať člena tímu')));
   kresliTim(zoz);
 }
@@ -299,11 +303,12 @@ function kresliTim(zoz) {
     }
     const img = h('img', { alt: '', src: m.foto ? m.foto.nahlad : k2src(m.k) });
     const subor = h('input', { type: 'file', accept: 'image/*' });
-    subor.addEventListener('change', async () => { const f = subor.files[0]; if (!f) return; m.foto = await priprauFoto(f, [480, 820]); img.src = m.foto.nahlad; obnov(); });
+    const fotoPozn = h('p', { class: 'kind', role: 'status' });
+    subor.addEventListener('change', () => vyberFoto(subor, [480, 820], fotoPozn, (foto) => { m.foto = foto; img.src = foto.nahlad; }));
     const zmaz = h('button', { class: 'btn quiet small', type: 'button', onclick: () => { m.zmaz = !m.zmaz; card.classList.toggle('changed', m.zmaz); zmaz.textContent = m.zmaz ? 'Vrátiť späť' : 'Odstrániť z tímu'; obnov(); } }, m.zmaz ? 'Vrátiť späť' : 'Odstrániť z tímu');
     const card = h('details', { class: 'card' + (m.nove ? ' changed' : ''), open: m.nove || null },
       h('summary', {}, h('span', { class: 'nm' }, m.k ? norm(m.k.meno.text) : 'Nový člen tímu'), h('span', { class: 'mt' }, m.k ? norm(m.k.rola.text) : '')),
-      h('div', { class: 'body' }, h('div', { class: 'photo' }, img, h('div', {}, h('span', { class: 'btn quiet small file' }, 'Vybrať fotku', subor), h('p', { class: 'kind' }, 'Najlepšie fotka na výšku, tvár v hornej tretine.'))),
+      h('div', { class: 'body' }, h('div', { class: 'photo' }, img, h('div', {}, h('span', { class: 'btn quiet small file' }, 'Vybrať fotku', subor), h('p', { class: 'kind' }, 'Najlepšie fotka na výšku, tvár v hornej tretine.'), fotoPozn)),
         vstup(m.p.meno, 'Meno'), vstup(m.p.rola, 'Rola', { pozn: 'Barber alebo Barberka' }), vstup(m.p.bio, 'Krátky popis', { area: true, pozn: 'jedna veta' }),
         m.nove ? null : h('div', { class: 'btns' }, zmaz)));
     return card;
@@ -325,9 +330,11 @@ function galeriaTab() {
     const prvy = (g.g.html.match(/srcset="([^"]+\.webp)/) || [])[1] || '';
     const img = h('img', { alt: '', src: prvy ? U.urlSuboru(P + prvy.split(',')[0].trim().split(/\s+/)[0], base.sha) : '' });
     const subor = h('input', { type: 'file', accept: 'image/*' });
-    subor.addEventListener('change', async () => { const f = subor.files[0]; if (!f) return; g.foto = await priprauFoto(f, [640, 1080, 1600]); img.src = g.foto.nahlad; obnov(); });
+    const fotoPozn = h('p', { class: 'kind', role: 'status' });
+    // KF-06: nová fotka potrebuje nový popis aj jeho preklady (anglická stránka by inak opisovala pôvodnú fotku)
+    subor.addEventListener('change', () => vyberFoto(subor, [640, 1080, 1600], fotoPozn, (foto) => { g.foto = foto; img.src = foto.nahlad; fotoPozn.textContent = 'Nová fotka: prepíš popis, aby sedel na ňu, a skontroluj aj jeho preklady (Preklady pod popisom).'; }));
     s.append(h('details', { class: 'card' }, h('summary', {}, h('span', { class: 'nm' }, short(g.alt, 50))),
-      h('div', { class: 'body' }, h('div', { class: 'photo wide' }, img, h('span', { class: 'btn quiet small file' }, 'Vymeniť fotku', subor)), vstup(p, 'Popis fotky', { area: true }))));
+      h('div', { class: 'body' }, h('div', { class: 'photo wide' }, img, h('div', {}, h('span', { class: 'btn quiet small file' }, 'Vymeniť fotku', subor), fotoPozn)), vstup(p, 'Popis fotky', { area: true }))));
   });
 }
 
@@ -521,6 +528,14 @@ function kontaktTab() {
   s.append(kp.warn, kp.nahlad, h('p', { class: 'note' }, h('b', {}, 'Nezabudni: '), 'telefón a hodiny zmeň aj v rezervačnom systéme na barbershop30.sk a na Google (profil firmy).'));
 }
 
+/* výber fotky: zmenšenie, alebo zrozumiteľná veta pri súbore, ktorý nie je obrázok (KF-05) */
+async function vyberFoto(subor, sirky, pozn, hotovo) {
+  const f = subor.files[0]; if (!f) return;
+  pozn.textContent = 'Pripravujem fotku…';
+  try { const foto = await priprauFoto(f, sirky); pozn.textContent = ''; hotovo(foto); obnov(); }
+  catch (e) { pozn.textContent = 'Túto fotku sa nepodarilo načítať. Vyber fotku vo formáte JPEG alebo PNG.'; subor.value = ''; }
+}
+
 /* ---------------- fotky: zmenšenie v prehliadači na WebP a JPEG ---------------- */
 async function priprauFoto(subor, sirky) {
   const url = URL.createObjectURL(subor);
@@ -627,6 +642,28 @@ function zostav() {
       if (m) {
         const at = ld + m.index;
         zm[F.index].push({ start: at, end: at + m[0].length, text: `${m[1]}${JSON.stringify(sk(n))}${m[2]}${sk(cena).replace(',', '.')}${m[4]}` });
+      }
+    }
+    // KF-02: cena služby aj v iných textoch stránky („Pánsky strih 18 €“ v úvode, „…, objednaj sa“ v Remesle) a v ich
+    // prekladoch (en/ a jazyky): text so starou cenou sa zmení spolu s cenníkom, aby web nehlásil dve ceny
+    if (zmenene(cena) || zmenene(n)) {
+      const stara = norm(cena.orig), nova = sk(cena), menoS = norm(n.orig), menoN = sk(n);
+      const re = new RegExp(`${reEsc(menoS).replace(/ /g, '[ \\u00a0]')}([ \u00a0])${reEsc(stara)}([ \u00a0])€`, 'g');
+      const src = base.raw[F.index], ld = src.indexOf('application/ld+json');
+      const prekryva = (a, b) => zm[F.index].some((x) => a < x.end && b > x.start);
+      for (const m of src.matchAll(re)) {
+        if (ld >= 0 && m.index > ld && m.index < src.indexOf('</script>', ld)) continue;
+        if (base.cennik.some((rr) => [rr.meno, rr.cena].some((sg) => sg && m.index >= sg.start && m.index < sg.end))) continue;
+        if (prekryva(m.index, m.index + m[0].length)) continue;   // text upravený v Textoch má prednosť
+        zm[F.index].push({ start: m.index, end: m.index + m[0].length, text: `${esc(menoN)}${m[1]}${esc(nova)}${m[2]}€` });
+      }
+      const cislo = new RegExp(`(?<![\\d,.])${reEsc(stara)}(?![\\d,]|\\.\\d)`);
+      const reK = new RegExp(`${reEsc(menoS)}[ \u00a0]${reEsc(stara)}[ \u00a0]€`);
+      for (const kk of Object.keys(i18n.en || {})) {
+        if (!reK.test(kk) || kk === norm(r.cena.text)) continue;
+        const t2 = {};
+        for (const l of LANGS) { const v = i18n[l][kk]; if (typeof v === 'string') t2[l] = v.replace(cislo, nova.replace(',', l === 'en' ? '.' : ',')); }
+        presuny.push([kk, kk.replace(reK, `${menoN} ${nova} €`), t2]);
       }
     }
     // znalosti asistenta: riadok služby (názov – dĺžka – cena: popis)
@@ -764,7 +801,14 @@ function timDoZnalosti(faq, zmenMd) {
   const barberi = clenovia.filter((m) => !zena(m)).map((m) => m.meno), barberky = clenovia.filter(zena).map((m) => m.meno);
   const zoznam = (a) => (a.length > 1 ? `${a.slice(0, -1).join(', ')} a ${a[a.length - 1]}` : a[0] || '');
   const adrian = (m) => (m === 'Adrián' ? ' (v rezervačnom systéme Adrian)' : '');
-  zmenMd((md) => md.replace(/^Barberi: .*$/m, `Barberi: ${barberi.map((m) => m + adrian(m)).join(', ')}.${barberky.length ? ` ${barberky.length > 1 ? 'Barberky' : 'Barberka'}: ${barberky.join(', ')}.` : ''}`));
+  zmenMd((md) => {
+    // KF-04: mená v riadku „Barberi:“ s poznámkami (napr. „Adrián (v rezervačnom systéme Adrian)“) ostanú, ak člen ostal
+    const stare = new Map(((md.match(/^Barberi: (.*?)\.(?: Barberk[ay]: .*)?$/m) || [])[1] || '').split(/, (?![^(]*\))/).map((t) => [plain(t.replace(/\s*\(.*\)$/, '')), t]));
+    const tok = (m) => stare.get(plain(m)) || m + adrian(m);
+    md = md.replace(/^Barberi: .*$/m, `Barberi: ${barberi.map(tok).join(', ')}.${barberky.length ? ` ${barberky.length > 1 ? 'Barberky' : 'Barberka'}: ${barberky.join(', ')}.` : ''}`);
+    // predstavenia doslova z karty tímu: celý zoznam podľa aktuálneho tímu
+    return md.replace(/(^Predstavenia barberov na webe \(doslova z karty tímu\):\n)(?:- .*\n)*/m, (x, hl) => hl + clenovia.map((m) => `- ${m.meno} (${zena(m) ? 'barberka' : 'barber'})${m.bio ? ': ' + m.bio : ''}\n`).join(''));
+  });
   const REZ = 'https://www.barbershop30.sk/rezervacia';
   const TEL = (faq.otazky.map((o) => (o.a.match(/Zavolaj nám na [^.]*?telefón vždy zdvihneme\./) || [])[0]).find(Boolean)) || `Zavolaj nám na ${base.kontakt.tel ? base.kontakt.tel.lok : ''}.`;
   const nastav = (id, a) => { const o = faq.otazky.find((x) => x.id === id); if (o) o.a = a; };

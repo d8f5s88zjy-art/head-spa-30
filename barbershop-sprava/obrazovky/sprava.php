@@ -51,10 +51,11 @@ function akcie_spravy(string $a): void
             $r = Zmena::spat($kto);
             Ui::presmeruj('', [], $r['ok'] ? ($r['spat_spat'] ? 'Krok späť je vrátený, web je znova po poslednom uložení.' : 'Hotovo, web je ako pred posledným uložením. Krok späť sa dá tiež vrátiť.') : $r['chyba'], $r['ok'] ? 'ok' : 'chyba');
         case 'balik-novy': case 'balik-moje':
+            $bolNovy = Zmena::novyBalik();
             $r = Zmena::prevezmiBalik($a === 'balik-moje' ? 'moje' : 'novy', $kto);
             if (!$r['ok']) Ui::presmeruj('', [], $r['chyba'], 'chyba');
             $p = Prepinace::zapis();
-            Ui::presmeruj('', [], 'Aktualizácia je dokončená, zapnuté funkcie sú znova na webe.' . ($r['vynechane'] ? "\nTieto súbory ostali z nového balíka (moja úprava sa do nich nedala preniesť): " . implode(', ', $r['vynechane']) . '.' : '') . ($p['chyby'] ? "\n" . implode("\n", $p['chyby']) : ''), $p['chyby'] ? 'chyba' : 'ok');
+            Ui::presmeruj('', [], ($bolNovy ? 'Aktualizácia je dokončená, zapnuté funkcie sú znova na webe.' : 'Tvoje úpravy sú znova na webe, zapnuté funkcie tiež.') . ($r['vynechane'] ? "\nTieto súbory ostali z nového balíka (moja úprava sa do nich nedala preniesť): " . implode(', ', $r['vynechane']) . '.' : '') . ($p['chyby'] ? "\n" . implode("\n", $p['chyby']) : ''), $p['chyby'] ? 'chyba' : 'ok');
         case 'kontrola-znova':
             Prostredie::kontroly(true);
             Ui::presmeruj('kontrola', [], 'Kontrola hostingu je urobená znova.');
@@ -85,15 +86,22 @@ function obrazovka_domov(): void
             . Ui::tlacidlo('balik-novy', 'Dokončiť aktualizáciu', 'hlavne')
             . ($moje ? '<p class="pozn">V správe sú tvoje úpravy (' . count($moje) . ' súborov). Nový balík ich už má obsahovať, ak si predtým poslal export. Ak nie, môžeš ich ponechať a znovu zverejniť:</p>' . Ui::tlacidlo('balik-moje', 'Ponechať moje úpravy a znovu zverejniť', 'tiche') : '') . '</div>';
     }
+    // KF-01: ten istý balík nahratý znova (verzia sedí), ale verejné súbory sú pôvodné: úpravy treba zverejniť znova
+    $prepisane = Zmena::novyBalik() ? [] : Zmena::webPrepisany();
+    if ($prepisane) {
+        $h .= '<div class="karta dolezite"><h2>Na webe nie sú tvoje úpravy</h2><p class="lead">Súbory webu sa líšia od tvojich posledných úprav (' . Ui::e(implode(', ', array_slice($prepisane, 0, 5)) . (count($prepisane) > 5 ? ' a ďalšie' : '')) . '). Stáva sa to, keď sa balík webu nahrá na hosting znova. Tvoje úpravy sú uložené v správe.</p>'
+            . Ui::tlacidlo('balik-moje', 'Znovu zverejniť moje úpravy', 'hlavne') . '</div>';
+    }
     $ciel = Nastavenia::cielovyStav();
     $web = is_file(Miesto::w('index.html')) ? Prepinace::precitaj((string) file_get_contents(Miesto::w('index.html'))) : ['asistent' => '', 'objednavka' => '', 'vernost' => false];
+    $zapise = Zmena::novyBalik() ? 'Zapne sa po ťuknutí na Dokončiť aktualizáciu (alebo Ponechať moje úpravy a znovu zverejniť).' : ($prepisane ? 'Zapne sa po ťuknutí na Znovu zverejniť moje úpravy.' : 'Zapíše sa po ťuknutí na Zapísať nastavenie na web.');
     $nesedi = ($web['asistent'] !== '') !== ($ciel['asistent'] !== '') || ($web['objednavka'] !== '') !== ($ciel['objednavka'] !== '') || $web['vernost'] !== $ciel['vernost'];
     $h .= '<h2>Čo je na webe zapnuté</h2><ul class="body">'
-        . riadok_stavu('Asistent Barber', $web['asistent'] !== '', $ciel['dovody']['asistent'] ?? 'Zapíše sa po ťuknutí na Zapísať nastavenie na web.', 'Ikona asistenta s označením AI je na webe.')
-        . riadok_stavu('Voľné termíny v okne objednávky', $web['objednavka'] !== '', $ciel['dovody']['objednavka'] ?? 'Zapíše sa po ťuknutí na Zapísať nastavenie na web.', 'Okno Objednať sa ukazuje barberov, dni a voľné časy.')
-        . riadok_stavu('Vernostná kartička', $web['vernost'], $ciel['dovody']['vernost'] ?? 'Zapíše sa po ťuknutí na Zapísať nastavenie na web.', 'Prihláška ku kartičke je na webe, recepcia má admin kartičiek.')
+        . riadok_stavu('Asistent Barber', $web['asistent'] !== '', $ciel['dovody']['asistent'] ?? $zapise, 'Ikona asistenta s označením AI je na webe.')
+        . riadok_stavu('Voľné termíny v okne objednávky', $web['objednavka'] !== '', $ciel['dovody']['objednavka'] ?? $zapise, 'Okno Objednať sa ukazuje barberov, dni a voľné časy.')
+        . riadok_stavu('Vernostná kartička', $web['vernost'], $ciel['dovody']['vernost'] ?? $zapise, 'Prihláška ku kartičke je na webe, recepcia má admin kartičiek.')
         . '</ul>';
-    if ($nesedi && !Zmena::novyBalik()) $h .= '<div class="hlaska var">Web sa líši od nastavenia.</div>' . Ui::tlacidlo('zverejnit', 'Zapísať nastavenie na web', 'hlavne');
+    if ($nesedi && !Zmena::novyBalik() && !$prepisane) $h .= '<div class="hlaska var">Web sa líši od nastavenia.</div>' . Ui::tlacidlo('zverejnit', 'Zapísať nastavenie na web', 'hlavne');
     if ($u = Nastavenia::upozornenieStropu()) $h .= '<div class="hlaska var">' . Ui::e($u) . '</div>';
     $h .= '<p class="rad"><a class="tl" href="' . Ui::e(Ui::url('nastavenia')) . '">Nastavenia funkcií</a></p>';
 
@@ -158,7 +166,7 @@ function obrazovka_nastavenia(): void
 function obrazovka_historia(): void
 {
     $typy = ['ulozenie' => 'Uloženie', 'spat' => 'Krok späť', 'balik' => 'Nový balík'];
-    $h = '<p class="lead">Posledných 30 uložení. Ku každému je záloha.</p><ul class="body">';
+    $h = '<p class="lead">Posledných 30 uložení. Ku každému je záloha. Vrátiť sa dá posledné uloženie (Krok späť na úvode správy); staršie stavy obnoví zo zálohy tvorca webu, napíš mu dátum a čas.</p><ul class="body">';
     $r = Zmena::historia(30);
     foreach ($r as $x) $h .= '<li class="vyp"><div><b>' . Ui::e(Ui::datumCas($x['cas'])) . '</b> · ' . Ui::e($typy[$x['typ']] ?? $x['typ']) . ' · ' . Ui::e($x['kto'])
         . ($x['stav'] === 'vratene' ? ' <span class="stit var">vrátené</span>' : ($x['stav'] !== 'hotove' ? ' <span class="stit var">nedokončené, vrátené zo zálohy</span>' : ''))

@@ -237,6 +237,14 @@ foreach ([['subory' => ['index.php' => '<?php']], ['subory' => [$P . 'assets/app
     over(!$r['ok'] && $r['kod'] === 400, 'neplatné uloženie odmietnuté (' . ($i + 1) . '): ' . mb_substr($r['chyba'], 0, 70));
 }
 over($stavWebu() === $pred && Zmena::verzia() === $vPred, 'po odmietnutých uloženiach je web bez zmeny');
+// KF-01: ten istý balík nahratý znova cez FTP prepíše verejné súbory pôvodnými; správa to pozná a úpravy zverejní znova
+Zmena::zapamatajBalik();
+$ixPred = file_get_contents("$W/index.html");
+over(!Zmena::novyBalik() && Zmena::webPrepisany() === [], 'po uloženiach web zodpovedá úpravám (prepínače sa nerátajú)');
+file_put_contents("$W/index.html", preg_replace('/ (PRVE|DRUHE)<\/h1>/', '</h1>', $ixPred, 1));
+over(Zmena::webPrepisany() === ['index.html'] && !Zmena::novyBalik(), 'prepísaná stránka sa pozná aj pri tej istej verzii balíka', json_encode(Zmena::webPrepisany()));
+$r = Zmena::prevezmiBalik('moje', 'Lajko');
+over($r['ok'] && Zmena::webPrepisany() === [] && file_get_contents("$W/index.html") === $ixPred, 'Znovu zverejniť moje úpravy vráti úpravy na web');
 // fotka: nahratie, uloženie, existujúca sa neprepíše, krok späť ju nemaže
 $f = Fotky::prijmi($P . 'assets/img/tim-novy-abc-480.webp', $jpg);
 $r = Zmena::uloz(['verzia' => Zmena::verzia(), 'zmeny' => ['Tím: nová fotka'], 'fotky' => [$P . 'assets/img/tim-novy-abc-480.webp' => $f['znacka']], 'subory' => [$P . 'assets/barbershop30.vcf' => Zmena::citajZdroj($P . 'assets/barbershop30.vcf') . "NOTE:skúška\r\n"]], 'Lajko');

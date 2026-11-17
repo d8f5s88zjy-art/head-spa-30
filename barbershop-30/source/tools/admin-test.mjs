@@ -223,6 +223,12 @@ ok(cenaRe(novaCena).test(riadok(idx1, 1)) && rez1 === rez0, 'cena v index.html, 
 const ldCena = (h) => { const m = h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/); const o = JSON.parse(m[1]).hasOfferCatalog.itemListElement.find((x) => x.itemOffered.name === 'Pánsky strih'); return o && o.price; };
 ok(ldCena(idx1) === novaCena.replace(',', '.') && ldCena(idx0) === staraCena.replace(',', '.'), 'údaje pre Google (JSON-LD): nová cena, platný JSON', `${ldCena(idx0)} → ${ldCena(idx1)}`);
 ok(md1.includes(`– ${novaCena} €`) && md1.split('\n').some((r) => r.startsWith('- Pánsky strih –') && r.includes(`${novaCena} €`)), 'znalosti asistenta: nová cena');
+// KF-02: cena služby aj mimo cenníka (čip v úvode, „…, objednaj sa“) a v ich prekladoch – web nehlási dve ceny
+const vText = (h, c) => (n(h).match(new RegExp(`Pánsky strih[\\s${NB}]${c}[\\s${NB}]€`, 'g')) || []).length;
+ok(vText(idx0, staraCena) >= 2 && vText(idx1, staraCena) === (n(hook).includes(`Pánsky strih ${staraCena} €`) ? 1 : 0) && vText(idx1, novaCena) >= 1, 'cena Pánskeho strihu aj v textoch úvodu (text upravený v Textoch má prednosť)', `${vText(idx0, staraCena)} → stará ${vText(idx1, staraCena)}, nová ${vText(idx1, novaCena)}`);
+ok(en1[`Pánsky strih ${novaCena} €`] === `Men's haircut €${novaCena.replace(',', '.')}` && !(`Pánsky strih ${staraCena} €` in en1), 'preklad textu s cenou presunutý a s novou cenou', en1[`Pánsky strih ${novaCena} €`]);
+// KF-04: znalosti o tíme po úprave popisu: predstavenie s novým popisom, poznámka pri mene Adriána ostala
+ok(md1.split('\n').some((r) => r.startsWith(`- ${meno1} (`) && r.includes('a s úsmevom.')) && md1.includes('Adrián (v rezervačnom systéme Adrian)'), 'znalosti: predstavenie člena tímu s novým popisom, poznámky pri menách ostali');
 const staraVOdp = faq1.otazky.filter((o) => new RegExp(`(^|[^\\d,])${staraCena}[\\s${NB}]€`).test(o.a));
 ok(staraVOdp.length === 0 || staraVOdp.every((o) => /Pánsky strih/.test(o.a) === false), 'odpovede asistenta bez starej ceny Pánskeho strihu', staraVOdp.map((o) => o.id).join(','));
 ok(kopiaSedi(faq1, faqWeb1, faqKmene1), 'kópia odpovedí pre web zhodná (otázky aj kmene)');

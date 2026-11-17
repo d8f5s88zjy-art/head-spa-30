@@ -105,7 +105,7 @@ find "$B" -name '.DS_Store' -delete
 find "$B" -type d -exec chmod 755 {} +; find "$B" -type f -exec chmod 644 {} +
 
 # ---------- 8. návod a ZIP ----------
-POCET=$(find "$B" -type f | wc -l); MB=$(du -sm "$B" | cut -f1); KNIZ=$(find "$B/asistent/vendor" -type f | wc -l)
+POCET=$(find "$B" -type f | wc -l); MB=$(du -sm --apparent-size "$B" | cut -f1); KNIZ=$(find "$B/asistent/vendor" -type f | wc -l)
 sed "s/{COMMIT}/${COMMIT:0:8}/g; s/{SUBOROV}/$POCET/g; s/{MB}/$MB/g; s/{KNIZNICA}/$KNIZ/g" "$D/NAVOD.txt" > "$VON/NAVOD.txt"
 if [ "$ZIP" = 1 ]; then rm -f "$VON/barbershop30-plny.zip"; ( cd "$VON" && zip -q -r -X barbershop30-plny.zip NAHRAT-NA-HOSTING NAVOD.txt ); fi
 echo "Hotovo: $B ($POCET súborov, $MB MB, knižnica asistenta $KNIZ súborov, commit ${COMMIT:0:8})$([ "$ZIP" = 1 ] && echo " a $VON/barbershop30-plny.zip")"

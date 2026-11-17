@@ -41,8 +41,10 @@ s `^6.4`, voľba `--php=8.1` v `barbershop-30/source/tools/balik-domena.sh`). Vi
   ďalej ako `text/event-stream`. Kľúč API je len v `config.php` na serveri.
 - Úsilie modelu `low` (rýchle krátke odpovede); v `config.php` sa dá dať `medium` alebo `high`. Pri odmietnutí
   modelom pomôže záložný model (`fallbacks: "default"`).
-- Limity: 15 otázok za 10 minút a 60 za deň od jedného návštevníka (IP len ako odtlačok so soľou, po 24 h preč),
-  1 500 otázok za deň spolu (strop nákladov). Rozhovory sa na serveri neukladajú.
+- Limity: 15 otázok za 10 minút a 60 za deň od jedného návštevníka (IP len ako odtlačok so soľou, po 24 h preč;
+  adresa IPv6 sa ráta po bloku /64), 300 otázok za deň spolu (strop nákladov, `spolu_za_den`). Jedna odpoveď
+  najviac `max_tokens` 1 500 tokenov vrátane premýšľania (512–4 000 v `config.php`), najviac 3 kolá s nástrojom.
+  Rozhovory sa na serveri neukladajú. Výpis chýb PHP do odpovede je vypnutý.
 - Asistent nerezervuje; posiela odkaz na rezervačný systém a telefón recepcie.
 - Na otázku, kto odpovedá, povie pravdivo, že je Barber, AI asistent, nie človek.
 

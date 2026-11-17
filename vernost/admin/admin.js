@@ -318,7 +318,7 @@ async function spravy(telo) {
   if (spolu) kolko.textContent = `Správu dostanú len klienti so súhlasom: ${spolu.so_suhlasom}. Upozornenie v telefóne má zapnuté ${spolu.s_upozornenim}, ostatní ju uvidia na kartičke${nastav.email ? ' alebo v e‑maile' : ''}.`;
   const f = el('form', { class: 'panel', novalidate: true }, el('h2', {}, 'Nová správa klientom'), kolko,
     el('label', { class: 'pole' }, 'Nadpis (do 60 znakov)', nadpis), el('label', { class: 'pole' }, 'Text (do 500 znakov)', text),
-    nastav.email ? el('label', { class: 'volba' }, email, el('span', {}, 'Poslať aj e‑mailom (klientom so súhlasom, ktorí zadali e‑mail)')) : el('p', { class: 'pozn' }, 'E‑maily sú vypnuté (v konfigurácii chýba odosielateľ). Správa ide upozornením a na kartičku.'),
+    nastav.email ? el('label', { class: 'volba' }, email, el('span', {}, 'Poslať aj e‑mailom (klientom so súhlasom, ktorí zadali e‑mail)')) : el('p', { class: 'pozn' }, nastav.sprava ? 'E‑maily sú vypnuté: e‑mail odosielateľa nastaví majiteľ v správe webu (Nastavenia, Vernostná kartička). Správa ide upozornením a na kartičku.' : 'E‑maily sú vypnuté (v konfigurácii chýba odosielateľ). Správa ide upozornením a na kartičku.'),
     posli);
   f.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -347,7 +347,8 @@ async function nastavenia(telo) {
   const body = el('input', { type: 'number', min: '0', max: '100', step: '1', id: 's-body' });
   const uloz = el('button', { class: 'tl hlavne', type: 'button' }, 'Uložiť');
   const exp = el('button', { class: 'tl', type: 'button' }, 'Stiahnuť zoznam klientov (CSV)');
-  try { body.value = String((await api('nastavenia')).body_za_navstevu); } catch (e) { out.replaceChildren(hlaska(e.message, false)); }
+  let sprava = false;
+  try { const n = await api('nastavenia'); body.value = String(n.body_za_navstevu); sprava = !!n.sprava; } catch (e) { out.replaceChildren(hlaska(e.message, false)); }
   uloz.addEventListener('click', () => akcia(uloz, out, async () => { await api('nastavenia_uloz', { body_za_navstevu: Number(body.value) }); out.replaceChildren(hlaska('Uložené.')); }));
   exp.addEventListener('click', () => akcia(exp, out, async () => {
     const b = await api('export'); const u = URL.createObjectURL(b);
@@ -358,7 +359,7 @@ async function nastavenia(telo) {
       el('div', { class: 'rad' }, body, uloz)),
     el('div', { class: 'panel' }, el('h2', {}, 'Údaje klientov'), el('p', { class: 'pozn' }, 'Súbor obsahuje osobné údaje. Ulož ho len na bezpečné miesto a po použití zmaž.'), exp),
     el('div', { class: 'panel' }, el('h2', {}, 'Ako to funguje'), el('ol', {},
-      el('li', {}, 'Klient si pri rezervácii na webe zaškrtne „Áno, chcem vernostnú kartičku“, alebo ju založíš tu (Klienti → Nový klient).'),
+      el('li', {}, sprava ? 'Klient si kartičku založí cez odkaz Vernostná kartička v pätičke webu alebo cez QR kód, alebo ju založíš tu (Klienti → Nový klient).' : 'Klient si pri rezervácii na webe zaškrtne „Áno, chcem vernostnú kartičku“, alebo ju založíš tu (Klienti → Nový klient).'),
       el('li', {}, 'Po zaplatení mu ukáž QR kód (Klienti → QR pre nového klienta): kartičku si založí sám v telefóne.'),
       el('li', {}, 'Po návšteve ho nájdeš (meno, telefón alebo QR kód z jeho kartičky) a klikneš Zapísať návštevu.'),
       el('li', {}, 'Keď má dosť bodov, vyberieš odmenu a klikneš Uplatniť. Za kúpu produktu môžeš body pripísať ručne.'),

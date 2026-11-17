@@ -331,7 +331,7 @@ PHP bez knižníc (8.2+), stránky vykreslené na serveri (fungujú bez skriptu)
   a kartičiek, zákazy vnútorných súborov, úplnosť balíka podľa `subory.sha256`, rezervačný systém na svojom mieste
   (`/rezervacia` s `v-order-component`, `/admin` → `/admin/login`; len GET), adresa návštevníka za proxy, limity PHP.
 - **Štyri funkcie** (`jadro/Nastavenia.php`, `obrazovky/sprava.php`): asistent (kľúč API typu heslo, súhlas, denný strop
-  100–5 000, kľúč sa už nezobrazí), voľné termíny (súhlas, Vyskúšať = jedno čítanie barberov), kartička (heslo recepcie,
+  100–2 000, predvolene 300, upozornenie pri 80 %, kľúč sa už nezobrazí), voľné termíny (súhlas, Vyskúšať = jedno čítanie barberov), kartička (heslo recepcie,
   e‑mail odosielateľa), úpravy webu. `jadro/pre-asistenta.php` a `pre-vernost.php` dávajú serverom konfiguráciu z údajov;
   kód `../asistent/` sa nemení, `../vernost/` má štyri voliteľné kľúče (`data`, `prevadzky`, `len`, `spustene`).
   **Lokálna poistka:** pod `php -S` sa kľúč vydá len s `ANTHROPIC_BASE_URL=http://127.0.0.1:…` (falošné API) a kalendár len
@@ -340,7 +340,9 @@ PHP bez knižníc (8.2+), stránky vykreslené na serveri (fungujú bez skriptu)
 - **Prepínače** (`jadro/Prepinace.php`): to isté, čo robí `pages.yml` – `data-asistent`, `data-objednavka` na prvej značke
   `<html>` a `data-zapnute` pri skripte `assets/vernost.js` v `/index.html` a `/en/index.html`. Zapisuje ich server z nastavenia
   a z kontrol (kľúč + súhlas + knižnica + `api.php?a=stav`), idempotentne; `app.js`, `asistent.js`, `objednavka.js`, `vernost.js`
-  sa nemenia. Po nahratí novšieho balíka sú vypnuté, kým majiteľ neťukne Dokončiť aktualizáciu. S všetkými zapnutými má
+  sa nemenia. Po nahratí novšieho balíka sú vypnuté, kým majiteľ neťukne Dokončiť aktualizáciu. Ten istý balík nahratý znova
+  správa pozná podľa verejných súborov, ktoré sa líšia od posledného zverejnenia (`Zmena::webPrepisany`), a ponúkne Znovu
+  zverejniť moje úpravy. S všetkými zapnutými má
   `index.html` 14 271 B gzip (hranica 14 600 B).
 - **Úpravy webu** (`sprava/upravy/` = `admin/index.html` odvodený pri stavbe balíka, `admin/ulozisko-hosting.js`,
   `sprava/api.php`): zdroj sú súbory v tvare repozitára (pôvodné v `sprava/semeno/*.txt`, úpravy v údajoch), verejné stránky

@@ -43,12 +43,16 @@ Keď niečo treba opraviť, správa to napíše vetou, čo urobiť. Pri staršom
 súborov hostingu: v priečinku barbershop30-udaje vedľa priečinka webu, alebo v priečinku webu v priečinku, ktorého
 meno sa začína b30-udaje-. Správa ti povie, kde presne. Kód opíš do správy, platí 24 hodín a po použití sa súbor
 sám zmaže. Potom si nastav meno a heslo správy (aspoň 10 znakov).
+Keď správa napíše, že kód už neplatí (vypršal alebo niekto skúšal hádať), zmaž súbor PRVY-KOD.txt cez FTP a ťukni
+Vytvoriť kód znova; nový kód je tam hneď.
 Kód, heslá ani kľúč API nikomu neposielaj. Ani nám.
 
 6. ASISTENT BARBER
 Potrebuje kľúč API z účtu prevádzky na platform.claude.com (účet si založ na firmu; za odpovede sa platí z neho,
 podľa použitia). Kľúč vlož len do správy: Nastavenia, Asistent Barber, zaškrtni súhlas a ulož. Kľúč sa už potom
-nikde nezobrazí. Denný strop otázok (predvolene 1 500) je poistka nákladov, môžeš ho znížiť.
+nikde nezobrazí. Denný strop otázok (predvolene 300, najviac 2 000) je poistka nákladov; pri 80 % ťa správa upozorní.
+Bežná otázka stojí rádovo 1 až 3 centy, najdlhšia asi 20 centov. V účte na platform.claude.com si hneď nastav
+mesačný limit útraty (napríklad 30 €): po jeho minutí asistent prestane odpovedať a web ponúkne telefón.
 Kým kľúč nie je vložený, asistent sa na webe neukáže. Kľúč odstrániš tým istým miestom, asistent hneď zmizne.
 
 7. VOĽNÉ TERMÍNY V OKNE OBJEDNÁVKY
@@ -58,7 +62,8 @@ voľné termíny vypni a napíš nám. Kým sú vypnuté, okno ponúkne Zavolať
 O zapnutí daj vedieť správcovi rezervačného systému.
 
 8. VERNOSTNÁ KARTIČKA
-Nastavenia, Vernostná kartička: nastav heslo pre recepciu (iné než heslo správy) a ulož. Recepcia sa potom prihlási
+Nastavenia, Vernostná kartička: nastav heslo pre recepciu (aspoň 10 znakov, iné než heslo správy, správa iné
+neprijme) a ulož. Recepcia sa potom prihlási
 na https://www.barbershop30.sk/vernost/admin/ a nájde tam QR kód pre nového klienta, zápis návštev, odmeny a akcie.
 E‑mail odosielateľa je nepovinný (z neho príde klientovi odkaz na kartičku).
 
@@ -71,6 +76,9 @@ budeme robiť novú verziu webu, aby v nej tvoje úpravy boli. Nie sú v ňom he
 10. PO NAHRATÍ NOVŠIEHO BALÍKA
 Nový balík nahráš rovnako (súbory sa prepíšu novými). Potom otvor správu a ťukni Dokončiť aktualizáciu. Dovtedy sú
 asistent, voľné termíny aj kartička na webe vypnuté; nastavenia, kľúč, heslá a kartičky klientov ostávajú.
+Ak si nám pred novou verziou neposlal export, ťukni namiesto toho Ponechať moje úpravy a znovu zverejniť.
+Keď nahráš znova TEN ISTÝ balík (napríklad po prerušenom nahratí), správa ukáže „Na webe nie sú tvoje úpravy“:
+ťukni Znovu zverejniť moje úpravy a web bude znova s tvojimi textami, cenami a fotkami.
 
 11. ZABUDNUTÉ HESLO
 Na prihlásení ťukni Zabudnuté heslo: obnoviť prístup. Postup je rovnaký ako na začiatku, kód bude v súbore

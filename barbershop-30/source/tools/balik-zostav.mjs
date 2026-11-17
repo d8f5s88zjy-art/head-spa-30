@@ -29,6 +29,7 @@ for (const x of fs.readdirSync(path.join(VON, 'assets')).filter((n) => n.endsWit
 let h = citaj('admin/index.html');
 const raz = (a, b) => { const n = typeof a === 'string' ? h.split(a).length - 1 : (h.match(new RegExp(a.source, a.flags.includes('g') ? a.flags : a.flags + 'g')) || []).length; if (n !== 1) throw new Error(`admin/index.html: čakám presne raz ${a} (je ${n}×)`); h = h.replace(a, b); };
 raz('<html lang="sk">', '<html lang="sk" data-ulozisko="hosting">');
+raz('<title>Admin · Barbershop 30</title>', '<title>Úpravy webu · správa Barbershop 30</title>');
 raz(/<!-- kľúč je v tomto prehliadači[^>]*-->\n<meta http-equiv="Content-Security-Policy" content="[^"]*">/, `<!-- správa na vlastnej doméne: stránka hovorí len s vlastným serverom (sprava/api.php), skripty a štýly len vlastné -->\n<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' blob: data:; connect-src 'self'; base-uri 'none'; form-action 'none'">`);
 raz('href="../karta/ikony/barbershop-192.png"', 'href="../../karta/ikony/barbershop-192.png"');
 if (h.split('url(../assets/fonts/').length - 1 !== 3) throw new Error('admin/index.html: čakám tri písma v ../assets/fonts/');
