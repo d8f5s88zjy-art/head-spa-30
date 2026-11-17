@@ -70,11 +70,18 @@ function ip(): string {
   if ($proxy && $xff !== '') { $casti = array_map('trim', explode(',', $xff)); $posledna = end($casti); if (filter_var($posledna, FILTER_VALIDATE_IP)) return $posledna; }
   return $r;
 }
+/* návštevník pre limity: adresa IPv4 celá, IPv6 po /64 (jedna prípojka má celý blok /64, inak by každá adresa
+   z neho bola nový návštevník a obišla limit na adresu) */
+function ip_skupina(string $ip): string {
+  if (!str_contains($ip, ':')) return $ip;
+  $b = @inet_pton($ip);
+  return $b === false ? $ip : bin2hex(substr($b, 0, 8)) . '::/64';
+}
 /* jedna otázka sa započíta do všetkých okien naraz; vráti false, keď je niektoré plné */
 function limit_ok(string $druh = 'otazka'): bool {
   $k = konfig();
   $sol = (string) ($k['sol'] ?? kluc_api());
-  $ja = 'ip:' . hash_hmac('sha256', ip(), $sol);
+  $ja = 'ip:' . hash_hmac('sha256', ip_skupina(ip()), $sol);
   $okna = $druh === 'kalendar' ? [
     // objednávkové okno: čítanie voľných časov, šetrne k rezervačnému systému (časy sú aj tak 2 minúty v pamäti)
     ["kal:$ja", 600, (int) ($k['kal_za_10_min'] ?? 90)],
@@ -82,7 +89,7 @@ function limit_ok(string $druh = 'otazka'): bool {
   ] : [
     [$ja, 600, (int) ($k['za_10_min'] ?? 15)],          // jeden návštevník: 15 otázok za 10 minút
     [$ja, 86400, (int) ($k['za_den'] ?? 60)],           // a 60 za deň
-    ['spolu', 86400, (int) ($k['spolu_za_den'] ?? 1500)], // celý web: strop nákladov za deň
+    ['spolu', 86400, (int) ($k['spolu_za_den'] ?? 300)],  // celý web: strop nákladov za deň
   ];
   $pdo = db(); $t = time();
   $pdo->beginTransaction();

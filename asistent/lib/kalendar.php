@@ -64,17 +64,37 @@ final class Rezervacie {
     $this->url = rtrim($url, '/');
     $this->http = HttpClient::create(['timeout' => $timeout, 'max_duration' => $timeout, 'headers' => ['User-Agent' => 'Barbershop30-asistent/1.0']]);
   }
-  private function prihlas(): void {
-    if ($this->token !== null) return;
+  /* token formulára a cookie stránky rezervácie sa držia 5 minút (cache_dir): každé čítanie by inak bolo dve
+     požiadavky na rezervačný systém (GET stránky + POST) */
+  private function subor(): string { return (string) (konfig()['cache_dir'] ?? __DIR__ . '/../data') . '/kal-relacia-' . hash('sha256', $this->url) . '.json'; }
+  private function prihlas(): bool {
+    if ($this->token !== null) return false;
+    $c = is_file($this->subor()) ? json_decode((string) @file_get_contents($this->subor()), true) : null;
+    if (is_array($c) && is_string($c['token'] ?? null) && is_array($c['cookies'] ?? null) && time() - (int) ($c['t'] ?? 0) < 300) {
+      $this->token = $c['token']; $this->cookies = $c['cookies']; return true;
+    }
     $r = $this->http->request('GET', $this->url);
     $html = $r->getContent();
     if (!preg_match('/name="csrf-token" content="([^"]+)"/', $html, $m)) throw new RuntimeException('chýba CSRF token');
     $this->token = $m[1];
     foreach ($r->getHeaders()['set-cookie'] ?? [] as $c) { $kv = explode(';', $c, 2)[0]; [$n, $v] = array_pad(explode('=', $kv, 2), 2, ''); $this->cookies[$n] = $v; }
+    @file_put_contents($this->subor(), json_encode(['t' => time(), 'token' => $this->token, 'cookies' => $this->cookies]), LOCK_EX);
+    @chmod($this->subor(), 0600);
+    return false;
   }
   public function volaj(string $metoda, array $data): array {
     if ($metoda === 'makeOrder') throw new LogicException('objednávku asistent nikdy neodosiela');
-    $this->prihlas();
+    $zPamate = $this->prihlas();
+    try { return $this->posli($metoda, $data); }
+    catch (Throwable $e) {
+      if (!$zPamate) throw $e;
+      // uložený token už rezervačný systém neberie (vypršal): raz nanovo so stránkou
+      @unlink($this->subor()); $this->token = null; $this->cookies = [];
+      $this->prihlas();
+      return $this->posli($metoda, $data);
+    }
+  }
+  private function posli(string $metoda, array $data): array {
     $cookie = implode('; ', array_map(fn ($n, $v) => "$n=$v", array_keys($this->cookies), $this->cookies));
     $r = $this->http->request('POST', $this->url . '/ajax', [
       'headers' => ['X-CSRF-TOKEN' => $this->token, 'X-Requested-With' => 'XMLHttpRequest', 'Accept' => 'application/json', 'Cookie' => $cookie],

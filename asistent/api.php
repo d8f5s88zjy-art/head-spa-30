@@ -9,6 +9,7 @@
  *        -> objednávkové okno na webe (lib/kalendar.php), len so zapnutým kalendárom
  * Kľúč API je len v config.php (vytvorí ho nasadenie z tajomstva ANTHROPIC_API_KEY), nikdy v prehliadači. */
 declare(strict_types=1);
+ini_set('display_errors', '0');   // chyby len do denníka servera, nikdy do odpovede (cesty na disku)
 const ASISTENT = true;
 require __DIR__ . '/lib/jadro.php';
 require __DIR__ . '/lib/kalendar.php';
@@ -89,7 +90,8 @@ try {
   for ($kolo = 0; $kolo < 3; $kolo++) {
     $stream = $client->beta->messages->createStream(
       model: (string) ($k['model'] ?? 'claude-opus-5-5'),
-      maxTokens: 4000,
+      // strop jednej odpovede vrátane premýšľania: odpovede majú 1 až 3 vety, viac je len náklad (config.php 'max_tokens')
+      maxTokens: max(512, min(4000, (int) ($k['max_tokens'] ?? 1500))),
       system: [
         // pokyny a znalosti sa nemenia: vyrovnávacia pamäť na strane API (lacnejšie a rýchlejšie ďalšie otázky)
         ['type' => 'text', 'text' => pokyny($prevadzka), 'cacheControl' => ['type' => 'ephemeral']],
@@ -110,6 +112,7 @@ try {
     }
     $msg = $acc->message();
     if ($msg->stopReason === 'refusal') { $odmietnute = true; break; }
+    if ($msg->stopReason === 'max_tokens') { $telefon = true; break; }   // odpoveď narazila na strop: pod ňou aspoň Zavolať
     if ($msg->stopReason !== 'tool_use') break;
     $vysledky = [];
     foreach ($msg->content as $b) {
