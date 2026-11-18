@@ -1830,6 +1830,145 @@ html[data-tema="farebna"] .cat .n{background:var(--f-cervena);color:#fff}
 html[data-tema="farebna"] .lb img{box-shadow:0 18px 50px rgba(27,27,27,.3)}
 }
 
+/* ═══ Návrh B (Mário 18. 11. 2026: „vrchná aj spodná časť stránky bude červená“, „rozloženie farieb červená, biela, čierna
+   zhruba ako prvý návrh“ d7119bd4; Lajko 13. 11.: „moc červenej“): ČERVENÁ + ČIERNA VRSTVA.
+   1. Lišta a päta sú červené vo všetkých troch témach (farebna, svetla, tmava) – tlmenejšia červená z loga #b42226 (prvý
+      návrh mal tehlovú RGB 184, 53, 43), biele písmo 6,6 : 1; pod lištou 4 px čierna linka, pod pätou čierny pás s copyrightom a na
+      rozhraní pätice a pásu 3D vizitka majiteľa (oblasť vizitka-pata, len pri zhode údajov GRAFIKA_PRI['vizitka']).
+   2. Farebná téma (predvolená): telo strieda biele a čierne pásy v rytme prvého návrhu – úvod (fotka) a pás čísel čierne,
+      katalóg biely, akcie čierne, zľavy s kartou ČERVENÉ (jediná veľká červená plocha tela), služby a novinky biele, O nás
+      svetlošedé, kontakt čierny; podstránky: čierna hlavička s fotkou, biely obsah. Červená v tele inak len akcenty
+      (tlačidlá, štítky, linky nadpiskov, tvrdý tieň fotky v hlavičke, percentá zliav).
+   3. Čierna scéna = lokálne tokeny (ako tmavá téma), červená scéna = biele písmo, čierne akcenty. Kontrasty: biela na
+      #b42226 6,6 : 1, biela na #141414 18 : 1, #e57679 na #141414 6,3 : 1 (malé červené písmo na čiernej), #d93439 na
+      #141414 3,9 : 1 (len veľké čísla a grafika); čierna na červenej má len 2,8 : 1, preto sú čierne na červenej len ozdobné
+      linky (pod lištou, nad pätou, linka nadpisku zliav), nikdy text ani ukazovateľ stavu. ═══ */
+@media screen{
+html{--b-cervena:#b42226;--b-cervena-tm:#921b1f;--b-cierna:#141414;--b-cierna-2:#1f1f1f}
+/* ── červená scéna (lišta, päta, zľavy): biele písmo, čierne akcenty ── */
+html body :is(header.top,footer),html[data-tema="farebna"] body :is(header.top,footer,.zlavy){
+  --paper:#b42226;--prgb:180,34,38;--mortar:#b42226;--concrete:#141414;--line:rgba(255,255,255,.34);--povrch:#fff;--povrch-2:#f2f2f2;
+  --ink:#fff;--ink-2:#fff;--ink-3:#fff;--irgb:255,255,255;
+  --brick:#141414;--brick-hover:#000;--brick-dk:#fff;--brick-txt:#fff;--brick-lt:#921b1f;--brick-pale:#fff;--scena:#b42226;
+  background:var(--b-cervena);color:#fff}
+/* ── čierna scéna (farebná téma: pás čísel, akcie a kontakt na úvode, hlavičky podstránok, spodná lišta telefónu) ── */
+html[data-tema="farebna"] body :is(.facts:not(.n3),.akcie,.kontakt-teaser,.page-head,.kat-cta.zl),html body .mbar{
+  --paper:#141414;--prgb:20,20,20;--mortar:#1a1a1a;--concrete:#262626;--line:#333;--povrch:#1f1f1f;--povrch-2:#2a2a2a;
+  --ink:#fff;--ink-2:#e6e6e6;--ink-3:#bdbdbd;--irgb:255,255,255;
+  --brick:#d93439;--brick-hover:#b42226;--brick-dk:#e57679;--brick-txt:#e57679;--brick-lt:#2a2a2a;--brick-pale:#e57679;--scena:#141414;
+  color:var(--ink)}
+html[data-tema="farebna"] body :is(.facts:not(.n3),.akcie,.kontakt-teaser,.page-head){background:var(--b-cierna)}
+html[data-tema="farebna"] body.home :is(.akcie,.kontakt-teaser){background:var(--b-cierna)}
+
+/* ── LIŠTA: červená, dole 4 px čierna linka; znak RS (čierna doska) ostáva, názov biely s čiernym obrysom, menu biele
+   s bielym podčiarknutím aktuálnej stránky (čierna linka na červenej má len 2,8 : 1), telefón čierne tlačidlo (pod myšou biele) ── */
+html body header.top,html body.home header.top.scrolled,
+html[data-tema="farebna"] body header.top,html[data-tema="farebna"] body.home header.top.scrolled{
+  background:var(--b-cervena);border-bottom:1px solid var(--b-cierna);box-shadow:inset 0 -3px 0 var(--b-cierna);backdrop-filter:none;-webkit-backdrop-filter:none}
+html[data-tema="farebna"] body header.top,html[data-tema="farebna"] body.home header.top.scrolled{border-block:4px solid var(--b-cervena);border-bottom-color:var(--b-cierna);box-shadow:none}
+html body .top.scrolled{box-shadow:inset 0 -3px 0 var(--b-cierna),0 8px 22px rgba(0,0,0,.28)}
+html[data-tema="farebna"] body .top.scrolled{box-shadow:0 8px 22px rgba(0,0,0,.28)}
+html body .top .brand,html[data-tema="farebna"] body .top .brand{color:#fff}
+html body .top .lg-nazov span,html[data-tema="farebna"] body .top .lg-nazov span+span{color:#fff;text-shadow:var(--obrys-tien)}
+html body .top .lg-nazov{--obrys:1.4px}
+@media (max-width:980px){html body .top .lg-nazov{--obrys:1.25px}}
+@media (max-width:359px){html body .top .lg-nazov{--obrys:1px}}
+html body .top .nav a,html[data-tema="farebna"] body .top .nav a{color:#fff}
+html body .top .nav a:hover,html body .top .nav a[aria-current]{color:#fff;border-bottom-color:#fff}
+html body .top .nav-ciara{background:#fff}
+html body .top .tel,html[data-tema="farebna"] body .top .tel{background:var(--b-cierna);border-color:var(--b-cierna);color:#fff}
+html body .top .tel:hover,html[data-tema="farebna"] body .top .tel:hover{background:#fff;border-color:#fff;color:var(--b-cierna)}
+html body .top :is(.btn,a,button,input):focus-visible,html[data-tema="farebna"] body .top :is(.btn,a,button,input):focus-visible{outline-color:#fff}
+html[data-tema="tmava"] body .top .brand img{box-shadow:none}
+/* menu na telefóne: svetlé (tmavé v tmavej téme) s červeným pásom hore a čiernou linkou ako lišta */
+@media (max-width:980px){
+  html body .drawer,html[data-tema="farebna"] body .drawer{border-top:0;box-shadow:inset 0 12px 0 var(--b-cervena),inset 0 16px 0 var(--b-cierna)}
+  html body .drawer .dtel a{color:var(--brick-txt)}
+}
+/* ── SPODNÁ LIŠTA TELEFÓNU: čierna s červenou linkou hore, Zavolať červené, Cenová ponuka biele ── */
+html body .mbar,html[data-tema="farebna"] body .mbar{background:var(--b-cierna);backdrop-filter:none;-webkit-backdrop-filter:none;border-top:3px solid var(--b-cervena);box-shadow:none}
+html body .mbar .btn.primary{background:#d93439;border-color:#d93439;color:#fff}
+html body .mbar .btn.primary:hover{background:var(--b-cervena);border-color:var(--b-cervena)}
+html body .mbar :is(.btn.ghost,.btn.outline),html[data-tema="farebna"] body .mbar :is(.btn.ghost,.btn.outline){background:#fff;color:var(--b-cierna);border-color:#fff}
+html body .mbar :is(.btn.ghost,.btn.outline):hover,html[data-tema="farebna"] body .mbar :is(.btn.ghost,.btn.outline):hover{background:var(--b-cierna);color:#fff;border-color:#fff}
+html body .mbar :is(.btn,a):focus-visible,html[data-tema="farebna"] body .mbar :is(.btn,a):focus-visible{outline-color:#fff}
+
+/* ── PÄTA: červená s 4 px čiernou linkou hore; dole čierny pás cez celú šírku s copyrightom; vizitka na rozhraní ── */
+html body footer,html[data-tema="farebna"] body footer,html[data-tema="tmava"] body footer{
+  background:var(--b-cervena);color:#fff;border-top:4px solid var(--b-cierna);box-shadow:none;padding-bottom:0}
+html body footer :is(h3,summary){color:#fff}
+html body footer a,html body footer a:hover{color:#fff}
+html body footer a:hover{text-decoration:underline;text-underline-offset:3px}
+html body footer :is(a,button,summary):focus-visible{outline:3px solid #fff;outline-offset:2px}
+html body footer .flogo,html[data-tema="farebna"] body .flogo{border-radius:5.6%/11.4%;box-shadow:none}
+html body footer .bottom,html[data-tema="farebna"] body footer .bottom{--ink:#fff;--brick-dk:#fff;margin-top:34px;padding-block:16px;border-top:0;
+  background:var(--b-cierna);color:#fff;box-shadow:0 0 0 100vmax var(--b-cierna);clip-path:inset(0 -100vmax)}
+html body footer .bottom a{color:#fff}
+@media (max-width:980px){html body footer .bottom,html[data-tema="farebna"] body footer .bottom{padding-bottom:calc(16px + 70px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:700px){html body footer .bottom,html[data-tema="farebna"] body footer .bottom{margin-top:16px;padding-top:12px}}
+/* vizitka: posledná vec pred copyrightom, napoly v červenej päte a napoly v čiernom páse; telefón celá šírka mínus okraje,
+   počítač 440 px; posun do pásu = 20 % šírky (39 % výšky obrázka 960 × 491) */
+.f-viz{--viz-w:min(440px,calc(100vw - 2 * var(--gutter)));--viz-p:calc(var(--viz-w) * .2);position:relative;z-index:1;display:flex;justify-content:center;margin-top:clamp(26px,3.6vw,44px);margin-bottom:calc(-1 * var(--viz-p))}
+.f-viz a{display:block;width:var(--viz-w);border-radius:6px;line-height:0;box-shadow:0 22px 44px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.3);transition:transform .3s var(--krivka-dnu,ease)}
+.f-viz a:hover{transform:translateY(-3px)}
+.f-viz img{display:block;width:100%;height:auto;border-radius:6px}
+html body footer .f-viz+.bottom{margin-top:0;padding-top:calc(var(--viz-w,440px) * .2 + 18px)}
+@media (max-width:700px){html body footer .f-viz+.bottom{padding-top:calc((100vw - 2 * var(--gutter)) * .2 + 12px)}}
+@media (min-width:701px){html body footer .f-viz+.bottom{padding-top:calc(min(440px,100vw - 2 * var(--gutter)) * .2 + 18px)}}
+html body footer .f-viz a:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+/* priebeh čítania (3 px hore) leží na červenej lište: biely */
+html body .progress{background:#fff}
+
+/* ── FAREBNÁ TÉMA: telo v rytme prvého návrhu ── */
+/* pás čísel pod úvodom čierny (úvod a čísla tvoria jeden tmavý blok ako na prvom návrhu) */
+html[data-tema="farebna"] body .facts:not(.n3){border-block:0;border-bottom:1px solid #333}
+html[data-tema="farebna"] body .facts:not(.n3)>div{border-color:#333}
+html[data-tema="farebna"] body .facts:not(.n3) b,html[data-tema="farebna"] body .facts:not(.n3) b i{color:#fff}
+html[data-tema="farebna"] body .facts:not(.n3) b i,html[data-tema="farebna"] body .facts.fk:not(.n3) .f-zlavy b i{color:#d93439}
+html[data-tema="farebna"] body .facts:not(.n3) span{color:var(--ink-3)}
+html[data-tema="farebna"] body .facts.fk:not(.n3) .f-co{color:#fff}
+/* akcie na úvode: čierne, karty o tón svetlejšie (#1f1f1f) s bielym písmom, štítky červené */
+html[data-tema="farebna"] body.home .akcie .deals{gap:12px;background:none;border:0}
+html[data-tema="farebna"] body.home .akcie .deal{background:var(--povrch);color:#fff;border-radius:6px;box-shadow:0 0 0 1px #2e2e2e}
+html[data-tema="farebna"] body.home .akcie a.deal:hover{background:var(--povrch-2)}
+html[data-tema="farebna"] body.home .akcie .deal .thumb{opacity:.5}
+/* zľavy a karta: ČERVENÉ (ako pás zliav prvého návrhu), karta na čiernej podložke */
+html[data-tema="farebna"] body.home .zlavy{background:var(--b-cervena);color:#fff}
+html[data-tema="farebna"] body.home :is(.zlavy p,.karta p,.disc b,.disc span){color:#fff}
+html[data-tema="farebna"] body.home .zlavy .eyebrow{color:#fff}
+html[data-tema="farebna"] body.home .zlavy .eyebrow::before{background:var(--b-cierna)}
+html[data-tema="farebna"] body.home .disc b i{color:#fff}
+html[data-tema="farebna"] body.home .karta::before{background:var(--b-cierna)}
+html[data-tema="farebna"] body.home .karta b{color:#fff}
+html[data-tema="farebna"] body.home .karta img{box-shadow:0 22px 44px rgba(0,0,0,.5)}
+/* Služby a stránky skupín: box zákazníckej karty ČIERNY (čierna vrstva; červená plocha tela je len pás zliav na úvode,
+   inak by krátka stránka Služieb mala s lištou a pätou vyše 20 % červenej), tlačidlo biele */
+html[data-tema="farebna"] body .kat-cta.zl{background:var(--b-cierna);border-color:var(--b-cierna);color:#fff}
+html[data-tema="farebna"] body .kat-cta.zl :is(p,h2,h3,b,.ilu-tx){color:#fff}
+html[data-tema="farebna"] body .kat-cta.zl :is(.btn.ghost,.btn.outline){background:#fff;color:var(--b-cierna);border-color:#fff}
+html[data-tema="farebna"] body .kat-cta.zl :is(.btn.ghost,.btn.outline):hover{background:#d93439;color:#fff;border-color:#d93439}
+html[data-tema="farebna"] body .kat-cta.zl a:not(.btn){color:#fff}
+/* kontakt na úvode: čierny ako na prvom návrhu */
+html[data-tema="farebna"] body.home .kontakt-teaser .big-tel{color:#fff}
+html[data-tema="farebna"] body.home .kontakt-teaser .big-tel:hover{color:var(--brick-txt)}
+html[data-tema="farebna"] body.home .kontakt-teaser :is(p,.hours){color:var(--ink-2)}
+html[data-tema="farebna"] body.home .kontakt-teaser .hours b{color:#fff}
+html[data-tema="farebna"] body.home .kontakt-teaser p a{color:#fff}
+html[data-tema="farebna"] body.home .kontakt-teaser .ph{box-shadow:0 0 0 1px #333}
+/* O nás na úvode: svetlošedá ako na prvom návrhu */
+html[data-tema="farebna"] body.home .onas{background:var(--mortar)}
+/* hlavička podstránky: čierna s fotkou v ráme a tvrdým červeným tieňom; omrvinky svetlé */
+html[data-tema="farebna"] body .page-head{border-bottom:0}
+html[data-tema="farebna"] body .page-head .crumbs :is(a,span,li){color:var(--ink-3)}
+html[data-tema="farebna"] body .page-head .crumbs a:hover{color:#fff}
+html[data-tema="farebna"] body .page-head .ph-foto{box-shadow:clamp(6px,.8vw,11px) clamp(6px,.8vw,11px) 0 #d93439}
+html[data-tema="farebna"] body .page-head :is(.btn.ghost,.btn.outline){color:#fff;border-color:#fff;background:transparent}
+html[data-tema="farebna"] body .page-head :is(.btn.ghost,.btn.outline):hover{background:#fff;color:var(--b-cierna)}
+/* výzva pred pätou: biela s čiernou linkou hore (pred červenou pätou žiadna ďalšia červená plocha) */
+html[data-tema="farebna"] body .cta-pas{background:#fff;box-shadow:inset 0 4px 0 var(--b-cierna)}
+}
+
 /* ═══ Úvod v štýle pôvodného webu (Lajko 17. 11. 2026: „zachovaj štýl písma a prvú úvodnú [obrazovku] … aj to, že sa to
    menilo, ale urob to tak, nech sa to dá ľahko čítať, ale všetko nové tam nechaj“; „celé do čierno-bielo-červenej“) ═══
    Celá prvá obrazovka je tmavá fotka cez celú šírku, fotky sa pomaly striedajú (každá 6 s, prelnutie a Ken Burns ako na pôvodnom webe), vľavo dole

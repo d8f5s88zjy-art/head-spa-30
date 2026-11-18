@@ -154,6 +154,9 @@ spolu s logom vo vektore (README, Pre Mária).
     webu), tabula-siroka, tabula-vysoka (adresa, telefóny, e-mail, otváracia doba), vizitka (meno, adresa, telefóny, e-mail),
     karta (tá istá zákaznícka karta ako `img/karta-nova-*`, tu šikmý pohľad; adresa s PSČ, telefóny, e-mail) a päť ilustrácií
     iného štýlu: alt-auto-zlte, alt-sypke-zmesi-ikona, alt-okna-robotnik, alt-rezivo-kruh, alt-stresne-krytiny-stvorec.
+  - **Päta každej stránky** (Mário 18. 11. 2026, e-mail „treba opravit“: „celkom dole moju vizitku dať v 3D prevedení“): tá
+    istá 3D vizitka (výrez vizitka) ako `img/grafika/vizitka-p-720|960.avif|webp` (orez nie, len zmenšenie a prevod formátu,
+    `nastroje/grafika_maria.sh`) a náhľad vizitka-n 480 px; oblasť správy `vizitka-pata`, len pri zhode údajov `GRAFIKA_PRI['vizitka']`.
   Položka s údajom v obrázku má v dátach `plati_pri` a na webe je len dovtedy, kým údaje v správe sú rovnaké ako na nej
   (`GRAFIKA_UDAJE` v `build.py`). Správa vie položku skryť, nahradiť (podmienka tým zaniká), popísať a posunúť.
 - Známe rozdiely, ktoré obrázok neskrývajú: zápis čísla „037/ 6511 777“, „Tel./fax“ (web fax neuvádza), „Nitra 5“ na karte,

@@ -519,7 +519,7 @@ def breadcrumb_ld(path, crumbs):
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}, ensure_ascii=False) + '</script>\n'
 
 
-FARBA = '#ffffff'   # farba lišty prehliadača (theme-color, manifest): biela lišta webu vo farebnej téme (od 16. 11. 2026, predtým antracit #1c1a1b nad červenou lištou); pri ?tema=svetla ju skript TEMA_HEAD prepíše na #ffffff, pri ?tema=tmava na #111111
+FARBA = '#b42226'   # farba lišty prehliadača (theme-color, manifest): červená lišta webu vo všetkých témach (návrh B, Mário 18. 11. 2026: „vrchná aj spodná časť stránky bude červená“)
 TEMA = 'farebna'    # predvolená téma v atribúte data-tema na <html> každej stránky (farebná aj bez JS; zdroj/tema-head.js)
 
 
@@ -935,6 +935,7 @@ def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, h
     <details class="f-zb" open><summary>Katalóg</summary>{''.join(f'<a href="{rel(path, "katalog/" + nice_slug(k[0]) + ".html")}">{k[1]}</a>' for k in KATEGORIE[:8])}<a href="{rel(path, 'katalog/index.html')}">Celý katalóg</a></details>
     <div class="f-kontakt"><h3>Kontakt</h3><a href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a><a href="tel:{FIRMA['pevna_tel']}">{FIRMA['pevna']}</a><a class="mail" href="mailto:{FIRMA['email']}">{FIRMA['email']}</a>{oblast('hodiny-pata', V.vykresli('hodiny-pata', path, VD))}</div>
   </div>
+  {oblast('vizitka-pata', V.vykresli('vizitka-pata', path, VD))}
   <div class="wrap bottom"><span>© <span id="rok">2026</span> {FIRMA['majitel']}, Nitra</span><a href="{rel(path, 'letak.html')}">Akciový leták</a><a href="{rel(path, 'asistent/ochrana-udajov.html')}" data-asistent-odkaz>Ochrana údajov</a><a href="{FIZOSK}" target="_blank" rel="noopener">Stavebná firma FIZO SK – www.fizosk.sk</a></div>
 </footer>
 <div class="mbar" aria-label="Rýchly kontakt"><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať</a><a class="btn ghost" href="{rel(path, 'kontakt.html')}">Cenová ponuka</a></div>
@@ -1373,7 +1374,10 @@ GRAFIKA_UDAJE = {'hodiny': [[[1, 2, 3, 4, 5], '7:00', '16:00'], [[6], '7:00', '1
 # telefóny a e-mail, tabuľa aj otváraciu dobu, preto sa ukážu len pri zhode s data/firma.json (udaje_platia; kľúče ako
 # plati_pri tých istých obrázkov v data/galeria.json). Inak je na úvode a na Službách náhradou doterajšia plochá karta
 # (Mário ju poslal 8. 11. 2026; má tie isté údaje – nová adresa či číslo znamená novú kartu od majiteľa), na Kontakte nič.
-GRAFIKA_PRI = {'karta': ['ulica', 'psc', 'pevna', 'mobil', 'email'], 'tabula': ['ulica', 'psc', 'pevna', 'mobil', 'email', 'hodiny']}
+GRAFIKA_PRI = {'karta': ['ulica', 'psc', 'pevna', 'mobil', 'email'], 'tabula': ['ulica', 'psc', 'pevna', 'mobil', 'email', 'hodiny'],
+               # 3D vizitka v päte každej stránky (Mário 18. 11. 2026: „celkom dole moju vizitku dať v 3D prevedení“): meno,
+               # adresa, telefóny a e-mail ako plati_pri položky vizitka v data/galeria.json; oblasť vizitka-pata
+               'vizitka': ['majitel', 'ulica', 'psc', 'pevna', 'mobil', 'email']}
 # Služby: 3D piktogramy pri službách (oblasť sluzby-polozky; img/ilu, nastroje/grafika_maria.sh, rámik 4 : 3). Služby mení
 # správa (nadpis, poradie, nové aj zmazané), preto sa obrázok priraďuje podľa slova v nadpise (malými písmenami), každý
 # najviac raz – premenovaná služba bez toho slova je bez obrázka, nikdy s cudzím. Ikona zliav má v obrázku „hotovosť 5 % |

@@ -556,6 +556,7 @@ final class Vykreslenie
             case 'sluzby-zlavy': return $S('sluzby-zlavy', ['zlava' => self::zlava($D), 'karta3d' => self::karta3d($D), 'akcie_href' => self::rel($cesta, 'akcie/index.html')]);
             case 'uvod-karta': return $S('uvod-karta', ['karta3d' => self::karta3d($D)]);
             case 'sluzby-kontakt': return $S('sluzby-kontakt', self::sluzby_kontakt_vm($D));
+            case 'vizitka-pata': return $S('vizitka-pata', ['obr' => self::udaje_platia($D, $D['k']['grafika_pri']['vizitka']), 'pre' => $cesta === '404.html' ? '/' : self::rel($cesta, '')]);   // 404 má adresy od koreňa (build_404)
             case 'kontakt-tabula': return $S('kontakt-tabula', ['obr' => self::udaje_platia($D, $D['k']['grafika_pri']['tabula'])]);
             case 'sluzby-lede': return $S('lede', ['text' => self::txt($D['texty']['sluzby_uvod'])]);
             case 'sluzby-polozky': return $S('sluzby-polozky', self::sluzby_polozky_vm($D));

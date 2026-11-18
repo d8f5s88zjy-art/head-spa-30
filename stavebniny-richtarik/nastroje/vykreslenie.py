@@ -493,6 +493,7 @@ def vykresli(oid, cesta, D):
     if oid == 'sluzby-zlavy': return sablona('sluzby-zlavy', {'zlava': zlava(D), 'karta3d': karta3d(D), 'akcie_href': rel(cesta, 'akcie/index.html')})
     if oid == 'uvod-karta': return sablona('uvod-karta', {'karta3d': karta3d(D)})
     if oid == 'sluzby-kontakt': return sablona('sluzby-kontakt', sluzby_kontakt_vm(D))
+    if oid == 'vizitka-pata': return sablona('vizitka-pata', {'obr': udaje_platia(D, D['k']['grafika_pri']['vizitka']), 'pre': '/' if cesta == '404.html' else rel(cesta, '')})   # 404 má adresy od koreňa (build_404)
     if oid == 'kontakt-tabula': return sablona('kontakt-tabula', {'obr': udaje_platia(D, D['k']['grafika_pri']['tabula'])})
     if oid == 'sluzby-lede': return sablona('lede', {'text': txt(D['texty']['sluzby_uvod'])})
     if oid == 'sluzby-polozky': return sablona('sluzby-polozky', sluzby_polozky_vm(D))

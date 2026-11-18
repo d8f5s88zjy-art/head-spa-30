@@ -106,6 +106,12 @@ album logo-rs-cierna-doska 1190
 album tabula-siroka 1140
 album tabula-vysoka 790
 album vizitka 1190
+# päta každej stránky (Mário 18. 11. 2026: „celkom dole moju vizitku dať v 3D prevedení“; oblasť vizitka-pata): ten istý
+# výrez vo väčších šírkach 720 a 960 px (telefón celá šírka, počítač 440 px pri DPR 2); 480 px je náhľad vizitka-n
+for s in 720 960; do
+  convert "$Z/vizitka.webp" -filter Lanczos -resize "${s}x" -unsharp 0x0.6+0.45+0.01 -strip "$TMP/x.png"
+  kod "$TMP/x.png" "$G/vizitka-p-$s"
+done
 album karta 1140
 album alt-auto-zlte 530
 album alt-sypke-zmesi-ikona 660

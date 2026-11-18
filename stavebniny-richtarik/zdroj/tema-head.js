@@ -3,7 +3,7 @@
    asistent/ochrana-udajov.html), takže web je farebný aj bez JavaScriptu a nič sa neprekresľuje. Tento skript beží pred
    štýlom (teda pred prvým vykreslením) a atribút len prepne pre porovnanie: ?tema=svetla (svetlý papier, bez atribútu) a
    ?tema=tmava (čierno-biela) sa zapamätajú (localStorage tema), ?tema=farebna voľbu zruší, bez parametra platí zapamätaná
-   voľba. Prepne aj farbu lišty prehliadača (theme-color). V ráme bez úložiska (sandbox) alebo so zakázaným úložiskom platí
+   voľba. Farba lišty prehliadača (theme-color) je vo všetkých témach červená ako lišta webu (návrh B, 18. 11. 2026). V ráme bez úložiska (sandbox) alebo so zakázaným úložiskom platí
    len parameter v adrese. Zdroj skriptu, ktorý build.py:TEMA_HEAD zmenší a vloží do <head> každej stránky pred štýl
    (index.html cez zdroj/tema_vloz.py, asistent/ochrana-udajov.html medzi značky <!--tema-->; kontrola_uvodu() overí zhodu).
    Tokeny: site.css, časti „Tmavá téma“ a „Farebná téma“; zápis: richtarik/majitel/farebna/ZAPIS.md.
@@ -18,8 +18,6 @@
     if (!t && s) t = s.getItem('tema') || '';
     if (t === 'tmava' || t === 'svetla') {
       if (t === 'tmava') h.setAttribute('data-tema', t); else h.removeAttribute('data-tema');
-      var c = d.querySelector('meta[name="theme-color"]');
-      if (c) c.setAttribute('content', t === 'tmava' ? '#111111' : '#ffffff');
     }
   } catch (e) {}
 })(document.documentElement, document);

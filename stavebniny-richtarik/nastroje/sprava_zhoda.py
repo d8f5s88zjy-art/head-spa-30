@@ -108,7 +108,7 @@ def oblasti_varianty(D):
                    ('uvod-novinky', 'index.html'), ('novinky-kat', 'katalog/dlazby.html'), ('hlavicka', 'novinky/nova-novinka.html'), ('meta', 'novinky/nova-novinka.html'),
                    ('ld-omrvinky', 'novinky/nova-novinka.html'), ('novinka-doplnok', 'novinky/nova-novinka.html'), ('hlavicka', skryta), ('meta', skryta),
                    ('galeria-predajna', 'galeria/index.html'), ('sluzby-polozky', 'sluzby.html'), ('sluzby-kontakt', 'sluzby.html'),
-                   ('uvod-karta', 'index.html'), ('kontakt-tabula', 'kontakt.html'),
+                   ('uvod-karta', 'index.html'), ('kontakt-tabula', 'kontakt.html'), ('vizitka-pata', 'kontakt.html'), ('vizitka-pata', 'katalog/dlazby.html'),
                    ('doprava-polozky', 'doprava.html'), ('onas-text', 'o-nas.html'), ('uvod-lede', 'index.html'), ('sluzby-lede', 'sluzby.html'),
                    # Máriove grafiky s údajom v obrázku: zmenený mobil skryje tabuľu s kontaktom, vizitku, kartu a leták so sortimentom
                    ('galeria-letaky', 'letak.html'), ('galeria-grafika', 'galeria/index.html'), ('sluzby-zlavy', 'sluzby.html')]:
@@ -123,7 +123,7 @@ def oblasti_varianty(D):
         von.append([oid, c, V.vykresli(oid, c, H), H])
     # zmenená ulica: 3D karta na úvode a na Službách ustúpi plochej karte, tabuľa na Kontakte zmizne (pokyny majiteľa 17. 11. 2026)
     U = copy.deepcopy(dict(D, k=K)); U.pop('verzia', None); U['firma']['ulica'] = 'Novozámocká 70'
-    for oid, c in [('uvod-karta', 'index.html'), ('sluzby-zlavy', 'sluzby.html'), ('kontakt-tabula', 'kontakt.html'), ('sluzby-kontakt', 'sluzby.html')]:
+    for oid, c in [('uvod-karta', 'index.html'), ('sluzby-zlavy', 'sluzby.html'), ('kontakt-tabula', 'kontakt.html'), ('sluzby-kontakt', 'sluzby.html'), ('vizitka-pata', 'katalog/dlazby.html')]:
         von.append([oid, c, V.vykresli(oid, c, U), U])
     # služby: premenovaná služba bez slova piktogramu je bez obrázka; slovo „výpočet“ v dvoch službách – obrázok len pri prvej
     S = copy.deepcopy(dict(D, k=K)); S.pop('verzia', None)
