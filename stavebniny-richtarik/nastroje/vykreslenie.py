@@ -141,7 +141,14 @@ def karta_akcie(D, a, cesta, uvod=False):
     # vlastnej stránky (Garáže vedú na novinku)
     n = a.get('nahlad')
     return {'href': href, 'stitok': txt(a['stitok']), 'nazov': txt(a['nazov']), 'karta': txt(a['karta']), 'viac': txt(viac),
-            'nahlad': {'src': rel(cesta, n['src']), 'w': n['w'], 'h': n['h'], 'foto': bool(n.get('foto'))} if n else None}
+            'nahlad': {'src': rel(cesta, n['src']), 'w': n['w'], 'h': n['h'], 'foto': bool(n.get('foto')), 'srcset': nahlad_srcset(n, cesta)} if n else None}
+
+
+def nahlad_srcset(n, cesta):
+    """srcset obrázka na karte akcie, ak má viac šírok (fotka tovaru 300 a 600 px: na telefóne s hustotou 2–3 je náhľad vedľa
+    textu karty, site.css); sizes je v šablóne. Jedna šírka → None (len src)."""
+    s = n.get('sirky') or []
+    return ', '.join(f'{rel(cesta, x[1])} {x[0]}w' for x in s) if len(s) > 1 else None
 
 
 def pdf_text(a, p):

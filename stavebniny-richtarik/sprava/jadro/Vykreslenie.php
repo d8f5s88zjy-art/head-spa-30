@@ -140,7 +140,14 @@ final class Vykreslenie
         // obrázok na karte: miniatúra letáku alebo celá fotka tovaru (foto), aj pri karte bez vlastnej stránky
         $n = $a['nahlad'] ?? null;
         return ['href' => $href, 'stitok' => self::txt($a['stitok']), 'nazov' => self::txt($a['nazov']), 'karta' => self::txt($a['karta']), 'viac' => self::txt($viac),
-                'nahlad' => $n ? ['src' => self::rel($cesta, $n['src']), 'w' => $n['w'], 'h' => $n['h'], 'foto' => !empty($n['foto'])] : null];
+                'nahlad' => $n ? ['src' => self::rel($cesta, $n['src']), 'w' => $n['w'], 'h' => $n['h'], 'foto' => !empty($n['foto']), 'srcset' => self::nahlad_srcset($n, $cesta)] : null];
+    }
+
+    /** srcset obrázka na karte akcie, ak má viac šírok (fotka tovaru 300 a 600 px pre telefón s hustotou 2–3); jedna šírka → null. */
+    public static function nahlad_srcset(array $n, string $cesta): ?string
+    {
+        $s = $n['sirky'] ?? [];
+        return count($s) > 1 ? implode(', ', array_map(fn($x) => self::rel($cesta, $x[1]) . ' ' . $x[0] . 'w', $s)) : null;
     }
 
     public static function pdf_text(array $a, array $p): string

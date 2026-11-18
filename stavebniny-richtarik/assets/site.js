@@ -236,8 +236,8 @@
     Array.prototype.forEach.call(d.querySelectorAll('[data-do]'), function (el) { if (el.getAttribute('data-do') < dnes) el.hidden = true; });
   });
 
-  // úvod: striedanie fotiek ako na pôvodnom webe (štyri staré fotky img/hd, každá 6 s, prelnutie s jemným priblížením;
-  // pohyb robí CSS v kompozítore, trieda uv-stridaj). Prvá fotka je v HTML (LCP), ďalšie tri sú v <template> a vložia sa
+  // úvod: striedanie fotiek ako na pôvodnom webe (fotka dvora predajne a štyri staré fotky img/hd, každá 6 s, prelnutie
+  // s jemným priblížením; pohyb robí CSS v kompozítore, trieda uv-stridaj). Prvá fotka je v HTML (LCP), ďalšie sú v <template> a vložia sa
   // až po načítaní stránky a po uvítaní, v nečinnom čase, aby nebrali pásmo prvej fotke; striedanie sa zapne, keď sú
   // všetky dekódované. Nie pri „obmedziť pohyb“ a šetrení dát (ostane prvá fotka bez pohybu). Mimo obrazovky
   // a na skrytej karte sa animácie zastavia (uv-stoj), aby nebežali zbytočne.

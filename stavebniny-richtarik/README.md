@@ -184,7 +184,10 @@ svoje farby a kontrola ju nečíta.
   témy, šírky 360 / 800 / 1440 px, úvod aj podstránku – lišta a päta musia byť `#b42226`, spodná lišta `#141414`
   (`LISTA_PATA`); `theme-color` každej stránky a manifestu = `FARBA`; na každej stránke s pätou je oblasť `pata-grafika`
   tesne pred pásom s copyrightom a v nej (kým platia údaje `GRAFIKA_PRI['vizitka']`) 3D vizitka s `width`/`height`,
-  `loading="lazy"`, opisom a existujúcimi súbormi; Ochrana údajov má červený pás hore a dole. Vypíše „kontrola lišty
+  `loading="lazy"`, opisom a existujúcimi súbormi; Ochrana údajov má červený pás hore a dole; `404.html` má všetky adresy
+  od koreňa (`href`, `src`, `action`, `poster` a každú adresu v `srcset`, `adresy_404_relativne`) – servíruje sa na ľubovoľnej
+  hĺbke a relatívny `srcset` loga v lište sa na vnorenej adrese (`/katalog/nic/zle.html`) rozbil (skeptik M5 D1, opravené
+  18. 11. 2026 v `build_404`; PHP 404 prekresľuje len oblasti `pata-grafika` a `hodiny-pata`, tie majú adresy od koreňa). Vypíše „kontrola lišty
   a päty: OK (… 3D vizitka v päte 77 stránok)“ alebo `POZOR` s témou, šírkou a víťazným pravidlom.
 - **Tokeny** (`:root` = svetlá, `html[data-tema="farebna"]`, `html[data-tema="tmava"]`): farebná – stránka `--paper #f5f5f5`,
   karty `#fff`, malta a hlavičky podstránok `#ebebeb`, betón `#e0e0e0`, linky `#d4d4d4`, písmo `#1a1a1a` / `#383838` /
@@ -276,18 +279,24 @@ spodnou lištou) a veľký nápis vľavo dole priamo na nej.
   701 px, dnešný deň podčiarknutý), veta zo správy (`<!--s:uvod-lede-->`), Zavolať 0905 622 223, Poslať dopyt, Prezrieť
   katalóg, Aktuálne akcie a vyhľadávanie (biely ostrov; na počítači sa výsledky otvárajú nad poľom, aby boli celé na prvej
   obrazovke). Na počítači je vpravo dole „Skroluj“ (`.uv-cue`, ozdoba, `aria-hidden`).
-- Fotky (`.uv-bg`): štyri staré fotky z `img/hd` (Pexels, `img/FOTKY.md`) – palety tvárnic, stavba, murári, strecha –
+- Fotky (`.uv-bg`): prvá je Máriova fotka celého dvora predajne (Mário 18. 11. 2026: „treba pridať jednu aj našich
+  stavebnín, tú čo vidieť celý stavebný materiál“; `img/uvod/uvod-predajna-*`, zdroj pôvodná snímka 1320 × 990
+  v `zdroj/foto-maria/dvor-predajne-13.webp`, bez úpravy tónu; telefón a tablet na výšku `-t-480|580`, počítač `-1082`,
+  nezväčšené), za ňou štyri staré fotky z `img/hd` (Pexels, `img/FOTKY.md`) – palety tvárnic, stavba, murári, strecha –
   v `img/uvod/uvod-{palety,stavba,murar,strecha}-*.avif|webp`: počítač a tablet široký výrez `-1280|1920` (strecha `-1230`,
   užší výrez sa nezväčšuje), telefón (do 700 px) vlastný zvislý výrez `-t-480|750` (stavba `-t-710`). Len orez, zmenšenie
-  a prevod formátu skriptom `zdroj/uvod_snimky.py`, nič nedokreslené ani tónované. **Výrezy nesmú zasiahnuť nákladné auto
-  a modrý sud na fotke `hero` ani palmu na fotke `strecha-praca`** (zakázané oblasti v skripte; `build.py` ich pri každom
+  a prevod formátu skriptom `zdroj/uvod_snimky.py`, nič nedokreslené ani tónované. **Výrezy nesmú zasiahnuť žiadne vozidlo:
+  na fotke dvora nákladné auto vľavo ani modré nákladné auto v strede dvora (ani posuvník Mailu pri pravom okraji
+  snímky), na fotke `hero` nákladné auto a modrý sud, ani palmu na fotke `strecha-praca`** (zakázané oblasti v skripte; `build.py` ich pri každom
   behu overí). Fotka predajne č. 11 a štítok „Naša predajňa“ v prvej obrazovke nie sú (majiteľ 17. 11. 2026: „vymazať“);
   fotka 11 ostáva nižšie na stránke. Film ani auto v úvode nie sú.
-- Načítanie: prvá fotka (`.uv-f0`, palety) je v HTML s `fetchpriority="high"` (LCP; telefón 96 KB AVIF, počítač 119 KB),
-  ďalšie tri sú v `<template class="uv-dalsie">` a `site.js` (časť „úvod: striedanie fotiek“) ich vloží až po načítaní
+- Načítanie: prvá fotka (`.uv-f0`, dvor predajne) je v HTML s `fetchpriority="high"` (LCP; telefón 18–24 KB AVIF,
+  počítač 30 KB; jej `<source>` pre telefón platí aj pre tablet na výšku: `(max-width:700px), (orientation:portrait) and
+  (max-width:1024px)`), ďalšie štyri (palety, stavba, murár, strecha; `.uv-f1` až `.uv-f4`) sú v `<template class="uv-dalsie">` a `site.js` (časť „úvod: striedanie fotiek“) ich vloží až po načítaní
   stránky a po uvítaní v nečinnom čase; striedanie sa zapne triedou `uv-stridaj`, keď sú dekódované. `sizes` počíta
   s výškou úvodu (široký výrez pokrýva celú výšku).
-- Striedanie ako na pôvodnom webe: cyklus 24 s, každá fotka ≈ 6 s, prelnutie s jemným priblížením (krivka pôvodného
+- Striedanie ako na pôvodnom webe: cyklus 30 s pre päť fotiek (od 18. 11. 2026, predtým 24 s pre štyri), každá fotka ≈ 6 s
+  (`@keyframes uv-slide` 0 / 4,8 / 20 / 25,6 %, oneskorenie `.uv-f1`–`.uv-f4` 6/12/18/24 s), prelnutie s jemným priblížením (krivka pôvodného
   `slide`), prvá fotka dosadne s Ken Burns (15 s). Mimo obrazovky a na skrytej karte sa zastaví (`uv-stoj`). Slová
   nadpisu nabehnú za sebou (posun zdola a prelnutie, 1,35 s, krok 105 ms), riadok nad nadpisom, ponuka, hodiny a Skroluj
   vyjdú po nich (trieda `uv-ide` zo skriptu v `<head>`; po uvítaní ich spúšťa skript brány).
@@ -306,9 +315,19 @@ spodnou lištou) a veľký nápis vľavo dole priamo na nej.
   téma, priemer 8 okamihov): priemerný jas prvej obrazovky 92 z 255 na telefóne 390 a 91 na počítači 1440 (predtým 55 a
   50, pôvodný web 85 a 89); plocha stmavená menej než na 50 %: 46 % a 64 % (predtým 0 % a 7 %, pôvodný web 5 % a 59 %).
   Farby úvodu sú len čierna, biela, šedá `#d9d9d9` a červené z palety.
+  Po pridaní fotky dvora predajne (18. 11. 2026; 8 okamihov celého 30 s kruhu × 320/390/768/1440 × tri témy, `CYKLUS=30000
+  meraj.cjs` + `vyhodnot.py`, a v reálnom čase `kontrast-cas.cjs` 6 šírok × 3 témy × 18 okamihov): biely H1 ≥ 3,46,
+  tenší riadok ≥ 3,36, „Za super ceny.“ ≥ 3,51 (prah 3), malý text ≥ 5,10, tlačidlá 4,67, 0 pod prahom; `potreba.py`
+  biely 0,42, tenší 0,52, červený 0,83, malý text 0,53 – terajšie hustoty stačia aj pre túto fotku. LCP úvodu (390,
+  Slow 4G, CPU 4×) je fotka dvora `uvod-predajna-t-580.avif` (24 KB).
 - **Pri výmene alebo doplnení fotky úvodu** (napr. Máriove fotky do `zdroj/uvod_snimky.py`) treba najprv zmerať, či
-  hustoty tmy ešte stačia: hustoty sú stavané na najjasnejšie pixely terajších 4 fotiek a rezerva nadpisu je len asi
-  0,5 nad prahom 3 : 1. Postup: `FOTO=1 node meraj.cjs <výstup> 32 novy:<port> 320x568,390x844,768x1024,1440x900
+  hustoty tmy ešte stačia: hustoty sú stavané na najjasnejšie pixely fotiek a rezerva nadpisu je len asi
+  0,5 nad prahom 3 : 1. Pravidlá pre novú fotku: skutočná fotka (nič nedokreslené, netónované, nezväčšené, bez
+  doostrenia snímok z e-mailu), žiadne vozidlo ani nič, čo do Nitry nepatrí (zakázané oblasti do `ZDROJE`, aj na
+  pozadí), telefónny zvislý výrez aj široký výrez, AVIF aj WebP, prvá fotka v HTML s `fetchpriority="high"` a ostatné
+  v `template.uv-dalsie`, v `site.css` cyklus = 6 s × počet fotiek a percentá `@keyframes uv-slide` prepočítané
+  (1,44 s prelnutie, 6 s, 7,68 s), v `build.py` zoznam `.uv-f1…` v `kontrola_uvodu`, testy uvítania (`uvitanie-zf.mjs
+  kontroly`). Postup merania (pri inom cykle nastaviť `CYKLUS=<ms>`, napr. 30000): `FOTO=1 node meraj.cjs <výstup> 32 novy:<port> 320x568,390x844,768x1024,1440x900
   farebna,svetla,tmava`, potom `python3 -I potreba.py <výstup>` (koľko čiernej treba pod každou skupinou textu; dnes biely
   nadpis 0,41, tenší riadok 0,52, červený 0,83, malý text 0,45–0,53) a `python3 -I vyhodnot.py kontrast <výstup>` (musí byť
   0 pod prahom). Ak treba viac, zvýšiť `fill-opacity` v SVG `.uv h1::before` alebo `--uv-tm` v `assets/site.css`.
@@ -323,7 +342,8 @@ spodnou lištou) a veľký nápis vľavo dole priamo na nej.
 - `build.py` úvod neprepíše: `write()` zápis do `index.html` odmietne. `kontrola_uvodu()` na konci behu overí menu
   a údaje firmy v úvode, jeden H1 „Stavebný materiál v celom sortimente. Za super ceny.“ po slovách `.w` s dvoma `.nz`
   a nad ním `.uv-nad` (bez znaku a názvu firmy v H1; názov je v titulku a v lište práve raz), fotky `.uv-f0` (v HTML,
-  `fetchpriority="high"`) a `.uv-f1` až `.uv-f3` (v `template.uv-dalsie`), existenciu súborov `img/uvod`, výrezy (zakázané
+  `fetchpriority="high"`, fotka dvora predajne `uvod-predajna`) a `.uv-f1` až `.uv-f4` (v `template.uv-dalsie`, palety
+  medzi nimi) so striedaním 30 s v `site.css`, existenciu súborov `img/uvod`, výrezy (zakázané
   oblasti), že v prvej obrazovke nie je fotka 11, štítok, rám ani film, og obrázok na všetkých stránkach, žiadny odkaz
   na staré video s autom, že uvítanie v `index.html` sa zhoduje so zdrojom (nižšie) a že rad fotiek „Skutočné fotografie
   – V našej predajni v Nitre“ (`section.zasoba`, dlaždice `.zt`, čakanie `uv-pocka`) na úvode nie je a pod prvou
@@ -406,7 +426,7 @@ oneskorenia; odozva na dotyk a myš ostala. Časy uvedené ďalej v tejto časti
 | `--dlzka-odh` / `--dlzka-odh-op` (odhalenie pri posune) | 620 / 520 ms | 930 / 780 ms |
 | `--dlzka-riadok`, `--dlzka-stredna`, `--krok-cas` | 800, 360, 70 ms | 1 200, 540, 105 ms |
 | riadok nadpisu sekcie z drážky, H1 po prechode na telefóne | 560, 440 ms | 840, 660 ms |
-| úvod: nábeh slov H1, Ken Burns prvej fotky, striedanie fotiek | 0,9 s (krok 70 ms), 10 s, – | 1,35 s (krok 105 ms), 15 s, 24 s (fotka 6 s) |
+| úvod: nábeh slov H1, Ken Burns prvej fotky, striedanie fotiek | 0,9 s (krok 70 ms), 10 s, – | 1,35 s (krok 105 ms), 15 s, 30 s pre 5 fotiek (fotka 6 s) |
 | uvítanie Brána (od prvého vykreslenia po koniec) | ≈ 1,6 s | ≈ 2,4 s (`zdroj/uvitanie.js`, `M = 1.5`) |
 | **bez zmeny (odozva):** `--dlzka-tlak` 80 ms, `--dlzka-pusti` 160 ms, `--dlzka-hover` 240 ms, `--dlzka-kratka` 180 ms, lightbox, otvorenie menu 300 ms, výsledky hľadania, okno asistenta 360 ms, preskočenie uvítania, rýchla cesta uvítania 440 ms | | |
 
@@ -798,6 +818,11 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
      z jeho príloh, potvrdiť (príkaz v `nastroje/foto_maria.sh`). **Strešné okná RoofLITE** ostávajú s fotkou Pexels
      `okno-strecha`: fotka Fakro by ukazovala inú značku – máte fotku RoofLITE? Originály fotiek v plnom rozlíšení a súhlas
      výrobcov (Wienerberger/Pezinské tehelne, Stadreko, Blachotrapez, Fakro) so zverejnením.
+  4. **Úvod – fotka celého dvora** (`img/uvod/uvod-predajna-*`, prvá fotka striedania): je zo snímky jeho e-mailu
+     (1320 × 990). Na dvore stoja dve nákladné autá (vľavo a modré v strede), v úvode žiadne vozidlo nechceme, preto na
+     počítači vidno najmä dlažbu a palety v popredí a farebný rad len pri hornom okraji; na počítači 1440 je fotka
+     roztiahnutá asi 1,3×. Originál z fotoaparátu (vyššie rozlíšenie) alebo fotka dvora bez áut by pomohli; výrez sa potom
+     zmení v `zdroj/uvod_snimky.py`.
 
 ## Údržba
 - Prostredie: `python3 -m venv venv && venv/bin/pip install lxml`, potom v tomto priečinku `venv/bin/python build.py`.
@@ -888,9 +913,18 @@ JSON-LD, značky) → zálohu → denník prerušeného zápisu → premenovanie
 **Obrázok na karte akcie** (od 18. 11. 2026, Mário: „akcie tovaru treba vymeniť obrázky“): karta akcie na Akciách a na úvode
 (`akcie-index`, `uvod-akcie`, pole `nahlad`) ukazuje buď miniatúru letáku (zasunutú pod okraj karty, ako doteraz), alebo
 **fotku tovaru** (`nahlad.foto: true`): celú, bez orezu, na bielom ráme, mierne natočenú, celú v karte; text karty má vpravo
-rezervu (`site.css .thumb.foto`; na telefóne sú karty bez náhľadu ako doteraz). Obrázok majú aj karty bez vlastnej stránky
+rezervu (`site.css .thumb.foto`). **Na telefóne do 700 px** (od 18. 11. 2026, Lajko – D2: Máriove fotky vidno aj v zozname)
+má každá karta s obrázkom malý náhľad vpravo hore (88 – 120 px, `clamp(88px,28vw,120px)`) v bielom rámiku, celý (fotka aj
+leták, `object-fit:contain`, komín na výšku celý), rovno a plne nepriehľadný; štítok, nadpis, text a odkaz ho obtekajú
+(`float`, karta `display:flow-root`), nič neprekryje; výška ide z `width`/`height` (bez posunu pri načítaní), `loading="lazy"`.
+Karta bez obrázka (Dlažba City Stone Design) je ako doteraz. Fotka tovaru má `nahlad.sirky` (300 a 600 px; komín 249 a 497 –
+`bash nastroje/foto_maria.sh karty`, len zmenšenie zo `zdroj/foto-maria`), šablóny dajú `srcset` a `sizes="(max-width:700px)
+120px, 150px"` (Python `nahlad_srcset` vo `vykreslenie.py`, PHP `Vykreslenie::nahlad_srcset`), takže ani na iPhone (DPR 3)
+sa náhľad nezväčšuje nad súbor; miniatúra letáku má 400 px a srcset nepotrebuje. Na počítači sa nič nemení (rovnaké
+rozloženie; komín na DPR 2 načíta súbor 497 px namiesto 249). Obrázok majú aj karty bez vlastnej stránky
 (Garáže vedú na novinku; v Pythone aj PHP `karta_akcie` podmienka `if n`). V správe je pri akcii pole „Obrázok na karte akcie“
-(`karta_foto`, aj pri karte bez stránky): fotka sa zmenší na šírku 300 px bez výrezu letáku (`Ulohy::kartaFoto`), leták
+(`karta_foto`, aj pri karte bez stránky): fotka sa zmenší na šírku 300 px (a 600 px do `nahlad.sirky`, ak je aspoň taká
+široká) bez výrezu letáku (`Ulohy::kartaFoto`), leták
 a PDF na stránke akcie ostávajú; nový alebo zmazaný leták fotku na karte nemení, „Odstrániť obrázok na karte“ vráti
 miniatúru letáku (`Ulohy::nahladLetaku`). Hlavičky akcií s Máriovými fotkami sú `kat:<výrez>` (`img/kat/`, `KAT_FOTO_ALT`),
 správa ich ponúka medzi hlavičkami (`konstanty.json → hlavicky`); schéma komína je v ráme celá na bielom (`KAT_FOTO_CELA`,

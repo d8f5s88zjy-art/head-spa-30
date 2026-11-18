@@ -601,7 +601,7 @@ html[data-asistent] footer .bottom{padding-right:64px}
 /* bočné menu: posun pri prejdení */
 .kat>li>a,.kat ul a{transition:color .2s,padding-left .25s}
 .kat>li>a:hover,.kat ul a:hover{padding-left:6px}
-@media (max-width:700px){.band{min-height:420px}.deal .thumb{display:none}.deal h3,.deal p,.deal .tag,.deal .more,.deal h2.h3{max-width:none}}
+@media (max-width:700px){.band{min-height:420px}.deal h3,.deal p,.deal .tag,.deal .more,.deal h2.h3{max-width:none}}
 
 /* karty značiek s fotkou, popiskom a sortimentom */
 .znacka{grid-template-columns:260px 1fr;gap:0;padding:0;overflow:hidden}
@@ -1117,10 +1117,26 @@ html[data-tema] body.home .karta .k3d img{box-shadow:none}
 .deal .thumb,.akcie-page .deal .thumb,body.home .deal .thumb{opacity:1;box-shadow:0 10px 26px rgba(18,18,18,.16);transform:rotate(4deg) translateY(16px)}
 a.deal:hover .thumb{transform:rotate(4deg) translateY(4px)}   /* RP2-13: uhol ostáva, pod myšou len zdvih */
 /* obrázok akcie ako fotka tovaru (nahlad.foto, Mário 18. 11. 2026): celý, bez orezu, na bielom ráme, mierne natočený, celý
-   v karte (nie zasunutý pod okraj ako leták); text karty má vpravo rezervu na šírku obrázka. Telefón: bez náhľadu ako doteraz. */
+   v karte (nie zasunutý pod okraj ako leták); text karty má vpravo rezervu na šírku obrázka. Telefón: blok nižšie. */
 .deal .thumb.foto,.akcie-page .deal .thumb.foto,body.home .deal .thumb.foto{right:16px;bottom:18px;width:auto;height:auto;max-width:150px;max-height:170px;object-fit:contain;background:#fff;padding:4px;border-radius:3px;opacity:1;transform:rotate(3deg)}
 a.deal:hover .thumb.foto{transform:rotate(3deg) translateY(-4px)}
 @media (min-width:701px){.deal:has(.thumb.foto) :is(h3,p,.tag,.more,h2.h3){max-width:calc(100% - 170px)}}
+/* telefón do 700 px (Lajko 18. 11. 2026, D2: Máriove fotky akcií vidno aj v zozname, nielen po otvorení akcie): karta s obrázkom
+   ho má ako malý náhľad vpravo hore v bielom rámiku – celý (fotka aj leták, object-fit:contain, schéma komína na výšku celá),
+   rovno a plne nepriehľadný, štítok, nadpis, text aj odkaz ho obtekajú (float, riadky sa mu vyhnú, nič neprekryje). Šírka
+   88 – 120 px (28vw), výška podľa pomeru strán z width/height (bez posunu pri načítaní). Fotka tovaru má v srcset 600 px
+   (sizes v šablóne akcie-index / uvod-akcie = 120px), na telefóne s hustotou 3 sa teda nič nezväčšuje nad súbor; miniatúra
+   letáku má 400 px. Karta bez obrázka ostáva ako doteraz (mriežka). */
+@media (max-width:700px){
+  .deals .deal:has(>img.thumb){display:flow-root}
+  .deals .deal:has(>img.thumb)>*+*{margin-top:12px}
+  .deals .deal:has(>img.thumb)>.tag{display:table;margin-top:0}
+  .deals .deal>img.thumb,.deals .deal>img.thumb.foto,a.deal:hover>img.thumb,a.deal:hover>img.thumb.foto{
+    position:static;float:right;width:clamp(88px,28vw,120px);height:auto;max-width:none;max-height:none;margin:2px 0 10px 14px;
+    padding:3px;object-fit:contain;object-position:50% 50%;background:#fff;border-radius:3px;opacity:1;transform:none;
+    box-shadow:0 0 0 1px rgba(18,18,18,.12),0 6px 16px rgba(18,18,18,.16);transition:none}
+  html[data-tema] body.home .akcie .deals .deal>img.thumb{opacity:1}   /* farebná téma úvodu: náhľad na počítači 50 %, tu celý */
+}
 /* pás zliav na úvode (betónový podklad): nadpisok a popisy s kontrastom nad 4,5 : 1 */
 body.home .zlavy .eyebrow{color:var(--brick-dk)}
 body.home .disc span{color:var(--ink-2)}
@@ -1947,9 +1963,11 @@ html[data-tema="farebna"] body .page-head :is(.btn.ghost,.btn.outline):hover{bac
    (richtarik/staryuvod/navrh-A, kontrast každého prvku v 8 okamihoch striedania), jemný tieň písma. Farby úvodu len čierna,
    biela a červená loga (#d93439, zmeraná z img/logo-rs-720.png), rovnaké vo všetkých témach (úvod je vždy tmavý). Z nového
    ostáva: hodiny a veta zo správy webu, Zavolať, Poslať dopyt, odkazy na katalóg a akcie, vyhľadávanie. Prvá fotka
-   (uv-f0) je v HTML a je LCP; ďalšie tri sú v <template> a vloží ich až site.js po načítaní (bez JS, pri „obmedziť pohyb“
-   a šetrení dát ostane jedna fotka bez pohybu). Fotky: staré img/hd, orezané bez nákladného auta (hero) a bez palmy
-   (strecha-praca), img/uvod/uvod-*.avif|webp, telefón vlastný zvislý výrez -t-. */
+   (uv-f0, Máriova fotka celého dvora predajne, 18. 11. 2026) je v HTML a je LCP; ďalšie štyri sú v <template> a vloží
+   ich až site.js po načítaní (bez JS, pri „obmedziť pohyb“ a šetrení dát ostane jedna fotka – predajňa – bez pohybu).
+   Fotky: dvor predajne (zdroj/foto-maria, výrezy bez oboch nákladných áut) a staré img/hd, orezané bez nákladného auta
+   (hero) a bez palmy (strecha-praca), img/uvod/uvod-*.avif|webp, telefón vlastný zvislý výrez -t- (predajňa aj tablet
+   na výšku). */
 :root .uv{--paper:#000;--prgb:0,0,0;--mortar:#000;--concrete:#000;--ink:#fff;--ink-2:#fff;--ink-3:#fff;--irgb:255,255,255;
   --line:rgba(255,255,255,.55);--brick:#d93439;--brick-hover:#b42226;--brick-dk:#b42226;--brick-txt:#fff;--scena:#000;--uv-cervena:#d93439;
   position:relative;isolation:isolate;overflow:clip;display:grid;align-items:end;
@@ -2089,16 +2107,17 @@ html[data-tema="farebna"] body .page-head :is(.btn.ghost,.btn.outline):hover{bac
 }
 /* pohyb (len „bez obmedzenia pohybu“; trieda uv-ide zo skriptu v <head>, bez JS nič; po uvítaní ho robí skript brány):
    fotka dosadne (pôvodne 10 s, tempo ×1,5), slová nadpisu nabehnú za sebou (pôvodne .9 s, krok 70 ms, ×1,5), riadok nad
-   nadpisom, ponuka a hodiny vyjdú zdola; striedanie fotiek (pôvodný web: krivka slide, prelnutie a jemné priblíženie; tu cyklus 24 s, každá fotka 6 s, aby
-   sa prvá zmena ukázala do ≈ 8 s ako na pôvodnom webe)
+   nadpisom, ponuka a hodiny vyjdú zdola; striedanie fotiek (pôvodný web: krivka slide, prelnutie a jemné priblíženie; tu cyklus 30 s pre päť fotiek, každá fotka 6 s,
+   prelnutie 1,44 s ako pri 24 s cykle, aby sa prvá zmena ukázala do ≈ 8 s ako na pôvodnom webe)
    zapne site.js triedou uv-stridaj, mimo obrazovky sa zastaví (uv-stoj) */
 @media (prefers-reduced-motion:no-preference){
   .uv-ide:not(.vt) .uv-f0{animation:uv-kb 15s var(--krivka-kamera) both}
   @keyframes uv-kb{from{transform:scale(1.1)}}
-  .uv-bg.uv-stridaj .uv-f1{animation:uv-slide 24s ease-in-out 6s infinite}
-  .uv-bg.uv-stridaj .uv-f2{animation:uv-slide 24s ease-in-out 12s infinite}
-  .uv-bg.uv-stridaj .uv-f3{animation:uv-slide 24s ease-in-out 18s infinite}
-  @keyframes uv-slide{0%{opacity:0;transform:scale(1.08)}6%{opacity:1}25%{opacity:1;transform:none}32%{opacity:0;transform:none}100%{opacity:0;transform:none}}
+  .uv-bg.uv-stridaj .uv-f1{animation:uv-slide 30s ease-in-out 6s infinite}
+  .uv-bg.uv-stridaj .uv-f2{animation:uv-slide 30s ease-in-out 12s infinite}
+  .uv-bg.uv-stridaj .uv-f3{animation:uv-slide 30s ease-in-out 18s infinite}
+  .uv-bg.uv-stridaj .uv-f4{animation:uv-slide 30s ease-in-out 24s infinite}
+  @keyframes uv-slide{0%{opacity:0;transform:scale(1.08)}4.8%{opacity:1}20%{opacity:1;transform:none}25.6%{opacity:0;transform:none}100%{opacity:0;transform:none}}
   .uv-bg.uv-stoj .uv-f{animation-play-state:paused}
   .uv-ide:not(.vt) .uv h1 .w{animation:uv-rise 1.35s var(--krivka-vyjazd) both;animation-delay:calc(.225s + var(--i) * .105s)}
   .uv-ide:not(.vt) .uv :is(.uv-nad,.uv-b,.uv-info,.uv-cue){animation:uv-rise 1.2s var(--krivka-vyjazd) both}

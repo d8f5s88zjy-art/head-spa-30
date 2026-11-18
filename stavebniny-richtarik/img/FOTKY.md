@@ -71,22 +71,42 @@ Mário: „Akcie – akcie tovaru treba vymeniť obrázky u: Tehla TermoBRIK, ko
 zatepľovanie a sadrokartónový systém, garáže – záhradné domčeky“. Pôvod **Mário, e-mail 18. 11. 2026** (snímky Mailu
 IMG_0375 – 0379, `zdroj/foto-maria/vyrezy.tsv`); len orez, zmenšenie a prevod, bez doostrenia, nič nad šírku výrezu.
 Karta akcie (`data/akcie.json` → `nahlad` s `foto: true`): celý obrázok zmenšený do 300 × 380 px, len WebP (ako ostatné
-náhľady kariet). Hlavička stránky akcie (`hlavicka: "kat:<výrez>"`): sada `img/kat/<výrez>-480|720|960|<šírka>` AVIF/WebP
+náhľady kariet); od 18. 11. 2026 (D2, náhľad aj na telefóne) aj do 600 × 760 px pre `srcset` (`nahlad.sirky`; telefón
+s hustotou 2 – 3), `bash nastroje/foto_maria.sh karty` – tiež len zmenšenie, výrezy sú väčšie (762 – 1608 px). Hlavička stránky akcie (`hlavicka: "kat:<výrez>"`): sada `img/kat/<výrez>-480|720|960|<šírka>` AVIF/WebP
 a výrez pre telefón `img/kat/hlavicka/<výrez>-720`.
 
 | výrez (zdroj) | karta `img/akcie/` | hlavička `img/kat/` | akcia |
 |---|---|---|---|
-| tehla-termobrik (1123 × 1320) | `tehla-termobrik-karta-300` 300 × 353 | 1123 × 842 + 0 + 80 (oba nápisy TermoBRIK) | Pezinská tehla TermoBRIK (predtým `uvod:zasoba-tehly`) |
-| komin-stadreko (1052 × 1608, schéma) | `komin-stadreko-karta-249` 249 × 380 | celá, v ráme celá na bielom, bez výrezu pre telefón | Komín Stadreko (predtým Pexels `komin-strecha`) |
-| krytina-blachotrapez (762 × 575) | `krytina-blachotrapez-karta-300` 300 × 226 | celá (762 px) | Krytina Blachotrapez (predtým Pexels `strecha`) |
-| stresne-okno-fakro | `stresne-okno-fakro-karta-300` 300 × 203 | tá istá ako katalóg | Okná a schody Fakro (predtým Pexels `okno-strecha`) |
-| sadrokarton-podhlad | `sadrokarton-podhlad-karta-300` 300 × 242 | tá istá ako katalóg | Zatepľovací a sadrokartónový systém (predtým Pexels `sadrokarton-montaz`) |
-| garaz (1297 × 1320) | `garaz-karta-300` 300 × 305 | 1297 × 973 + 0 + 250 (hlavička novinky Garáže) | Garáže, záhradné domčeky (karta bez stránky; novinka predtým Pexels `hutny`) |
+| tehla-termobrik (1123 × 1320) | `tehla-termobrik-karta-300|600` 300 × 353, 600 × 705 | 1123 × 842 + 0 + 80 (oba nápisy TermoBRIK) | Pezinská tehla TermoBRIK (predtým `uvod:zasoba-tehly`) |
+| komin-stadreko (1052 × 1608, schéma) | `komin-stadreko-karta-249|497` 249 × 380, 497 × 760 | celá, v ráme celá na bielom, bez výrezu pre telefón | Komín Stadreko (predtým Pexels `komin-strecha`) |
+| krytina-blachotrapez (762 × 575) | `krytina-blachotrapez-karta-300|600` 300 × 226, 600 × 453 | celá (762 px) | Krytina Blachotrapez (predtým Pexels `strecha`) |
+| stresne-okno-fakro | `stresne-okno-fakro-karta-300|600` 300 × 203, 600 × 407 | tá istá ako katalóg | Okná a schody Fakro (predtým Pexels `okno-strecha`) |
+| sadrokarton-podhlad | `sadrokarton-podhlad-karta-300|600` 300 × 242, 600 × 484 | tá istá ako katalóg | Zatepľovací a sadrokartónový systém (predtým Pexels `sadrokarton-montaz`) |
+| garaz (1297 × 1320) | `garaz-karta-300|600` 300 × 305, 600 × 611 | 1297 × 973 + 0 + 250 (hlavička novinky Garáže) | Garáže, záhradné domčeky (karta bez stránky; novinka predtým Pexels `hutny`) |
 | rezivo (1297 × 990) | – | – | len v zdroji, na web nejde: akcia Stavebné rezivo má jeho fotku zo skladu (README, Čaká na podklady) |
 
 Letáky akcií (`img/p/*`, PDF) sa nemenili. Strešné okná RoofLITE ostávajú s `okno-strecha` (Pexels) – fotka Fakro je iná značka.
 
+### Úvod – fotka celého dvora predajne v striedaní (`img/uvod/uvod-predajna-*`, `zdroj/uvod_snimky.py`)
+Mário, e-mail 18. 11. 2026 („treba opravit“): „k tým úvodným fotkám, čo sa menia, treba pridať jednu aj našich stavebnín, tú
+čo vidieť celý stavebný materiál“; v e-maile 10:38 poslal práve fotku celého dvora (tá istá ako `img/predajna/13-dlazba-sklad`).
+Zdroj je pôvodná snímka z jeho e-mailu z 8./9. 11. 2026 v najvyššom rozlíšení, aké máme (`majitel/podklady/fotky/13.png`,
+1320 × 990, sha256 `461c9e93…19fe75`), bezstratovo v `zdroj/foto-maria/dvor-predajne-13.webp` (rozdiel pixelov 0), **bez úpravy
+tónu** (nie vzhľad „Svetlé ráno“ z `img/predajna/`). Len orez, zmenšenie (Lanczos) a prevod do AVIF a WebP, nič sa nezväčšuje
+ani nedoostruje. Je to prvá fotka striedania (`.uv-f0`, LCP); ostatné štyri (Pexels, časť nižšie) idú po nej.
+
+| súbory `img/uvod/` | výrez (x0, y0, x1, y1) v 1320 × 990 | kde | čo je mimo výrezu (zakázané oblasti v skripte) |
+|---|---|---|---|
+| `uvod-predajna-t-480\|580` | 214, 0, 794, 990 (580 × 990) | telefón do 700 px a tablet na výšku do 1024 px | nákladné auto vľavo (0, 245, 210, 604), modré nákladné auto v strede dvora (798, 190, 908, 304), posuvník Mailu pri pravom okraji (x ≥ 1298) |
+| `uvod-predajna-1082` | 214, 306, 1296, 990 (1082 × 684) | počítač a tablet na šírku | to isté; modré auto stojí vo výške radu farebných paliet, preto široký výrez začína pod ním (y ≥ 306) |
+
+Na telefóne je celý dvor (sklad, rad modrých, červených a žltých balíkov, dvor a dlažba v popredí); na počítači hlavne
+dlažba a palety, farebný rad len pri hornom okraji – lepší široký záber bez vozidla z tejto snímky nie je. Snímka má
+1320 px, takže na počítači 1440 ju prehliadač roztiahne asi 1,3× (mäkšia než fotky Pexels); originál z fotoaparátu by
+pomohol (README, Čaká na podklady).
+
 ## Fotky prvej obrazovky úvodu zo 17. 11. 2026 (`img/uvod/uvod-*`, staré fotky z pôvodného webu)
+(Od 18. 11. 2026 je pred nimi ako prvá fotka striedania Máriova fotka dvora predajne `uvod-predajna`, časť vyššie.)
 Lajko 17. 11. 2026: „zachovaj štýl písma a prvú úvodnú [obrazovku] … aj to, že sa to menilo“. Prvá obrazovka úvodu
 strieda štyri fotky, ktoré boli v pozadí úvodu pôvodného webu (`.hero`): Pexels, licencia Pexels (voľné aj na komerčné
 použitie), zdroje v `img/hd/`. Len orez, zmenšenie (Lanczos) a prevod do AVIF a WebP skriptom `zdroj/uvod_snimky.py`;
@@ -95,7 +115,7 @@ keď majiteľ dodá vlastné fotky z predajne alebo zo stavieb, stačí ich dať
 
 | súbor v `img/uvod/` | zdroj `img/hd/` | Pexels | výrez (x0, y0, x1, y1) – počítač a tablet / telefón | čo je mimo výrezu |
 |---|---|---|---|---|
-| `uvod-palety-1280|1920`, `-t-480|750` (prvá fotka, LCP) | `hero.webp` 2400 × 1600 | https://www.pexels.com/photo/32865462/ | 0, 560, 2400, 1600 / 240, 0, 990, 1600 | nákladné auto (x 1500–2060, y 300–540) a modrý sud (x 1960–2080, y 40–150) |
+| `uvod-palety-1280|1920`, `-t-480|750` (do 17. 11. prvá fotka, od 18. 11. druhá) | `hero.webp` 2400 × 1600 | https://www.pexels.com/photo/32865462/ | 0, 560, 2400, 1600 / 240, 0, 990, 1600 | nákladné auto (x 1500–2060, y 300–540) a modrý sud (x 1960–2080, y 40–150) |
 | `uvod-stavba-1280|1920`, `-t-480|710` | `stavba.webp` 2400 × 1347 | https://www.pexels.com/photo/39494022/ | celá / 720, 0, 1430, 1347 | – (telefónny výrez má 710 px, nezväčšuje sa na 750) |
 | `uvod-murar-1280|1920`, `-t-480|750` | `murar.webp` 2400 × 1599 | https://www.pexels.com/photo/30081237/ | celá / 780, 0, 1530, 1599 | – |
 | `uvod-strecha-1230`, `-t-480|750` | `strecha-praca.webp` 2400 × 1600 | https://www.pexels.com/photo/11467876/ | 0, 330, 1230, 1600 / 300, 330, 1050, 1600 | palma (x ≥ 1260), do Nitry nepatrí; široký výrez má 1230 px a nezväčšuje sa |

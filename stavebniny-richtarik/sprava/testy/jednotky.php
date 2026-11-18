@@ -516,7 +516,8 @@ t('S7: názov nad 45 znakov sa neoreže', str_contains((string)Ulohy::akcia($D, 
 $DK = Zmena::sKonstantami($D);
 $ak = Vykreslenie::vykresli('akcie-index', 'akcie/index.html', $DK); $ua = Vykreslenie::vykresli('uvod-akcie', 'index.html', $DK);
 t('akcie: TermoBRIK, Komín, Krytina, Fakro, Sadrokartón a Garáže majú na karte fotku tovaru (Akcie), na úvode tie z úvodu',
-  substr_count($ak, 'class="thumb foto"') === 6 && str_contains($ak, 'img/akcie/komin-stadreko-karta-249.webp" alt="" loading="lazy" width="249" height="380"')
+  substr_count($ak, 'class="thumb foto"') === 6 && str_contains($ak, 'src="../img/akcie/komin-stadreko-karta-249.webp" srcset="../img/akcie/komin-stadreko-karta-249.webp 249w, ../img/akcie/komin-stadreko-karta-497.webp 497w" sizes="(max-width:700px) 120px, 150px" alt="" loading="lazy" width="249" height="380"')
+  && str_contains($ua, 'srcset="img/akcie/tehla-termobrik-karta-300.webp 300w, img/akcie/tehla-termobrik-karta-600.webp 600w"') && substr_count($ak, ' srcset=') === 6
   && str_contains($ak, 'href="../novinky/garaze-zahradne-domceky.html"><img class="thumb foto" src="../img/akcie/garaz-karta-300.webp"')
   && substr_count($ua, 'class="thumb foto"') === 4 && str_contains($ua, 'img/akcie/tehla-termobrik-karta-300.webp') && substr_count($ak, 'class="thumb"') >= 9);
 t('akcie: stránka akcie TermoBRIK má hlavičku s Máriovou fotkou a leták ostal', str_contains(Vykreslenie::vykresli('hlavicka', 'akcie/pezinska-tehla-termobrik.html', $DK), 'img/kat/tehla-termobrik-1123.webp')
@@ -524,8 +525,10 @@ t('akcie: stránka akcie TermoBRIK má hlavičku s Máriovou fotkou a leták ost
   && str_contains(Vykreslenie::vykresli('hlavicka', 'akcie/komin-qatro.html', $DK), '<figure class="ph-foto cela">'));
 [$X, $e] = Ulohy::akcia($D, 'cement-325-r', $post, ['karta_foto' => nahraj("$VST/letak.jpg")]);
 $b = $e === null ? $X['akcie']['akcie'][$i] : [];
-t('akcie: nahratý obrázok na kartu = celá fotka 300 px s foto, leták a PDF bez zmeny', $e === null && ($b['nahlad']['foto'] ?? false) === true && $b['nahlad']['w'] === 300 && in_array($b['nahlad']['h'], [225, 400], true)
+t('akcie: nahratý obrázok na kartu = celá fotka 300 px s foto (a 600 px v srcset pre telefón), leták a PDF bez zmeny', $e === null && ($b['nahlad']['foto'] ?? false) === true && $b['nahlad']['w'] === 300 && in_array($b['nahlad']['h'], [225, 400], true)
   && is_file("$WEB/" . $b['nahlad']['src']) && $b['letak'] === $a['letak'] && $b['pdf'] === $a['pdf']
+  && count($b['nahlad']['sirky'] ?? []) === 2 && $b['nahlad']['sirky'][1][0] === 600 && is_file("$WEB/" . $b['nahlad']['sirky'][1][1])
+  && str_contains(Vykreslenie::vykresli('akcie-index', 'akcie/index.html', Zmena::sKonstantami($X)), ', ../' . $b['nahlad']['sirky'][1][1] . ' 600w" sizes=')
   && str_contains(Vykreslenie::vykresli('akcie-index', 'akcie/index.html', Zmena::sKonstantami($X)), '<img class="thumb foto" src="../' . $b['nahlad']['src'] . '"'), (string)$e);
 [$X2, $e] = Ulohy::akcia($X, 'cement-325-r', ['verzia' => $b['verzia'] ?? 0, 'letak_zmazat' => 1] + $post, []);
 $c = $e === null ? $X2['akcie']['akcie'][$i] : [];

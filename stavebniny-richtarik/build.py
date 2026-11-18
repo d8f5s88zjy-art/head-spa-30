@@ -1363,9 +1363,22 @@ def build_404():
     t = page(p, 'Stránka sa nenašla', body)   # svetlá stránka bez tmavej hlavičky
     t = re.sub(r'<link rel="canonical"[^>]*>\n|<meta property="og:url"[^>]*>\n', '', t)
     t = t.replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1)
-    # relatívne adresy na adresy od koreňa domény
+    # relatívne adresy na adresy od koreňa domény – aj každá adresa v srcset (logo v lište: na vnorenej adrese, napr.
+    # /katalog/nic/zle.html, by relatívny srcset načítal /katalog/nic/img/… a logo by bolo rozbité; skeptik M5 D1)
     t = re.sub(r'(\s(?:href|src)=")(?!https?:|/|#|mailto:|tel:|data:)([^"]+)"', r'\1/\2"', t)
+    t = re.sub(r'(\ssrcset=")([^"]+)"', lambda m: m.group(1) + ', '.join(
+        c if re.match(r'(https?:|/|data:)', c) else '/' + c for c in (x.strip() for x in m.group(2).split(','))) + '"', t)
     write(p, t)
+
+
+def adresy_404_relativne(t):
+    """Adresy na stránke 404, ktoré nie sú od koreňa domény (href, src, action, poster a každá adresa v srcset); 404 sa
+    servíruje na ľubovoľnej hĺbke, relatívna adresa by sa tam rozbila. Prázdny zoznam = v poriadku."""
+    zle = []
+    for a, v in re.findall(r'\s(href|src|srcset|action|poster)="([^"]*)"', t):
+        for u in ([c.strip().split()[0] for c in v.split(',') if c.strip()] if a == 'srcset' else [v]):
+            if not re.match(r'(https?:|/|#|mailto:|tel:|data:|$)', u): zle.append(f'{a}={u}')
+    return zle
 
 
 # Kontakt: karty Zavolajte nám a Napíšte nám s Máriovými grafikami (e-mail 16. 11. 2026, IMG_0313 a IMG_0309; img/ilu/kontakt-*,
@@ -1670,7 +1683,7 @@ def kontrola_uvodu():
     # 2026: „tento rad fotiek daj preč“): pod prvou obrazovkou (.uv) ide hneď pás faktov; fotky zasoba-* ostávajú len pre hlavičky
     if re.search(r'class="(zasoba|zas|zt)"|h-zasoba|V našej predajni v Nitre|uv-pocka|img/uvod/zasoba-', s) or not re.search(r'<div class="uv-cue"[^>]*>Skroluj</div>\n</section>\n<div class="facts', s):
         chyba.append('úvod: rad fotiek „V našej predajni v Nitre“ (section.zasoba, .zt, uv-pocka) má byť preč a pod úvodom (.uv) má ísť hneď pás faktov')
-    # prvá obrazovka (17. 11. 2026): fotky img/uvod sa striedajú (prvá v HTML s fetchpriority, ďalšie tri v <template>),
+    # prvá obrazovka (17. 11. 2026): fotky img/uvod sa striedajú (prvá v HTML s fetchpriority, ďalšie štyri v <template>),
     # fotka predajne 11, štítok „Naša predajňa“, rám a šikmý panel starého úvodu ani film/auto tam už nie sú
     sek = re.search(r'<section class="uv"[^>]*>.*?</section>', s, re.S)
     sek = sek.group(0) if sek else ''
@@ -1681,10 +1694,18 @@ def kontrola_uvodu():
         f0 = re.findall(r'<picture class="uv-f uv-f0">.*?</picture>', sek, re.S)
         dalsie = re.search(r'<template class="uv-dalsie">(.*?)</template>', sek, re.S)
         if len(f0) != 1 or 'fetchpriority="high"' not in f0[0] or 'loading="lazy"' in f0[0]: chyba.append('úvod: prvá fotka .uv-f0 nie je práve raz v HTML s fetchpriority="high"')
-        if not dalsie or [int(x) for x in re.findall(r'<picture class="uv-f uv-f(\d)">', dalsie.group(1))] != [1, 2, 3]: chyba.append('úvod: ďalšie tri fotky .uv-f1 až .uv-f3 nie sú v <template class="uv-dalsie">')
+        if not dalsie or [int(x) for x in re.findall(r'<picture class="uv-f uv-f(\d)">', dalsie.group(1))] != [1, 2, 3, 4]: chyba.append('úvod: ďalšie štyri fotky .uv-f1 až .uv-f4 nie sú v <template class="uv-dalsie">')
+        # Mário 18. 11. 2026: „k tým úvodným fotkám … pridať jednu aj našich stavebnín, tú čo vidieť celý stavebný materiál“ –
+        # prvá fotka (LCP) je jeho fotka celého dvora (img/uvod/uvod-predajna-*, výrezy bez áut v zdroj/uvod_snimky.py) a v CSS
+        # má každá z piatich fotiek svoje oneskorenie v 30 s cykle
+        if 'img/uvod/uvod-predajna-' not in (f0[0] if f0 else '') or 'img/uvod/uvod-palety-' not in (dalsie.group(1) if dalsie else ''):
+            chyba.append('úvod: prvá fotka .uv-f0 má byť fotka dvora predajne (uvod-predajna) a palety majú byť v <template class="uv-dalsie">')
+        _css = open(os.path.join(OUT, 'assets', 'site.css'), encoding='utf-8').read()
+        if [re.search(rf'\.uv-bg\.uv-stridaj \.uv-f{i}\{{animation:uv-slide 30s ease-in-out {6 * i}s infinite\}}', _css) is not None for i in (1, 2, 3, 4)] != [True] * 4:
+            chyba.append('úvod: v site.css nie je striedanie piatich fotiek (.uv-f1 až .uv-f4, uv-slide 30s, oneskorenie 6/12/18/24 s)')
         chybajuce = sorted({u for u in re.findall(r'(img/uvod/[\w.-]+)', sek) if not os.path.exists(os.path.join(OUT, u))})
         if chybajuce: chyba.append('úvod: chýbajú súbory ' + ', '.join(chybajuce))
-    import importlib.util as _iu   # výrezy fotiek úvodu nesmú zasiahnuť nákladiak ani palmu (zdroj/uvod_snimky.py)
+    import importlib.util as _iu   # výrezy fotiek úvodu nesmú zasiahnuť žiadne vozidlo ani palmu (zdroj/uvod_snimky.py)
     _sp = _iu.spec_from_file_location('uvod_snimky', os.path.join(OUT, 'zdroj', 'uvod_snimky.py')); _us = _iu.module_from_spec(_sp); _sp.loader.exec_module(_us)
     chyba += ['úvod: ' + c for c in _us.kontrola()]
     if s.count('<title>Stavebniny Richtárik') != 1 or len(re.findall(r'<a class="brand"[^>]*aria-label="Stavebniny Richtárik', s)) != 1: chyba.append('úvod: názov firmy nie je v titulku alebo v lište (a.brand) práve raz')
@@ -1871,11 +1892,15 @@ def kontrola_listy_paty():
             for u in re.findall(r'(?:src|srcset|href)="([^"]+)"', m.group(1)) + re.findall(r'([^\s",]+\.(?:webp|avif)) \d+w', m.group(1)):
                 u = u.split()[0]; u = u[1:] if c == '404.html' and u.startswith('/') else os.path.normpath(os.path.join(os.path.dirname(c), u))
                 if not os.path.exists(os.path.join(OUT, u)): chyba.append(f'{c}: vizitka – chýba {u}')
+    # 404 (aj s oblasťami správy, ktoré PHP prekresľuje): všetky adresy od koreňa, aj srcset loga v lište (D1)
+    for c in ('404.html',):
+        zle = adresy_404_relativne(open(os.path.join(OUT, c), encoding='utf-8').read())
+        if zle: chyba.append(f'{c}: relatívne adresy (na vnorenej adrese rozbité): {", ".join(zle[:6])}')
     och = open(os.path.join(OUT, 'asistent', 'ochrana-udajov.html'), encoding='utf-8').read()
     if f'<meta name="theme-color" content="{FARBA}">' not in och or not re.search(r'body::before \{[^}]*background: #b42226;[^}]*\} body::after \{[^}]*background: #b42226;', och):
         chyba.append('asistent/ochrana-udajov.html: chýba theme-color FARBA alebo červený pás hore a dole (body::before, body::after)')
     if chyba: print(f'POZOR: kontrola lišty a päty ({len(chyba)}):', chyba[:12])
-    else: print(f'kontrola lišty a päty: OK (lišta a päta {LISTA_PATA["footer"]}, spodná lišta telefónu {LISTA_PATA[".mbar"]} v 3 témach × 3 šírkach × úvod/podstránka × pred/po posune; theme-color {FARBA}; 3D vizitka v päte {stranky} stránok' + ('' if viz else ', údaje sa zmenili – vizitka skrytá') + ')')
+    else: print(f'kontrola lišty a päty: OK (lišta a päta {LISTA_PATA["footer"]}, spodná lišta telefónu {LISTA_PATA[".mbar"]} v 3 témach × 3 šírkach × úvod/podstránka × pred/po posune; theme-color {FARBA}; 3D vizitka v päte {stranky} stránok' + ('' if viz else ', údaje sa zmenili – vizitka skrytá') + '; 404 len s adresami od koreňa, aj srcset loga)')
     return not chyba
 
 

@@ -135,10 +135,12 @@ try {
   // Máriove grafiky s údajom v obrázku: pred zmenami sú všetky na webe
   const pocetFig = async c => ((await verejna(c)).text.match(/<figure class="fig"><a href="[^"]*img\/grafika\//g) || []).length;
   t('grafiky: pred zmenami obrázok hodín, 4 letáky a bannery, 7 obrázkov albumu bez piktogramov', (await verejna('kontakt.html')).text.includes('kontakt-hodiny-288') && (await pocetFig('letak.html')) === 4 && (await pocetFig('galeria/index.html')) === 7 && (await verejna('galeria/index.html')).text.includes('7 obrázkov') && !(await verejna('galeria/index.html')).text.includes('img/grafika/alt-'));
-  // Mário 18. 11. 2026: karty akcií s fotkou tovaru (6 na Akciách, 4 na úvode), súbory sa načítajú
+  // Mário 18. 11. 2026: karty akcií s fotkou tovaru (6 na Akciách, 4 na úvode), súbory sa načítajú; každá fotka má 300 a 600 px
+  // (srcset pre náhľad na telefóne, D2) – 12 súborov
   { const ak = (await verejna('akcie/index.html')).text, uv = (await verejna('index.html')).text, fs = [...new Set(ak.match(/img\/akcie\/[a-z0-9-]+\.webp/g) || [])];
-    t('akcie: karty s fotkou tovaru na Akciách a na úvode, súbory sa načítajú', (ak.match(/class="thumb foto"/g) || []).length === 6 && (uv.match(/class="thumb foto"/g) || []).length === 4
-      && fs.length === 6 && (await Promise.all(fs.map(async f => (await verejna(f)).kod))).every(k => k === 200)); }
+    t('akcie: karty s fotkou tovaru na Akciách a na úvode (srcset 300 a 600 px), súbory sa načítajú', (ak.match(/class="thumb foto"/g) || []).length === 6 && (uv.match(/class="thumb foto"/g) || []).length === 4
+      && (ak.match(/ srcset="[^"]*-karta-\d+\.webp \d+w, [^"]*-karta-\d+\.webp \d+w" sizes=/g) || []).length === 6
+      && fs.length === 12 && (await Promise.all(fs.map(async f => (await verejna(f)).kod))).every(k => k === 200)); }
   // pokyny majiteľa 17. 11. 2026: 3D karta (úvod, Služby), tabuľa na Kontakte, piktogramy na Službách
   { const u = (await verejna('index.html')).text, sl = (await verejna('sluzby.html')).text, ko = (await verejna('kontakt.html')).text;
     t('grafiky: pred zmenami 3D karta na úvode (aj miniatúra v páse faktov) a na Službách, tabuľa na Kontakte, piktogramy na Službách', u.includes('karta-3d-820') && u.includes('karta-3d-mini-208') && !u.includes('karta-nova') && sl.includes('karta-3d-480')

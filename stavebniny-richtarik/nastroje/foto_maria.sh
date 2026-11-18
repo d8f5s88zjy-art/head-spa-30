@@ -66,15 +66,21 @@ cast_18_11() {
   # rezivo (poslal v tej istej sérii, v zozname ho nemenoval): pripravené, na web nejde – akcia Stavebné rezivo má jeho fotku
   # zo skladu (README, Čaká na podklady); v prípade potvrdenia: karta rezivo + fotka rezivo cely bez-ostrenia
 }
-karta() {   # karta <výrez>: img/akcie/<výrez>-karta-<šírka>.webp, celý výrez zmenšený do 300 × 380 (nič sa nezväčšuje)
-  local w
+karta() {   # karta <výrez>: img/akcie/<výrez>-karta-<šírka>.webp, celý výrez zmenšený do 300 × 380 a pre telefón s hustotou 2–3
+  # (náhľad vedľa textu karty, site.css) aj do 600 × 760 – len ak je výrez väčší ako 300 × 380 (nič sa nezväčšuje)
+  local w box
   mkdir -p img/akcie
-  convert "$Z/$1.webp" -filter Lanczos -resize '300x380>' -strip "$TMP/k.png"
-  w=$(identify -format '%w' "$TMP/k.png")
-  ffmpeg -v error -y -i "$TMP/k.png" -c:v libwebp -quality 82 -compression_level 6 "img/akcie/$1-karta-$w.webp"
-  echo "img/akcie/$1-karta-$w.webp: $(identify -format '%wx%h' "img/akcie/$1-karta-$w.webp"), $(stat -c %s "img/akcie/$1-karta-$w.webp") B"
+  for box in 300x380 600x760; do
+    convert "$Z/$1.webp" -filter Lanczos -resize "$box>" -strip "$TMP/k.png"
+    w=$(identify -format '%w' "$TMP/k.png")
+    [ "$box" = 600x760 ] && [ -e "img/akcie/$1-karta-$w.webp" ] && continue   # výrez nie je väčší ako 300 × 380
+    ffmpeg -v error -y -i "$TMP/k.png" -c:v libwebp -quality 82 -compression_level 6 "img/akcie/$1-karta-$w.webp"
+    echo "img/akcie/$1-karta-$w.webp: $(identify -format '%wx%h' "img/akcie/$1-karta-$w.webp"), $(stat -c %s "img/akcie/$1-karta-$w.webp") B"
+  done
 }
 if [[ ${1:-} == 18-11 ]]; then cast_18_11; exit 0; fi
+# len obrázky na kartách akcií (bez hlavičiek): bash nastroje/foto_maria.sh karty
+if [[ ${1:-} == karty ]]; then for m in tehla-termobrik komin-stadreko krytina-blachotrapez stresne-okno-fakro sadrokarton-podhlad garaz; do karta "$m"; done; exit 0; fi
 
 # kategória ← fotka (rozhodnutie podľa Máriovho zoznamu; README časť Karty značiek a fotky kategórií)
 fotka stresne-kritiny-strecha      cely              # strešné krytiny: škridly na streche, ruka s plánom (IMG_0355 dole)

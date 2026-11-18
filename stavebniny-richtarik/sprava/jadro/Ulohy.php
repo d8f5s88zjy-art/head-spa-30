@@ -62,15 +62,19 @@ final class Ulohy
     }
 
     /** Obrázok na karte akcie (Mário 18. 11. 2026: „akcie tovaru treba vymeniť obrázky“): celá fotka tovaru zmenšená na šírku
-     *  300 px, bez výrezu letáku (D8) – nahlad s foto:true (karta ju ukáže celú, site.css .thumb.foto). Leták ani PDF nemení.
+     *  300 px (a 600 px do srcset pre telefón, ak je fotka aspoň taká široká), bez výrezu letáku (D8) – nahlad s foto:true
+     *  (karta ju ukáže celú, site.css .thumb.foto). Leták ani PDF nemení.
      *  „Odstrániť obrázok na karte“ vráti miniatúru letáku (ak leták je), inak karta ostane bez obrázka. Vráti akciu alebo chybu. */
     public static function kartaFoto(array $a, array $post, array $files, string $nazov)
     {
         if (!empty($post['karta_foto_zmazat']) && !empty($a['nahlad']['foto'])) $a['nahlad'] = self::nahladLetaku($a['letak'] ?? null);
         if (!empty($files['karta_foto']['name'])) {
-            $f = Subory::fotka($files['karta_foto'], $nazov . ' karta', [300], false);
+            $f = Subory::fotka($files['karta_foto'], $nazov . ' karta', [300, 600], false);
             if (is_string($f)) return $f;
-            $a['nahlad'] = ['src' => $f['sirky'][0][1], 'w' => $f['w'], 'h' => $f['h'], 'foto' => true];
+            // src a rozmery: 300 px (karta na počítači); 600 px len v srcset pre telefón s hustotou 2–3 (ak je fotka aspoň 600 px)
+            $s0 = $f['sirky'][0][0];
+            $a['nahlad'] = ['src' => $f['sirky'][0][1], 'w' => $s0, 'h' => (int)round($f['h'] * $s0 / $f['w']), 'foto' => true];
+            if (count($f['sirky']) > 1) $a['nahlad']['sirky'] = $f['sirky'];
         }
         return $a;
     }
