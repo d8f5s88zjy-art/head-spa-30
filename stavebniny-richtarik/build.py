@@ -519,7 +519,7 @@ def breadcrumb_ld(path, crumbs):
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}, ensure_ascii=False) + '</script>\n'
 
 
-FARBA = '#b42226'   # farba lišty prehliadača (theme-color, manifest): červená lišta webu vo všetkých témach (návrh B, Mário 18. 11. 2026: „vrchná aj spodná časť stránky bude červená“)
+FARBA = '#b42226'   # farba lišty prehliadača (theme-color, manifest): červená lišta webu vo všetkých témach (Mário 18. 11. 2026: „vrchná aj spodná časť stránky bude červená“; 16. – 18. 11. biela #ffffff, pri ?tema=tmava #111111)
 TEMA = 'farebna'    # predvolená téma v atribúte data-tema na <html> každej stránky (farebná aj bez JS; zdroj/tema-head.js)
 
 
@@ -649,7 +649,7 @@ HLAVICKA_FOTO = {
     'katalog/index.html': 'predajna:11-tvarnice-porfix-cesta', 'akcie/index.html': 'predajna:04-ytong-porfix', 'galeria/index.html': 'predajna:02-tvarnice-obloha',
     'kontakt.html': 'predajna:13-dlazba-sklad', 'o-nas.html': 'predajna:08-predajna-pult', 'sluzby.html': 'predajna:10-auta-firmy',
     'katalog/sypke-zmesy/baumit.html': 'predajna:03-baumit-sklad',
-    'katalog/murovaci-material/ytong.html': 'predajna:04-ytong-porfix', 'katalog/sadrokartonovy-zateplovaci-system.html': 'sadrokarton-montaz',
+    'katalog/murovaci-material/ytong.html': 'predajna:04-ytong-porfix',
     'katalog/stavebne-naradie-doplnky.html': 'predajna:12-predajna-regaly', 'katalog/murovaci-material/pezinske-tehelne.html': 'uvod:zasoba-tehly',
     'katalog/murovaci-material/porfix.html': 'porfix-stavba',
     # Lajko 13. 11. 2026 („fotky zmeniť, Porfix odtiaľ ber fotky, sadrokartón fotka“): Porfix – stavba z pórobetónu Porfix z webu
@@ -659,12 +659,13 @@ HLAVICKA_FOTO = {
     # namiesto kladenia podlahy s holým telom montéra (podlaha-montaz pôsobila lacno a cudzo).
     'novinky/index.html': 'zahrada', 'novinky/betonove-vyrobky.html': 'predajna:02-tvarnice-obloha', 'novinky/dekoracne-kamene.html': 'dlazba',
     'novinky/topstone-oprava-starych-chodnikov.html': 'dlazba', 'novinky/delap-ohybny-kamenny-obklad.html': 'fasada',
-    'novinky/ekostyren.html': 'beton', 'novinky/garaze-zahradne-domceky.html': 'hutny',
+    'novinky/ekostyren.html': 'beton', 'novinky/garaze-zahradne-domceky.html': 'kat:garaz',   # Máriova fotka garáže (18. 11. 2026)
     'novinky/magic-floor-vynilova-podlaha.html': 'podlaha-izba', 'novinky/vyrobky-z-plastu.html': 'zahrada',
     'letak.html': None, 'caste-otazky.html': None, 'doprava.html': 'predajna:10-auta-firmy',
-    # strešné okná: svetlá fotka strešného okna na streche (pôvodná fotka okien bola z 80 % tmavé drevo)
-    'katalog/stresne-okna.html': 'okno-strecha', 'katalog/stresne-okna/fakro.html': 'okno-strecha',
-    'katalog/stresne-okna/fakro/fakro-schody-vylezy.html': 'okno-strecha',
+    # strešné okná: Máriova fotka otvoreného strešného okna (príloha e-mailu 18. 11. 2026, poslaná k oknám Fakro) aj na
+    # podstránkach Fakro; hlavná stránka Strešné okná ju má z KAT_FOTO (do 18. 11. 2026 Pexels okno-strecha)
+    'katalog/stresne-okna/fakro.html': 'kat:stresne-okno-fakro',
+    'katalog/stresne-okna/fakro/fakro-schody-vylezy.html': 'kat:stresne-okno-fakro',
 }
 # Majiteľ 17. 11. 2026 („katalóg výrobkov – vymeniť fotky za tie, čo som poslal v prílohe“): hlavné stránky 10 kategórií majú
 # jeho fotky (img/kat, nastroje/foto_maria.sh, img/FOTKY.md). Dlaždice skupín na úvode a v Katalógu ostávajú ilustrácie (Lajko
@@ -675,6 +676,11 @@ KAT_FOTO = {
     'katalog/hutny-material.html': 'hutny-material-rury', 'katalog/izolacny-material.html': 'izolacny-material-podkrovie',
     'katalog/fasadny-system.html': 'fasadny-system-rez', 'katalog/farby-laky.html': 'farby-laky-chemolak',
     'katalog/dlazby.html': 'dlazby-vzorkova-plocha', 'katalog/podhlady-pvc.html': 'podhlady-pvc-pergola',
+    # Mário 18. 11. 2026 („vymeníte obrázky v katalógu výrobkov za nové, čo som Vám poslal: … strešné okná, dvere okná,
+    # sadrokartón“; prílohy e-mailu 10:38): namiesto Pexels okno-strecha, dvere a sadrokarton-montaz. Sypké zmesi nový obrázok
+    # v prílohách nemajú – ostáva Univer Bau (README Čaká na podklady).
+    'katalog/stresne-okna.html': 'stresne-okno-fakro', 'katalog/dvere-okna.html': 'dvere-okna-predajna',
+    'katalog/sadrokartonovy-zateplovaci-system.html': 'sadrokarton-podhlad',
 }
 HLAVICKA_FOTO.update({p: 'kat:' + m for p, m in KAT_FOTO.items()})
 KAT_FOTO_ALT = {   # opis toho, čo je na fotke (značky len tie, ktoré sú na obaloch čitateľné)
@@ -688,7 +694,17 @@ KAT_FOTO_ALT = {   # opis toho, čo je na fotke (značky len tie, ktoré sú na 
     'farby-laky-chemolak': 'Regály s plechovkami farieb Chemolak a vzorkovníky farieb',
     'dlazby-vzorkova-plocha': 'Vzorková plocha betónových dlažieb a múrikov pod holým nebom',
     'podhlady-pvc-pergola': 'Pergola s lavicami a stolom, v pozadí farebné plotovky',
+    'stresne-okno-fakro': 'Otvorené strešné okno v streche z pálených škridiel',
+    'dvere-okna-predajna': 'Ukážky interiérových dverí, zárubní a kľučiek vo vzorkovej predajni',
+    'sadrokarton-podhlad': 'Rošt podhľadu z kovových profilov pod OSB doskami, časť už zakrytá sadrokartónom',
+    # hlavičky akcií a novinky (Mário 18. 11. 2026: „akcie tovaru treba vymeniť obrázky“; data/akcie.json, data/novinky.json)
+    'tehla-termobrik': 'Paleta tehál zabalená v červenej fólii s nápisom TermoBRIK',
+    'komin-stadreko': 'Schéma komínového systému v reze s napojenou krbovou vložkou a kotlom',
+    'krytina-blachotrapez': 'Detail plechovej strešnej krytiny v červenej farbe',
+    'garaz': 'Plechová garáž s otvorenými dverami',
 }
+# fotky, ktoré sa v hlavičke ukazujú celé na bielom (object-fit contain), nie orezané na rám 4 : 3: schéma komína na výšku
+KAT_FOTO_CELA = {'komin-stadreko': '(max-width:700px) 160px, 260px'}
 # fotky hlavičiek akcií sú v data/akcie.json (pole hlavicka; nová akcia zo správy si vyberá z existujúcich hlavičiek,
 # sprava/kostry/konstanty.json → hlavicky)
 HLAVICKA_FOTO.update({a['stranka']: a['hlavicka'] for a in AKCIE if a['stranka']})
@@ -724,9 +740,11 @@ def foto_hlavicky(path, spec):
         sir = sorted(int(m.group(1)) for f in os.listdir(z) for m in [re.fullmatch(re.escape(meno) + r'-(\d+)\.webp', f)] if m)
         w, h = webp_rozmer(os.path.join(z, f'{meno}-{sir[-1]}.webp'))
         ss = lambda ext: ', '.join(f'{pre}img/kat/{meno}-{s}.{ext} {s}w' for s in sir)
-        img = (f'<picture>{tel}<source type="image/avif" srcset="{ss("avif")}" sizes="{FOTO_SIZES}">'
-               f'<img src="{pre}img/kat/{meno}-{sir[-1]}.webp" srcset="{ss("webp")}" sizes="{FOTO_SIZES}" width="{w}" height="{h}" '
+        sz = KAT_FOTO_CELA.get(meno, FOTO_SIZES)   # celá fotka na výšku je v ráme užšia
+        img = (f'<picture>{tel}<source type="image/avif" srcset="{ss("avif")}" sizes="{sz}">'
+               f'<img src="{pre}img/kat/{meno}-{sir[-1]}.webp" srcset="{ss("webp")}" sizes="{sz}" width="{w}" height="{h}" '
                f'alt="{html.escape(KAT_FOTO_ALT[meno], quote=True)}" fetchpriority="high"></picture>')
+        if meno in KAT_FOTO_CELA: return f'<figure class="ph-foto cela">{img}</figure>'
     elif druh == 'uvod':
         sir, (w, h), pos = UVOD_FOTO[meno]
         ss = lambda ext: ', '.join(f'{pre}img/uvod/{meno}-{s}.{ext} {w if s == sir[-1] else s}w' for s in sir)
@@ -935,7 +953,7 @@ def page(path, title, body, crumbs=None, extra_head='', head=None, home=False, h
     <details class="f-zb" open><summary>Katalóg</summary>{''.join(f'<a href="{rel(path, "katalog/" + nice_slug(k[0]) + ".html")}">{k[1]}</a>' for k in KATEGORIE[:8])}<a href="{rel(path, 'katalog/index.html')}">Celý katalóg</a></details>
     <div class="f-kontakt"><h3>Kontakt</h3><a href="tel:{FIRMA['mobil_tel']}">{FIRMA['mobil']}</a><a href="tel:{FIRMA['pevna_tel']}">{FIRMA['pevna']}</a><a class="mail" href="mailto:{FIRMA['email']}">{FIRMA['email']}</a>{oblast('hodiny-pata', V.vykresli('hodiny-pata', path, VD))}</div>
   </div>
-  {oblast('vizitka-pata', V.vykresli('vizitka-pata', path, VD))}
+  {oblast('pata-grafika', V.vykresli('pata-grafika', path, VD))}
   <div class="wrap bottom"><span>© <span id="rok">2026</span> {FIRMA['majitel']}, Nitra</span><a href="{rel(path, 'letak.html')}">Akciový leták</a><a href="{rel(path, 'asistent/ochrana-udajov.html')}" data-asistent-odkaz>Ochrana údajov</a><a href="{FIZOSK}" target="_blank" rel="noopener">Stavebná firma FIZO SK – www.fizosk.sk</a></div>
 </footer>
 <div class="mbar" aria-label="Rýchly kontakt"><a class="btn primary" href="tel:{FIRMA['mobil_tel']}">Zavolať</a><a class="btn ghost" href="{rel(path, 'kontakt.html')}">Cenová ponuka</a></div>
@@ -1376,18 +1394,26 @@ GRAFIKA_UDAJE = {'hodiny': [[[1, 2, 3, 4, 5], '7:00', '16:00'], [[6], '7:00', '1
 # (Mário ju poslal 8. 11. 2026; má tie isté údaje – nová adresa či číslo znamená novú kartu od majiteľa), na Kontakte nič.
 GRAFIKA_PRI = {'karta': ['ulica', 'psc', 'pevna', 'mobil', 'email'], 'tabula': ['ulica', 'psc', 'pevna', 'mobil', 'email', 'hodiny'],
                # 3D vizitka v päte každej stránky (Mário 18. 11. 2026: „celkom dole moju vizitku dať v 3D prevedení“): meno,
-               # adresa, telefóny a e-mail ako plati_pri položky vizitka v data/galeria.json; oblasť vizitka-pata
+               # adresa, telefóny a e-mail ako plati_pri položky vizitka v data/galeria.json; oblasť pata-grafika
                'vizitka': ['majitel', 'ulica', 'psc', 'pevna', 'mobil', 'email']}
 # Služby: 3D piktogramy pri službách (oblasť sluzby-polozky; img/ilu, nastroje/grafika_maria.sh, rámik 4 : 3). Služby mení
 # správa (nadpis, poradie, nové aj zmazané), preto sa obrázok priraďuje podľa slova v nadpise (malými písmenami), každý
 # najviac raz – premenovaná služba bez toho slova je bez obrázka, nikdy s cudzím. Ikona zliav má v obrázku „hotovosť 5 % |
 # karta 3,3 %“: len pri zhode vety o zľave (plati_pri zlava). Šírky súborov 240 a 480 px (rámik 160 px, telefón 200 px).
-def _sluzba_obr(meno, h, kluce, alt, plati_pri=(), sirky=(240, 480)):
+# Mário 18. 11. 2026 („Služby – doplniť piktogramy… 3D: stavebný materiál v celom sortimente, Doprava na stavbu, platba platobnou
+# kartou“): 01 mriežka ikon skupín z jeho letáku, 05 jeho 3D žlté auto, 07 ikona VÚB terminálu z letáku „Prečo nakupovať
+# u nás“ (zdroj má len 180 px: jediný súbor bez zväčšenia, rámik „mala“ najviac 180 px aj na telefóne). Dočasné výrezy, kým
+# nepošle samostatné piktogramy (README Čaká na podklady). Kľúč 07 je „kart“, nie „platb“ – „platbe“ nie je v nadpise zliav.
+def _sluzba_obr(meno, h, kluce, alt, plati_pri=(), sirky=(240, 480), mala=False):
     return {'kluce': list(kluce), 'plati_pri': list(plati_pri), 'w': sirky[-1], 'h': h, 'alt': alt, 'src': f'img/ilu/{meno}-{sirky[-1]}.webp',
-            'webp': ', '.join(f'img/ilu/{meno}-{w}.webp {w}w' for w in sirky), 'avif': ', '.join(f'img/ilu/{meno}-{w}.avif {w}w' for w in sirky)}
-SLUZBY_OBR = [_sluzba_obr('sluzba-vypocet', 360, ['výpočet'], texty.OBR_ALT['ilu:zdarma-vypocet']),
+            'webp': ', '.join(f'img/ilu/{meno}-{w}.webp {w}w' for w in sirky), 'avif': ', '.join(f'img/ilu/{meno}-{w}.avif {w}w' for w in sirky),
+            'mala': mala}
+SLUZBY_OBR = [_sluzba_obr('sluzba-sortiment', 360, ['sortiment'], texty.OBR_ALT['ilu:sluzba-sortiment']),
+              _sluzba_obr('sluzba-vypocet', 360, ['výpočet'], texty.OBR_ALT['ilu:zdarma-vypocet']),
               _sluzba_obr('sluzba-poradenstvo', 364, ['poradenstv'], texty.OBR_ALT['ilu:poradenstvo']),
-              _sluzba_obr('zlavy', 360, ['zľav'], texty.OBR_ALT['ilu:zlavy'], ['zlava'], (288, 480))]
+              _sluzba_obr('zlavy', 360, ['zľav'], texty.OBR_ALT['ilu:zlavy'], ['zlava'], (288, 480)),
+              _sluzba_obr('sluzba-doprava', 360, ['doprav'], texty.OBR_ALT['ilu:sluzba-doprava']),
+              _sluzba_obr('sluzba-platba', 135, ['kart'], texty.OBR_ALT['ilu:sluzba-platba'], sirky=(180,), mala=True)]
 
 
 def build_kontakt():
@@ -1727,6 +1753,132 @@ def kontrola_farieb():
     return not zle
 
 
+# Lišta a päta (Mário 18. 11. 2026: „vrchná aj spodná časť stránky bude červená“; „celkom dole moju vizitku dať v 3D
+# prevedení“): podklad lišty a päty má byť vo všetkých troch témach a na všetkých šírkach červená z loga #b42226, spodná
+# lišta telefónu čierna; 3D vizitka (oblasť pata-grafika) je v päte každej stránky, kým údaje platia.
+LISTA_PATA = {'header.top': '#b42226', 'footer': '#b42226', '.mbar': '#141414'}
+
+
+def _css_pravidla(t):
+    """Pravidlá site.css ako (media, selektor, deklarácie, poradie); komentáre preč, @media sa vnárajú."""
+    t = re.sub(r'/\*.*?\*/', '', t, flags=re.S)
+    zas, von, buf = [], [], ''
+    for ch in t:
+        if ch == '{':
+            zas.append(buf.strip()); buf = ''
+        elif ch == '}':
+            s = zas.pop()
+            if not s.startswith('@') and buf.strip(): von.append((tuple(x for x in zas if x.startswith('@')), s, buf.strip(), len(von)))
+            buf = ''
+        else: buf += ch
+    return von
+
+
+def _specificita(sel):
+    """Špecificita (a, b, c) jedného selektora; :is()/:not() berú najvyššiu z argumentov, :where() nulu."""
+    a = b = c = 0
+    while True:   # vnútro :is/:not/:where nahradí jeho najvyššou špecificitou (od najvnútornejších)
+        m = re.search(r':(is|not|where)\(([^()]*)\)', sel)
+        if not m: break
+        sp = (0, 0, 0) if m.group(1) == 'where' else max(_specificita(x.strip()) for x in m.group(2).split(','))
+        a, b, c = a + sp[0], b + sp[1], c + sp[2]; sel = sel[:m.start()] + ' ' + sel[m.end():]
+    a += len(re.findall(r'#[\w-]+', sel))
+    b += len(re.findall(r'\.[\w-]+|\[[^\]]*\]|:(?!:)[\w-]+', sel))
+    c += len(re.findall(r'(?:^|[\s>+~(])([a-z][\w-]*)', sel)) + len(re.findall(r'::[\w-]+', sel))
+    return (a, b, c)
+
+
+def _media_plati(media, sirka):
+    for m in media:
+        if re.search(r'\bprint\b', m) and 'screen' not in m: return False
+        for k, v in re.findall(r'\((min|max)-width:\s*(\d+)px\)', m):
+            if (k == 'min' and sirka < int(v)) or (k == 'max' and sirka > int(v)): return False
+    return True
+
+
+def _selektor_plati(sel, prvok, tema, stav):
+    """Zodpovedá selektor prvku lišty, päty alebo spodnej lišty v danej téme a stave? Neznáme predky (napr. html.vt)
+    berie ako možnú zhodu, aby kontrola nič neprehliadla."""
+    casti = sel.replace('>', ' ').split()
+    if not casti: return False
+    pod = casti[-1]
+    if prvok == 'header.top':
+        if not re.fullmatch(r'(header)?\.top(\.scrolled)?', pod) or ('.scrolled' in pod and not stav['posun']): return False
+    elif prvok == 'footer':
+        if pod != 'footer': return False
+    elif pod != '.mbar': return False
+    for x in casti[:-1]:
+        t = re.findall(r'data-tema="(\w+)"', x)
+        if x.startswith('html'):
+            if ':not([data-tema])' in x and not x.startswith(':is') and tema != 'svetla': return False
+            if t and not x.startswith(':is') and tema not in t: return False
+        elif x.startswith('body'):
+            if '.home' in x and not stav['uvod']: return False
+        elif x.startswith(':is(html'):
+            if t and tema not in t and tema != 'svetla': return False
+    return True
+
+
+def kontrola_listy_paty():
+    """Podklad lišty (header.top, aj lepkavej po posune), päty a spodnej lišty telefónu podľa kaskády site.css (špecificita,
+    poradie, @media podľa šírky 360 / 800 / 1440 px) vo všetkých troch témach a na úvode aj podstránke; theme-color všetkých
+    stránok a manifestu = FARBA; 3D vizitka (oblasť pata-grafika) v päte každej stránky tesne pred pásom s copyrightom, s
+    rozmermi (bez posunu rozloženia), lazy a s existujúcimi súbormi, kým platia údaje GRAFIKA_PRI['vizitka']."""
+    css = open(os.path.join(OUT, 'assets', 'site.css'), encoding='utf-8').read()
+    prav = _css_pravidla(css)
+    prem = dict(re.findall(r'(--b-[\w-]+):\s*(#[0-9a-f]{6})', css))
+    chyba = []
+    for prvok, chce in LISTA_PATA.items():
+        for tema in ('farebna', 'svetla', 'tmava'):
+            for sirka in (360, 800, 1440):
+                if prvok == '.mbar' and sirka > 980: continue
+                for uvod in (True, False):
+                    for posun in (False, True):
+                        stav, vitaz = {'uvod': uvod, 'posun': posun}, None
+                        for media, sel, dekl, por in prav:
+                            if not _media_plati(media, sirka): continue
+                            bg = re.findall(r'(?:^|;)\s*background(?:-color)?\s*:\s*([^;]+)', dekl)
+                            if not bg: continue
+                            for s in sel.split(','):
+                                s = s.strip()
+                                if not _selektor_plati(s, prvok, tema, stav): continue
+                                k = (_specificita(s), por)
+                                if not vitaz or k >= vitaz[0]: vitaz = (k, bg[-1].strip(), s)
+                        hod = vitaz and re.sub(r'var\((--b-[\w-]+)\)', lambda m: prem.get(m.group(1), m.group(0)), vitaz[1]).lower()
+                        if hod != chce: chyba.append(f'{prvok} {tema} {sirka} px{" úvod" if uvod else ""}{" po posune" if posun else ""}: {vitaz and vitaz[2]} {{background:{vitaz and vitaz[1]}}} (má byť {chce})')
+    man = json.load(open(os.path.join(OUT, 'manifest.webmanifest'), encoding='utf-8'))
+    if FARBA != LISTA_PATA['header.top'] or man.get('theme_color') != FARBA: chyba.append(f'theme-color (FARBA {FARBA}, manifest {man.get("theme_color")}) nie je farba lišty {LISTA_PATA["header.top"]}')
+    viz = V.udaje_platia(VD, VD['k']['grafika_pri']['vizitka'])
+    stranky = 0
+    for kor, dirs, subory in os.walk(OUT):
+        dirs[:] = [x for x in dirs if x not in ('img', 'pdf', 'subory', 'zdroj', 'nasadenie', '__pycache__', '.git', 'sprava', 'data', 'nastroje', 'asistent')]
+        for f in subory:
+            if not f.endswith('.html'): continue
+            c = os.path.relpath(os.path.join(kor, f), OUT); t = open(os.path.join(kor, f), encoding='utf-8').read()
+            if f'<meta name="theme-color" content="{FARBA}">' not in t: chyba.append(f'{c}: theme-color nie je {FARBA}')
+            if '<footer' not in t: continue
+            stranky += 1
+            pata = t[t.index('<footer'):t.index('</footer>')]
+            m = re.search(r'<!--s:pata-grafika-->(.*?)<!--/s:pata-grafika-->\n  <div class="wrap bottom">', pata, re.S)
+            if not m: chyba.append(f'{c}: v päte nie je oblasť pata-grafika tesne pred pásom s copyrightom'); continue
+            if not viz:
+                if m.group(1): chyba.append(f'{c}: vizitka v päte, hoci údaje GRAFIKA_PRI["vizitka"] neplatia')
+                continue
+            img = re.search(r'<img [^>]*>', m.group(1))
+            if not img or not re.search(r'width="\d+" height="\d+"', img.group(0)) or 'loading="lazy"' not in img.group(0) or 'alt=""' in img.group(0):
+                chyba.append(f'{c}: vizitka v päte bez rozmerov, bez loading="lazy" alebo bez popisu'); continue
+            pre = '' if c == '404.html' else os.path.relpath(OUT, kor) + '/'
+            for u in re.findall(r'(?:src|srcset|href)="([^"]+)"', m.group(1)) + re.findall(r'([^\s",]+\.(?:webp|avif)) \d+w', m.group(1)):
+                u = u.split()[0]; u = u[1:] if c == '404.html' and u.startswith('/') else os.path.normpath(os.path.join(os.path.dirname(c), u))
+                if not os.path.exists(os.path.join(OUT, u)): chyba.append(f'{c}: vizitka – chýba {u}')
+    och = open(os.path.join(OUT, 'asistent', 'ochrana-udajov.html'), encoding='utf-8').read()
+    if f'<meta name="theme-color" content="{FARBA}">' not in och or not re.search(r'body::before \{[^}]*background: #b42226;[^}]*\} body::after \{[^}]*background: #b42226;', och):
+        chyba.append('asistent/ochrana-udajov.html: chýba theme-color FARBA alebo červený pás hore a dole (body::before, body::after)')
+    if chyba: print(f'POZOR: kontrola lišty a päty ({len(chyba)}):', chyba[:12])
+    else: print(f'kontrola lišty a päty: OK (lišta a päta {LISTA_PATA["footer"]}, spodná lišta telefónu {LISTA_PATA[".mbar"]} v 3 témach × 3 šírkach × úvod/podstránka × pred/po posune; theme-color {FARBA}; 3D vizitka v päte {stranky} stránok' + ('' if viz else ', údaje sa zmenili – vizitka skrytá') + ')')
+    return not chyba
+
+
 def konstanty():
     """Konštanty pre vykreslenie oblastí (nastroje/vykreslenie.py aj sprava/jadro/Vykreslenie.php): doména, farba, titulky
     stránok s oblasťou meta, názvy stránok katalógu (odkazy „Tento tovar v katalógu“) a hotové fotky hlavičiek, z ktorých
@@ -1894,4 +2046,5 @@ if __name__ == '__main__':
     kontrola_uvodu()
     kontrola_textov()
     kontrola_farieb()
+    kontrola_listy_paty()
     print('vygenerovaných stránok HTML:', len(ZAPISANE), '(úvod index.html sa upravuje ručne)')

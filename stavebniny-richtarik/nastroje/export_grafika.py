@@ -41,12 +41,10 @@ GRAFIKA = {'id': 'grafika', 'nadpis': 'Logo a firemná grafika', 'fotky': [
     pol('tabula-siroka', 'Firemná tabuľa Richtárik Stavebniny'),
     pol('tabula-vysoka', 'Firemná tabuľa s adresou, kontaktom a otváracou dobou', ['ulica', 'psc', 'pevna', 'mobil', 'email', 'hodiny']),
     pol('vizitka', 'Vizitka Ing. Mário Richtárik – Stavebniny', ['majitel', 'ulica', 'psc', 'pevna', 'mobil', 'email']),
-    pol('karta', 'Zákaznícka karta Stavebniny Richtárik', ['ulica', 'psc', 'pevna', 'mobil', 'email']),
-    pol('alt-auto-zlte', 'Ilustrácia: nákladné auto s paletami tehál'),
-    pol('alt-sypke-zmesi-ikona', 'Ilustrácia: robotník s lopatou a fúrikom'),
-    pol('alt-okna-robotnik', 'Ilustrácia: robotník nesie okno'),
-    pol('alt-rezivo-kruh', 'Ilustrácia: robotník reže drevo'),
-    pol('alt-stresne-krytiny-stvorec', 'Ilustrácia: pokrývač kladie škridlu')]}
+    pol('karta', 'Zákaznícka karta Stavebniny Richtárik', ['ulica', 'psc', 'pevna', 'mobil', 'email'])]}
+# Päť piktogramov iného štýlu (alt-auto-zlte, alt-sypke-zmesi-ikona, alt-okna-robotnik, alt-rezivo-kruh,
+# alt-stresne-krytiny-stvorec) bolo v albume od 16. 11. 2026; majiteľ ich 18. 11. 2026 dal z Galérie zmazať („z galérie vymazať
+# tie obrázky, čo sme hovorili – piktogramy“). Žlté auto alt-auto-zlte je odvtedy pri službe Doprava na stavbu (img/ilu/sluzba-doprava).
 
 if __name__ == '__main__':
     g = json.load(open(CESTA, encoding='utf-8'))

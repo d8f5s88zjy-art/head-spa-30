@@ -137,9 +137,10 @@ final class Vykreslenie
     {
         if ($a['stranka']) { $href = self::rel($cesta, $a['stranka']); $viac = 'Leták akcie'; }
         else { $href = self::rel($cesta, $a['odkaz']['stranka']); $viac = $a['odkaz']['text']; }
+        // obrázok na karte: miniatúra letáku alebo celá fotka tovaru (foto), aj pri karte bez vlastnej stránky
         $n = $a['nahlad'] ?? null;
         return ['href' => $href, 'stitok' => self::txt($a['stitok']), 'nazov' => self::txt($a['nazov']), 'karta' => self::txt($a['karta']), 'viac' => self::txt($viac),
-                'nahlad' => ($n && $a['stranka']) ? ['src' => self::rel($cesta, $n['src']), 'w' => $n['w'], 'h' => $n['h']] : null];
+                'nahlad' => $n ? ['src' => self::rel($cesta, $n['src']), 'w' => $n['w'], 'h' => $n['h'], 'foto' => !empty($n['foto'])] : null];
     }
 
     public static function pdf_text(array $a, array $p): string
@@ -437,7 +438,7 @@ final class Vykreslenie
                 foreach ($o['kluce'] as $k) if (str_contains($n, $k)) $ok = true;
                 if (!$ok) continue;
                 $pouzite[$i] = true;
-                if (self::udaje_platia($D, $o['plati_pri'])) $p['obr'] = array_intersect_key($o, array_flip(['src', 'webp', 'avif', 'w', 'h'])) + ['alt' => self::txt($o['alt'])];
+                if (self::udaje_platia($D, $o['plati_pri'])) $p['obr'] = array_intersect_key($o, array_flip(['src', 'webp', 'avif', 'w', 'h', 'mala'])) + ['alt' => self::txt($o['alt'])];
                 break;
             }
         }
@@ -555,8 +556,9 @@ final class Vykreslenie
             case 'galeria-letaky': case 'galeria-grafika': return $S('galeria-grafika', self::grafika_vm($D, substr($oid, 8), $cesta));
             case 'sluzby-zlavy': return $S('sluzby-zlavy', ['zlava' => self::zlava($D), 'karta3d' => self::karta3d($D), 'akcie_href' => self::rel($cesta, 'akcie/index.html')]);
             case 'uvod-karta': return $S('uvod-karta', ['karta3d' => self::karta3d($D)]);
+            case 'uvod-karta-mini': return $S('uvod-karta-mini', ['karta3d' => self::karta3d($D)]);   // miniatúra v páse faktov úvodu
             case 'sluzby-kontakt': return $S('sluzby-kontakt', self::sluzby_kontakt_vm($D));
-            case 'vizitka-pata': return $S('vizitka-pata', ['obr' => self::udaje_platia($D, $D['k']['grafika_pri']['vizitka']), 'pre' => $cesta === '404.html' ? '/' : self::rel($cesta, '')]);   // 404 má adresy od koreňa (build_404)
+            case 'pata-grafika': return $S('pata-grafika', ['obr' => self::udaje_platia($D, $D['k']['grafika_pri']['vizitka']), 'pre' => $cesta === '404.html' ? '/' : self::rel($cesta, '')]);   // 404 má adresy od koreňa (build_404)
             case 'kontakt-tabula': return $S('kontakt-tabula', ['obr' => self::udaje_platia($D, $D['k']['grafika_pri']['tabula'])]);
             case 'sluzby-lede': return $S('lede', ['text' => self::txt($D['texty']['sluzby_uvod'])]);
             case 'sluzby-polozky': return $S('sluzby-polozky', self::sluzby_polozky_vm($D));

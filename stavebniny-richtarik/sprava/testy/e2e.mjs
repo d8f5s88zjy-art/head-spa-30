@@ -62,6 +62,13 @@ async function pis(loc, text, pomaly) {
 }
 async function rozmyslaj(pomaly) { if (pomaly) await cakaj(2000); }
 async function verejna(cesta) { const r = await s.request.get(URL + cesta); return { kod: r.status(), text: await r.text() }; }
+// 3D vizitka v päte (Mário 18. 11. 2026; oblasť pata-grafika): koľko z týchto stránok ju má v HTML
+const PATA_VIZ = ['index.html', 'kontakt.html', 'katalog/dlazby.html', '404.html'];
+async function vizitkyVPate() { let n = 0; for (const c of PATA_VIZ) { const x = (await verejna(c)).text; if (/<!--s:pata-grafika--><div class="wrap f-viz">[^]*?vizitka-p-960\.webp[^]*?<!--\/s:pata-grafika-->/.test(x)) n++; } return n; }
+// vizitka sa v päte naozaj vykreslí: obrázok načítaný, s rozmermi, pod obsahom päty a nad pásom s copyrightom
+async function vizitkaVidno(c) { await s.goto(URL + c); const v = s.locator('footer .f-viz img'); if (await v.count() !== 1) return false; await v.scrollIntoViewIfNeeded(); await s.waitForFunction(() => { const i = document.querySelector('footer .f-viz img'); return i && i.complete && i.naturalWidth > 0; }, null, { timeout: 8000 }).catch(() => 0);
+  return s.evaluate(() => { const i = document.querySelector('footer .f-viz img'), b = document.querySelector('footer .bottom').getBoundingClientRect(), g = document.querySelector('footer .grid').getBoundingClientRect(), r = i.getBoundingClientRect();
+    return i.naturalWidth > 0 && i.getAttribute('width') && i.getAttribute('height') && i.loading === 'lazy' && r.width > 200 && r.top >= g.bottom && r.top < b.top && r.bottom > b.top; }); }
 async function bezKoduSpravy(cesty) {
   for (const c of cesty) {
     const v = await verejna(c);
@@ -127,11 +134,16 @@ try {
 
   // Máriove grafiky s údajom v obrázku: pred zmenami sú všetky na webe
   const pocetFig = async c => ((await verejna(c)).text.match(/<figure class="fig"><a href="[^"]*img\/grafika\//g) || []).length;
-  t('grafiky: pred zmenami obrázok hodín, 4 letáky a bannery, 12 obrázkov albumu', (await verejna('kontakt.html')).text.includes('kontakt-hodiny-288') && (await pocetFig('letak.html')) === 4 && (await pocetFig('galeria/index.html')) === 12 && (await verejna('galeria/index.html')).text.includes('12 obrázkov'));
+  t('grafiky: pred zmenami obrázok hodín, 4 letáky a bannery, 7 obrázkov albumu bez piktogramov', (await verejna('kontakt.html')).text.includes('kontakt-hodiny-288') && (await pocetFig('letak.html')) === 4 && (await pocetFig('galeria/index.html')) === 7 && (await verejna('galeria/index.html')).text.includes('7 obrázkov') && !(await verejna('galeria/index.html')).text.includes('img/grafika/alt-'));
+  // Mário 18. 11. 2026: karty akcií s fotkou tovaru (6 na Akciách, 4 na úvode), súbory sa načítajú
+  { const ak = (await verejna('akcie/index.html')).text, uv = (await verejna('index.html')).text, fs = [...new Set(ak.match(/img\/akcie\/[a-z0-9-]+\.webp/g) || [])];
+    t('akcie: karty s fotkou tovaru na Akciách a na úvode, súbory sa načítajú', (ak.match(/class="thumb foto"/g) || []).length === 6 && (uv.match(/class="thumb foto"/g) || []).length === 4
+      && fs.length === 6 && (await Promise.all(fs.map(async f => (await verejna(f)).kod))).every(k => k === 200)); }
   // pokyny majiteľa 17. 11. 2026: 3D karta (úvod, Služby), tabuľa na Kontakte, piktogramy na Službách
   { const u = (await verejna('index.html')).text, sl = (await verejna('sluzby.html')).text, ko = (await verejna('kontakt.html')).text;
-    t('grafiky: pred zmenami 3D karta na úvode a na Službách, tabuľa na Kontakte, piktogramy na Službách', u.includes('karta-3d-820') && !u.includes('karta-nova') && sl.includes('karta-3d-480')
-      && ko.includes('tabula-vysoka-k-240') && sl.includes('kontakt-zavolajte-480') && sl.includes('kontakt-napiste-480') && sl.includes('zlavy-480') && sl.includes('sluzba-vypocet-480') && sl.includes('sluzba-poradenstvo-480')); }
+    t('grafiky: pred zmenami 3D karta na úvode (aj miniatúra v páse faktov) a na Službách, tabuľa na Kontakte, piktogramy na Službách', u.includes('karta-3d-820') && u.includes('karta-3d-mini-208') && !u.includes('karta-nova') && sl.includes('karta-3d-480')
+      && ko.includes('tabula-vysoka-k-240') && sl.includes('kontakt-zavolajte-480') && sl.includes('kontakt-napiste-480') && sl.includes('zlavy-480') && sl.includes('sluzba-vypocet-480') && sl.includes('sluzba-poradenstvo-480')
+      && sl.includes('sluzba-sortiment-480') && sl.includes('sluzba-doprava-480') && sl.includes('sluzba-platba-180')); }
 
   // ---------- 3. otváracie hodiny ----------
   await tuk('a.dlazdica:has-text("Otváracie hodiny")');
@@ -149,7 +161,7 @@ try {
   const kh = (await verejna('kontakt.html')).text;
   t('grafiky: zmena hodín skryje obrázok hodín na Kontakte, tabuľka ostane', !kh.includes('kontakt-hodiny') && !kh.includes('khod-obr') && /<!--s:hodiny-kontakt--><table class="hours">/.test(kh));
   t('grafiky: zmena hodín skryje leták Prečo nakupovať a tabuľu s otváracou dobou', !(await verejna('letak.html')).text.includes('letak-preco-nakupovat') && (await pocetFig('letak.html')) === 3
-    && !(await verejna('galeria/index.html')).text.includes('tabula-vysoka') && (await verejna('galeria/index.html')).text.includes('11 obrázkov'));
+    && !(await verejna('galeria/index.html')).text.includes('tabula-vysoka') && (await verejna('galeria/index.html')).text.includes('6 obrázkov'));
   t('grafiky: zmena hodín skryje tabuľu s otváracou dobou na Kontakte, 3D karta ostane', !kh.includes('tabula-vysoka') && (await verejna('index.html')).text.includes('karta-3d-820'));
   await s.goto(URL + 'kontakt.html'); await s.locator('.khod').scrollIntoViewIfNeeded();
   t('grafiky: karta Otváracie hodiny bez obrázka sa zobrazí', (await s.locator('.khod .hours').isVisible()) && (await s.locator('.khod picture').count()) === 0);
@@ -343,10 +355,12 @@ try {
   // karty Kontaktu: grafika „Zavolajte nám“ má staré číslo v obrázku, preto zmizne; karta ostane s novým číslom
   const kk = (await verejna('kontakt.html')).text;
   t('kontakt: zmena mobilu skryje obrázok Zavolajte nám, karta ostane', !kk.includes('kontakt-zavolajte') && kk.includes('kontakt-napiste-480') && /<h2 class="kk-n">Zavolajte nám<\/h2><a class="big kk-hl" href="tel:\+421905111222">/.test(kk));
-  t('grafiky: zmena mobilu skryje aj vizitku, kartu a leták so sortimentom', (await pocetFig('galeria/index.html')) === 9 && (await verejna('galeria/index.html')).text.includes('9 obrázkov')
+  t('grafiky: zmena mobilu skryje aj vizitku, kartu a leták so sortimentom', (await pocetFig('galeria/index.html')) === 4 && (await verejna('galeria/index.html')).text.includes('4 obrázky')
     && !(await verejna('galeria/index.html')).text.includes('vizitka') && !(await verejna('letak.html')).text.includes('letak-stavebniny-richtarik') && (await pocetFig('letak.html')) === 2);
+  t('päta: zmena mobilu skryje 3D vizitku v päte (úvod, Kontakt, Dlažby, 404), päta ostane', (await vizitkyVPate()) === 0
+    && PATA_VIZ.length === (await Promise.all(PATA_VIZ.map(async c => (await verejna(c)).text))).filter(x => x.includes('<!--s:pata-grafika--><!--/s:pata-grafika-->\n  <div class="wrap bottom">')).length);
   { const u = (await verejna('index.html')).text, sl = (await verejna('sluzby.html')).text;
-    t('grafiky: zmena mobilu – na úvode a na Službách plochá karta namiesto 3D, na Službách bez Zavolajte nám, Napíšte nám ostane', u.includes('karta-nova-671') && !u.includes('karta-3d')
+    t('grafiky: zmena mobilu – na úvode a na Službách plochá karta namiesto 3D (miniatúra v páse faktov zmizne), na Službách bez Zavolajte nám, Napíšte nám ostane', u.includes('karta-nova-671') && !u.includes('karta-3d')
       && sl.includes('karta-nova-671') && !sl.includes('karta-3d') && !sl.includes('kontakt-zavolajte') && sl.includes('kontakt-napiste-480')); }
   await s.goto(URL + 'sluzby.html'); await s.locator('.cta-pas').scrollIntoViewIfNeeded();
   t('Služby: výzva pred pätou s jedným piktogramom sa zobrazí', (await s.locator('.cta-ik picture').count()) === 1 && (await s.locator('.cta-ik picture img').first().isVisible()));
@@ -360,12 +374,14 @@ try {
   await zverejni('kontakt-vratenie');
   t('kontakt: po vrátení pôvodný mobil', nb((await verejna('kontakt.html')).text).includes('0905 622 223') && !nb((await verejna('index.html')).text).includes('0905 111 222'));
   t('kontakt: po vrátení je obrázok Zavolajte nám späť', (await verejna('kontakt.html')).text.includes('kontakt-zavolajte-480'));
-  t('grafiky: po vrátení mobilu je 3D karta späť a na Službách oba piktogramy', (await verejna('index.html')).text.includes('karta-3d-820') && (await verejna('sluzby.html')).text.includes('karta-3d-480')
+  t('grafiky: po vrátení mobilu je 3D karta späť (aj miniatúra) a na Službách oba piktogramy', (await verejna('index.html')).text.includes('karta-3d-820') && (await verejna('index.html')).text.includes('karta-3d-mini-208') && (await verejna('sluzby.html')).text.includes('karta-3d-480')
     && (await verejna('sluzby.html')).text.includes('kontakt-zavolajte-480'));
-  t('grafiky: po vrátení mobilu sú vizitka, karta a leták so sortimentom späť', (await pocetFig('galeria/index.html')) === 11 && (await verejna('galeria/index.html')).text.includes('vizitka-n') && (await pocetFig('letak.html')) === 3);
+  t('grafiky: po vrátení mobilu sú vizitka, karta a leták so sortimentom späť', (await pocetFig('galeria/index.html')) === 6 && (await verejna('galeria/index.html')).text.includes('vizitka-n') && (await pocetFig('letak.html')) === 3);
+  t('päta: po vrátení mobilu je 3D vizitka späť v päte (úvod, Kontakt, Dlažby, 404)', (await vizitkyVPate()) === PATA_VIZ.length);
+  t('päta: 3D vizitka sa na Kontakte vykreslí medzi obsahom päty a pásom s copyrightom', await vizitkaVidno('kontakt.html'));
 
   // ---------- 8f. e-mail a pevná linka: obrázok s údajom zmizne, po vrátení je späť ----------
-  // (hodiny sú od kroku 3 zmenené, preto je v albume grafiky 11 obrázkov a na Letáku 3)
+  // (hodiny sú od kroku 3 zmenené, preto je v albume grafiky 6 obrázkov a na Letáku 3)
   for (const [pole, hodnota, popis, zmizne, ostane] of [['email', 'predajna@stavebniny-test.sk', 'e-mail', 'kontakt-napiste', 'kontakt-zavolajte-480'],
     ['pevna', '037 111 22 33', 'pevná linka', 'kontakt-zavolajte', 'kontakt-napiste-480']]) {
     await s.goto(URL + 'sprava/');
@@ -377,8 +393,9 @@ try {
     await zverejni(`kontakt-${pole}`);
     const k2 = (await verejna('kontakt.html')).text, g2 = (await verejna('galeria/index.html')).text;
     t(`kontakt (${popis}): zmena skryje len obrázok s týmto údajom, karta ostane s novou hodnotou`, !k2.includes(zmizne) && k2.includes(ostane) && nb(k2).includes(hodnota));
-    t(`grafiky (${popis}): zmena skryje vizitku, kartu a leták so sortimentom`, (await pocetFig('galeria/index.html')) === 9 && !g2.includes('vizitka') && !g2.includes('karta-n')
+    t(`grafiky (${popis}): zmena skryje vizitku, kartu a leták so sortimentom`, (await pocetFig('galeria/index.html')) === 4 && !g2.includes('vizitka') && !g2.includes('karta-n')
       && !(await verejna('letak.html')).text.includes('letak-stavebniny-richtarik') && (await pocetFig('letak.html')) === 2);
+    t(`päta (${popis}): zmena skryje 3D vizitku v päte`, (await vizitkyVPate()) === 0);
     await s.goto(URL + 'sprava/');
     await tuk('a.dlazdica:has-text("História")');
     await tuk('button:has-text("Vrátiť")');
@@ -386,7 +403,8 @@ try {
     await zverejni(`kontakt-${pole}-vratenie`);
     const k3 = (await verejna('kontakt.html')).text;
     t(`kontakt (${popis}): po vrátení sú oba obrázky a pôvodná hodnota späť`, k3.includes('kontakt-zavolajte-480') && k3.includes('kontakt-napiste-480') && !nb(k3).includes(hodnota));
-    t(`grafiky (${popis}): po vrátení sú vizitka, karta a leták so sortimentom späť`, (await pocetFig('galeria/index.html')) === 11 && (await verejna('galeria/index.html')).text.includes('vizitka-n') && (await pocetFig('letak.html')) === 3);
+    t(`grafiky (${popis}): po vrátení sú vizitka, karta a leták so sortimentom späť`, (await pocetFig('galeria/index.html')) === 6 && (await verejna('galeria/index.html')).text.includes('vizitka-n') && (await pocetFig('letak.html')) === 3);
+    t(`päta (${popis}): po vrátení je 3D vizitka späť v päte`, (await vizitkyVPate()) === PATA_VIZ.length);
   }
 
   // ---------- 8g. obrázok pridaný do albumu grafiky: v rámiku má obe šírky, na Galérii sa vykreslí a otvorí ----------
@@ -401,7 +419,7 @@ try {
   await zverejni('galeria-grafika');
   v = await verejna('galeria/index.html');
   const mg = v.text.match(/<img src="\.\.\/(img\/s\/[^"]+-1200\.webp)" srcset="\.\.\/(img\/s\/[^"]+-600\.webp) 600w, \.\.\/img\/s\/[^"]+-1200\.webp 1200w" sizes="[^"]+" alt="Skúšobný obrázok do albumu grafiky"/);
-  t('grafiky: pridaný obrázok je v albume so šírkami 600 a 1200 px', !!mg && v.text.includes('12 obrázkov'));
+  t('grafiky: pridaný obrázok je v albume so šírkami 600 a 1200 px', !!mg && v.text.includes('7 obrázkov'));
   t('grafiky: súbory pridaného obrázka sa načítajú', !!mg && (await verejna(mg[1])).kod === 200 && (await verejna(mg[2])).kod === 200);
   await s.goto(URL + 'galeria/index.html');
   const ob = s.locator('img[alt="Skúšobný obrázok do albumu grafiky"]');

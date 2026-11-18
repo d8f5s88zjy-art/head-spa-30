@@ -4,6 +4,8 @@
 # obrázok: 'p/ID' fotka z pôvodného webu, 'predajna:<názov>' Máriova fotka z img/predajna, alebo názov fotky z img/ (900 × 600,
 # img/FOTKY.md), None = fotka kategórie. Kde je fotka kategórie zároveň v hlavičke stránky (sadrokartón), dostane karta vlastnú,
 # aby sa tá istá fotka neopakovala na jednej stránke (kontrola 13. 11. 2026, A1).
+# Masterplast od 18. 11. 2026 len s logom (ako Velux): ilustračná fotka fasády z Pexels (zateplenie-fasada) nebola Máriova
+# a jeho vlastnú fotku Masterplastu nemáme.
 
 ZNACKY = {
     ('dlazby', 'premac'): ('Zámková dlažba, terasové platne, svahové systémy, plotové tvárnice, palisády, obrubníky a odvodňovacie žľaby.', None),
@@ -36,7 +38,7 @@ ZNACKY = {
     ('murovaci-material', 'betonárka nadlice'): ('Betónové tvárnice na stratené debnenie, piliere, soklové a ohradové murivo, nosné a obvodové murivo, priečky a prímurovky, zatrávňovacie dielce a betónové dlažby.', None),
     ('podhlady---pvc', 'transform recykling'): ('Výhradný predajca plastových výrobkov pre Nitru a okolie: zatrávňovacie dlažby, záhonové chodníky a obrubníky, nášľapné dielce, plotovky, profily, terasové platne, káblové žľaby a prepravné palety.', None),
     ('sadrokartonovy---zateplovaci-system', 'stavebné profily'): ('Kompletný systém pre sadrokartón: profily CD, UD, CW a UW, závesy a spojky, rohové a ukončovacie lišty, skrutky a hmoždinky, pásky, brúsne mriežky, obkladové, dlažbové a schodové profily.', 'predajna:06-regal-profily'),
-    ('sadrokartonovy---zateplovaci-system', 'masterplast'): ('Sadrokartón s príslušenstvom a profilmi, zatepľovací systém so sklotexom, hmoždinkami, polystyrénom a lepidlami, strešné a parotesné fólie, izolácia proti vlhkosti a radónu, OSB dosky.', 'zateplenie-fasada'),
+    ('sadrokartonovy---zateplovaci-system', 'masterplast'): ('Sadrokartón s príslušenstvom a profilmi, zatepľovací systém so sklotexom, hmoždinkami, polystyrénom a lepidlami, strešné a parotesné fólie, izolácia proti vlhkosti a radónu, OSB dosky.', None),
     ('stavebne-naradie-doplnky', 'slovakia trend'): ('Kompletné stavebné, dielenské, elektrické a záhradkárske náradie: hladítka, kladivá, miešačky, vodováhy, rezače dlažby, rebríky, spojovací materiál, pletivo, ochranné pomôcky, kotlíky aj zváracia technika.', None),
     ('stavebne-naradie-doplnky', 'ds haco'): ('Revízne a vaňové dvierka, vetracie mriežky plastové aj nerezové, tanierové ventily, flexo potrubie a spony, podlahové a kanalizačné vpusty.', None),
     ('stavebne-rezivo', 'drepex'): ('Stavebné rezivo priamo na sklade: dosky, hranoly, foršne, strešné laty a krovy, tatranský profil, zrubový obklad, dlážkovica, palubovka a lišty. V ponuke aj palivové drevo agát.', None),

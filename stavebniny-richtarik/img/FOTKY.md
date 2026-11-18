@@ -25,10 +25,66 @@ Fotografie z Pexels (licencia Pexels, voľné aj na komerčné použitie). Po na
 
 Doplnené fotky (Pexels, voľná licencia): murar.webp (30081237), strecha-praca.webp (11467876), vzv.webp (18699604), stavba.webp (39494022), beton.webp (37121400), tehly-ruky.webp (19688828).
 
-Strešné okná (hlavičky katalógu Strešné okná, Fakro, Fakro schody a výlezy, akcií Okná a schody Fakro, Strešné okná Rooflite):
+Strešné okná (do 18. 11. 2026 hlavičky katalógu Strešné okná, Fakro, Fakro schody a výlezy a akcie Okná a schody Fakro – odvtedy Máriova fotka `img/kat/stresne-okno-fakro`; ostáva hlavička akcie Strešné okná Rooflite):
 `img/hd/okno-strecha.webp` 2400 px, `okno-strecha-1200.webp` a dlaždica `img/okno-strecha.webp` 900×600 – https://www.pexels.com/photo/233267/
 (svetlá strecha, otvorené strešné okno); nahrádza tmavú fotku `okna` (hlavičky, dlaždica Strešné okná na úvode a v Katalógu,
 karta Velux). Súbory `okna` ostávajú v repozitári, do balíka nejdú.
+
+## Obrázky majiteľa podľa pokynov z 18. 11. 2026 (e-maily „treba opravit“ a 10:38)
+
+### Služby 01, 05, 07 – výrezy z jeho grafík (`img/ilu/sluzba-*`, `bash nastroje/grafika_maria.sh 18-11`)
+Mário: „Služby – doplniť piktogramy, čo som Vám poslal, 3D: stavebný materiál v celom sortimente, Doprava na stavbu, platba
+platobnou kartou“. Samostatné súbory týchto piktogramov v prílohách neboli, preto **dočasne** výrezy z jeho grafík zo
+16. 11. 2026 (`zdroj/grafika-maria/`, pôvod v časti Propagačné grafiky nižšie); len orez, zmenšenie (Lanczos, jemné doostrenie)
+a prevod do AVIF a WebP, nič sa nezväčšuje (README, Čaká na podklady).
+
+| súbory | výrez | orez | kde |
+|---|---|---|---|
+| `sluzba-sortiment-240\|480` | letak-stavebniny-richtarik (IMG_0310 vpravo) | 508 × 381 + 0 + 443 – mriežka 12 ikon skupín (bez piateho stĺpca s druhým „Murovací materiál“) | Služby, pri službe 01 Stavebný materiál v celom sortimente |
+| `sluzba-doprava-240\|480` | alt-auto-zlte (3D žlté auto s paletami) | 900 × 675 + 202 + 36 | Služby, pri službe 05 Doprava na stavbu |
+| `sluzba-platba-180` | letak-preco-nakupovat (IMG_0310 vľavo) | 180 × 135 + 312 + 431 – ikona „VÚB BANKA – platby cez terminál“; 1 : 1, bez zmenšenia a doostrenia | Služby, pri službe 07 Platba kartou (rámik najviac 180 px) |
+
+### Miniatúra 3D zákazníckej karty (`img/ilu/karta-3d-mini-208|312`, `bash nastroje/grafika_maria.sh 18-11`)
+Mário, e-mail 18. 11. 2026 10:38 („tam treba dať tiež obrázok 3D zákazníckej karty, miniatúra“): ten istý výrez `karta` (IMG_0312)
+ako `karta-3d-*`, orez 915 × 714 + 214 + 90, len zmenšenie na 208 a 312 px a prevod; úvod, pás faktov pod prvou obrazovkou.
+
+### Katalóg – prílohy e-mailu 10:38 (`img/kat/`, `bash nastroje/foto_maria.sh 18-11`)
+Mário: „vymeníte obrázky v katalógu výrobkov za nové, čo som Vám poslal: sypké zmesy, strešné okná, dvere okná, sadrokartón“.
+Pôvod: **Mário, e-mail 18. 11. 2026** (10:38; prílohy ako snímky Mailu IMG_0375 – 0379, výrezy bez rozhrania Mailu, súradnice
+v `zdroj/foto-maria/vyrezy.tsv`, bezstratovo v `zdroj/foto-maria/`). Sú to snímky z Mailu, nie originály: len orez, zmenšenie
+(Lanczos) a prevod do AVIF a WebP, **bez doostrenia**; najväčší súbor má šírku výrezu, nič sa nezväčšuje. Súhlas autorov fotiek
+a originály žiadame od majiteľa (README, Čaká na podklady).
+
+| súbory `img/kat/` | výrez | orez na rám 4 : 3 | kde na webe | namiesto (Pexels) |
+|---|---|---|---|---|
+| `stresne-okno-fakro-480\|720\|960\|1172`, `hlavicka/…-720` | stresne-okno-fakro (IMG_0378, 1297 × 879) | 1172 × 879 + 62 + 0 | hlavička Strešné okná, Fakro, Fakro schody a výlezy | `okno-strecha` (233267) |
+| `dvere-okna-predajna-480\|720\|960\|1297`, `hlavicka/…-720` | dvere-okna-predajna (IMG_0376, 1297 × 990) | 1297 × 973 + 0 + 0 | hlavička Dvere a okná (opis: vzorková predajňa – netvrdíme, že je to predajňa v Nitre) | `dvere` (31620051) |
+| `sadrokarton-podhlad-480\|720\|960\|1165`, `hlavicka/…-720` | sadrokarton-podhlad (IMG_0377, 1165 × 939) | 1165 × 874 + 0 + 0 | hlavička Sadrokartón a zateplenie | `sadrokarton-montaz` (11427405) |
+
+Karta Masterplast na Sadrokartóne je od 18. 11. 2026 len s logom (Pexels `zateplenie-fasada` preč, Máriovu fotku Masterplastu
+nemáme). Sypké zmesi: nový obrázok v prílohách nebol, ostáva jeho fotka Univer Bau (otázka v README). Dlaždice skupín na úvode
+a v Katalógu ostávajú jeho 3D kresby (Lajko 16. 11. 2026). Súbory Pexels `img/hd/dvere*`, `img/dvere.webp`,
+`img/hd/sadrokarton-montaz*`, `img/zateplenie-fasada.*` ostávajú v repozitári, nič na ne neodkazuje, do balíka nejdú.
+
+### Akcie – prílohy e-mailu 10:38 (`img/akcie/`, `img/kat/`, `bash nastroje/foto_maria.sh 18-11`)
+Mário: „Akcie – akcie tovaru treba vymeniť obrázky u: Tehla TermoBRIK, komín Stadreko, krytina Blachotrapez, okná Fakro,
+zatepľovanie a sadrokartónový systém, garáže – záhradné domčeky“. Pôvod **Mário, e-mail 18. 11. 2026** (snímky Mailu
+IMG_0375 – 0379, `zdroj/foto-maria/vyrezy.tsv`); len orez, zmenšenie a prevod, bez doostrenia, nič nad šírku výrezu.
+Karta akcie (`data/akcie.json` → `nahlad` s `foto: true`): celý obrázok zmenšený do 300 × 380 px, len WebP (ako ostatné
+náhľady kariet). Hlavička stránky akcie (`hlavicka: "kat:<výrez>"`): sada `img/kat/<výrez>-480|720|960|<šírka>` AVIF/WebP
+a výrez pre telefón `img/kat/hlavicka/<výrez>-720`.
+
+| výrez (zdroj) | karta `img/akcie/` | hlavička `img/kat/` | akcia |
+|---|---|---|---|
+| tehla-termobrik (1123 × 1320) | `tehla-termobrik-karta-300` 300 × 353 | 1123 × 842 + 0 + 80 (oba nápisy TermoBRIK) | Pezinská tehla TermoBRIK (predtým `uvod:zasoba-tehly`) |
+| komin-stadreko (1052 × 1608, schéma) | `komin-stadreko-karta-249` 249 × 380 | celá, v ráme celá na bielom, bez výrezu pre telefón | Komín Stadreko (predtým Pexels `komin-strecha`) |
+| krytina-blachotrapez (762 × 575) | `krytina-blachotrapez-karta-300` 300 × 226 | celá (762 px) | Krytina Blachotrapez (predtým Pexels `strecha`) |
+| stresne-okno-fakro | `stresne-okno-fakro-karta-300` 300 × 203 | tá istá ako katalóg | Okná a schody Fakro (predtým Pexels `okno-strecha`) |
+| sadrokarton-podhlad | `sadrokarton-podhlad-karta-300` 300 × 242 | tá istá ako katalóg | Zatepľovací a sadrokartónový systém (predtým Pexels `sadrokarton-montaz`) |
+| garaz (1297 × 1320) | `garaz-karta-300` 300 × 305 | 1297 × 973 + 0 + 250 (hlavička novinky Garáže) | Garáže, záhradné domčeky (karta bez stránky; novinka predtým Pexels `hutny`) |
+| rezivo (1297 × 990) | – | – | len v zdroji, na web nejde: akcia Stavebné rezivo má jeho fotku zo skladu (README, Čaká na podklady) |
+
+Letáky akcií (`img/p/*`, PDF) sa nemenili. Strešné okná RoofLITE ostávajú s `okno-strecha` (Pexels) – fotka Fakro je iná značka.
 
 ## Fotky prvej obrazovky úvodu zo 17. 11. 2026 (`img/uvod/uvod-*`, staré fotky z pôvodného webu)
 Lajko 17. 11. 2026: „zachovaj štýl písma a prvú úvodnú [obrazovku] … aj to, že sa to menilo“. Prvá obrazovka úvodu
@@ -152,11 +208,14 @@ spolu s logom vo vektore (README, Pre Mária).
     (zoznam v README, Pre Mária) – Lajko o nich vie a chce ich na webe; sú tam ako náhľady, opisy píšeme správne.
   - **Logo a firemná grafika** v Galérii: logo-rs-vodorovne, logo-rs-pod-sebou, logo-rs-cierna-doska (zdroj dnešného loga
     webu), tabula-siroka, tabula-vysoka (adresa, telefóny, e-mail, otváracia doba), vizitka (meno, adresa, telefóny, e-mail),
-    karta (tá istá zákaznícka karta ako `img/karta-nova-*`, tu šikmý pohľad; adresa s PSČ, telefóny, e-mail) a päť ilustrácií
-    iného štýlu: alt-auto-zlte, alt-sypke-zmesi-ikona, alt-okna-robotnik, alt-rezivo-kruh, alt-stresne-krytiny-stvorec.
+    karta (tá istá zákaznícka karta ako `img/karta-nova-*`, tu šikmý pohľad; adresa s PSČ, telefóny, e-mail). Päť piktogramov
+    iného štýlu (alt-auto-zlte, alt-sypke-zmesi-ikona, alt-okna-robotnik, alt-rezivo-kruh, alt-stresne-krytiny-stvorec) bolo
+    v albume od 16. 11. 2026; Mário ich 18. 11. 2026 dal z Galérie zmazať („z galérie vymazať tie obrázky, čo sme hovorili –
+    piktogramy“). Súbory `img/grafika/alt-*` ostávajú v repozitári, nič na ne neodkazuje, preto nejdú do balíka; výrezy sú
+    v `zdroj/grafika-maria/` (žlté auto je zdroj obrázka služby Doprava na stavbu, `img/ilu/sluzba-doprava-*`).
   - **Päta každej stránky** (Mário 18. 11. 2026, e-mail „treba opravit“: „celkom dole moju vizitku dať v 3D prevedení“): tá
     istá 3D vizitka (výrez vizitka) ako `img/grafika/vizitka-p-720|960.avif|webp` (orez nie, len zmenšenie a prevod formátu,
-    `nastroje/grafika_maria.sh`) a náhľad vizitka-n 480 px; oblasť správy `vizitka-pata`, len pri zhode údajov `GRAFIKA_PRI['vizitka']`.
+    `nastroje/grafika_maria.sh`) a náhľad vizitka-n 480 px; oblasť správy `pata-grafika`, len pri zhode údajov `GRAFIKA_PRI['vizitka']`.
   Položka s údajom v obrázku má v dátach `plati_pri` a na webe je len dovtedy, kým údaje v správe sú rovnaké ako na nej
   (`GRAFIKA_UDAJE` v `build.py`). Správa vie položku skryť, nahradiť (podmienka tým zaniká), popísať a posunúť.
 - Známe rozdiely, ktoré obrázok neskrývajú: zápis čísla „037/ 6511 777“, „Tel./fax“ (web fax neuvádza), „Nitra 5“ na karte,
@@ -181,7 +240,7 @@ pracovný priečinok `dizajn2/zapis/nastroje/fotky.sh` (nie balík webu). Nové 
   nie je napísaná. **Pred spustením webu treba súhlas Porfixu** (marketing@porfix.sk, +421 800 10 13 13) alebo potvrdenie, že ho
   Stavebniny Richtárik ako partner majú; bez neho vrátiť v `build.py` (`HLAVICKA_FOTO`) `uvod:zasoba-porfix`. Najväčší súbor
   má 1613 px (v `srcset` skutočná šírka).
-- `sadrokarton-montaz` (dlaždica Sadrokartón a zateplenie na úvode a v Katalógu, hlavička kategórie a akcie): montér reže
+- `sadrokarton-montaz` (do 18. 11. 2026 hlavička kategórie a akcie Sadrokartón a zateplenie, odvtedy Máriova fotka `img/kat/sadrokarton-podhlad`): montér reže
   sadrokartónovú dosku – Pexels https://www.pexels.com/photo/11427405/ (Jimmy Nilsson Masth), licencia Pexels. Nahrádza
   regál s profilmi (Máriova fotka 06 ostáva pri Hutnom materiáli) a fotku `sadrokarton` (stoh dosiek v hypermarkete).
 - `komin-strecha` (Komínové systémy, Schiedel, Qatro, akcia Komín Qatro): pálená strecha s komínom a strešnými oknami –
@@ -192,7 +251,7 @@ pracovný priečinok `dizajn2/zapis/nastroje/fotky.sh` (nie balík webu). Nové 
   white walls and panoramic windows“, Max Vakhtbovych), licencia Pexels. Nahrádza `podlaha-montaz` (Pexels 4263067, autor na
   Pexels uvedený len ako „K“ / @kelly – kladenie lamiel, pravú polovicu výrezu na telefóne zaberalo holé stehno montéra; súbory
   zo stromu preč). Dlaždica 900 × 600 sa nerobí (Magic Floor nie je kategória).
-- `zateplenie-fasada` (karta značky Masterplast v kategórii Sadrokartón a zateplenie, len dlaždica 900 × 600): fasáda bytového
+- `zateplenie-fasada` (do 18. 11. 2026 karta značky Masterplast v kategórii Sadrokartón a zateplenie, odvtedy karta len s logom; len dlaždica 900 × 600): fasáda bytového
   domu so zatepľovacími doskami a hmoždinkami za lešením – Pexels https://www.pexels.com/photo/5511087/ (Mike van
   Schoonderwalt), licencia Pexels. `zateplenie-fasada.avif` je tá istá dlaždica v 720 × 480 (AVIF, prvý zdroj karty). Masterplast nemá na webe materiály pre partnerov (masterplast.sk, 13. 11. 2026), preto
   voľná licencia. Karta Stavebné profily má Máriovu fotku `predajna/06-regal-profily` (regál s profilmi), hlavička kategórie

@@ -40,11 +40,31 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
     „Poradenstvo v stavebninách“, Množstevné zľavy ← „Zľavy“; `SLUZBY_OBR`, oblasť `sluzby-polozky`, priradenie podľa slova
     v nadpise služby), v karte zliav 3D zákaznícka karta, v časti Vlastná doprava auto z grafiky Rozvoz namiesto starých fotiek
     áut `img/p/883–885` (už nie sú v balíku), vo výzve pred pätou „Zavolajte nám“ a „Napíšte nám“ (oblasť `sluzby-kontakt`).
-    Každý obrázok je na stránke raz (auto len vo Vlastnej doprave, nie aj pri službe Doprava na stavbu; „Zdarma výpočet“ len
-    pri službe, výzva pred pätou ho už nemá). Otváracie hodiny na Službách nie sú, ich piktogram ostáva na Kontakte.
+    Od 18. 11. 2026 (Mário: „Služby – doplniť piktogramy… stavebný materiál v celom sortimente, Doprava na stavbu, platba
+    platobnou kartou“) majú obrázok aj 01 (mriežka ikon skupín z jeho letáku), 05 (jeho 3D žlté auto s paletami) a 07 (ikona
+    VÚB terminálu z letáku, rámik najviac 180 px) – dočasné výrezy, časť Čaká na podklady. Každý obrázok je na stránke raz
+    (Iveco Rozvoz len vo Vlastnej doprave, pri službe Doprava na stavbu je žlté auto; „Zdarma výpočet“ len pri službe, výzva
+    pred pätou ho už nemá). Otváracie hodiny na Službách nie sú, ich piktogram ostáva na Kontakte.
+  - **Miniatúra 3D karty v páse faktov úvodu** (Mário, e-mail 18. 11. 2026 10:38: „…pod ním je názov Zákaznícka karta, sú tam
+    tie zľavy – tam treba dať tiež obrázok 3D zákazníckej karty, miniatúra“): `img/ilu/karta-3d-mini-208|312` (ten istý výrez
+    ako 3D karta, len menší), v bunke `.f-karta` vpravo hore vedľa „Zákaznícka karta / Zľava z cien“ (telefón 84 px, do 374 px
+    72 px, počítač 104 px; od 1300 px vľavo dole pod nadpisom), mierne natočená. Je mimo toku (`position:absolute`), výška
+    pásu sa nemení (bez posunu rozloženia); pás je na všetkých šírkach pod prvou obrazovkou, preto `loading="lazy"`, `alt=""`
+    (text je hneď vedľa). Oblasť správy `uvod-karta-mini` s tou istou podmienkou ako 3D karta (`GRAFIKA_PRI['karta']`; po
+    zmene adresy, PSČ, telefónu alebo e-mailu zmizne, text pásu ostane). Na O nás (ten istý pás, `FAKTY_ONAS`) nie je.
   - **3D zákaznícka karta** (L23, výrez `karta` z IMG_0312, `img/ilu/karta-3d-*`) na úvode (oblasť `uvod-karta`) a na Službách
     namiesto plochej `img/karta-nova-*`; pri inej adrese, PSČ, telefóne alebo e-maile v správe sa ukáže plochá karta
     (`GRAFIKA_PRI['karta']`; plochá karta má tie isté údaje – nová adresa či číslo znamená novú kartu od majiteľa).
+  - **3D vizitka v päte každej stránky** (Mário 18. 11. 2026: „celkom dole moju vizitku dať v 3D prevedení“; tá istá vizitka
+    ako v albume Galérie, výrez `zdroj/grafika-maria/vizitka.webp`, len zmenšenie a prevod: `img/grafika/vizitka-n` 480 px
+    a `vizitka-p-720|960` AVIF/WebP, `nastroje/grafika_maria.sh`): posledná vec na stránke pred copyrightom, vycentrovaná,
+    napoly v červenej päte a napoly v čiernom páse, na telefóne celá šírka obsahu, na počítači 440 px; `loading="lazy"`,
+    `width`/`height` 960 × 491 (bez posunu rozloženia), po kliknutí veľká `vizitka-v.webp` v lightboxe. Je v oblasti správy
+    `pata-grafika` (šablóna `sprava/sablony/pata-grafika.html`, Python `nastroje/vykreslenie.py` aj PHP
+    `sprava/jadro/Vykreslenie.php`; na 404 adresy od koreňa) a ukáže sa len pri zhode mena majiteľa, ulice, PSČ, pevnej
+    linky, mobilu a e-mailu (`GRAFIKA_PRI['vizitka']`, tie isté kľúče ako `plati_pri` vizitky v `data/galeria.json`) – po
+    zmene niektorého z nich v správe zmizne zo všetkých stránok a päta ostane bez nej. Názov oblasti nemá slovo „vizitka“
+    (e2e test kontroluje, že po zmene kontaktu na Galérii slovo „vizitka“ nie je).
   - **Tabule 3D** (L24): vysoká tabuľa (adresa, telefóny, e-mail, otváracia doba) na Kontakte v karte Predajňa a sklad (oblasť
     `kontakt-tabula`, len pri zhode údajov `GRAFIKA_PRI['tabula']`), široká „RICHTÁRIK Stavebniny“ na O nás pod fotkou predajne
     (`TABULA_ONAS`, bez údajov); obe ostávajú aj v Galérii. Opravené akciové letáky zatiaľ nemáme (Pre Mária).
@@ -103,7 +123,8 @@ produktov sú prevzaté z pôvodnej stránky, nič nie je vymyslené.
     druhý riadok má „AVIA 3t“ a Avia je 3,5 t (výrez je mnohouholník, roh s nápisom je priehľadný – `nastroje/grafika_maria.sh`; rámik má pod ním odtiene podlahy
     obrázka, aby roh nebol vidno ako svetlejší klin);
   - dva letáky a dva bannery na stránke Leták v časti „Letáky a bannery“ (oblasť `galeria-letaky`) a logá, tabule, vizitka,
-    zákaznícka karta a päť ilustrácií iného štýlu v albume „Logo a firemná grafika“ na konci Galérie, za fotkami predajne
+    zákaznícka karta v albume „Logo a firemná grafika“ (7 položiek; päť piktogramov iného štýlu Mário 18. 11. 2026 dal z Galérie
+    zmazať, žlté auto je odvtedy pri službe Doprava na stavbu) na konci Galérie, za fotkami predajne
     a výstav (oblasť `galeria-grafika`): náhľady v rámikoch 4 : 3 zarovnaných hore (letáky dva v rade ako susedné časti
     stránky, album šesť v rade), po kliknutí veľký obrázok. Obrázok nahraný v správe má v rámiku šírky 600 a 1 200 px
     (`srcset`, `sizes`). Položky sú v `data/galeria.json` (albumy `letaky`, `grafika`, prenesené
@@ -144,7 +165,7 @@ toho istého tónu (358°):
 | odtieň | použitie | kontrast |
 |---|---|---|
 | `#d93439` (`--brick`, `--f-cervena`) | tlačidlá s bielym písmom, veľké písmo (názov v lište, „Za super ceny.“, percentá), linky, grafika | biela na nej 4,67 : 1 |
-| `#b42226` (`--brick-txt`, `--brick-dk`, `--brick-hover`) | malé červené písmo na svetlom, tlačidlo pod myšou | na bielej 6,57, na `#e0e0e0` 4,98 |
+| `#b42226` (`--b-cervena`, `--brick-txt`, `--brick-dk`, `--brick-hover`) | lišta, päta a pás zliav na úvode (od 18. 11. 2026, biele písmo), malé červené písmo na svetlom, tlačidlo pod myšou | biela na nej 6,57; na bielej 6,57, na `#e0e0e0` 4,98 |
 | `#921b1f` | tmavší stav pod myšou (šípky prechádzky) | – |
 | `#e57679` (`--brick-svetla`, `--brick-pale`) | malé červené písmo na čiernom (päta, tmavá téma) | na `#111` 6,47, na `#2b2b2b` 4,85 |
 
@@ -158,16 +179,45 @@ svoje farby a kontrola ju nečíta.
   stránok správy `sprava/kostry`, manifest) a každú zapísanú farbu (`#rgb`, `#rrggbb`, `#rrggbbaa`, `%23…` v dátových SVG,
   `rgb()`/`rgba()`) porovná s paletou (`PALETA_CERVENE` + neutrálne + úplne priehľadné); vypíše „kontrola farieb: OK“ alebo
   `POZOR` so súborom a riadkom.
+- **Kontrola lišty a päty** (`kontrola_listy_paty`, za kontrolou farieb): z kaskády `site.css` (špecificita, poradie, `@media`
+  podľa šírky) zistí víťazný podklad lišty `header.top` (aj lepkavej po posune), päty a spodnej lišty telefónu pre všetky tri
+  témy, šírky 360 / 800 / 1440 px, úvod aj podstránku – lišta a päta musia byť `#b42226`, spodná lišta `#141414`
+  (`LISTA_PATA`); `theme-color` každej stránky a manifestu = `FARBA`; na každej stránke s pätou je oblasť `pata-grafika`
+  tesne pred pásom s copyrightom a v nej (kým platia údaje `GRAFIKA_PRI['vizitka']`) 3D vizitka s `width`/`height`,
+  `loading="lazy"`, opisom a existujúcimi súbormi; Ochrana údajov má červený pás hore a dole. Vypíše „kontrola lišty
+  a päty: OK (… 3D vizitka v päte 77 stránok)“ alebo `POZOR` s témou, šírkou a víťazným pravidlom.
 - **Tokeny** (`:root` = svetlá, `html[data-tema="farebna"]`, `html[data-tema="tmava"]`): farebná – stránka `--paper #f5f5f5`,
   karty `#fff`, malta a hlavičky podstránok `#ebebeb`, betón `#e0e0e0`, linky `#d4d4d4`, písmo `#1a1a1a` / `#383838` /
-  vedľajšie `#595959`, päta `#1a1a1a` so spodným pásom `#0a0a0a` a malým červeným písmom `#e57679`; svetlá – stránka biela,
+  vedľajšie `#595959`; lišta a päta vo všetkých témach `#b42226` s bielym písmom, pás s copyrightom a čierne scény `#141414`
+  (karty akcií na čiernej `#1f1f1f`, malé červené písmo na čiernej `#e57679`); svetlá – stránka biela,
   malta `#f5f5f5`, betón `#ebebeb`, linky `#dbdbdb`, písmo `#141414` / `#5c5c5c`; tmavá – podklad `#111`, pásy `#1a1a1a`,
   karty `#1c1c1c` / `#262626`, linky `#2e2e2e`, písmo `#f5f5f5` / `#d6d6d6` / `#b3b3b3`. `--prgb` / `--irgb` (RGB podkladu
   a písma pre priesvitné lišty a jemné linky) sú neutrálne.
-- **Farebná téma (predvolená)** je prevažne biela a svetlá (Lajko skôr chcel svetlejší web): biela lišta s červenou linkou
-  dole, svetlé pásy a biele karty, čierna je len úvod (prvá obrazovka) a päta, červená len ako akcent (tlačidlá, linky, štítky, „Za super ceny.“). **Svetlá téma** má ešte viac bielej: výzva pred
-  pätou je biely pás s červenou linkou hore, červeným a čiernym tlačidlom (nie červená plocha). **Tmavá téma** je čierna,
-  biela a červená. Úvod je vo všetkých témach rovnaký (čierny pás s fotkou, časť Úvod).
+- **Červená lišta a päta (Mário 18. 11. 2026, e-mail „treba opravit“: „vrchná aj spodná časť stránky bude červená“)** vo
+  všetkých troch témach a na všetkých stránkach (blok „Červená lišta a päta“ v `site.css` za časťou Farebná téma): lišta
+  `#b42226` so 4 px čiernou linkou dole, znak RS na svojej čiernej doske, názov biely s čiernym obrysom, položky menu biele
+  (aktuálna a pod myšou s bielym podčiarknutím – čierne by malo len 2,8 : 1), telefón čierne tlačidlo; päta `#b42226` so 4 px
+  čiernou linkou hore, celé písmo biele, dole čierny pás cez celú šírku s copyrightom a na rozhraní päty a pásu **3D vizitka
+  majiteľa** (nižšie); spodná lišta telefónu čierna s červenou linkou hore, Zavolať červené, Cenová ponuka biela; menu na
+  telefóne svetlé (v tmavej téme tmavé) s červeným pásom hore. Na počítači má päta hore 44 px (inak 52). `theme-color`
+  a manifest `#b42226` vo všetkých témach. Ochrana údajov (bez lišty a päty webu) má hore a dole červený pás s čiernou
+  linkou, 404 má lištu a pätu webu. Pás pod bránou uvítania za spodnou lištou telefónu je čierny (`zdroj/uvitanie.css`).
+- **Farebná téma (predvolená): rozloženie farieb ako prvý návrh** (Mário 18. 11.: „rozloženie farieb červená, biela, čierna
+  bude zhruba tak rozložené ako … prvý návrh“, commit d7119bd4 z 28. 9. 2026). Úvod zhora: červená lišta, tmavý úvod s fotkou,
+  **čierny** pás čísel (percentá červené), svetlý pás značiek, svetlý katalóg, svetlý pás Doprava, **čierne** Akcie (karty
+  `#1f1f1f`, štítky červené), **červený** pás zliav so zákazníckou kartou na čiernej podložke (jediná veľká červená plocha
+  tela), biele služby a novinky, svetlošedé O nás, biela prehliadka, **čierny** kontakt, biela výzva s čiernou linkou,
+  červená päta. Podstránky: čierna hlavička (omrvinky, nadpis, fotka v ráme s tvrdým červeným tieňom), svetlý obsah, box
+  zákazníckej karty čierny (Služby, skupiny), červená päta. Poradie sekcií sa nemenilo. Ak by bolo „moc červenej“, stačí pás
+  zliav prepnúť na čierny (jedno pravidlo; úvod potom 6,9 % červenej ako prvý návrh). **Svetlá téma** má okrem červenej
+  lišty a päty telo svetlé (výzva pred pätou biely pás s červenou linkou hore), **tmavá téma** telo čierne. Úvod je vo všetkých
+  témach rovnaký (čierny pás s fotkou, časť Úvod).
+- **Merania 18. 11. 2026** (`richtarik/mario5/zapis/`, `nastroje/podiel-snimky.cjs` a `porota/nastroje/podiel.py`: červená
+  R > 140, R − G > 70, R − B > 70; čierna jas < 0,13; biela jas > 0,85 a neutrálna; celé stránky farebnej témy, „obmedziť
+  pohyb“; červená / čierna / biela v %): úvod 1440 prvý návrh 7,1 / 20,5 / 50,0, BAZA c77fe70f 1,9 / 8,0 / 69,0, teraz
+  11,8 / 20,3 / 46,7; úvod 390 prvý návrh 7,3 / 17,0 / 49,0, BAZA 3,0 / 9,0 / 66,4, teraz 8,9 / 25,2 / 44,2; Služby 1440
+  BAZA 1,6 / 17,6 / 69,4 → 18,9 / 19,7 / 50,8, Služby 390 2,3 / 15,3 / 63,8 → 10,6 / 18,2 / 53,0. Červenej je o 4–5 bodov viac
+  ako na prvom návrhu – to je červená lišta a päta, ktoré Mário chce; čierna a biela sedia s prvým návrhom.
 - **Merania 17. 11. 2026** (`richtarik/staryuvod/zapis/`, `nastroje/snim.mjs` a `mer.py`, ako 16. 11.: tmavé = L < 35 %,
   svetlé = L > 80 %, červená = maska HSV; 390 × 844 a 1440 × 900, „obmedziť pohyb“; BAZA 2ea16df7 → teraz): **červená
   nie je vyššia** – farebná téma, úvod priemer na obrazovku cez celú výšku telefón 7,1 → 6,9 %, počítač 3,1 → 3,0 % (strop
@@ -188,9 +238,10 @@ Web má tri varianty podkladu z jedných komponentov cez tokeny v `assets/site.c
 `asistent/ochrana-udajov.html`), takže web je farebný aj bez JavaScriptu a nič sa neprekresľuje. Svetlý papier (bez
 atribútu) a tmavá „čierno-biela“ (`data-tema="tmava"`) ostávajú len na porovnanie.
 
-**Scény a mechanizmus farebnej témy** (časť „Farebná téma“ na konci `site.css`): lokálne tokeny majú biela lišta hore
-(znak RS, názov s čiernym obrysom, položky menu, telefón ako červené tlačidlo, 4 px červená linka dole), spodná lišta
-telefónu (biela s červenou linkou hore), päta a ostrov hľadania. Podklad prechodu medzi stránkami (`::view-transition`) je
+**Scény a mechanizmus farebnej témy** (časti „Farebná téma“ a „Červená lišta a päta“ v `site.css`): lokálne tokeny má
+červená scéna (lišta, päta a pás zliav na úvode; `--b-cervena` `#b42226`, biele písmo, čierne akcenty), čierna scéna (pás
+čísel, akcie a kontakt na úvode, hlavička podstránky, box zákazníckej karty, spodná lišta telefónu; `--b-cierna` `#141414`,
+tokeny ako tmavá téma) a ostrov hľadania. Čierna na červenej je len ozdobná linka, nikdy text ani ukazovateľ stavu. Podklad prechodu medzi stránkami (`::view-transition`) je
 po pásoch vo farbe scén novej stránky (`--scena`; skript `zdroj/prechody.js` ich pri `pagereveal` zapíše ako
 `background-image` do malého `<style id="vt-pozadie">`), aby päta ani pásy pri prelnutí nepreblikli inou farbou; pásy
 zhasnú, len čo ich nová stránka zakryje (`@keyframes vt-podklad`, 330 ms). Výška lišty je token `--lista-v` (88 px, do
@@ -201,7 +252,8 @@ zhasnú, len čo ich nová stránka zakryje (`@keyframes vt-podklad`, 330 ms). V
 Prepínanie: skript `zdroj/tema-head.js` (build.py `TEMA_HEAD`, v `index.html` ho vkladá `python3 -I zdroj/tema_vloz.py .`,
 v `asistent/ochrana-udajov.html` značky `<!--tema-->`) beží v `<head>` pred štýlom: `?tema=svetla` odoberie atribút
 (svetlý papier), `?tema=tmava` nastaví tmavú, oboje si zapamätá (`localStorage` `tema`), `?tema=farebna` voľbu zruší, bez
-parametra platí zapamätaná voľba; prepne aj `theme-color` (farebná `#ffffff` – biela lišta, svetlá `#ffffff`, tmavá `#111111`). Bez JS,
+parametra platí zapamätaná voľba; `theme-color` neprepína – je `#b42226` (červená lišta) vo všetkých témach (`build.py`
+`FARBA`, manifest; do 18. 11. 2026 farebná a svetlá `#ffffff`, tmavá `#111111`). Bez JS,
 v ráme bez úložiska alebo so zakázaným úložiskom je web farebný (parameter v adrese funguje aj tam). Ten istý skript
 nastaví na `<html>` triedu `js`; bez nej (bez JavaScriptu) sú tlačidlo menu a pole hľadania skryté, lebo by nič nerobili
 (navigácia je v päte). Pri tlači sa netlačí spodná lišta, tlačidlo menu, prechádzka ani tlačidlá výziev. Skript prechodov
@@ -724,11 +776,34 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
      tie s preklepmi, bod 3); ilustrácia „Dlažby + obklady“ v štýle série (bod 2); obrázok s pokynmi, kam dať 3D názvy
      „RICHTÁRIK STAVEBNINY“, a obrázok s miestom 3D zákazníckej karty (prílohy e-mailu k nám neprišli – dnes je 3D karta na
      úvode a na Službách namiesto plochej); Parabit – stačí bez odkazu na web výrobcu, alebo celú značku z katalógu dať preč?
+- **Čaká na podklady** (Mário 18. 11. 2026, e-maily „treba opravit“ a 10:38; čo je na webe provizórne, kým nepošle súbor):
+  1. **Služby 01, 05, 07** – samostatné 3D piktogramy „Stavebný materiál v celom sortimente“, „Doprava na stavbu“ a „Platba
+     platobnou kartou“ v prílohách neboli. Dočasne sú tam výrezy z jeho grafík (`nastroje/grafika_maria.sh 18-11`,
+     `SLUZBY_OBR`): 01 mriežka 12 ikon skupín z letáku so sortimentom (nápis „PODHLADY“ je jeho, nemeníme ho), 05 jeho 3D
+     žlté auto s paletami (do 18. 11. 2026 v Galérii), 07 ikona „VÚB BANKA – platby cez terminál“ z letáku „Prečo nakupovať
+     u nás“ – zdroj má len 180 × 135 px, preto je rámik najviac 180 px aj na telefóne (`.srv-obr.mala`) a na telefóne s DPR 3
+     je mäkká. Výmena: nový výrez do `zdroj/grafika-maria/` pod novým menom, riadok v časti `cast_18_11` a meno v `SLUZBY_OBR`.
+  2. **Katalóg** – nové obrázky Strešné okná, Dvere a okná a Sadrokartón sú v hlavičkách (`KAT_FOTO`, `img/kat/`,
+     `nastroje/foto_maria.sh 18-11`; Fakro a Fakro schody a výlezy majú tú istú fotku okna cez `HLAVICKA_FOTO`). Sú to snímky
+     z Mailu (≈ 1 170 – 1 300 px), originály v plnom rozlíšení a súhlas autorov fotiek žiadame. **Sypké zmesi:** Mário píše, že
+     poslal nový obrázok, v prílohách 17. ani 18. 11. 2026 nebol – ostáva jeho fotka Univer Bau (pošlite ho prosím znova).
+     Mimo jeho zoznamu ostávajú ilustračné fotky Pexels: hlavička Holcim, Cemmac, Calmit (`cement`) a pozadie dlaždíc tovaru
+     Baumitu (`img/cement.webp`) – vymeniť za fotky predajne (napr. `05-hala-vozik`)? Karta Masterplast je len s logom.
+  3. **Akcie** – Máriove prílohy z e-mailu 10:38 sú na kartách (celé, `img/akcie/<výrez>-karta-*.webp`) a v hlavičkách stránok
+     akcií (`img/kat/`): Pezinská tehla TermoBRIK, Komín Stadreko (schéma celá na bielom), Krytina Blachotrapez, Okná
+     a schody Fakro (tá istá fotka okna ako katalóg), Zatepľovací a sadrokartónový systém (podhľad), Garáže a záhradné domčeky
+     (karta; hlavička novinky Garáže namiesto Pexels `hutny`). Letáky a PDF akcií sa nemenili. Otázky: **Stavebné rezivo** –
+     fotku hranolov v snehu (`zdroj/foto-maria/rezivo.webp`, poslal v tej istej sérii, v zozname ju nemenoval; zrejme tá istá
+     fotka ako hlavička katalógu Stavebné rezivo zo 17. 11.) sme na akciu nedali, akcia má jeho fotku zo skladu – doplnené
+     z jeho príloh, potvrdiť (príkaz v `nastroje/foto_maria.sh`). **Strešné okná RoofLITE** ostávajú s fotkou Pexels
+     `okno-strecha`: fotka Fakro by ukazovala inú značku – máte fotku RoofLITE? Originály fotiek v plnom rozlíšení a súhlas
+     výrobcov (Wienerberger/Pezinské tehelne, Stadreko, Blachotrapez, Fakro) so zverejnením.
 
 ## Údržba
 - Prostredie: `python3 -m venv venv && venv/bin/pip install lxml`, potom v tomto priečinku `venv/bin/python build.py`.
   Beh vypíše `stránok v sitemap.xml: 76`, `znalosti asistenta z dát: bez zmeny`, `kontrola oblastí správy: OK`,
-  `zhoda Python = PHP: … rozdielov 0`, `kontrola úvodu: OK`, `kontrola textov: OK`, `kontrola farieb: OK` a `vygenerovaných stránok HTML: 76`
+  `zhoda Python = PHP: … rozdielov 0`, `kontrola úvodu: OK`, `kontrola textov: OK`, `kontrola farieb: OK`, `kontrola lišty a päty: OK`
+  a `vygenerovaných stránok HTML: 76`
   (riadok `vynechané odkazy …` sa vypíše len vtedy, keď zdroj odkazuje na súbor, ktorý už neexistuje). Riadok `POZOR` znamená, že
   `kontrola_uvodu()` v ručnom `index.html` nenašla položku menu alebo údaj firmy z `build.py` (`NAV`, `FIRMA`), alebo
   že `kontrola_textov()` našla titulok, popis či H1 mimo pravidiel (časť Texty a SEO) – treba to opraviť. Po behu
@@ -773,7 +848,7 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
   (vložiť výstup `dlazdice('index.html', cisla=True)`).
 - Služby (texty v `data/texty.json`, piktogramy `SLUZBY_OBR`), pás faktov O nás (`FAKTY_ONAS`) a tabuľa na O nás
   (`TABULA_ONAS`) sú v `build.py`; texty sú zo zdroja alebo z úvodu, nové treba overiť rovnako. Podmienky 3D karty a tabule
-  na Kontakte sú v `GRAFIKA_PRI` (kľúče ako `plati_pri` v `data/galeria.json`).
+  na Kontakte a 3D vizitky v päte sú v `GRAFIKA_PRI` (kľúče ako `plati_pri` v `data/galeria.json`).
 - Hosting: `python3 -I nasadenie/presmerovania.py . nasadenie` vyrobí znova `htaccess.txt`, `web.config.txt`
   a `presmerovania.tsv` (po pridaní PDF do `pdf/`, zmene stránok alebo `DOMENA`) a vypíše kontrolu (časť HTTPS
   a presmerovania).
@@ -791,11 +866,11 @@ po zmene obrazoviek správy snímky a PDF vyrobiť znova); architektúra a výsl
 
 **Ako to funguje.** Návštevník dostáva len statické súbory ako doteraz – na verejných stránkach nie je žiadny skript,
 štýl, cookie ani odkaz správy. Obsah, ktorý správa mení, je v stránkach v označených oblastiach
-`<!--s:ID-->…<!--/s:ID-->` (275 oblastí, spolu ≈ 18 kB na 77 stránkach; od 16. 11. 2026 aj karty Zavolajte nám a Napíšte
+`<!--s:ID-->…<!--/s:ID-->` (353 oblastí na 77 stránkach – od 18. 11. 2026 aj 3D vizitka v päte každej stránky `pata-grafika` a miniatúra 3D karty v páse faktov úvodu `uvod-karta-mini`; od 16. 11. 2026 aj karty Zavolajte nám a Napíšte
 nám na Kontakte – `kontakt-karty`: Máriova grafika s číslom alebo e-mailom v obrázku sa ukáže, len kým sú v `data/firma.json`
 údaje z obrázka, `KONTAKT_OBR` v `build.py`; po zmene telefónu či e-mailu ostane karta bez obrázka. Rovnako ostatné grafiky
 s údajom: obrázok hodín v `hodiny-kontakt`, ikona zliav v `sluzby-polozky`, 3D karta v `uvod-karta` a `sluzby-zlavy`
-(namiesto nej plochá karta), tabuľa v `kontakt-tabula`, piktogramy kontaktu v `sluzby-kontakt` a položky albumov `galeria-letaky`
+(namiesto nej plochá karta), tabuľa v `kontakt-tabula`, 3D vizitka v päte v `pata-grafika`, miniatúra 3D karty v `uvod-karta-mini`, piktogramy kontaktu v `sluzby-kontakt` a položky albumov `galeria-letaky`
 a `galeria-grafika` s poľom `plati_pri` – `GRAFIKA_UDAJE`, `udaje_platia()`; v správe má taká položka poznámku „nie je na
 webe“ a po nahradení novým obrázkom podmienka zaniká. Albumy grafiky smú ostať prázdne, ich časť potom z webu zmizne celá). Pravda o ňom sú údaje `data/*.json` (`firma`
 s hodinami a oznamami, `cennik`, `akcie`, `caste`, `novinky`, `galeria`, `texty`, `verzia`). Oblasti skladajú tie isté šablóny `sprava/sablony/*.html` v Pythone
@@ -809,6 +884,17 @@ ho po poslednom dni skryje (bez JS ostane viditeľný aj s dátumom); bežné ho
 Každá zmena ide cez náhľad so zoznamom „Čo sa zmení“ (pred → po, uloží sa aj do Histórie; pri zmene telefónu, e-mailu
 alebo hodín aj veta, ktoré obrázky s údajom v obrázku z webu zmiznú alebo sa vrátia – `Rozdiel::obrazkyVety`) → kontroly (H1, titulky a popisy pre Google a ich jedinečnosť, odkazy, rozmery obrázkov,
 JSON-LD, značky) → zálohu → denník prerušeného zápisu → premenovanie → overenie odtlačkov a dá sa vrátiť v Histórii.
+
+**Obrázok na karte akcie** (od 18. 11. 2026, Mário: „akcie tovaru treba vymeniť obrázky“): karta akcie na Akciách a na úvode
+(`akcie-index`, `uvod-akcie`, pole `nahlad`) ukazuje buď miniatúru letáku (zasunutú pod okraj karty, ako doteraz), alebo
+**fotku tovaru** (`nahlad.foto: true`): celú, bez orezu, na bielom ráme, mierne natočenú, celú v karte; text karty má vpravo
+rezervu (`site.css .thumb.foto`; na telefóne sú karty bez náhľadu ako doteraz). Obrázok majú aj karty bez vlastnej stránky
+(Garáže vedú na novinku; v Pythone aj PHP `karta_akcie` podmienka `if n`). V správe je pri akcii pole „Obrázok na karte akcie“
+(`karta_foto`, aj pri karte bez stránky): fotka sa zmenší na šírku 300 px bez výrezu letáku (`Ulohy::kartaFoto`), leták
+a PDF na stránke akcie ostávajú; nový alebo zmazaný leták fotku na karte nemení, „Odstrániť obrázok na karte“ vráti
+miniatúru letáku (`Ulohy::nahladLetaku`). Hlavičky akcií s Máriovými fotkami sú `kat:<výrez>` (`img/kat/`, `KAT_FOTO_ALT`),
+správa ich ponúka medzi hlavičkami (`konstanty.json → hlavicky`); schéma komína je v ráme celá na bielom (`KAT_FOTO_CELA`,
+`.ph-foto.cela`).
 
 **build.py** číta `data/` (`data_sprava.py`), oblasti v ručnom `index.html` prepíše z údajov (zvyšok súboru nemení),
 zapíše `sprava/kostry/` (kostra akcie, `konstanty.json`, `oblasti.json`, `typografia.json`) a na konci overí:
@@ -864,12 +950,14 @@ skončila, a `noindex`); úplne ju odstráni programátor. Úvod (`index.html`) 
 `sprava_zhoda.py --referencia` preto `index.html` porovnáva po zjednotení medzier.
 
 **Testy správy** (všetky na kópii v `/dev/shm`, nikdy na hostingu ani na repozitári – bez argumentov sa nespustia):
-`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (180 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
-prerušený zápis, súbeh, kódy, heslá, oznamy, novinky, galéria, texty, kontakt, grafiky s údajom v obrázku, ceny a úvod),
-`bash sprava/testy/e2e.sh <snímky>` (Playwright 390 × 844 aj 1440 × 900, ≈ 260 kontrol na šírku: celý postup majiteľa
+`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (190 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
+prerušený zápis, súbeh, kódy, heslá, oznamy, novinky, galéria, texty, kontakt, grafiky s údajom v obrázku vrátane 3D vizitky
+v päte, ceny a úvod),
+`bash sprava/testy/e2e.sh <snímky>` (Playwright 390 × 844 aj 1440 × 900, 283 kontrol na šírku: celý postup majiteľa
 vrátane novinky, sviatku, fotky v galérii, textu, telefónu, e-mailu a pevnej linky a ich vrátenia, obrázka pridaného do
 albumu grafiky a skrytia všetkých letákov, s overením verejných stránok a toho, že obrázky so starými hodinami,
-telefónom alebo e-mailom po zmene zmiznú a po vrátení sa vrátia), `bash sprava/testy/bezpecnost.sh`, `python3 sprava/testy/vstupy.py <priečinok>`
+telefónom alebo e-mailom po zmene zmiznú a po vrátení sa vrátia – aj 3D vizitka v päte úvodu, Kontaktu, Dlažieb a 404),
+`bash sprava/testy/bezpecnost.sh`, `python3 sprava/testy/vstupy.py <priečinok>`
 (testovacie súbory). Lokálny server: `php -S 127.0.0.1:<port> -t <kópia> sprava/testy/router.php` (napodobní zákazy
 z `.htaccess`; bez HTTPS funguje len pod `php -S`).
 
@@ -877,7 +965,8 @@ z `.htaccess`; bez HTTPS funguje len pod `php -S`).
 Náhľad beží na GitHub Pages v podpriečinku `stavebniny-richtarik/`. Ostrý web je v koreni domény
 https://www.stavebninyrichtarik.sk/ (canonical, sitemap a og:image sú nastavené na túto adresu):
 
-1. `venv/bin/python build.py` – vypíše `stránok v sitemap.xml: 76`, `kontrola úvodu: OK`, `kontrola textov: OK`, `kontrola farieb: OK`
+1. `venv/bin/python build.py` – vypíše `stránok v sitemap.xml: 76`, `kontrola úvodu: OK`, `kontrola textov: OK`, `kontrola farieb: OK`,
+   `kontrola lišty a päty: OK`
    a žiadne `POZOR`; `index.html` bez zmeny.
 2. `bash nasadenie/balik.sh . <priečinok balíka>` (bez asistenta) alebo
    `ASISTENT_API=https://www.stavebninyrichtarik.sk/asistent/api.php bash nasadenie/balik.sh . <priečinok>` (s ním, až

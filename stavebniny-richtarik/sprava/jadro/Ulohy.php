@@ -61,6 +61,30 @@ final class Ulohy
         return $c;
     }
 
+    /** Obrázok na karte akcie (Mário 18. 11. 2026: „akcie tovaru treba vymeniť obrázky“): celá fotka tovaru zmenšená na šírku
+     *  300 px, bez výrezu letáku (D8) – nahlad s foto:true (karta ju ukáže celú, site.css .thumb.foto). Leták ani PDF nemení.
+     *  „Odstrániť obrázok na karte“ vráti miniatúru letáku (ak leták je), inak karta ostane bez obrázka. Vráti akciu alebo chybu. */
+    public static function kartaFoto(array $a, array $post, array $files, string $nazov)
+    {
+        if (!empty($post['karta_foto_zmazat']) && !empty($a['nahlad']['foto'])) $a['nahlad'] = self::nahladLetaku($a['letak'] ?? null);
+        if (!empty($files['karta_foto']['name'])) {
+            $f = Subory::fotka($files['karta_foto'], $nazov . ' karta', [300], false);
+            if (is_string($f)) return $f;
+            $a['nahlad'] = ['src' => $f['sirky'][0][1], 'w' => $f['w'], 'h' => $f['h'], 'foto' => true];
+        }
+        return $a;
+    }
+
+    /** Miniatúra letáku na kartu: najmenšia šírka nahratého letáku, pri letáku z pôvodného webu (img/p/ID.webp) jeho -400. */
+    public static function nahladLetaku(?array $l): ?array
+    {
+        if (!$l) return null;
+        if (!empty($l['sirky'])) return ['src' => $l['sirky'][0][1], 'w' => $l['sirky'][0][0], 'h' => (int)round($l['h'] * $l['sirky'][0][0] / $l['w'])];
+        if (preg_match('~^img/p/(\d+)\.webp$~', $l['src'], $m) && is_file(Nastavenie::w("img/p/{$m[1]}-400.webp")))
+            return ['src' => "img/p/{$m[1]}-400.webp", 'w' => 400, 'h' => (int)round($l['h'] * 400 / $l['w'])];
+        return ['src' => $l['src'], 'w' => $l['w'], 'h' => $l['h']];
+    }
+
     /** Uloží akciu z formulára. $id = null → nová. Vráti [$D, chyba, varovania, id]. */
     public static function akcia(array $D, ?string $id, array $post, array $files): array
     {
@@ -76,7 +100,9 @@ final class Ulohy
         if ($stara && !$stara['stranka']) {   // karta bez vlastnej stránky (vedie do katalógu alebo noviniek)
             $nazov = Kontrola::text($post['nazov'] ?? '', 500); $stitok = Kontrola::text($post['stitok'] === 'vlastny' ? ($post['stitok_vlastny'] ?? '') : ($post['stitok'] ?? ''), 200); $karta = Kontrola::text($post['karta'] ?? '', 2000);
             foreach ([[$nazov, 'Názov', 3, 45], [$stitok, 'Štítok', 2, 18], [$karta, 'Text akcie', 10, 220]] as [$v, $n, $mi, $ma]) if ($e = Kontrola::chybaTextu($v, $n, $mi, $ma)) return [$D, $e, [], $id];
-            $D['akcie']['akcie'][$i] = array_merge($stara, ['nazov' => $nazov, 'stitok' => $stitok, 'karta' => $karta, 'verzia' => $stara['verzia'] + 1]);
+            $k = self::kartaFoto($stara, $post, $files, $nazov);   // obrázok na karte aj pri karte bez stránky (Garáže)
+            if (is_string($k)) return [$D, $k, [], $id];
+            $D['akcie']['akcie'][$i] = array_merge($k, ['nazov' => $nazov, 'stitok' => $stitok, 'karta' => $karta, 'verzia' => $stara['verzia'] + 1]);
             return [$D, null, [], $id];
         }
         $nazov = Kontrola::text($post['nazov'] ?? '', 500);
@@ -159,15 +185,19 @@ final class Ulohy
         if ($ch = Seo::chyby($seo['titulok'], Typografia::txt($seo['h1']), Typografia::txt($seo['popis']))) return [$D, implode(' ', $ch) . ' Upravte to v časti „Pre Google“.', [], $id];
         if ($stara && $stara['nazov'] !== $nazov && $seo === $stara['seo']) $var[] = 'Zmenili ste názov akcie. Skontrolujte v časti „Pre Google“, či nadpis a popis sedia.';
         // leták – fotka a PDF (až po kontrole textov, aby sa pri chybe v texte súbory nenahrávali zbytočne)
-        if (!empty($post['letak_zmazat'])) { $a['letak'] = null; $a['nahlad'] = null; }
+        // obrázok na karte: fotka tovaru (nahlad.foto) má prednosť pred miniatúrou letáku – nový ani zmazaný leták ju nemení
+        $foto = !empty($a['nahlad']['foto']);
+        if (!empty($post['letak_zmazat'])) { $a['letak'] = null; if (!$foto) $a['nahlad'] = null; }
         if (!empty($files['letak_foto']['name'])) {
             $f = Subory::fotka($files['letak_foto'], $nazov, [600, 1200], true);
             if (is_string($f)) return [$D, $f, [], $id];
             $vyrez = $f['karta'] ?? null; unset($f['karta']);   // výrez pre kartu (nie text akcie v $karta)
             $a['letak'] = $f;
             // D8: fotka na šírku dostane na kartu výrez na výšku (ako ostatné letáky), inak by z nej bol tenký pásik
-            $a['nahlad'] = $vyrez ?? ['src' => $f['sirky'][0][1], 'w' => $f['sirky'][0][0], 'h' => (int)round($f['h'] * $f['sirky'][0][0] / $f['w'])];
+            if (!$foto) $a['nahlad'] = $vyrez ?? ['src' => $f['sirky'][0][1], 'w' => $f['sirky'][0][0], 'h' => (int)round($f['h'] * $f['sirky'][0][0] / $f['w'])];
         }
+        $a = self::kartaFoto($a, $post, $files, $nazov);
+        if (is_string($a)) return [$D, $a, [], $id];
         // PDF letáky
         $pdf = [];
         foreach ($a['pdf'] as $j => $p) if (empty($post['pdf_zmazat'][$j])) $pdf[] = $p;

@@ -57,9 +57,10 @@
 .br-nad span{white-space:nowrap}
 .br-nad span+span::before{display:none}
 }
-/* lišta: vo farebnej téme je vyššia (--lista-v v site.css); pás pod bránou za spodnou lištou telefónu je biely ako lišta */
+/* lišta: vo farebnej téme je vyššia (--lista-v v site.css); pás pod bránou za spodnou lištou telefónu je čierny ako spodná
+   lišta (od 18. 11. 2026 čierna s červenou linkou vo všetkých témach) */
 html[data-tema="farebna"] .br{top:var(--lista-v,88px)}
-@media (max-width:980px){html[data-tema="farebna"] .br{box-shadow:0 calc(69px + env(safe-area-inset-bottom,0px)) 0 #fff}}
+@media (max-width:980px){html[data-tema="farebna"] .br{box-shadow:0 calc(69px + env(safe-area-inset-bottom,0px)) 0 #141414}}
 @media print,(prefers-reduced-motion:reduce){.br,.br-ide .br{display:none}}
 /* tlač počas uvítania: úvod v konečnom stave (!important prebije bežiaci pohyb nadpisu, ponuky a štítku) */
 @media print{.uv h1 .w,.uv-nad,.uv-b,.uv-info{opacity:1!important;transform:none!important}}

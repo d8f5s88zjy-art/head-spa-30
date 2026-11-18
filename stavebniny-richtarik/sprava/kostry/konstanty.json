@@ -248,17 +248,9 @@
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/hd/hlavicka/dlazba-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/hd/hlavicka/dlazba-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><img src=\"../img/hd/dlazba-1200.webp\" srcset=\"../img/hd/dlazba-600.webp 600w, ../img/hd/dlazba-1200.webp 1200w, ../img/hd/dlazba.webp 2400w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1200\" height=\"810\" alt=\"\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/hd/dlazba-1200.webp"
   },
-  "dvere": {
-   "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/hd/hlavicka/dvere-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/hd/hlavicka/dvere-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><img src=\"../img/hd/dvere-1200.webp\" srcset=\"../img/hd/dvere-1200.webp 1200w, ../img/hd/dvere.webp 2400w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1200\" height=\"904\" alt=\"\" fetchpriority=\"high\"></picture></figure>",
-   "nahlad": "img/hd/dvere-1200.webp"
-  },
   "fasada": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/hd/hlavicka/fasada-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/hd/hlavicka/fasada-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><img src=\"../img/hd/fasada-1200.webp\" srcset=\"../img/hd/fasada-600.webp 600w, ../img/hd/fasada-1200.webp 1200w, ../img/hd/fasada.webp 2400w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1200\" height=\"800\" alt=\"\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/hd/fasada-1200.webp"
-  },
-  "hutny": {
-   "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/hd/hlavicka/hutny-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/hd/hlavicka/hutny-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><img src=\"../img/hd/hutny-1200.webp\" srcset=\"../img/hd/hutny-1200.webp 1200w, ../img/hd/hutny.webp 2400w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1200\" height=\"800\" alt=\"\" fetchpriority=\"high\"></picture></figure>",
-   "nahlad": "img/hd/hutny-1200.webp"
   },
   "izolacia": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/hd/hlavicka/izolacia-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/hd/hlavicka/izolacia-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><img src=\"../img/hd/izolacia-1200.webp\" srcset=\"../img/hd/izolacia-1200.webp 1200w, ../img/hd/izolacia.webp 2400w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1200\" height=\"801\" alt=\"\" fetchpriority=\"high\"></picture></figure>",
@@ -268,6 +260,10 @@
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/dlazby-vzorkova-plocha-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/dlazby-vzorkova-plocha-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/dlazby-vzorkova-plocha-480.avif 480w, ../img/kat/dlazby-vzorkova-plocha-720.avif 720w, ../img/kat/dlazby-vzorkova-plocha-960.avif 960w, ../img/kat/dlazby-vzorkova-plocha-1320.avif 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/dlazby-vzorkova-plocha-1320.webp\" srcset=\"../img/kat/dlazby-vzorkova-plocha-480.webp 480w, ../img/kat/dlazby-vzorkova-plocha-720.webp 720w, ../img/kat/dlazby-vzorkova-plocha-960.webp 960w, ../img/kat/dlazby-vzorkova-plocha-1320.webp 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1320\" height=\"878\" alt=\"Vzorková plocha betónových dlažieb a múrikov pod holým nebom\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/kat/dlazby-vzorkova-plocha-1320.webp"
   },
+  "kat:dvere-okna-predajna": {
+   "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/dvere-okna-predajna-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/dvere-okna-predajna-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/dvere-okna-predajna-480.avif 480w, ../img/kat/dvere-okna-predajna-720.avif 720w, ../img/kat/dvere-okna-predajna-960.avif 960w, ../img/kat/dvere-okna-predajna-1297.avif 1297w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/dvere-okna-predajna-1297.webp\" srcset=\"../img/kat/dvere-okna-predajna-480.webp 480w, ../img/kat/dvere-okna-predajna-720.webp 720w, ../img/kat/dvere-okna-predajna-960.webp 960w, ../img/kat/dvere-okna-predajna-1297.webp 1297w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1297\" height=\"973\" alt=\"Ukážky interiérových dverí, zárubní a kľučiek vo vzorkovej predajni\" fetchpriority=\"high\"></picture></figure>",
+   "nahlad": "img/kat/dvere-okna-predajna-1297.webp"
+  },
   "kat:farby-laky-chemolak": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/farby-laky-chemolak-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/farby-laky-chemolak-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/farby-laky-chemolak-480.avif 480w, ../img/kat/farby-laky-chemolak-720.avif 720w, ../img/kat/farby-laky-chemolak-960.avif 960w, ../img/kat/farby-laky-chemolak-1320.avif 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/farby-laky-chemolak-1320.webp\" srcset=\"../img/kat/farby-laky-chemolak-480.webp 480w, ../img/kat/farby-laky-chemolak-720.webp 720w, ../img/kat/farby-laky-chemolak-960.webp 960w, ../img/kat/farby-laky-chemolak-1320.webp 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1320\" height=\"990\" alt=\"Regály s plechovkami farieb Chemolak a vzorkovníky farieb\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/kat/farby-laky-chemolak-1320.webp"
@@ -275,6 +271,10 @@
   "kat:fasadny-system-rez": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/fasadny-system-rez-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/fasadny-system-rez-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/fasadny-system-rez-480.avif 480w, ../img/kat/fasadny-system-rez-720.avif 720w, ../img/kat/fasadny-system-rez-960.avif 960w, ../img/kat/fasadny-system-rez-1320.avif 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/fasadny-system-rez-1320.webp\" srcset=\"../img/kat/fasadny-system-rez-480.webp 480w, ../img/kat/fasadny-system-rez-720.webp 720w, ../img/kat/fasadny-system-rez-960.webp 960w, ../img/kat/fasadny-system-rez-1320.webp 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1320\" height=\"990\" alt=\"Rez zatepľovacím systémom: tehlové murivo, izolačné dosky s kotvami, sieťka a omietka\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/kat/fasadny-system-rez-1320.webp"
+  },
+  "kat:garaz": {
+   "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/garaz-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/garaz-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/garaz-480.avif 480w, ../img/kat/garaz-720.avif 720w, ../img/kat/garaz-960.avif 960w, ../img/kat/garaz-1297.avif 1297w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/garaz-1297.webp\" srcset=\"../img/kat/garaz-480.webp 480w, ../img/kat/garaz-720.webp 720w, ../img/kat/garaz-960.webp 960w, ../img/kat/garaz-1297.webp 1297w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1297\" height=\"973\" alt=\"Plechová garáž s otvorenými dverami\" fetchpriority=\"high\"></picture></figure>",
+   "nahlad": "img/kat/garaz-1297.webp"
   },
   "kat:hutny-material-rury": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/hutny-material-rury-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/hutny-material-rury-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/hutny-material-rury-480.avif 480w, ../img/kat/hutny-material-rury-720.avif 720w, ../img/kat/hutny-material-rury-960.avif 960w, ../img/kat/hutny-material-rury-1320.avif 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/hutny-material-rury-1320.webp\" srcset=\"../img/kat/hutny-material-rury-480.webp 480w, ../img/kat/hutny-material-rury-720.webp 720w, ../img/kat/hutny-material-rury-960.webp 960w, ../img/kat/hutny-material-rury-1320.webp 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1320\" height=\"993\" alt=\"Oceľové rúry a profily uložené v regáli\" fetchpriority=\"high\"></picture></figure>",
@@ -284,6 +284,14 @@
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/izolacny-material-podkrovie-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/izolacny-material-podkrovie-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/izolacny-material-podkrovie-480.avif 480w, ../img/kat/izolacny-material-podkrovie-720.avif 720w, ../img/kat/izolacny-material-podkrovie-960.avif 960w, ../img/kat/izolacny-material-podkrovie-1284.avif 1284w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/izolacny-material-podkrovie-1284.webp\" srcset=\"../img/kat/izolacny-material-podkrovie-480.webp 480w, ../img/kat/izolacny-material-podkrovie-720.webp 720w, ../img/kat/izolacny-material-podkrovie-960.webp 960w, ../img/kat/izolacny-material-podkrovie-1284.webp 1284w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1284\" height=\"963\" alt=\"Podkrovie zateplené minerálnou vlnou pod fóliou, role izolácie Isover a rebrík\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/kat/izolacny-material-podkrovie-1284.webp"
   },
+  "kat:komin-stadreko": {
+   "html": "<figure class=\"ph-foto cela\"><picture><source type=\"image/avif\" srcset=\"../img/kat/komin-stadreko-480.avif 480w, ../img/kat/komin-stadreko-720.avif 720w, ../img/kat/komin-stadreko-960.avif 960w, ../img/kat/komin-stadreko-1052.avif 1052w\" sizes=\"(max-width:700px) 160px, 260px\"><img src=\"../img/kat/komin-stadreko-1052.webp\" srcset=\"../img/kat/komin-stadreko-480.webp 480w, ../img/kat/komin-stadreko-720.webp 720w, ../img/kat/komin-stadreko-960.webp 960w, ../img/kat/komin-stadreko-1052.webp 1052w\" sizes=\"(max-width:700px) 160px, 260px\" width=\"1052\" height=\"1608\" alt=\"Schéma komínového systému v reze s napojenou krbovou vložkou a kotlom\" fetchpriority=\"high\"></picture></figure>",
+   "nahlad": "img/kat/komin-stadreko-1052.webp"
+  },
+  "kat:krytina-blachotrapez": {
+   "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/krytina-blachotrapez-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/krytina-blachotrapez-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/krytina-blachotrapez-480.avif 480w, ../img/kat/krytina-blachotrapez-720.avif 720w, ../img/kat/krytina-blachotrapez-762.avif 762w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/krytina-blachotrapez-762.webp\" srcset=\"../img/kat/krytina-blachotrapez-480.webp 480w, ../img/kat/krytina-blachotrapez-720.webp 720w, ../img/kat/krytina-blachotrapez-762.webp 762w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"762\" height=\"575\" alt=\"Detail plechovej strešnej krytiny v červenej farbe\" fetchpriority=\"high\"></picture></figure>",
+   "nahlad": "img/kat/krytina-blachotrapez-762.webp"
+  },
   "kat:murovaci-material-porotherm": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/murovaci-material-porotherm-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/murovaci-material-porotherm-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/murovaci-material-porotherm-480.avif 480w, ../img/kat/murovaci-material-porotherm-720.avif 720w, ../img/kat/murovaci-material-porotherm-960.avif 960w, ../img/kat/murovaci-material-porotherm-1272.avif 1272w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/murovaci-material-porotherm-1272.webp\" srcset=\"../img/kat/murovaci-material-porotherm-480.webp 480w, ../img/kat/murovaci-material-porotherm-720.webp 720w, ../img/kat/murovaci-material-porotherm-960.webp 960w, ../img/kat/murovaci-material-porotherm-1272.webp 1272w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1272\" height=\"882\" alt=\"Keramické tehly na základovej doske, za nimi zabalené palety tehál\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/kat/murovaci-material-porotherm-1272.webp"
@@ -291,6 +299,10 @@
   "kat:podhlady-pvc-pergola": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/podhlady-pvc-pergola-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/podhlady-pvc-pergola-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/podhlady-pvc-pergola-480.avif 480w, ../img/kat/podhlady-pvc-pergola-720.avif 720w, ../img/kat/podhlady-pvc-pergola-960.avif 960w, ../img/kat/podhlady-pvc-pergola-1030.avif 1030w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/podhlady-pvc-pergola-1030.webp\" srcset=\"../img/kat/podhlady-pvc-pergola-480.webp 480w, ../img/kat/podhlady-pvc-pergola-720.webp 720w, ../img/kat/podhlady-pvc-pergola-960.webp 960w, ../img/kat/podhlady-pvc-pergola-1030.webp 1030w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1030\" height=\"664\" alt=\"Pergola s lavicami a stolom, v pozadí farebné plotovky\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/kat/podhlady-pvc-pergola-1030.webp"
+  },
+  "kat:sadrokarton-podhlad": {
+   "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/sadrokarton-podhlad-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/sadrokarton-podhlad-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/sadrokarton-podhlad-480.avif 480w, ../img/kat/sadrokarton-podhlad-720.avif 720w, ../img/kat/sadrokarton-podhlad-960.avif 960w, ../img/kat/sadrokarton-podhlad-1165.avif 1165w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/sadrokarton-podhlad-1165.webp\" srcset=\"../img/kat/sadrokarton-podhlad-480.webp 480w, ../img/kat/sadrokarton-podhlad-720.webp 720w, ../img/kat/sadrokarton-podhlad-960.webp 960w, ../img/kat/sadrokarton-podhlad-1165.webp 1165w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1165\" height=\"874\" alt=\"Rošt podhľadu z kovových profilov pod OSB doskami, časť už zakrytá sadrokartónom\" fetchpriority=\"high\"></picture></figure>",
+   "nahlad": "img/kat/sadrokarton-podhlad-1165.webp"
   },
   "kat:stavebne-rezivo-hranoly": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/stavebne-rezivo-hranoly-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/stavebne-rezivo-hranoly-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/stavebne-rezivo-hranoly-480.avif 480w, ../img/kat/stavebne-rezivo-hranoly-720.avif 720w, ../img/kat/stavebne-rezivo-hranoly-960.avif 960w, ../img/kat/stavebne-rezivo-hranoly-1320.avif 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/stavebne-rezivo-hranoly-1320.webp\" srcset=\"../img/kat/stavebne-rezivo-hranoly-480.webp 480w, ../img/kat/stavebne-rezivo-hranoly-720.webp 720w, ../img/kat/stavebne-rezivo-hranoly-960.webp 960w, ../img/kat/stavebne-rezivo-hranoly-1320.webp 1320w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1320\" height=\"990\" alt=\"Stohy stavebných hranolov na snehu\" fetchpriority=\"high\"></picture></figure>",
@@ -300,9 +312,17 @@
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/stresne-kritiny-strecha-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/stresne-kritiny-strecha-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/stresne-kritiny-strecha-480.avif 480w, ../img/kat/stresne-kritiny-strecha-720.avif 720w, ../img/kat/stresne-kritiny-strecha-960.avif 960w, ../img/kat/stresne-kritiny-strecha-1272.avif 1272w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/stresne-kritiny-strecha-1272.webp\" srcset=\"../img/kat/stresne-kritiny-strecha-480.webp 480w, ../img/kat/stresne-kritiny-strecha-720.webp 720w, ../img/kat/stresne-kritiny-strecha-960.webp 960w, ../img/kat/stresne-kritiny-strecha-1272.webp 1272w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1272\" height=\"880\" alt=\"Strecha z pálených škridiel, na nej kôpka škridiel a ruka s výkresom\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/kat/stresne-kritiny-strecha-1272.webp"
   },
+  "kat:stresne-okno-fakro": {
+   "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/stresne-okno-fakro-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/stresne-okno-fakro-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/stresne-okno-fakro-480.avif 480w, ../img/kat/stresne-okno-fakro-720.avif 720w, ../img/kat/stresne-okno-fakro-960.avif 960w, ../img/kat/stresne-okno-fakro-1172.avif 1172w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/stresne-okno-fakro-1172.webp\" srcset=\"../img/kat/stresne-okno-fakro-480.webp 480w, ../img/kat/stresne-okno-fakro-720.webp 720w, ../img/kat/stresne-okno-fakro-960.webp 960w, ../img/kat/stresne-okno-fakro-1172.webp 1172w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1172\" height=\"879\" alt=\"Otvorené strešné okno v streche z pálených škridiel\" fetchpriority=\"high\"></picture></figure>",
+   "nahlad": "img/kat/stresne-okno-fakro-1172.webp"
+  },
   "kat:sypke-zmesy-univer-bau": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/sypke-zmesy-univer-bau-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/sypke-zmesy-univer-bau-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/sypke-zmesy-univer-bau-480.avif 480w, ../img/kat/sypke-zmesy-univer-bau-720.avif 720w, ../img/kat/sypke-zmesy-univer-bau-960.avif 960w, ../img/kat/sypke-zmesy-univer-bau-1272.avif 1272w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/sypke-zmesy-univer-bau-1272.webp\" srcset=\"../img/kat/sypke-zmesy-univer-bau-480.webp 480w, ../img/kat/sypke-zmesy-univer-bau-720.webp 720w, ../img/kat/sypke-zmesy-univer-bau-960.webp 960w, ../img/kat/sypke-zmesy-univer-bau-1272.webp 1272w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1272\" height=\"990\" alt=\"Palety vriec Univer Bau v sklade: lepidlá, omietky a suchý betón\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/kat/sypke-zmesy-univer-bau-1272.webp"
+  },
+  "kat:tehla-termobrik": {
+   "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/kat/hlavicka/tehla-termobrik-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/kat/hlavicka/tehla-termobrik-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/kat/tehla-termobrik-480.avif 480w, ../img/kat/tehla-termobrik-720.avif 720w, ../img/kat/tehla-termobrik-960.avif 960w, ../img/kat/tehla-termobrik-1123.avif 1123w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/kat/tehla-termobrik-1123.webp\" srcset=\"../img/kat/tehla-termobrik-480.webp 480w, ../img/kat/tehla-termobrik-720.webp 720w, ../img/kat/tehla-termobrik-960.webp 960w, ../img/kat/tehla-termobrik-1123.webp 1123w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1123\" height=\"842\" alt=\"Paleta tehál zabalená v červenej fólii s nápisom TermoBRIK\" fetchpriority=\"high\"></picture></figure>",
+   "nahlad": "img/kat/tehla-termobrik-1123.webp"
   },
   "komin-strecha": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/hd/hlavicka/komin-strecha-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/hd/hlavicka/komin-strecha-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><img src=\"../img/hd/komin-strecha-1200.webp\" srcset=\"../img/hd/komin-strecha-1200.webp 1200w, ../img/hd/komin-strecha.webp 2400w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1200\" height=\"800\" alt=\"\" fetchpriority=\"high\"></picture></figure>",
@@ -364,10 +384,6 @@
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/predajna/hlavicka/13-dlazba-sklad-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/predajna/hlavicka/13-dlazba-sklad-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><source type=\"image/avif\" srcset=\"../img/predajna/13-dlazba-sklad-480.avif 480w, ../img/predajna/13-dlazba-sklad-720.avif 720w, ../img/predajna/13-dlazba-sklad-960.avif 960w, ../img/predajna/13-dlazba-sklad-1290.avif 1290w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\"><img src=\"../img/predajna/13-dlazba-sklad-1290.webp\" srcset=\"../img/predajna/13-dlazba-sklad-480.webp 480w, ../img/predajna/13-dlazba-sklad-720.webp 720w, ../img/predajna/13-dlazba-sklad-960.webp 960w, ../img/predajna/13-dlazba-sklad-1290.webp 1290w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1290\" height=\"985\" alt=\"\" style=\"object-position:50% 60%\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/predajna/13-dlazba-sklad-1290.webp"
   },
-  "sadrokarton-montaz": {
-   "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/hd/hlavicka/sadrokarton-montaz-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/hd/hlavicka/sadrokarton-montaz-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><img src=\"../img/hd/sadrokarton-montaz-1200.webp\" srcset=\"../img/hd/sadrokarton-montaz-1200.webp 1200w, ../img/hd/sadrokarton-montaz.webp 2400w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1200\" height=\"800\" alt=\"\" fetchpriority=\"high\"></picture></figure>",
-   "nahlad": "img/hd/sadrokarton-montaz-1200.webp"
-  },
   "strecha": {
    "html": "<figure class=\"ph-foto\"><picture><source media=\"(max-width:480px)\" type=\"image/avif\" srcset=\"../img/hd/hlavicka/strecha-720.avif 720w\" sizes=\"calc(100vw - 36px)\"><source media=\"(max-width:480px)\" type=\"image/webp\" srcset=\"../img/hd/hlavicka/strecha-720.webp 720w\" sizes=\"calc(100vw - 36px)\"><img src=\"../img/hd/strecha-1200.webp\" srcset=\"../img/hd/strecha-1200.webp 1200w, ../img/hd/strecha.webp 2400w\" sizes=\"(max-width:700px) calc(100vw - 36px), (max-width:1000px) 40vw, 520px\" width=\"1200\" height=\"801\" alt=\"\" fetchpriority=\"high\"></picture></figure>",
    "nahlad": "img/hd/strecha-1200.webp"
@@ -404,7 +420,7 @@
   "katalog/dlazby/dlazby-in-vest/prvky-pre-cestne-komunikacie.html": "dlazba",
   "katalog/dlazby/dlazby-in-vest/prvky-vonkajsej-architektury.html": "dlazba",
   "katalog/dlazby/dlazby-in-vest/prvky-zahradnej-architektury.html": "dlazba",
-  "katalog/dvere-okna.html": "dvere",
+  "katalog/dvere-okna.html": "kat:dvere-okna-predajna",
   "katalog/farby-laky.html": "kat:farby-laky-chemolak",
   "katalog/fasadny-system.html": "kat:fasadny-system-rez",
   "katalog/hutny-material.html": "kat:hutny-material-rury",
@@ -421,7 +437,7 @@
   "katalog/murovaci-material/porfix.html": "porfix-stavba",
   "katalog/murovaci-material/ytong.html": "predajna:04-ytong-porfix",
   "katalog/podhlady-pvc.html": "kat:podhlady-pvc-pergola",
-  "katalog/sadrokartonovy-zateplovaci-system.html": "sadrokarton-montaz",
+  "katalog/sadrokartonovy-zateplovaci-system.html": "kat:sadrokarton-podhlad",
   "katalog/stavebne-naradie-doplnky.html": "predajna:12-predajna-regaly",
   "katalog/stavebne-rezivo.html": "kat:stavebne-rezivo-hranoly",
   "katalog/stresne-kritiny.html": "kat:stresne-kritiny-strecha",
@@ -432,9 +448,9 @@
   "katalog/stresne-kritiny/mediterran.html": "strecha",
   "katalog/stresne-kritiny/onduline.html": "strecha",
   "katalog/stresne-kritiny/tondach.html": "strecha",
-  "katalog/stresne-okna.html": "okno-strecha",
-  "katalog/stresne-okna/fakro.html": "okno-strecha",
-  "katalog/stresne-okna/fakro/fakro-schody-vylezy.html": "okno-strecha",
+  "katalog/stresne-okna.html": "kat:stresne-okno-fakro",
+  "katalog/stresne-okna/fakro.html": "kat:stresne-okno-fakro",
+  "katalog/stresne-okna/fakro/fakro-schody-vylezy.html": "kat:stresne-okno-fakro",
   "katalog/sypke-zmesy.html": "kat:sypke-zmesy-univer-bau",
   "katalog/sypke-zmesy/baumit.html": "predajna:03-baumit-sklad",
   "katalog/sypke-zmesy/calmit.html": "cement",
@@ -502,12 +518,26 @@
  "pripona": " | Stavebniny Richtárik Nitra",
  "sluzby_obr": [
   {
+   "alt": "Ilustrácia: dvanásť skupín tovaru – fasádny systém, hutný a izolačný materiál, komínový systém, betónové dlažby, farby a stierky, náradie, okná a dvere, podhľady, sadrokartónové systémy, stavebné rezivo a strešné krytiny",
+   "avif": "img/ilu/sluzba-sortiment-240.avif 240w, img/ilu/sluzba-sortiment-480.avif 480w",
+   "h": 360,
+   "kluce": [
+    "sortiment"
+   ],
+   "mala": false,
+   "plati_pri": [],
+   "src": "img/ilu/sluzba-sortiment-480.webp",
+   "w": 480,
+   "webp": "img/ilu/sluzba-sortiment-240.webp 240w, img/ilu/sluzba-sortiment-480.webp 480w"
+  },
+  {
    "alt": "Ilustrácia: kalkulačka nad plánom stavby, palety tehál a dreva a vrecia cementu, nápis Zdarma výpočet spotreby stavebného materiálu",
    "avif": "img/ilu/sluzba-vypocet-240.avif 240w, img/ilu/sluzba-vypocet-480.avif 480w",
    "h": 360,
    "kluce": [
     "výpočet"
    ],
+   "mala": false,
    "plati_pri": [],
    "src": "img/ilu/sluzba-vypocet-480.webp",
    "w": 480,
@@ -520,6 +550,7 @@
    "kluce": [
     "poradenstv"
    ],
+   "mala": false,
    "plati_pri": [],
    "src": "img/ilu/sluzba-poradenstvo-480.webp",
    "w": 480,
@@ -532,12 +563,39 @@
    "kluce": [
     "zľav"
    ],
+   "mala": false,
    "plati_pri": [
     "zlava"
    ],
    "src": "img/ilu/zlavy-480.webp",
    "w": 480,
    "webp": "img/ilu/zlavy-288.webp 288w, img/ilu/zlavy-480.webp 480w"
+  },
+  {
+   "alt": "Ilustrácia: žlté nákladné auto s paletou tehál, vrecami a oceľovými nosníkmi",
+   "avif": "img/ilu/sluzba-doprava-240.avif 240w, img/ilu/sluzba-doprava-480.avif 480w",
+   "h": 360,
+   "kluce": [
+    "doprav"
+   ],
+   "mala": false,
+   "plati_pri": [],
+   "src": "img/ilu/sluzba-doprava-480.webp",
+   "w": 480,
+   "webp": "img/ilu/sluzba-doprava-240.webp 240w, img/ilu/sluzba-doprava-480.webp 480w"
+  },
+  {
+   "alt": "Ilustrácia: platobný terminál VÚB s platobnou kartou, nápis VÚB banka – platby cez terminál",
+   "avif": "img/ilu/sluzba-platba-180.avif 180w",
+   "h": 135,
+   "kluce": [
+    "kart"
+   ],
+   "mala": true,
+   "plati_pri": [],
+   "src": "img/ilu/sluzba-platba-180.webp",
+   "w": 180,
+   "webp": "img/ilu/sluzba-platba-180.webp 180w"
   }
  ],
  "stranky": {

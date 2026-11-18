@@ -25,8 +25,9 @@ kod() {   # kod <png> <cieľ bez prípony> [crf] [kvalita webp]: WebP a AVIF (We
   echo "$2: $(identify -format '%wx%h' "$2.webp"), webp $(stat -c %s "$2.webp") B, avif $(stat -c %s "$2.avif") B"
 }
 
-fotka() {   # fotka <výrez> <orez WxH+X+Y alebo „cely“>: sada šírok a výrez pre telefón
-  local m=$1 orez=$2 w h sir cw ch x y
+fotka() {   # fotka <výrez> <orez WxH+X+Y alebo „cely“> [bez-ostrenia] [bez-telefonu]: sada šírok a výrez pre telefón
+  local m=$1 orez=$2 w h sir cw ch x y ostr="-unsharp 0x0.6+0.45+0.01"
+  [ "${3:-}" = bez-ostrenia ] && ostr=""   # prílohy z 18. 11. 2026: len orez, zmenšenie a prevod, nič sa nedoostruje
   read -r w h < <(identify -format '%w %h\n' "$Z/$m.webp")
   [ "$orez" = cely ] && orez="${w}x${h}+0+0"
   convert "$Z/$m.webp" -crop "$orez" +repage -strip "$TMP/o.png"
@@ -34,16 +35,46 @@ fotka() {   # fotka <výrez> <orez WxH+X+Y alebo „cely“>: sada šírok a vý
   for sir in 480 720 960 "$w"; do
     [ "$sir" -gt "$w" ] && continue
     if [ "$sir" -eq "$w" ]; then cp "$TMP/o.png" "$TMP/x.png"   # najväčší súbor = skutočná šírka výrezu, bez zmenšenia
-    else convert "$TMP/o.png" -filter Lanczos -resize "${sir}x" -unsharp 0x0.6+0.45+0.01 -strip "$TMP/x.png"; fi
+    else convert "$TMP/o.png" -filter Lanczos -resize "${sir}x" $ostr -strip "$TMP/x.png"; fi
     kod "$TMP/x.png" "$O/$m-$sir"
     [ "$sir" -eq "$w" ] && break
   done
+  # schéma na výšku (komín) sa v hlavičke ukazuje celá (build.py KAT_FOTO_CELA), výrez pre telefón by z nej nechal pás
+  [ "${4:-}" = bez-telefonu ] && return 0
   # telefón: výrez s pomerom 720 : 468 v plnej šírke alebo výške, v strede (object-position 50 % 50 %), zmenšený na 720 px
   if [ $((w * 468)) -gt $((h * 720)) ]; then ch=$h; cw=$((h * 720 / 468)); else cw=$w; ch=$((w * 468 / 720)); fi
   x=$(( (w - cw) / 2 )); y=$(( (h - ch) / 2 ))
-  convert "$TMP/o.png" -crop "${cw}x${ch}+${x}+${y}" +repage -filter Lanczos -resize 720x468 -unsharp 0x0.6+0.45+0.01 -strip "$TMP/t.png"
+  convert "$TMP/o.png" -crop "${cw}x${ch}+${x}+${y}" +repage -filter Lanczos -resize 720x468 $ostr -strip "$TMP/t.png"
   kod "$TMP/t.png" "$O/hlavicka/$m-720" 32 78
 }
+
+# Prílohy e-mailu z 18. 11. 2026 (10:38; snímky z Mailu IMG_0375 – 0379, výrezy v zdroj/foto-maria/vyrezy.tsv): len orez,
+# zmenšenie a prevod, bez doostrenia; najväčší súbor = šírka výrezu. Spustenie len tejto časti: bash nastroje/foto_maria.sh 18-11
+cast_18_11() {
+  # katalóg (Mário: „vymeníte obrázky v katalógu výrobkov… strešné okná, dvere okná, sadrokartón“), rám hlavičky 4 : 3
+  fotka stresne-okno-fakro   1172x879+62+0   bez-ostrenia   # Strešné okná, Fakro, Fakro schody a výlezy, akcia Okná a schody Fakro
+  fotka dvere-okna-predajna  1297x973+0+0    bez-ostrenia   # Dvere a okná
+  fotka sadrokarton-podhlad  1165x874+0+0    bez-ostrenia   # Sadrokartón a zateplenie, akcia Sadrokartónový a zatepľovací systém
+  # akcie (Mário: „akcie tovaru treba vymeniť obrázky u: Tehla TermoBRIK, komín Stadreko, krytina Blachotrapez, okná Fakro,
+  # zatepľovanie a sadrokartónový systém, garáže – záhradné domčeky“): hlavička stránky akcie (rám 4 : 3) …
+  fotka tehla-termobrik      1123x842+0+80   bez-ostrenia   # Pezinská tehla TermoBRIK, oba nápisy TermoBRIK
+  fotka komin-stadreko       cely            bez-ostrenia bez-telefonu   # Komín Stadreko: celá schéma, v ráme celá na bielom
+  fotka krytina-blachotrapez cely            bez-ostrenia   # Krytina Blachotrapez (762 × 575 ≈ 4 : 3)
+  fotka garaz                1297x973+0+250  bez-ostrenia   # Garáže, záhradné domčeky: hlavička novinky (akcia nemá stránku)
+  # … a obrázok na karte akcie (Akcie, úvod): celý obrázok bez orezu, najviac 300 × 380 px, len WebP ako ostatné náhľady kariet
+  for m in tehla-termobrik komin-stadreko krytina-blachotrapez stresne-okno-fakro sadrokarton-podhlad garaz; do karta "$m"; done
+  # rezivo (poslal v tej istej sérii, v zozname ho nemenoval): pripravené, na web nejde – akcia Stavebné rezivo má jeho fotku
+  # zo skladu (README, Čaká na podklady); v prípade potvrdenia: karta rezivo + fotka rezivo cely bez-ostrenia
+}
+karta() {   # karta <výrez>: img/akcie/<výrez>-karta-<šírka>.webp, celý výrez zmenšený do 300 × 380 (nič sa nezväčšuje)
+  local w
+  mkdir -p img/akcie
+  convert "$Z/$1.webp" -filter Lanczos -resize '300x380>' -strip "$TMP/k.png"
+  w=$(identify -format '%w' "$TMP/k.png")
+  ffmpeg -v error -y -i "$TMP/k.png" -c:v libwebp -quality 82 -compression_level 6 "img/akcie/$1-karta-$w.webp"
+  echo "img/akcie/$1-karta-$w.webp: $(identify -format '%wx%h' "img/akcie/$1-karta-$w.webp"), $(stat -c %s "img/akcie/$1-karta-$w.webp") B"
+}
+if [[ ${1:-} == 18-11 ]]; then cast_18_11; exit 0; fi
 
 # kategória ← fotka (rozhodnutie podľa Máriovho zoznamu; README časť Karty značiek a fotky kategórií)
 fotka stresne-kritiny-strecha      cely              # strešné krytiny: škridly na streche, ruka s plánom (IMG_0355 dole)
@@ -65,3 +96,4 @@ logo() {   # logo <výrez> <cieľ> <orez>
 }
 logo logo-stadreko      stadreko      530x96+5+209   # nápis STADREKO so znakom (v snímke x 77 – 607, y 557 – 653)
 logo logo-rg-plast-deva rg-plast-deva 1032x399+0+0   # celé logo RG plast deva s bielym okrajom 24 px
+cast_18_11

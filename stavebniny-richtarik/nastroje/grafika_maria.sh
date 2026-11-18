@@ -44,8 +44,16 @@ urob() {   # urob <výrez> <cieľ> <orez WxH+X+Y alebo „stvorec“ alebo „ce
   done
 }
 
+vyrez() {   # vyrez <výrez> <cieľ> <orez WxH+X+Y>: len orez a prevod formátu (1 : 1, bez zmenšenia a doostrenia)
+  convert "$Z/$1.webp" -crop "$3" +repage -strip "$TMP/x.png"
+  kod "$TMP/x.png" "$O/$2"
+}
+
 if [[ ${1:-} == 17-11 ]]; then
   source <(sed -n '/^cast_17_11() {/,/^}/p' "$0"); cast_17_11; exit 0
+fi
+if [[ ${1:-} == 18-11 ]]; then
+  source <(sed -n '/^cast_18_11() {/,/^}/p' "$0"); cast_18_11; exit 0
 fi
 
 # séria ilustrácií skupín tovaru: dlaždice skupín na úvode a v Katalógu (do 480 px) a výzva „Potrebujete cenu…“ na
@@ -106,18 +114,15 @@ album logo-rs-cierna-doska 1190
 album tabula-siroka 1140
 album tabula-vysoka 790
 album vizitka 1190
-# päta každej stránky (Mário 18. 11. 2026: „celkom dole moju vizitku dať v 3D prevedení“; oblasť vizitka-pata): ten istý
+# päta každej stránky (Mário 18. 11. 2026: „celkom dole moju vizitku dať v 3D prevedení“; oblasť pata-grafika): ten istý
 # výrez vo väčších šírkach 720 a 960 px (telefón celá šírka, počítač 440 px pri DPR 2); 480 px je náhľad vizitka-n
 for s in 720 960; do
   convert "$Z/vizitka.webp" -filter Lanczos -resize "${s}x" -unsharp 0x0.6+0.45+0.01 -strip "$TMP/x.png"
   kod "$TMP/x.png" "$G/vizitka-p-$s"
 done
 album karta 1140
-album alt-auto-zlte 530
-album alt-sypke-zmesi-ikona 660
-album alt-okna-robotnik 530
-album alt-rezivo-kruh 660
-album alt-stresne-krytiny-stvorec 530
+# päť piktogramov iného štýlu (alt-*) majiteľ 18. 11. 2026 dal z Galérie zmazať; ich súbory img/grafika/alt-* sa už nevyrábajú
+# ani nepoužívajú (do balíka nejdú), výrezy ostávajú v zdroji (alt-auto-zlte je zdroj obrázka služby Doprava na stavbu)
 
 # Pokyny majiteľa zo 17. 11. 2026 („služby – použiť všetky piktogramy 3D“, „použiť 3D zákaznícku kartu“, „naše tabule 3D“):
 # rovnaké výrezy, len iný orez a veľkosti (najviac skutočný detail výrezu, nič sa nezväčšuje). Spustenie len tejto časti:
@@ -134,3 +139,21 @@ cast_17_11() {
   urob tabula-siroka tabula-siroka-o 935x480+173+22 480 820
 }
 cast_17_11
+
+# Pokyny majiteľa z 18. 11. 2026 (e-mail „treba opravit“): „Služby – doplniť piktogramy, čo som Vám poslal, 3D: stavebný
+# materiál v celom sortimente, Doprava na stavbu, platba platobnou kartou“. Samostatné obrázky týchto troch piktogramov
+# v podkladoch nie sú, preto dočasne výrezy z jeho grafík (README Čaká na podklady), rámik 4 : 3 ako pri 02 – 04:
+#   01 mriežka 12 ikon skupín tovaru z letáku so sortimentom (bez piateho stĺpca s druhým „Murovací materiál“) 508 × 381
+#   05 jeho 3D žlté auto s paletami (do 18. 11. 2026 piktogram v Galérii) 900 × 675
+#   07 ikona „VÚB BANKA – platby cez terminál“ z letáku „Prečo nakupovať u nás“ – v letáku má len 180 × 135, preto jediný
+#      súbor 180 px bez zmenšenia a bez doostrenia (na telefóne rámik najviac 180 px, nič sa nezväčšuje)
+# Spustenie len tejto časti: bash nastroje/grafika_maria.sh 18-11
+cast_18_11() {
+  urob letak-stavebniny-richtarik sluzba-sortiment 508x381+0+443 240 480
+  urob alt-auto-zlte sluzba-doprava 900x675+202+36 240 480
+  vyrez letak-preco-nakupovat sluzba-platba-180 180x135+312+431
+  # úvod, pás faktov pod prvou obrazovkou (e-mail 10:38: „…pod ním je názov Zákaznícka karta, sú tam tie zľavy – tam treba dať
+  # tiež obrázok 3D zákazníckej karty, miniatúra“): ten istý výrez ako karta-3d, len menší (84 / 104 px pri DPR 1 – 3)
+  urob karta karta-3d-mini 915x714+214+90 208 312
+}
+cast_18_11

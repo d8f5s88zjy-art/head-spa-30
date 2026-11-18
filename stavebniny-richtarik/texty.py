@@ -456,6 +456,10 @@ OBR_ALT = {
     'ilu:poradenstvo': 'Ilustrácia: predavač radí zákazníkovi nad plánom, nápis Poradenstvo v stavebninách',
     'ilu:rozvoz': 'Ilustrácia: nákladné auto Iveco s hydraulickou rukou vezie palety tehál, reziva a cementu',
     'ilu:zdarma-vypocet': 'Ilustrácia: kalkulačka nad plánom stavby, palety tehál a dreva a vrecia cementu, nápis Zdarma výpočet spotreby stavebného materiálu',
+    # Služby 01, 05, 07 (Mário 18. 11. 2026; výrezy z jeho letákov a 3D auto, nastroje/grafika_maria.sh 18-11)
+    'ilu:sluzba-sortiment': 'Ilustrácia: dvanásť skupín tovaru – fasádny systém, hutný a izolačný materiál, komínový systém, betónové dlažby, farby a stierky, náradie, okná a dvere, podhľady, sadrokartónové systémy, stavebné rezivo a strešné krytiny',
+    'ilu:sluzba-doprava': 'Ilustrácia: žlté nákladné auto s paletou tehál, vrecami a oceľovými nosníkmi',
+    'ilu:sluzba-platba': 'Ilustrácia: platobný terminál VÚB s platobnou kartou, nápis VÚB banka – platby cez terminál',
     'ilu:zlavy': 'Ilustrácia: platobná karta, bankovky, mince a znak percent, nápis Zákazník dostane zľavu: hotovosť 5 %, karta 3,3 %. Špeciálne zľavy pre stavebné firmy a živnostníkov',
 }
 

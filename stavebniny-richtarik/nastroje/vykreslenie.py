@@ -137,9 +137,11 @@ def akcia(D, cesta):
 def karta_akcie(D, a, cesta, uvod=False):
     if a['stranka']: href, viac = rel(cesta, a['stranka']), 'Leták akcie'
     else: href, viac = rel(cesta, a['odkaz']['stranka']), a['odkaz']['text']
+    # obrázok na karte: miniatúra letáku, alebo fotka tovaru (foto: celá, bez orezu – Mário 18. 11. 2026); aj pri karte bez
+    # vlastnej stránky (Garáže vedú na novinku)
     n = a.get('nahlad')
     return {'href': href, 'stitok': txt(a['stitok']), 'nazov': txt(a['nazov']), 'karta': txt(a['karta']), 'viac': txt(viac),
-            'nahlad': {'src': rel(cesta, n['src']), 'w': n['w'], 'h': n['h']} if n and a['stranka'] else None}
+            'nahlad': {'src': rel(cesta, n['src']), 'w': n['w'], 'h': n['h'], 'foto': bool(n.get('foto'))} if n else None}
 
 
 def pdf_text(a, p):
@@ -358,7 +360,7 @@ def sluzby_polozky_vm(D):
             if i in pouzite or not any(k in n for k in o['kluce']): continue
             pouzite.add(i)
             if udaje_platia(D, o['plati_pri']):
-                p['obr'] = dict({k: o[k] for k in ('src', 'webp', 'avif', 'w', 'h')}, alt=txt(o['alt']))
+                p['obr'] = dict({k: o[k] for k in ('src', 'webp', 'avif', 'w', 'h', 'mala')}, alt=txt(o['alt']))
             break
     return vm
 
@@ -492,8 +494,10 @@ def vykresli(oid, cesta, D):
     if oid in ('galeria-letaky', 'galeria-grafika'): return sablona('galeria-grafika', grafika_vm(D, oid[8:], cesta))
     if oid == 'sluzby-zlavy': return sablona('sluzby-zlavy', {'zlava': zlava(D), 'karta3d': karta3d(D), 'akcie_href': rel(cesta, 'akcie/index.html')})
     if oid == 'uvod-karta': return sablona('uvod-karta', {'karta3d': karta3d(D)})
+    # miniatúra tej istej 3D karty v páse faktov úvodu (Mário 18. 11. 2026); má v obrázku adresu a kontakty – tá istá podmienka
+    if oid == 'uvod-karta-mini': return sablona('uvod-karta-mini', {'karta3d': karta3d(D)})
     if oid == 'sluzby-kontakt': return sablona('sluzby-kontakt', sluzby_kontakt_vm(D))
-    if oid == 'vizitka-pata': return sablona('vizitka-pata', {'obr': udaje_platia(D, D['k']['grafika_pri']['vizitka']), 'pre': '/' if cesta == '404.html' else rel(cesta, '')})   # 404 má adresy od koreňa (build_404)
+    if oid == 'pata-grafika': return sablona('pata-grafika', {'obr': udaje_platia(D, D['k']['grafika_pri']['vizitka']), 'pre': '/' if cesta == '404.html' else rel(cesta, '')})   # 404 má adresy od koreňa (build_404)
     if oid == 'kontakt-tabula': return sablona('kontakt-tabula', {'obr': udaje_platia(D, D['k']['grafika_pri']['tabula'])})
     if oid == 'sluzby-lede': return sablona('lede', {'text': txt(D['texty']['sluzby_uvod'])})
     if oid == 'sluzby-polozky': return sablona('sluzby-polozky', sluzby_polozky_vm(D))

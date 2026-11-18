@@ -107,7 +107,7 @@ function obrazovka_akcia(): void
         . '<h2>2. Text akcie</h2>'
         . '<label class="pole"><span>Čo je v akcii a za akých podmienok</span><textarea name="karta" required rows="4" data-pocitadlo data-max="220" placeholder="Napíšte, čo je v akcii a za akých podmienok. Ceny píšte s DPH.">' . Ui::e($v('karta', $a['karta'])) . '</textarea><small>30 až 220 znakov. Zobrazí sa na karte akcie a pod nadpisom stránky.</small></label>';
     if (!$a['stranka']) {
-        $h .= '<p class="vela">Táto karta vedie na stránku ' . Ui::e($a['odkaz']['text'] ?? '') . ' a nemá vlastnú stránku akcie.</p>';
+        $h .= '<p class="vela">Táto karta vedie na stránku ' . Ui::e($a['odkaz']['text'] ?? '') . ' a nemá vlastnú stránku akcie.</p>' . pole_karta_foto($a);
     } else {
         $h .= '<h2>3. Leták</h2>';
         if ($a['letak']) $h .= '<figure class="nahlad-letaku"><img src="../' . Ui::e($a['letak']['src']) . '" alt="Súčasný leták" width="160"><figcaption>Súčasná fotka letáku</figcaption></figure><label class="prepinac"><input type="checkbox" name="letak_zmazat" value="1"> <span>Odstrániť fotku letáku</span></label>';
@@ -115,7 +115,8 @@ function obrazovka_akcia(): void
             . '<div class="pdf-zoznam">';
         foreach ($a['pdf'] as $j => $p) $h .= '<label class="prepinac"><input type="checkbox" name="pdf_zmazat[' . $j . ']" value="1"> <span>Odstrániť: ' . Ui::e(Vykreslenie::pdf_text($a, $p)) . '</span></label>';
         $h .= '</div><label class="pole subor"><span>Pridať leták v PDF</span><input type="file" name="pdf_novy" accept="application/pdf,.pdf"></label>'
-            . '<label class="pole"><span>Dátum letáku v PDF</span><input type="date" name="pdf_datum" value="' . Ui::e(date('Y-m-d')) . '"></label>';
+            . '<label class="pole"><span>Dátum letáku v PDF</span><input type="date" name="pdf_datum" value="' . Ui::e(date('Y-m-d')) . '"></label>'
+            . pole_karta_foto($a);
         // ceny
         $h .= '<h2>4. Ceny (nepovinné)</h2><p class="pomocka">Tabuľka cien na stránke akcie. Ceny píšte s DPH, napríklad <b>4,42 €/vrece</b>. Prázdne riadky sa vynechajú.</p>';
         if (Ulohy::cenyStarehoCennika($a, $D))
@@ -158,6 +159,16 @@ function obrazovka_akcia(): void
             : Ui::tlacidlo('zobrazit', 'Znova zobraziť akciu', 'druhe', ['id' => $a['id']], 'akcie')) . '</div>';
     }
     Ui::stranka($nova ? 'Nová akcia' : $a['nazov'], $h, 'akcie');
+}
+
+/** Obrázok na karte akcie (Akcie, úvod): celá fotka tovaru namiesto miniatúry letáku; leták na stránke akcie ostáva. */
+function pole_karta_foto(array $a): string
+{
+    $h = '<fieldset class="pole"><legend>Obrázok na karte akcie</legend>';
+    if (!empty($a['nahlad']['foto'])) $h .= '<figure class="nahlad-letaku"><img src="../' . Ui::e($a['nahlad']['src']) . '" alt="Súčasný obrázok na karte" width="120"><figcaption>Súčasný obrázok na karte</figcaption></figure>'
+        . '<label class="prepinac"><input type="checkbox" name="karta_foto_zmazat" value="1"> <span>Odstrániť obrázok na karte' . ($a['letak'] ?? null ? ' (karta znova ukáže leták)' : '') . '</span></label>';
+    return $h . '<label class="pole subor"><span>' . (!empty($a['nahlad']['foto']) ? 'Iná fotka na kartu' : 'Fotka tovaru na kartu') . '</span><input type="file" name="karta_foto" accept="image/jpeg,image/png,image/webp,image/heic,image/*" data-fotka>'
+        . '<small>Celá fotka sa zmenší, nič sa neoreže. Leták na stránke akcie ostane.</small></label></fieldset>';
 }
 
 function akcia_akcia(): void
