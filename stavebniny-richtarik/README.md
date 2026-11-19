@@ -874,8 +874,8 @@ Platí pre všetky texty webu (úvod, podstránky, alt texty, titulky, popisy, t
 - Služby (texty v `data/texty.json`, piktogramy `SLUZBY_OBR`), pás faktov O nás (`FAKTY_ONAS`) a tabuľa na O nás
   (`TABULA_ONAS`) sú v `build.py`; texty sú zo zdroja alebo z úvodu, nové treba overiť rovnako. Podmienky 3D karty a tabule
   na Kontakte a 3D vizitky v päte sú v `GRAFIKA_PRI` (kľúče ako `plati_pri` v `data/galeria.json`).
-- Hosting: `python3 -I nasadenie/presmerovania.py . nasadenie` vyrobí znova `htaccess.txt`, `web.config.txt`
-  a `presmerovania.tsv` (po pridaní PDF do `pdf/`, zmene stránok alebo `DOMENA`) a vypíše kontrolu (časť HTTPS
+- Hosting: `python3 -I nasadenie/presmerovania.py . nasadenie` vyrobí znova `htaccess.txt`, `htaccess-forpsi.txt`
+  (pre balík `FORPSI=linux`, časť Balík pre Forpsi), `web.config.txt` a `presmerovania.tsv` (po pridaní PDF do `pdf/`, zmene stránok alebo `DOMENA`) a vypíše kontrolu (časť HTTPS
   a presmerovania).
 
 ## Správa webu
@@ -884,7 +884,8 @@ k nim (sviatok, dovolenka, iné hodiny od – do), novinky (nové aj pôvodné: 
 galérie Predajňa a Areál a obrázky v albumoch grafiky (Letáky a bannery na stránke Leták, Logo a firemná grafika
 v Galérii), vybrané texty Úvodu, Služieb, O nás a Dopravy a telefón a e-mail: adresa
 `https://www.stavebninyrichtarik.sk/sprava/`, na telefóne aj na počítači. Návod pre majiteľa krok za krokom je v správe
-(Pomoc) a v PDF pre majiteľa `richtarik/dokoncenie/final/navod-sprava.pdf` (17. 11. 2026, 11 kapitol vrátane galérie,
+(Pomoc) a v PDF pre majiteľa `navod-sprava.pdf` (od 19. 11. 2026 `richtarik/forpsi/final/navod-sprava.pdf` – doplnené pole „Obrázok na karte akcie“
+a kde je súbor s kódom, zdroj a nové snímky `richtarik/forpsi/zapis/navod/`, `nastroje/snimky-karta.mjs`; predtým `richtarik/dokoncenie/final/navod-sprava.pdf` zo 17. 11. 2026; 11 kapitol vrátane galérie,
 letákov a bannerov, telefónu a e-mailu so skrývaním obrázkov a textov; zdroj `richtarik/dokoncenie/final/navod/navod.html`, snímky
 zo skutočnej správy na kópii `navod/nastroje/spusti.sh` – plné Chromium so slovenčinou, `LANGUAGE=sk`, PDF `navod/nastroje/vyrob.sh`;
 po zmene obrazoviek správy snímky a PDF vyrobiť znova); architektúra a výsledky testov v `richtarik/sprava/zapis/ZAPIS.md`.
@@ -937,21 +938,33 @@ atribúte) a `zhoda Python = PHP` (`nastroje/sprava_zhoda.py`: všetky oblasti, 
 šablóny, popisy, 75 záznamov hľadania – 0 rozdielov; bez `php` v PATH len upozornenie). `python3
 nastroje/sprava_zhoda.py --referencia <starý výstup>` overí, že web bez značiek je bajtovo ako predtým.
 
-**Inštalácia na Forpsi (Linux odporúčaný, Windows funguje).**
-1. Doména musí mať HTTPS (bez neho správa ukáže len návod). PHP 8.1 – 8.5 (odporúčané 8.3) s GD (WebP).
+**Inštalácia na Forpsi – len Hosting Linux.** Hosting Windows Forpsi nemá PHP (časť Balík pre Forpsi, F-01), správa
+tam nepôjde; na IIS nebola správa nikdy spustená a nepodporujeme ju. Postup pre laika krok za krokom je v balíku
+`FORPSI=linux` (`NAVOD-FORPSI.pdf`); tu je to isté pre programátora.
+1. Doména musí mať HTTPS (bez neho správa ukáže len stránku s postupom): v účte Forpsi Webhosting → web → SSL certifikát
+   → Spravovať → Požiadať o certifikát (bezplatný DV SSL len pre doménu registrovanú vo Forpsi a na DNS Forpsi, F-12, F-13).
+   PHP 8.1 – 8.5 (odporúčané 8.3, volí sa v administrácii, F-02) s GD (WebP) – či ho PHP na Forpsi má, je neoverené (F-22).
 2. Pred balíkom stiahnuť a importovať zmeny z hostingu (bod Zmeny z hostingu nižšie; pri prvej inštalácii netreba).
    Balík so správou: `SPRAVA=1 SPRAVA_REVIZIA=<revízia z data/verzia.json> bash nasadenie/balik.sh . <výstup>` –
    bez zhodnej revízie balík odmietne vzniknúť (poistka, aby nový web neprepísal zmeny majiteľa). Do balíka ide
    `sprava/` bez testov, `sprava/semeno/` (počiatočné údaje), `sprava/verzia.json`; nikdy `data/`, `nastroje/`, údaje
    správy ani zálohy. Bez `SPRAVA=1` je balík ako doteraz plus ochranné súbory `img/s/`, `pdf/s/`.
-3. Nahrať obsah balíka do `/<doména>/www` (FTP, WebFTP rozbalí ZIP na serveri). Na Linuxe si správa vytvorí priečinok
-   údajov **mimo webu** `/<doména>/sprava-data/`; ak to hosting nedovolí (Windows), vytvorí `www/sprava-data-<32 hex>/`
-   s `.htaccess` a `web.config` a sondou overí, že je z internetu nedostupný – inak sa zastaví.
+3. Nahrať obsah balíka do `www` (FileZilla; na novom hostingu `/<doména>/www`, F-03). Správa si vytvorí priečinok
+   údajov **mimo webu** vedľa `www` (`sprava-data/`); ak tam PHP nesmie zapisovať, vytvorí `www/sprava-data-<32 hex>/`
+   s `.htaccess` (a `web.config` pre prípad IIS) a sondou overí, že je z internetu nedostupný – inak sa zastaví.
+   **Keď PHP beží pod iným používateľom než FTP** (staršie servery Forpsi, F-18; pre nový hosting neoverené): po nahratí
+   cez FTP (priečinky 755) správa nevie vytvoriť ani priečinok údajov a ukáže „Správa webu sa nedá spustiť: priečinok
+   údajov nie je dostupný“ s postupom – vo FileZille práva 757 na `www` a podpriečinky (len priečinky). Potom údaje
+   vzniknú vo `www/sprava-data-<hex>` s právami 0705 a súbor s kódom 0604, aby ho majiteľ cez FTP prečítal
+   (`Nastavenie::cudziVlastnik()`); účet, tajomstvo a záznam majú 0600, podpriečinky 0700. Stránky, ktoré správa
+   prepíše, patria potom používateľovi PHP (644): FTP ich neprepíše, len zmaže a nahrá znova (priečinok je jeho) –
+   pri ďalšom balíku na to myslieť. Celé to skúša `nasadenie/test-forpsi.sh` na Apache s mod_php.
 4. Otvoriť `https://…/sprava/` → kontrola servera (HTTPS, PHP, rozšírenia, zápis do priečinkov webu, sondy: údaje
-   nedostupné, PHP sa v `img/s` a `pdf/s` nespúšťa, `sprava/` zakázaná, značky v stránkach, web = údaje). Ak hlási
-   zápis, na Linuxe nastaviť priečinkom webu práva 757 (Forpsi). Pred prihlásením ukáže len súhrn.
+   nedostupné, PHP sa v `img/s` a `pdf/s` nespúšťa, `sprava/` zakázaná, značky v stránkach, web = údaje; dva
+   informačné body: „Súbory vytvorené správou“ – či PHP beží pod iným používateľom než FTP – a „.htaccess v koreni
+   webu“). Ak hlási zápis, nastaviť priečinkom webu práva 757 (hlásenie povie ako). Pred prihlásením ukáže len súhrn.
 5. Prvé nastavenie spolu s majiteľom: Vytvoriť overovací kód → správa zapíše `PRVY-KOD.txt` do priečinka údajov
-   (čitateľný len cez FTP/WebFTP, kód platí 24 h, 5 pokusov, nový najskôr o 15 min) → kód opísať → meno a heslo
+   (čitateľný len cez FTP – FileZilla alebo WebFTP –, kód platí 24 h, 5 pokusov, nový najskôr o 15 min) → kód opísať → meno a heslo
    (aspoň 10 znakov, nie známe ani s názvom firmy). **Žiadne predvolené heslo ani účet neexistuje**; heslo je len ako
    odtlačok (Argon2id/bcrypt). Zabudnuté heslo: rovnako cez `OBNOVA-KOD.txt` (1 h); núdzovo zmazať `ucty.json` cez FTP.
 
@@ -984,8 +997,8 @@ skončila, a `noindex`); úplne ju odstráni programátor. Úvod (`index.html`) 
 `sprava_zhoda.py --referencia` preto `index.html` porovnáva po zjednotení medzier.
 
 **Testy správy** (všetky na kópii v `/dev/shm`, nikdy na hostingu ani na repozitári – bez argumentov sa nespustia):
-`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (190 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
-prerušený zápis, súbeh, kódy, heslá, oznamy, novinky, galéria, texty, kontakt, grafiky s údajom v obrázku vrátane 3D vizitky
+`php sprava/testy/jednotky.php <kópia balíka> <vstupy>` (209 testov: vstupy, šablóny, fotky, PDF, zámky, zálohy,
+prerušený zápis, súbeh, kódy, heslá, práva súborov pri PHP pod iným používateľom než FTP, oznamy, novinky, galéria, texty, kontakt, grafiky s údajom v obrázku vrátane 3D vizitky
 v päte, ceny a úvod),
 `bash sprava/testy/e2e.sh <snímky>` (Playwright 390 × 844 aj 1440 × 900, 283 kontrol na šírku: celý postup majiteľa
 vrátane novinky, sviatku, fotky v galérii, textu, telefónu, e-mailu a pevnej linky a ich vrátenia, obrázka pridaného do
@@ -993,7 +1006,8 @@ albumu grafiky a skrytia všetkých letákov, s overením verejných stránok a 
 telefónom alebo e-mailom po zmene zmiznú a po vrátení sa vrátia – aj 3D vizitka v päte úvodu, Kontaktu, Dlažieb a 404),
 `bash sprava/testy/bezpecnost.sh`, `python3 sprava/testy/vstupy.py <priečinok>`
 (testovacie súbory). Lokálny server: `php -S 127.0.0.1:<port> -t <kópia> sprava/testy/router.php` (napodobní zákazy
-z `.htaccess`; bez HTTPS funguje len pod `php -S`).
+z `.htaccess`; bez HTTPS funguje len pod `php -S`). Na skutočnom Apache s obmedzením ako Forpsi správu skúša
+`bash nasadenie/test-forpsi.sh` (časť Balík pre Forpsi).
 
 ## Nasadenie
 Náhľad beží na GitHub Pages v podpriečinku `stavebniny-richtarik/`. Ostrý web je v koreni domény
@@ -1018,7 +1032,9 @@ https://www.stavebninyrichtarik.sk/ (canonical, sitemap a og:image sú nastaven�
 3. Na hostingu: `ku-korenu/.htaccess` (Apache) alebo `ku-korenu/web.config` (IIS) z balíka – kópie
    `nasadenie/htaccess.txt` a `web.config.txt` – do koreňa webu: 301 zo starých adries `.aspx` a `files/N.pdf`,
    vlastná 404. Nie sú v ZIPe zámerne (ďalšie nahratie by prepísalo upravený `.htaccess`). Kanonická adresa a HTTPS:
-   časť HTTPS a presmerovania nižšie.
+   časť HTTPS a presmerovania nižšie. `web.config` nebol na IIS nikdy spustený a má známe chyby (časť Balík pre
+   Forpsi, IIS-01 až IIS-11); balík pre Forpsi ho v koreni nemá. **Pre Forpsi sa tento postup nepoužíva** – platí
+   `FORPSI=linux` (časť Balík pre Forpsi), kde je `.htaccess` rovno v balíku.
 4. Hlavičky (sú v oboch súboroch): gzip a brotli pre HTML, CSS, JS, JSON a SVG; `Cache-Control: max-age=31536000,
    immutable` pre `img/`, `pdf/`, `subory/` a písma, `max-age=600` pre HTML, `site.css`, `site.js` a `index.json`
    (názvy bez verzie). Fotku pod rovnakým názvom zákazníci po výmene uvidia až po roku – meniť názov.
@@ -1046,11 +1062,161 @@ https://www.stavebninyrichtarik.sk/ (canonical, sitemap a og:image sú nastaven�
   jedno `301` rovno na `https://www.stavebninyrichtarik.sk/akcie/index.html`. Ak hosting ukončuje HTTPS na proxy
   a Apache vidí stále `%{HTTPS} off` (presmerovanie dookola), v `.htaccess` zmeniť podmienku na
   `RewriteCond %{HTTP:X-Forwarded-Proto} !https`.
+- **Na Forpsi (balík `FORPSI=linux`) sa nič z toho ručne nerobí:** http → https zapína prepínač „SSL redirect“ pri
+  žiadosti o certifikát a www prepínač „WWW redirect“ v administrácii (F-14, F-15). `htaccess-forpsi.txt` má preto
+  ciele starých adries **bez schémy a mena servera** (`RewriteRule ^sk/akcie\.aspx$ /akcie/index.html [R=301,L,NC]`):
+  stará adresa funguje aj cez `http://`, kým doména ešte nemá certifikát, a na `https://` ju dostane „SSL redirect“
+  (najviac 2 presmerovania). Vypnuté kanonické pravidlo v ňom má tvar zo vzoru Forpsi (`X-Forwarded-Proto` a zároveň
+  `HTTPS off`, host zvlášť), takže by sa za proxy netočilo dookola; zapínať ho netreba.
 - **Ak hosting HTTPS mať nebude:** v `build.py` zmeniť `DOMENA = 'http://www.stavebninyrichtarik.sk/'`, spustiť
   `venv/bin/python build.py` (podstránky, sitemap, robots.txt) a `python3 -I nasadenie/presmerovania.py . nasadenie`
   (ciele presmerovaní a kanonické pravidlo sa prepnú na http). V ručnom `index.html` nahradiť
   `https://www.stavebninyrichtarik.sk/` za `http://www.stavebninyrichtarik.sk/` (canonical, og:url, og:image, JSON-LD);
   `kontrola_uvodu()` potom musí hlásiť OK. Potom balík (časť Nasadenie, bod 2).
+
+## Balík pre Forpsi
+Stav k 19. 11. 2026. **Na skutočnom účte Forpsi sa nič z tohto neskúšalo** – nikto z nás v ňom nebol. Všetko nižšie je
+buď z verejnej dokumentácie Forpsi (adresa a citácia), alebo zmerané u nás, alebo označené „neoverené“.
+
+**Východisko.** Dnešný web www.stavebninyrichtarik.sk nebeží na Forpsi (verejné DNS: servery `ns.mrhosting.net`, pošta
+`mail.mrhosting.net`; server IIS 10 / ASP.NET bez HTTPS). Čo má majiteľ v účte Forpsi (hosting, doména), nevieme –
+návod pre laika preto začína krokom 0. Majiteľ si má obsah meniť sám, takže balík pre Forpsi je **len pre Hosting
+Linux a vždy so správou** (Hosting Windows Forpsi nemá PHP, F-01).
+
+**Výroba.** `FORPSI=linux SPRAVA=1 SPRAVA_REVIZIA=<revízia z data/verzia.json> [CASTI=40] NAVOD_SPRAVA=<navod-sprava.pdf>
+bash nasadenie/balik.sh . <výstup>` (druhú polovicu robí `nasadenie/balik-forpsi.sh`). Bez `FORPSI` sa `balik.sh` správa
+ako doteraz (časť Nasadenie). Rozdiely profilu:
+- bez `SPRAVA=1` skončí chybou; `FORPSI=windows` sa nestavia (skončí chybou s vysvetlením);
+- nastavenie servera je **priamo v balíku** ako `web/.htaccess` (z `nasadenie/htaccess-forpsi.txt`, časť HTTPS
+  a presmerovania); `ku-korenu/` nevzniká a v koreni nie je `web.config` (vnorené `web.config` v `sprava/`, `img/s/`,
+  `pdf/s/` ostávajú – na Linuxe sú bez účinku a `.htaccess` ich z webu nevydá);
+- časti `richtarik-forpsi-cast-1-z-N.zip` … do `CASTI` MB (predvolene 40; 1 MB = 10^6 B): časť 1 = všetko mimo `img/`,
+  `pdf/`, `subory/` (stránky, štýly, skripty, písma, správa, `.htaccess`, ochranné súbory `img/s`, `pdf/s`) a obrázky,
+  na ktoré odkazuje `index.html` a `site.css`; potom ostatné `img/`, `pdf/`, `subory/`. Po časti 1 je úvod úplný;
+- v koreni každej časti je `cast-K-z-N.txt` (je aj vo `web/`, takže časti spolu = `web/`): ZIP má vždy aspoň dve položky
+  v koreni (Mac inak rozbalí ZIP s jedinou položkou bez obalu), laik podľa neho nájde, čo označiť, a adresa
+  `/cast-N-z-N.txt` na webe ukáže, že časť je vo `www` na správnom mieste (nie o priečinok hlbšie);
+- kontroly navyše (každá zastaví balík): znaky v názvoch `A–Z a–z 0–9 . _ / -`, žiadne dva názvy líšiace sa len
+  veľkosťou písmen, najviac 16 000 položiek v priečinku, presne 5 súborov začínajúcich bodkou, direktívy všetkých
+  `.htaccess` len zo skupín, ktoré Forpsi povoľuje (F-05), časti spolu = `web/` (sha256), samotná časť 1: úvodu nechýba
+  nič a ostatným stránkam len súbory z `img/`, `pdf/`, `subory/`;
+- vedľa ZIPov: `NAVOD-FORPSI.pdf` (strana 90 × 160 mm, jeden stĺpec, písmo 12,5 b – na telefón), `NAVOD-FORPSI.txt`
+  (riadky do 72 znakov, UTF-8 s BOM, CRLF), `NAVOD-FORPSI.html`, `navod-sprava.pdf` (z `NAVOD_SPRAVA`), `casti-sha256.txt`,
+  `zoznam.txt`, `SHA256SUMS.txt`, `web/`. **Laikovi sa posielajú len ZIPy a dve PDF.**
+- `CASTI_SUBOROV=200` obmedzí aj počet súborov v časti (núdzová sada pre WebFTP, ktoré berie súbor do 19 MB – F-09;
+  cesta je neoverená a z telefónu ju neodporúčame).
+
+**Návod pre laika** `nasadenie/navod-forpsi.md` → `nasadenie/navod_forpsi.py` (TXT a HTML) → `nasadenie/navod-pdf.cjs`
+(PDF cez Playwright; bez neho balík vznikne a skript vypíše POZOR). Značky zdroja sú v hlavičke `navod_forpsi.py`.
+Obsah: čo nikdy nemazať a ďalšie nahratie hneď na začiatku; krok 0 (čo je v účte Forpsi – Linux / Windows / nič, doména
+vo Forpsi áno / nie, e-maily na doméne ako fakt); FTP, PHP 8.3, FileZilla so slovenskými aj anglickými názvami (slovenské
+z prekladu `sk_SK.po` FileZilly); vyprázdnenie `www` len pri úplne prvom nahratí a so skúškou; nahratie častí; doména
+a e-maily ako rozhodnutie majiteľa s dvoma cestami a hotovými vetami; certifikát; kontrola; **Aby si Mário vedel sám
+meniť veci** (podmienky, prvé prihlásenie s kódom `PRVY-KOD.txt`, heslo si volí majiteľ sám, tabuľka hlásení podľa
+toho, čo je doslova na obrazovke, úkon „práva 757“); čo nie je overené na účte.
+
+**Čo Forpsi chce a dovoľuje.** Stav: *v balíku* = rieši balík alebo jeho návod · *administrácia* = nastaví majiteľ
+v zákazníckom účte · *overiť na účte* = nevieme, kým to niekto neuvidí. Zdroje stiahnuté 19. 11. 2026.
+
+| ID | Čo Forpsi chce alebo dovoľuje | Zdroj a citácia | Ako to rieši balík | Stav |
+|---|---|---|---|---|
+| F-01 | PHP je len na Hosting Linux | forpsi.sk/webhosting/windows/ – riadok „PHP“ má pri Easy, Advanced aj Professional krížik (`mark-red`); support.forpsi.com/kb/a3072 – „Podporované skriptování : ASP; ASP.NET; Perl v režimu FastCGI; HTML, CSS, JS; SSI; Silverlight“; kb/a2358 – „Pokud jsou Vaše stránky naprogramované v PHP, vyberte Hosting Linux.“ | balík len `FORPSI=linux`; krok 0 návodu zastaví Windows | overiť na účte (aký hosting majiteľ má) |
+| F-02 | Verzia PHP sa volí v administrácii | kb/a4182 – „U webhostingů s operačním systémem Linux je možné si aktuálně nastavit PHP verze: Linux 8.5 / 8.4 / 8.3 / 8.2 / 8.1 / 8.0 / 7.4“, „Nastavení nové verze PHP se projeví během několika okamžiků.“ | návod krok 2: 8.3 (na 8.3.6 bežia naše testy) | administrácia |
+| F-03 | Koreň webu je `www` | support.forpsi.sk/kb/a4686 – „www Kořenový adresář webu – sem nahráváte všechny soubory webových stránek“; kb/a4198 – „www - jedná se o root webhostingu do kterého nahrajte vaše webové stránky“ | obsah častí patrí do `www`; návod kroky 3 – 5 | v balíku; štruktúra FTP – overiť na účte |
+| F-04 | Úvodný súbor: `index.php` má prednosť pred `index.html`; bez neho 403 | kb/a2386 – „Indexové soubory se berou v tomto pořadí … index.php3 index.php index.html index.htm“; kb/a4359 – „Pokud v kořenové složce tento soubor chybí, vrátí server chybu 403.“ | návod krok 4: `www` pred prvým nahratím zálohovať a vyprázdniť; test na Apache s tým istým poradím | v balíku |
+| F-05 | V `.htaccess` len mod_rewrite a skupiny Indexes, AuthConfig, FileInfo, Limit | kb/a2796 (zmenené 22. 10. 2026) – „Na linuxových serverech je společně s mod_rewrite povoleno využívat následující skupiny direktiv: Indexes (např. DirectoryIndex) AuthConfig (AuthType, Require, ...) FileInfo (Header, ErrorDocument, ...) Limit (Order, Allow, Deny)“; kb/a2928 – chyba 500 „je většinou způsobeno nekorektním .htaccess … použití nepovolené direktivy“ | kontrola v `balik.sh` (dnes: mod_rewrite 87, FileInfo 18, AuthConfig 6, Indexes 1, nepovolené 0) a skúška na Apache s `AllowOverride FileInfo AuthConfig Indexes Limit`: žiadna odpoveď 500 | v balíku |
+| F-06 | `.user.ini` je podporovaný | forpsi.sk/webhosting/linux/ – riadok „Podpora .user.ini“ s fajkou; kb/a4676 – „možnost user.ini pro úpravu nastavení webu“ | `sprava/.user.ini` (32 MB nahrávanie, 256 MB pamäť); či platí v podpriečinku, ukáže kontrola servera | v balíku; účinok overiť na účte |
+| F-07 | Limity PHP | forpsi.sk/webhosting/linux/ – „upload_max_filesize 128 MB“, „memory_limit 1024 MB“, „max_execution_time 900s“ | správa potrebuje menej (32 MB, 256 MB, 120 s) | v balíku |
+| F-08 | FTP: údaje v účte, explicitné TLS na porte 21, pasívny režim, najviac 3 spojenia, FileZilla | kb/a2260 – „klikněte na Webhosting -> název domény -> FTP“; kb/a3390 – „K dispozici je explicitní šifrování TLS na portu 21.“; kb/a4160 – „Režim přenosu: Pasivní · … Maximální počet připojení: nastavte na 3“ | návod kroky 1 a 3 týmito hodnotami | administrácia |
+| F-09 | WebFTP: súbor do 19 MB, beh 90 s, ZIP vie rozbaliť | support.forpsi.sk/kb/a2404 – „Maximální velikost jednoho nahrávaného souboru je v rozhraní omezena na 19 MB.“; kb/a4093 – „Maximální čas provádění je 90 sekund · Lze nahrát i archivy (.zip, .rar a podobně), které můžete rovnou rozbalit na FTP“ | hlavná cesta je FileZilla; `CASTI=18 CASTI_SUBOROV=200` len na požiadanie | overiť na účte |
+| F-10 | Názvy bez diakritiky, medzier a zvláštnych znakov; na Linuxe záleží na veľkosti písmen | kb/a2435 – „Důrazně nedoporučujeme v názvech souborů používat diakritiku … stejně tak jako mezery“, „pokud jste si vybrali operační systém linux, rozhoduje v názvu souboru i velikost písmen“ | kontrola v `balik.sh` (dnes 1 668 súborov, 0 porušení, 0 kolízií) | v balíku |
+| F-11 | Hosting nie je úložisko archívov | kb/a4686 – „FTP prostor je určen výhradně pro provoz webových prezentací a aplikací. Nelze jej používat jako osobní úložiště, archiv či prostor pro zálohy.“ | návod: ZIPy sa na hosting nenahrávajú; zálohy správy v priečinku údajov sú hraničný prípad | v balíku (návod) |
+| F-12 | Bezplatný certifikát len pre doménu registrovanú vo Forpsi a na DNS Forpsi | support.forpsi.sk/kb/a4045 – „INTERNET CZ, a.s, (FORPSI) je registrátorom doménového názvu … doména musí mať nastavené FORPSI DNS servery“ | návod krok 0 d) rozhoduje vopred; dnes podmienka splnená nie je (DNS mrhosting.net) | overiť na účte |
+| F-13 | Zapnutie certifikátu | kb/a4013 – „Po kliknutí na "Spravovat" je aktivní tlačítko "Požádat o certifikát" … Certifikát bude vydán během několika minut.“, „U nové objednávky Hostingu s operačním systémem Linux již zde není potřeba provádět další kroky.“ | návod krok 7; rovnaký postup píše správa, keď ju niekto otvorí bez https | administrácia |
+| F-14 | http → https: „SSL redirect“ v administrácii alebo `.htaccess` | support.forpsi.sk/kb/a4003 – „Pro zrychlení přesměrování na novém hostingu Linux můžete na proxy serverech zapnout "SSL redirect" v nastavení webu“; vzor „RewriteCond %{HTTP:X-Forwarded-Proto} !https / RewriteCond %{HTTPS} off [NC]“ | návod krok 7 zaškrtne SSL redirect; naše pravidlo je vypnuté a má tvar Forpsi | administrácia |
+| F-15 | Prepínač „WWW redirect“ | kb/a4684 – „přehled DV SSL certifikátu, přesměrování na www“; snímka v kb/a4013 „WWW redirect: aktivní [deaktivovat]“ | nechať, ako je; smer presmerovania Forpsi nepíše | overiť na účte |
+| F-16 | Nasmerovanie domény | kb/a4685 – „systém ji automaticky nasměruje na nově přidaný web (A a MX záznamy)“; kb/a4170 – „nastavíte IP adresu, která je uvedena … pod názvem "Web IP (DNS A)"“; kb/a2531 – „je zapotřebí obvykle vyčkat až 24 hodin“ | návod krok 6: rozhoduje a robí majiteľ, dve cesty s hotovými vetami | administrácia (majiteľ) |
+| F-17 | E-maily pri zmene domény | kb/a3916 – „předtím než MX záznam změníte, kontaktujte nás pomocí chatu nebo tiketu, abychom nastavili příjem vašich e-mailů na mxavas.forpsi.com i během změny MX záznamů“; kb/a4170 – „Pokud emaily nechce převádět na poštovní server FORPSI, tak nastavte ze seznamu pouze první dva záznamy(A + CNAME *.vase-domena.tld).“ | návod: firma e-maily na doméne používa (web uvádza 22 odkazov `mailto:…@stavebninyrichtarik.sk`), doménu laik nikdy neprepína sám, „starý hosting nerušte“ | overiť na účte (rozsah pomoci Forpsi) |
+| F-18 | Staršie servery: PHP beží ako Apache, zápis chce práva 757, súbory od PHP nepatria FTP | kb/a2617 (2020) – „"ostatním": což je v našem případě Apache (uživatel pod kterým je spouštěn php skript) … Práva jsou tedy 757“; kb/a2614 (2016) – „Vlastníkem uploadovaného souboru je Apache … nelze pak s takto nahraným souborem manipulovat přes FTP.“; kb/a2394 – „Jestliže chcete nastavit práva hromadně, je nutné odeslat nový ticket na Zákaznickou podporu“ | poistka v správe (`cudziVlastnik()`), hlásenie s úkonom 757, test na Apache s dvoma používateľmi | overiť na účte (či to platí na novom hostingu) |
+| F-19 | Dynamická cache | kb/a4342 – „Standardní stránky Linux Hosting a WP Ready jsou ukládány do cache na 12 hodin.“, „Povolení cache na webech vytvořených pomocí jiných systémů CMS než WordPress může způsobit nesprávné zobrazení některých stránek.“ | návod krok 2: nechať „neaktívna“ | administrácia (nič nezapínať) |
+| F-20 | Vlastná stránka 404 | kb/a4368 – „Vlastní chybovou stránku definujeme přidáním či úpravou souboru ".htaccess" … ErrorDocument 404 /…“ | `.htaccess` v časti 1; test na Apache (404 so stránkou webu aj na vnorenej adrese) | v balíku |
+| F-21 | Systémové priečinky nemeniť | kb/a4686 – „Strukturu adresářů ani jejich názvy neupravujte“ | návod: `www`, `subdoms`, `backups-forpsi` nemazať ani nepremenúvať; priečinok `sprava-data` vedľa `www` je hraničný prípad | v balíku (návod) |
+| F-22 | PHP s GD a WebP | **zdroj sme nenašli – neoverené** | bod „Úprava fotiek (GD s WebP)“ v kontrole servera; bez neho nejdú len fotky | overiť na účte |
+| F-23 | Skúška pred nasmerovaním domény len cez súbor `hosts` a `http://` | kb/a2400 – „If you need to test your website without pointing the domain to our server in DNS … use the "hosts" file.“ | laikovi to návod neukladá; správa ide až po doméne a certifikáte | v balíku (návod to hovorí vopred) |
+| F-24 | Najviac 16 000 súborov v priečinku cez FTP | kb/a2407 – „limit v počtu zobrazených souborů přes FTP účet na 16 000 v jednom adresáři“ | kontrola v `balik.sh` (dnes najviac 542, `img/p`) | v balíku |
+| F-25 | FTP môže byť obmedzené podľa krajiny | support.forpsi.sk/kb/a4434 – „přidání a odebrání jednotlivých států (GeoIP) ze seznamu, kromě výchozího státu“ | návod krok 3: „vypni VPN“ | overiť na účte |
+| F-26 | Zmena Windows → Linux | support.forpsi.sk/kb/a2361 – „V případě zájmu změny operačního systému webserveru u webhostingu, nám prosím zašlete autorizovanou žádost.“ (cena a priebeh nie sú zverejnené) | návod krok 0 b) – hotová veta pre podporu | overiť na účte |
+| F-27 | Windows hosting: IIS 10, typy súborov a 404 cez `web.config` | kb/a3072 – „IIS 10.0 – URL Rewrite 2.0 – IIS WebDeploy – ISAPI Rewrite 3 (.htaccess Apache mod_rewrite)“; kb/a4113 – „zákazník může požadavky na neznámé mime typy povolit, pokud je přidá ve svém web.config souboru“ | nestavia sa (nižšie, IIS-01 až IIS-11) | neriešené |
+| F-28 | Hosting Linux Easy: cena | forpsi.sk/webhosting/linux/ – „Easy Hosting Linux 1,30 € + DPH/mesiac/prvý rok … 2,60 € + DPH/mesiac/ďalší rok“ | návod krok 0 c); objednáva majiteľ, my nič | administrácia (rozhodnutie majiteľa) |
+
+**Testy** (`bash nasadenie/test-forpsi.sh [port php -S] [port Apache] [snímky]`, na kópii v `/dev/shm/rs-forpsi-test`,
+na konci servery ukončí a kópiu zmaže; 19. 11. 2026: 165 kontrol v poriadku, 0 zlých):
+1. balík `FORPSI=linux` so všetkými kontrolami, veľkosť častí ≤ 40 MB, aspoň 2 položky v koreni každého ZIPu, návody,
+   bez `SPRAVA=1` a s `FORPSI=windows` balík nevznikne;
+2. `nasadenie/test_forpsi.py staticke`: všetky `web.config` (aj ten, ktorý správa píše do priečinka údajov) sú platné
+   XML a každý `mimeMap` má pred sebou `remove` (vo vnorených súboroch aj každý `add`); simulácia pravidiel
+   `htaccess-forpsi.txt`, `htaccess.txt` a mapy z `web.config.txt` proti `presmerovania.tsv` (236 adries, aj VEĽKÝMI
+   písmenami, bez reťaze, žiadny súbor nového webu pravidlá nezachytia);
+3. všetky časti rozbalené do jedného priečinka = `SHA256SUMS.txt`, nič navyše;
+4. samotná časť 1 v Chromiu (`test-forpsi-cast1.mjs`, 390 a 1440 px, 12 stránok): úvod bez jedinej odpovede 404,
+   inde chýbajú len obrázky a PDF z ďalších častí, žiadna chyba skriptu;
+5. Apache 2.4 s `AllowOverride FileInfo AuthConfig Indexes Limit` (bez Options) a poradím úvodných súborov ako Forpsi:
+   všetkých 77 stránok 200, typy a cache 15 prípon, gzip, 404 so stránkou webu, **236 starých adries cez http → 301 na
+   tú istú schému a server, cieľ 200**, zákazy v `sprava/`, `img/s`, `pdf/s`, PHP sa v `img/s` nespustí, v denníku
+   Apache žiadne „not allowed here“;
+6. správa pod mod_php, keď web patrí používateľovi „FTP“ (uid 2001) a PHP beží ako `www-data`: pri priečinkoch 755
+   hlásenie s úkonom 757; po ňom údaje vo `www/sprava-data-<hex>` (0705), sondy prejdú, „Server je pripravený.“,
+   kód `PRVY-KOD.txt` používateľ FTP prečíta, tajomstvo a účet nie, prvé prihlásenie, kontrola servera bez chyby,
+   zverejnenie zmeny hodín (správa prepíše stránky nahraté cez FTP). Toto je cesta „údaje vo www so sondou“, ktorú
+   README kedysi pripisoval Windows.
+Kroky 5 a 6 potrebujú root, `apache2` s `libphp8.3.so` a `setpriv`; inak sa preskočia s POZOR. Skutočný Forpsi má pred
+Apache proxy a PHP môže bežať inak (FastCGI) – test ho len napodobňuje.
+
+**Čo sa dá overiť len na účte Forpsi** (nič z toho nesľubujeme):
+1. či majiteľ má vo Forpsi účet, Hosting Linux a doménu a kde je doména registrovaná (F-01, F-12);
+2. štruktúra FTP (`www` hneď, alebo `/<doména>/www`) a čo Forpsi nahralo do `www` (F-03, F-04);
+3. pod kým beží PHP, či smie zapisovať vedľa `www`, kde vznikne priečinok údajov a či treba práva 757 (F-18);
+4. PHP: GD s WebP, `fileinfo`, `dom`, `mbstring`, `allow_url_fopen`, či platí `.user.ini` v podpriečinku (F-22, F-06);
+5. či sa server vie spýtať sám seba cez `https://www…` (sondy správy); ak nie a údaje sú vo `www`, správa sa zastaví –
+   náhradný postup: cez FTP vytvoriť `sprava-data` vedľa `www` s právami 757;
+6. či správa za proxy Forpsi spozná HTTPS (`X-Forwarded-Proto`) a akú adresu návštevníka vidí;
+7. akú adresu dá Apache za proxy do `Location` pri starých adresách (cieľ je bez schémy; u nás `http://…`, potom má
+   zasiahnuť „SSL redirect“) – ak by proxy posielala zlú schému alebo port, vrátiť sa k absolútnym cieľom (`htaccess.txt`);
+8. certifikát: či ho účet dovolí vydať, ako dlho to trvá, či kryje adresu s `www` aj bez; smer „WWW redirect“ (F-15);
+9. rozbalenie ZIPu vo WebFTP a čítanie súboru s kódom vo WebFTP z telefónu (F-09);
+10. presun domény a e-mailov – priebeh určí podpora Forpsi a dnešný poskytovateľ (F-16, F-17);
+11. slovenské názvy tlačidiel v administrácii Forpsi (návod ich má z českých článkov) a jazyk FileZilly u laika.
+
+**Známe a neriešené nálezy pre IIS (IIS-01 až IIS-11).** Profil `FORPSI=windows` sa nestavia. `nasadenie/web.config.txt`
+(a `ku-korenu/web.config` v režime bez `FORPSI`) **nebol na IIS nikdy spustený**; keby sa niekedy staval statický balík
+pre IIS, treba najprv vyriešiť:
+- **IIS-01 (vážna)** všetkých 86 pravidiel presmeruje na `https://www…`; na serveri bez certifikátu dostane návštevník
+  z Googlu chybu prehliadača a 301 si prehliadač zapamätá. Ciele viazať na schému, s akou je web zostavený, alebo
+  relatívne (tvar s úvodnou lomkou Microsoft výslovne neuvádza – overiť na IIS).
+- **IIS-02 (stredná)** `web.config` v koreni s piatimi sekciami: jedna nepovolená sekcia alebo chýbajúci URL Rewrite =
+  500.19 pre celý web. Rozložiť tak, aby chyba ostala v podpriečinku (pravidlá v `sk/web.config` a `files/web.config`,
+  typy v `img/`, `assets/`, `subory/`, v koreni len `httpErrors`), alebo nahrávať ako posledný súbor.
+- **IIS-03 (stredná)** na dnešný server so starou aplikáciou sa nič nenahráva a nič sa z neho nemaže – je to jediná
+  cesta návratu; balík pre IIS by bol len na prázdny hosting.
+- **IIS-04 (stredná)** aj „malý“ `web.config` (len `staticContent` a `httpErrors`) môže spadnúť, ak je sekcia zamknutá;
+  bez `web.config` IIS nevydá `.avif` ani `.webp` (web bez fotiek).
+- **IIS-05 (stredná)** v `mimeMap` chýba `.json` – hľadanie na webe (`assets/index.json`) by potichu nefungovalo.
+- **IIS-06 (drobná)** `urlCompression` je zbytočná sekcia navyše (nastavuje predvolené), vie zhodiť web.
+- **IIS-07 (drobná)** stránka 404 cez `ExecuteURL` na statický súbor môže vrátiť stav 200; `existingResponse="Replace"`
+  nie je vo vzore Forpsi.
+- **IIS-08 (drobná)** `defaultDocument` nie je nastavený; starý `Default.htm/.asp` by mal prednosť pred `index.html`.
+- **IIS-09 (drobná)** vnorené `web.config` (`sprava/`, `img/s/`, `pdf/s/`, `asistent/`, priečinok údajov) majú od
+  19. 11. 2026 pred každým `add` aj `remove` (zdvojená položka by dala 500.19); neriešené ostáva: hlavička CORS
+  v `web.config.txt` bez `remove` a limit IIS 28,6 MB na nahrávanie proti 34 MB v `sprava/.user.ini`. Správa na IIS
+  nebola nikdy spustená a nepodporujeme ju.
+- **IIS-10 (drobná)** vety „Windows funguje“ sú od 19. 11. 2026 preč zo `sprava/`, z návodov aj z tohto súboru.
+- **IIS-11 (drobná)** režim bez `FORPSI` ďalej vyrába `ku-korenu/web.config` s mapou `rewriteMaps` (rozlišuje veľkosť
+  písmen, Forpsi ju nedokumentuje) – ponechané zámerne (správanie bez parametra sa nemení), na Forpsi sa nedodáva.
+  ZIPy a `NAVOD-NAHRATIE.txt` z 18. 11. 2026 neplatia; návod pre laika to hovorí.
+
+**Ďalšie nahratie na Forpsi.** Nikdy nevyprázdňovať `www`; najprv záloha zo správy a import (časť Správa webu, Zmeny
+z hostingu), potom nový balík. Ak PHP beží pod iným používateľom než FTP, stránky prepísané správou FTP neprepíše
+(FileZilla ohlási 550): zmazať ich cez FTP a nahrať znova, nikdy nie `sprava-data*`, `img/s`, `pdf/s`.
 
 ## Asistent na otázky
 - Okno asistenta s povinným označením ako na Barbershope (výslovná žiadosť majiteľa). Všetko o ňom je v `asistent/README.md`:

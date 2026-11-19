@@ -2,8 +2,10 @@
 """Nastavenie hostingu: presmerovania starých adries pôvodného webu (…/sk/….aspx a files/N.pdf) na nové (301),
 vlastná stránka 404, kompresia a cache.
 Použitie (v priečinku webu): python3 -I nasadenie/presmerovania.py . nasadenie [--kanonicke]
-Vyrobí presmerovania.tsv, htaccess.txt (Apache, na hostingu premenovať na .htaccess) a web.config.txt (IIS,
-pôvodný hosting beží na IIS 10 / ASP.NET; na hostingu premenovať na web.config).
+Vyrobí presmerovania.tsv, htaccess.txt (Apache, na hostingu premenovať na .htaccess), web.config.txt (IIS,
+pôvodný hosting beží na IIS 10 / ASP.NET; na hostingu premenovať na web.config; na IIS nebol nikdy spustený – README,
+časť Balík pre Forpsi, známe nálezy IIS) a htaccess-forpsi.txt (Hosting Linux Forpsi; balik.sh FORPSI=linux ho dá do
+balíka rovno ako .htaccess).
 Pravidlá cesty sú rovnaké ako path_for() v build.py; stránky vynechané v build.py idú na najbližšiu rodičovskú stránku.
 
 Poradie pravidiel (README, časť HTTPS a presmerovania):
@@ -12,6 +14,11 @@ Poradie pravidiel (README, časť HTTPS a presmerovania):
    S prepínačom --kanonicke sa vyrobí zapnuté. Staré adresy .aspx a files/ ho obchádzajú.
 2. Staré adresy pôvodného webu (…/sk/….aspx) a súbory files/N rovno na absolútny cieľ na kanonickej adrese, takže aj
    z http:// alebo bez www je to jedno presmerovanie (bez reťaze).
+htaccess-forpsi.txt sa od htaccess.txt líši dvoma vecami (README, časť Balík pre Forpsi):
+- ciele starých adries sú BEZ schémy a mena servera (/akcie/index.html), takže stará adresa funguje aj cez http://,
+  kým doména ešte nemá certifikát; na https:// ju potom dostane „SSL redirect“ v administrácii Forpsi (najviac 2 skoky);
+- vypnuté kanonické pravidlo má tvar zo vzoru Forpsi (kb/a4003): X-Forwarded-Proto A ZÁROVEŇ HTTPS off, host zvlášť –
+  za proxy, ktorá ukončuje HTTPS, sa netočí dookola. Na Forpsi sa nezapína: http → https robí administrácia.
 Na konci skript vypíše kontrolu: stránky zdroja, chýbajúce, neexistujúce ciele a reťaze."""
 import sys, os, json, re
 from urllib.parse import urlparse
@@ -88,6 +95,28 @@ ht.append(f'RewriteRule ^files/({"|".join(PDF)})\\.pdf$ {absolutna("pdf/")}$1.pd
 if DOC: ht.append(f'RewriteRule ^files/({"|".join(DOC)})\\.doc$ {absolutna("subory/")}$1.doc [R=301,L,NC]')
 for a, b in VIDEO: ht.append(f'RewriteRule ^files/{re.escape(a)}$ {absolutna(b)} [R=301,L,NC]')
 open(os.path.join(OUT, 'htaccess.txt'), 'w').write('\n'.join(ht) + '\n')
+# Hosting Linux Forpsi: tá istá hlavička súboru (typy, kompresia, cache, 404), iné pravidlá presmerovaní
+i = ht.index('RewriteEngine On')
+hf = ['# Stavebniny Richtárik – nastavenie pre Hosting Linux Forpsi (Apache). V balíku FORPSI=linux je to súbor .htaccess',
+      '# v koreni webu (www). Vyrobené: nasadenie/presmerovania.py. Len direktívy, ktoré Forpsi v .htaccess povoľuje',
+      '# (mod_rewrite, FileInfo, Indexes, AuthConfig, Limit – support.forpsi.com/kb/a2796); žiadne Options ani php_flag.']
+hf += ht[1:i + 1] + ['',
+      f'# 1. Kanonická adresa {DOMENA}: ' + ('ZAPNUTÉ.' if KANONICKE else 'VYPNUTÉ. Na Forpsi robí http → https prepínač „SSL redirect“'),
+      '#    a www prepínač „WWW redirect“ v administrácii (Webhosting → web → SSL certifikát). Tvar podľa vzoru Forpsi',
+      '#    (kb/a4003): za proxy, ktorá ukončuje HTTPS, sa netočí dookola. Staré adresy (.aspx, files/) ho obchádzajú.',
+      f'{kom}RewriteCond %{{HTTP:X-Forwarded-Proto}} !https',
+      f'{kom}RewriteCond %{{HTTPS}} off [NC]',
+      f'{kom}RewriteRule ^(?!{STARE})(.*)$ {DOMENA}$1 [R=301,L,NE,NC]',
+      f'{kom}RewriteCond %{{HTTP_HOST}} !^{re.escape(HOST)}$ [NC]',
+      f'{kom}RewriteRule ^(?!{STARE})(.*)$ {DOMENA}$1 [R=301,L,NE,NC]', '',
+      '# 2. 301 zo starých adries pôvodného webu (zdroj/pages.json) a zo starých súborov files/N. Cieľ je bez schémy',
+      '#    a mena servera: funguje aj cez http://, kým doména nemá certifikát (README, časť Balík pre Forpsi).']
+for a, b in rows:
+    hf.append(f'RewriteRule ^{re.escape(a.lstrip("/"))}$ {b} [R=301,L,NC]')
+hf.append(f'RewriteRule ^files/({"|".join(PDF)})\\.pdf$ /pdf/$1.pdf [R=301,L,NC]')
+if DOC: hf.append(f'RewriteRule ^files/({"|".join(DOC)})\\.doc$ /subory/$1.doc [R=301,L,NC]')
+for a, b in VIDEO: hf.append(f'RewriteRule ^files/{re.escape(a)}$ /{b} [R=301,L,NC]')
+open(os.path.join(OUT, 'htaccess-forpsi.txt'), 'w').write('\n'.join(hf) + '\n')
 wc = ['<?xml version="1.0" encoding="UTF-8"?>', '<!-- Stavebniny Richtárik – nastavenie pre IIS (na hostingu premenovať na web.config). Vyrobené: nasadenie/presmerovania.py -->',
       '<configuration><system.webServer>', '<rewrite><rewriteMaps><rewriteMap name="stare">']
 wc += [f'  <add key="{a.lower()}" value="{absolutna(b)}" />' for a, b in rows]
@@ -134,6 +163,10 @@ kan = re.compile(rf'^(?!{STARE})(.*)$', re.I)
 retaze = [b for b in ciele if b.lower() in stare_cesty or b.lower().endswith('.aspx') or b.lower().startswith('/files/')]
 retaze += [a for a in stare_cesty if kan.match(a.lstrip('/'))]   # stará adresa, ktorú by zachytilo kanonické pravidlo
 retaze += [x for x in [absolutna(b) for b in ciele] if not x.startswith(DOMENA)]
+# htaccess-forpsi.txt: každé pravidlo má cieľ bez schémy a servera a žiadny cieľ nie je stará adresa (bez reťaze)
+ciele_f = [r.split()[2] for r in hf if r.startswith('RewriteRule ')]
+zle_f = [c for c in ciele_f if not c.startswith('/') or c.startswith('//') or c.lower().endswith('.aspx') or c.lower().startswith('/files/')]
+print('htaccess-forpsi.txt: pravidiel', len(ciele_f), '| cieľ so schémou alebo reťaz', len(zle_f), zle_f[:5])
 print('kanonická adresa', DOMENA, '(pravidlo ' + ('zapnuté' if KANONICKE else 'pripravené, vypnuté') + ')')
 print('v zdroji stránok', len(SRC), '| chýba', len(chyba_zdroj), chyba_zdroj[:5], '| presmerovaní', len(rows), '| súborov files/', len(subory),
       '| na úvod', sum(1 for a, b in rows if b == '/'), '| neexistujúci cieľ', len(neexist), neexist[:5], '| reťaze', len(retaze), retaze[:5])

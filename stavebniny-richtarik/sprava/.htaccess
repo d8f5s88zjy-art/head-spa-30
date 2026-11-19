@@ -1,4 +1,4 @@
-# Správa webu: z webu je dostupný len index.php a assets/ (Apache 2.4, Forpsi Linux; ISAPI Rewrite 3 na Windows číta tiež)
+# Správa webu: z webu je dostupný len index.php a assets/ (Apache 2.4, Hosting Linux Forpsi)
 # Bez „Options“ (hosting s AllowOverride bez Options by vrátil chybu 500); výpis priečinkov zakazuje „Require all denied“.
 <IfModule mod_authz_core.c>
   Require all denied

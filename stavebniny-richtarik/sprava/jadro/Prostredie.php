@@ -1,5 +1,5 @@
 <?php
-// Kontrola prostredia hostingu (Forpsi Linux aj Windows): pred prvým nastavením a v Nastaveniach. Povinné body zastavia
+// Kontrola prostredia hostingu (Hosting Linux Forpsi; na Windows hostingu Forpsi PHP nie je a na IIS správa nikdy nebežala): pred prvým nastavením a v Nastaveniach. Povinné body zastavia
 // správu s vetou, čo nastaviť. Pred prihlásením sa ukáže len súhrn, podrobnosti až po overení kódu alebo prihlásení.
 // Sondy (súbory v priečinku dát, PHP v img/s a pdf/s) sa po overení hneď zmažú.
 defined('SPRAVA') || exit;
@@ -93,7 +93,7 @@ final class Prostredie
     {
         $b = [];
         $https = Nastavenie::https() || Nastavenie::lokalne();
-        $b[] = self::bod('https', 'Zabezpečené pripojenie (HTTPS)', $https ? 'ok' : 'chyba', $https ? 'Správa ide cez https://.' : 'Zapnite certifikát SSL pre doménu v zákazníckom účte Forpsi a otvorte správu cez https://.');
+        $b[] = self::bod('https', 'Zabezpečené pripojenie (HTTPS)', $https ? 'ok' : 'chyba', $https ? 'Správa ide cez https://.' : 'V zákazníckom účte Forpsi otvorte Webhosting → váš web → riadok SSL certifikát → Spravovať → Požiadať o certifikát. Býva hotový do niekoľkých minút; potom otvorte túto stránku s https:// na začiatku.');
         $v = version_compare(PHP_VERSION, '8.1.0', '>=');
         $b[] = self::bod('php', 'Verzia PHP', $v ? 'ok' : 'chyba', $v ? 'PHP ' . PHP_VERSION : 'Je PHP ' . PHP_VERSION . '. V zákazníckom účte Forpsi nastavte PHP 8.1 alebo novšie (odporúčané 8.3).');
         $chyba = array_values(array_filter(['session', 'json', 'hash', 'fileinfo', 'dom', 'libxml', 'mbstring', 'pcre'], fn($e) => !extension_loaded($e)));
@@ -104,7 +104,12 @@ final class Prostredie
         $b[] = self::bod('limity', 'Veľkosť nahrávaných súborov', $lim >= 8 << 20 ? 'ok' : 'upozornenie', 'Najviac ' . round($lim / 1048576) . ' MB naraz, pamäť ' . ini_get('memory_limit') . ', čas ' . ini_get('max_execution_time') . ' s.', false);
         // priečinok dát
         $zap = is_writable(Nastavenie::d()) && is_writable(Nastavenie::d('data'));
-        $b[] = self::bod('data', 'Priečinok údajov správy', $zap ? 'ok' : 'chyba', $zap ? (Nastavenie::$vnutriWebu ? 'V priečinku webu ' . basename(Nastavenie::d()) . ' (chránený).' : 'Mimo verejného webu.') : 'Do priečinka údajov sa nedá zapisovať. Nastavte mu práva 757 (FTP: pravé tlačidlo, Práva).');
+        $b[] = self::bod('data', 'Priečinok údajov správy', $zap ? 'ok' : 'chyba', $zap ? (Nastavenie::$vnutriWebu ? 'V priečinku webu ' . basename(Nastavenie::d()) . ' (chránený).' : 'Mimo verejného webu.') : 'Do priečinka údajov sa nedá zapisovať. Nastavte mu práva 757 (FileZilla: pravé tlačidlo → Oprávnenia súborov).');
+        // dva informačné body (nepovinné): pomôžu zo snímky obrazovky zistiť, ako hosting zaobchádza so súbormi
+        $cudzi = Nastavenie::cudziVlastnik();
+        $b[] = self::bod('vlastnik', 'Súbory vytvorené správou', 'ok', $cudzi ? 'Server (PHP) beží pod iným používateľom než FTP. Súbor s kódom sa cez FTP dá prečítať, ale nie zmazať; nový kód vznikne najskôr o 15 minút.' : 'Server (PHP) beží pod tým istým používateľom ako FTP.', false);
+        $ht = is_file(Nastavenie::w('.htaccess'));
+        $b[] = self::bod('htaccess', 'Nastavenie servera (.htaccess v koreni webu)', $ht || Nastavenie::lokalne() ? 'ok' : 'upozornenie', $ht ? 'Súbor je nahratý.' : (Nastavenie::lokalne() ? 'Lokálny test bez súboru.' : 'Súbor .htaccess v koreni webu chýba: nefunguje stránka „Stránka sa nenašla“ ani staré adresy. Nahrajte ho z časti 1 balíka.'), false);
         if ($sondy) {
             $b[] = self::sondaDat();
             $b[] = self::sondaSpustania();
@@ -120,7 +125,7 @@ final class Prostredie
             @unlink($t);
             if (!$ok) $nezap[] = $p === '' ? 'koreň webu' : $p;
         }
-        $b[] = self::bod('zapis', 'Zápis do súborov webu', $nezap ? 'chyba' : 'ok', $nezap ? 'Nedá sa zapisovať do: ' . implode(', ', $nezap) . '. Na Linuxe im nastavte práva 757 (Forpsi, Midnight Commander alebo FTP).' : 'Správa vie bezpečne prepisovať stránky.');
+        $b[] = self::bod('zapis', 'Zápis do súborov webu', $nezap ? 'chyba' : 'ok', $nezap ? 'Nedá sa zapisovať do: ' . implode(', ', $nezap) . '. Kto má údaje k FTP, nastaví v programe FileZilla priečinku www a jeho podpriečinkom práva 757 (pravé tlačidlo na www → Oprávnenia súborov → číslo 757 → zaškrtnúť „Rekurzívne použiť aj na vnorené adresáre“ a „Použiť iba na adresáre“). Potom túto stránku načítajte znova.' : 'Správa vie bezpečne prepisovať stránky.');
         $rel = is_writable(Nastavenie::d('relacie'));
         $b[] = self::bod('relacia', 'Prihlásenie (relácie)', $rel ? 'ok' : 'chyba', $rel ? 'V poriadku.' : 'Priečinok relácií nie je zapisovateľný.');
         $volne = @disk_free_space(Nastavenie::d());
@@ -146,13 +151,13 @@ final class Prostredie
         if (!Nastavenie::$vnutriWebu) return self::bod('sonda-data', 'Údaje správy nie sú dostupné z webu', 'ok', 'Priečinok je mimo verejného webu.');
         $meno = 'sonda-' . bin2hex(random_bytes(8)) . '.txt';
         $tajne = bin2hex(random_bytes(8));
-        if (!self::kontrolaAdresy()) return self::bod('sonda-data', 'Údaje správy nie sú dostupné z webu', 'chyba', 'Server nevie overiť ochranu priečinka údajov: adresa ' . self::zakladUrl() . ' nevedie na tento hosting. Zavolajte programátora (README, časť Správa webu, adresa.txt).');
+        if (!self::kontrolaAdresy()) return self::bod('sonda-data', 'Údaje správy nie sú dostupné z webu', 'chyba', 'Server nevie overiť ochranu priečinka údajov: adresa ' . self::zakladUrl() . ' nevedie na tento hosting. Doména ešte nevedie na Forpsi alebo certifikát ešte nie je hotový; skúste to o hodinu. Ak web so zámkom už ide a toto vidíte stále: odfoťte túto stránku a pošlite ju tomu, kto vám web nahrával.');
         file_put_contents(Nastavenie::d($meno), $tajne);
         $r = self::sonda(self::zakladUrl() . basename(Nastavenie::d()) . '/' . $meno);
         @unlink(Nastavenie::d($meno));
-        if ($r === null) return self::bod('sonda-data', 'Údaje správy nie sú dostupné z webu', 'chyba', 'Server nevie overiť ochranu priečinka údajov. Zavolajte programátora.');
+        if ($r === null) return self::bod('sonda-data', 'Údaje správy nie sú dostupné z webu', 'chyba', 'Server nevie overiť ochranu priečinka údajov. Odfoťte túto stránku a pošlite ju tomu, kto vám web nahrával.');
         $ok = !str_contains($r[1], $tajne);
-        return self::bod('sonda-data', 'Údaje správy nie sú dostupné z webu', $ok ? 'ok' : 'chyba', $ok ? 'Overené (odpoveď ' . $r[0] . ').' : 'Priečinok údajov sa dá otvoriť z internetu! Nahrajte súbory .htaccess a web.config z balíka alebo presuňte web na Linux hosting.');
+        return self::bod('sonda-data', 'Údaje správy nie sú dostupné z webu', $ok ? 'ok' : 'chyba', $ok ? 'Overené (odpoveď ' . $r[0] . ').' : 'Priečinok údajov sa dá otvoriť z internetu! Správa potrebuje Hosting Linux (Apache), kde priečinok chráni súbor .htaccess. Odfoťte túto stránku a pošlite ju tomu, kto vám web nahrával.');
     }
 
     /** Malé skutočné súbory (WebP a PDF), aké nahráva správa: musia prísť s 200 a správnym typom. Ochranné súbory img/s
@@ -174,7 +179,7 @@ final class Prostredie
             @unlink(Nastavenie::w("$rel/$meno"));
             if ($r === null || $r[0] !== 200 || !str_starts_with(strtolower($r[2] ?? ''), $typ)) $zle[] = "$druh/s (odpoveď " . ($r[0] ?? '–') . ')';
         }
-        if ($zle) return self::bod('sonda-subory', $nazov, 'chyba', 'Nahraté súbory sa z webu nedajú otvoriť: ' . implode(', ', $zle) . '. Skontrolujte .htaccess a web.config v img/s a pdf/s (README, časť Správa webu) alebo zavolajte programátora.');
+        if ($zle) return self::bod('sonda-subory', $nazov, 'chyba', 'Nahraté súbory sa z webu nedajú otvoriť: ' . implode(', ', $zle) . '. V priečinkoch img/s a pdf/s majú byť súbory .htaccess z balíka (časť 1). Odfoťte túto stránku a pošlite ju tomu, kto vám web nahrával.');
         return self::bod('sonda-subory', $nazov, 'ok', 'Overené (WebP a PDF prídu so správnym typom).');
     }
 

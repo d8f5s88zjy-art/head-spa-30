@@ -1,8 +1,9 @@
 <?php
 // Cesty správy. Priečinok dát sa vyberá v pevnom poradí, nikdy podľa vstupu:
-//  1. <nad koreňom webu>/sprava-data (Forpsi Linux: /<doména>/sprava-data, mimo www – z webu nedostupné),
-//  2. existujúci <koreň webu>/sprava-data-<32 hex> (Forpsi Windows: priečinok mimo webu nie je; chránia ho web.config
-//     a .htaccess a kontrola prostredia overí sondou, že je z webu nedostupný),
+//  1. <nad koreňom webu>/sprava-data (Hosting Linux Forpsi: /<doména>/sprava-data, mimo www – z webu nedostupné),
+//  2. existujúci <koreň webu>/sprava-data-<32 hex> (hosting, kde PHP nesmie zapisovať nad www: chráni ho .htaccess
+//     a kontrola prostredia overí sondou, že je z webu nedostupný; web.config je tam len pre prípad IIS – na Windows
+//     hostingu Forpsi PHP nie je a na IIS správa nikdy nebežala),
 //  3. nový <koreň webu>/sprava-data-<32 hex>.
 defined('SPRAVA') || exit;
 
@@ -34,7 +35,22 @@ final class Nastavenie
             self::$vnutriWebu = true;
         }
         self::ochranData();
+        // hosting, kde PHP beží pod iným používateľom než FTP (Forpsi kb a2614, a2617): majiteľ musí vedieť cez FTP otvoriť
+        // priečinok a prečítať súbor s kódom; ostatné súbory priamo v priečinku údajov majú 0600 (Ulozisko::zapis), podpriečinky 0700
+        if (self::cudziVlastnik()) @chmod(self::$data, 0705);
         foreach (['data', 'koncept', 'staging', 'zalohy', 'relacie', 'export', 'log'] as $p) if (!is_dir(self::$data . '/' . $p)) @mkdir(self::$data . '/' . $p, 0700);
+    }
+
+    /** PHP beží pod iným používateľom, než ktorý nahral web cez FTP. Porovnáva sa sprava/index.php (vždy z FTP, správa ho
+     *  neprepisuje) s používateľom PHP. Kde posix chýba, porovná sa
+     *  s vlastníkom .htaccess, ktorý si správa zapísala sama. V teste sa dá režim vynútiť ($vynutCudzi). */
+    public static ?bool $vynutCudzi = null;
+    public static function cudziVlastnik(): bool
+    {
+        if (defined('SPRAVA_TEST') && self::$vynutCudzi !== null) return self::$vynutCudzi;
+        $ftp = @fileowner(self::$web . '/sprava/index.php');
+        $php = function_exists('posix_geteuid') ? posix_geteuid() : @fileowner(self::$data . '/.htaccess');
+        return $ftp !== false && $php !== false && $ftp !== $php;
     }
 
     /** Ochranné súbory priečinka dát (zakážu prístup z webu na Apache aj IIS). */
@@ -43,7 +59,7 @@ final class Nastavenie
         $h = self::$data . '/.htaccess';
         if (!is_file($h)) @file_put_contents($h, "# Správa webu: údaje – z webu nedostupné\nRequire all denied\n<IfModule !mod_authz_core.c>\nOrder allow,deny\nDeny from all\n</IfModule>\n");
         $w = self::$data . '/web.config';
-        if (!is_file($w)) @file_put_contents($w, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<configuration>\n  <system.webServer>\n    <security>\n      <authorization>\n        <remove users=\"*\" roles=\"\" verbs=\"\" />\n        <add accessType=\"Deny\" users=\"*\" />\n      </authorization>\n      <requestFiltering>\n        <hiddenSegments>\n          <add segment=\"" . basename(self::$data) . "\" />\n        </hiddenSegments>\n      </requestFiltering>\n    </security>\n  </system.webServer>\n</configuration>\n");
+        if (!is_file($w)) @file_put_contents($w, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<configuration>\n  <system.webServer>\n    <security>\n      <authorization>\n        <remove users=\"*\" roles=\"\" verbs=\"\" />\n        <add accessType=\"Deny\" users=\"*\" />\n      </authorization>\n      <requestFiltering>\n        <hiddenSegments>\n          <remove segment=\"" . basename(self::$data) . "\" />\n          <add segment=\"" . basename(self::$data) . "\" />\n        </hiddenSegments>\n      </requestFiltering>\n    </security>\n  </system.webServer>\n</configuration>\n");
     }
 
     public static function d(string $rel = ''): string { return self::$data . ($rel === '' ? '' : '/' . $rel); }

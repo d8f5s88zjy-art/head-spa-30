@@ -10,7 +10,9 @@ final class Dennik
         if (Nastavenie::$data === '') return;
         $r = ['cas' => date('c'), 'kto' => $_SESSION['ucet'] ?? '', 'ukon' => $ukon] + $podrobnosti;
         $r['ip'] = substr(hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . (Ulozisko::citajJson(Nastavenie::d('nastavenie.json'), [])['tajomstvo'] ?? '')), 0, 12);
-        @file_put_contents(Nastavenie::d('dennik.jsonl'), json_encode($r, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n", FILE_APPEND | LOCK_EX);
+        $f = Nastavenie::d('dennik.jsonl'); $novy = !is_file($f);
+        @file_put_contents($f, json_encode($r, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n", FILE_APPEND | LOCK_EX);
+        if ($novy || (@fileperms($f) & 0077)) @chmod($f, 0600);   // záznam číta len PHP (priečinok údajov môže mať 0705, Nastavenie::init)
     }
 
     public static function posledne(int $n = 50): array

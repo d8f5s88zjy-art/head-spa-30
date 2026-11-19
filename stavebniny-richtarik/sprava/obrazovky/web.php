@@ -222,7 +222,7 @@ function obrazovka_pomoc(): void
 <h2>Odhlásenie</h2>
 <p>Odhlásiť zruší aj zapamätanie tohto zariadenia. Nabudúce sa prihlásite menom a heslom.</p>
 <h2>Zabudol som heslo</h2>
-<p>Na prihlásení ťuknite „Zabudli ste heslo?“. Správa zapíše na hosting súbor OBNOVA-KOD.txt; otvoríte ho cez webftp.forpsi.com rovnako ako pri prvom nastavení.</p>
+<p>Na prihlásení ťuknite „Zabudli ste heslo?“. Správa zapíše na hosting súbor OBNOVA-KOD.txt; otvoríte ho rovnako ako pri prvom nastavení (programom FileZilla alebo na webftp.forpsi.com, údajmi k FTP).</p>
 <h2>Čo sa tu nedá</h2>
 <p>Vzhľad webu, menu, katalóg a značky, adresu a IČO mení programátor. Pošlite mu, čo chcete zmeniť.</p>
 </section>

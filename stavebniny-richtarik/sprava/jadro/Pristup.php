@@ -79,7 +79,7 @@ final class Pristup
         // Kým súbor s kódom existuje, nový kód najskôr o 15 min. Kto súbor zmaže cez FTP (dôkaz prístupu k hostingu),
         // dostane nový kód hneď – preto majiteľa nezdrží ani cudzí človek, ani zatvorený prehliadač.
         if ($k && $k['subor'] && time() - $k['cas'] < 900)
-            return 'Nový kód sa dá vytvoriť najskôr o ' . ceil((900 - (time() - $k['cas'])) / 60) . ' min. Ak ho potrebujete hneď, zmažte cez webftp.forpsi.com súbor ' . self::KOD_SUBOR[$k['druh']] . ' a ťuknite znova.';
+            return 'Nový kód sa dá vytvoriť najskôr o ' . ceil((900 - (time() - $k['cas'])) / 60) . ' min.' . (Nastavenie::cudziVlastnik() ? '' : ' Ak ho potrebujete hneď, zmažte cez FTP (FileZilla alebo webftp.forpsi.com) súbor ' . self::KOD_SUBOR[$k['druh']] . ' a ťuknite znova.');
         $kod = '';
         for ($i = 0; $i < 16; $i++) $kod .= self::ABECEDA[random_int(0, strlen(self::ABECEDA) - 1)];
         $pekny = implode('-', str_split($kod, 4));
@@ -89,7 +89,7 @@ final class Pristup
               . "Platí do: $do. Kód opíšte do správy webu. Po použití sa tento súbor sám zmaže.\r\n"
               . "Ak ste kód nežiadali, tento súbor zmažte.\r\n";
         Ulozisko::zapis(Nastavenie::d(self::KOD_SUBOR[$druh]), $text);
-        @chmod(Nastavenie::d(self::KOD_SUBOR[$druh]), 0600);
+        @chmod(Nastavenie::d(self::KOD_SUBOR[$druh]), Nastavenie::cudziVlastnik() ? 0604 : 0600);
         Ulozisko::upravJson(Nastavenie::d('nastavenie.json'), function ($n) use ($kod, $druh) {
             $n['kod'] = ['druh' => $druh, 'hash' => hash_hmac('sha256', $kod, $n['tajomstvo']), 'cas' => time(), 'pokusy' => 0, 'ip' => []];
             return $n;

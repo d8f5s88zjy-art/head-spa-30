@@ -18,12 +18,39 @@
 # Asistent na otázky: bez premennej ASISTENT_API ide web bez neho (bez data-asistent, bez odkazu Ochrana údajov
 # v päte, bez asistent/ a assets/asistent*). S ASISTENT_API=https://…/asistent/api.php dostanú všetky stránky adresu
 # servera a server ide do balíka bez testov, nástrojov, README, config.php a vendor/ (README asistenta, Zapnutie).
+#
+# FORPSI=linux (README, časť Balík pre Forpsi): balík pre Hosting Linux Forpsi, ktorý nahrá laik programom FileZilla.
+#   FORPSI=linux SPRAVA=1 SPRAVA_REVIZIA=<revízia> [CASTI=40] [NAVOD_SPRAVA=<navod-sprava.pdf>] bash nasadenie/balik.sh . <výstup>
+#   - vždy so správou (bez SPRAVA=1 skončí chybou) a vždy v častiach (predvolene do 40 MB);
+#   - nastavenie servera je priamo v časti 1 ako .htaccess (z nasadenie/htaccess-forpsi.txt); ku-korenu/ nevzniká a v koreni
+#     nie je web.config;
+#   - časti richtarik-forpsi-cast-1-z-N.zip …: časť 1 = všetky stránky, štýly, skripty, správa a obrázky úvodu (po nej je
+#     úvod úplný), potom ostatné obrázky, pdf/ a subory/; každá časť má v koreni súbor cast-K-z-N.txt (aspoň dve položky
+#     v koreni ZIPu a skúška, že časť je vo www na správnom mieste);
+#   - kontroly navyše: názvy súborov (znaky, veľké/malé písmená), direktívy .htaccess povolené na Forpsi, časť 1 sama;
+#   - návod pre laika NAVOD-FORPSI.txt, .html a .pdf (nasadenie/navod-forpsi.md cez nasadenie/navod_forpsi.py; PDF len
+#     keď je k dispozícii node s Playwrightom), casti-sha256.txt a s NAVOD_SPRAVA aj navod-sprava.pdf.
+#   CASTI_SUBOROV=200 obmedzí aj počet súborov v časti (núdzová sada pre WebFTP, neoverená).
+#   FORPSI=windows sa nestavia: Hosting Windows Forpsi nemá PHP a nastavenie pre IIS nebolo nikdy spustené.
+# Bez FORPSI sa nič nemení.
 set -euo pipefail
 SRC="$(cd "$1" && pwd)"; OUT="$2"
 [ -f "$SRC/index.html" ] && [ -f "$SRC/assets/site.js" ] || { echo "CHYBA: $SRC nie je priečinok webu"; exit 1; }
 mkdir -p "$OUT"; OUT="$(cd "$OUT" && pwd)"
 case "$OUT" in "$SRC"|"$SRC"/*) echo "CHYBA: výstup nesmie byť v priečinku webu"; exit 1;; esac
+FORPSI="${FORPSI:-}"
+case "$FORPSI" in
+  '') ;;
+  linux)
+    [ "${SPRAVA:-}" = "1" ] || { echo "CHYBA: balík pre Forpsi musí obsahovať správu webu (SPRAVA=1 SPRAVA_REVIZIA=…), aby si majiteľ vedel sám meniť obsah"; exit 1; }
+    [ -z "${ASISTENT_API:-}" ] || { echo "CHYBA: FORPSI=linux sa stavia bez asistenta (ASISTENT_API nezadávať)"; exit 1; }
+    CASTI="${CASTI:-40}";;
+  windows) echo "CHYBA: FORPSI=windows sa nestavia. Hosting Windows Forpsi nemá PHP, takže správa webu by tam nešla, a nastavenie"
+           echo "       pre IIS nebolo nikdy spustené (README, časť Balík pre Forpsi, známe nálezy IIS-01 až IIS-11)."; exit 1;;
+  *) echo "CHYBA: FORPSI môže byť len linux"; exit 1;;
+esac
 rm -rf "$OUT/web" "$OUT/zoznam.txt" "$OUT/SHA256SUMS.txt" "$OUT/ku-korenu" "$OUT/NAVOD-NAHRATIE.txt" "$OUT"/stavebniny-richtarik-web*.zip; mkdir -p "$OUT/web"
+[ -z "$FORPSI" ] || rm -rf "$OUT"/richtarik-forpsi-cast-*.zip "$OUT"/NAVOD-FORPSI.txt "$OUT"/NAVOD-FORPSI.html "$OUT"/NAVOD-FORPSI.pdf "$OUT"/casti-sha256.txt "$OUT"/navod-sprava.pdf
 tar -C "$SRC" \
   --exclude=./zdroj --exclude=./__pycache__ --exclude=./build.py --exclude=./obsah.py --exclude=./popisy.py --exclude=./texty.py \
   --exclude=./README.md --exclude='./OBNOVA-*.md' --exclude=./img/FOTKY.md --exclude=./nasadenie --exclude=./.gitignore \
@@ -86,6 +113,13 @@ for dp, dn, fn in os.walk(os.path.join(R, 'img')):
             n += 1; b += os.path.getsize(p); os.remove(p)
 print('vynechané neodkazované obrázky:', n, 'súborov,', round(b / 1048576, 2), 'MB')
 EOF2
+if [ "$FORPSI" = linux ]; then
+  # nastavenie servera rovno v balíku: laik nič nepremenúva a nehľadá skrytý súbor; http → https sa na Forpsi zapína
+  # v administrácii, takže súbor na hostingu nikto ručne neupravuje
+  cp "$SRC/nasadenie/htaccess-forpsi.txt" "$OUT/web/.htaccess"
+  [ ! -e "$OUT/web/web.config" ] || { echo "CHYBA: v koreni balíka pre Linux je web.config"; exit 1; }
+  rm -f "$OUT/web"/cast-*-z-*.txt
+fi
 (cd "$OUT/web" && find . -type f | sed 's|^\./||' | LC_ALL=C sort > "$OUT/zoznam.txt")
 echo "balík: $(wc -l < "$OUT/zoznam.txt") súborov, $(du -sh "$OUT/web" | cut -f1)"
 # prechádzka predajňou: každý súbor, ktorý modul prechádzky menuje (fotky zastávok, náhľady, panorámy), je v balíku
@@ -134,6 +168,10 @@ for dp, dn, fn in os.walk(R):
 print('lokálnych odkazov', n, 'chýbajúcich', len(bad), bad[:10])
 EOF
 (cd "$OUT/web" && find . -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum | sed 's|  \./|  |' > "$OUT/SHA256SUMS.txt")
+if [ "$FORPSI" = linux ]; then
+  bash "$SRC/nasadenie/balik-forpsi.sh" "$SRC" "$OUT" "$CASTI"
+  exit 0
+fi
 # nastavenie servera vedľa balíka (nie v ňom: pri ďalšom nahratí by prepísalo upravený .htaccess na hostingu)
 mkdir -p "$OUT/ku-korenu"; cp "$SRC/nasadenie/htaccess.txt" "$OUT/ku-korenu/.htaccess"; cp "$SRC/nasadenie/web.config.txt" "$OUT/ku-korenu/web.config"
 if [ -z "${CASTI:-}" ]; then

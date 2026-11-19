@@ -31,6 +31,7 @@ final class Ulozisko
         if (!is_dir($dir) && !@mkdir($dir, 0755, true) && !is_dir($dir)) throw new RuntimeException('Nedá sa vytvoriť priečinok.');
         $tmp = $cesta . '.tmp-' . bin2hex(random_bytes(6));
         if (@file_put_contents($tmp, $obsah, LOCK_EX) !== strlen($obsah)) { @unlink($tmp); throw new RuntimeException('Zápis súboru zlyhal.'); }
+        if ($dir === Nastavenie::$data) @chmod($tmp, 0600);   // súbory priamo v priečinku údajov (účet, tajomstvo) číta len PHP
         self::premenuj($tmp, $cesta);
     }
 

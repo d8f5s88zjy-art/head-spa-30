@@ -256,6 +256,25 @@ t('majiteľ z inej adresy: ten istý kód ďalej platí (cudzí ho nespáli)', P
 Pristup::vytvorKod('prvy');
 @unlink(Nastavenie::d('PRVY-KOD.txt'));
 t('majiteľ zmazal súbor cez FTP: nový kód vznikne hneď', Pristup::vytvorKod('prvy') === null && is_file(Nastavenie::d('PRVY-KOD.txt')));
+// hosting, kde PHP beží pod iným používateľom než FTP (Forpsi kb a2614, a2617): kód musí byť cez FTP čitateľný, tajomstvo nie
+$prava = fn(string $c) => fileperms($c) & 0777;
+if (DIRECTORY_SEPARATOR === '/') {
+    t('rovnaký používateľ: priečinok údajov 0700, kód 0600, nastavenie.json 0600', !Nastavenie::cudziVlastnik() && $prava(Nastavenie::d()) === 0700 && $prava(Nastavenie::d('PRVY-KOD.txt')) === 0600 && $prava(Nastavenie::d('nastavenie.json')) === 0600,
+        sprintf('%o %o %o', $prava(Nastavenie::d()), $prava(Nastavenie::d('PRVY-KOD.txt')), $prava(Nastavenie::d('nastavenie.json'))));
+    Nastavenie::$vynutCudzi = true; Nastavenie::init();
+    @unlink(Nastavenie::d('PRVY-KOD.txt'));
+    t('cudzí používateľ PHP: nový kód vznikne', Pristup::vytvorKod('prvy') === null && is_file(Nastavenie::d('PRVY-KOD.txt')));
+    t('cudzí používateľ PHP: priečinok údajov 0705 a kód 0604 (FTP ho prečíta)', $prava(Nastavenie::d()) === 0705 && $prava(Nastavenie::d('PRVY-KOD.txt')) === 0604, sprintf('%o %o', $prava(Nastavenie::d()), $prava(Nastavenie::d('PRVY-KOD.txt'))));
+    Dennik::zapis('test', ['co' => 'práva záznamu']);
+    t('cudzí používateľ PHP: záznam dennik.jsonl 0600', $prava(Nastavenie::d('dennik.jsonl')) === 0600, sprintf('%o', $prava(Nastavenie::d('dennik.jsonl'))));
+    t('cudzí používateľ PHP: nastavenie.json 0600, podpriečinky 0700', $prava(Nastavenie::d('nastavenie.json')) === 0600 && $prava(Nastavenie::d('relacie')) === 0700 && $prava(Nastavenie::d('data')) === 0700);
+    $v = Pristup::vytvorKod('obnova');   // súbor s iným kódom existuje a je čerstvý → veta o čakaní
+    t('cudzí používateľ PHP: hlásenie o čakaní neradí mazať súbor cez FTP (FTP ho zmazať nemôže)', is_string($v) && str_contains($v, 'najskôr o') && !str_contains($v, 'zmažte'), (string)$v);
+    Nastavenie::$vynutCudzi = false; $v = Pristup::vytvorKod('obnova');
+    t('rovnaký používateľ: hlásenie o čakaní radí zmazať súbor cez FTP', is_string($v) && str_contains($v, 'zmažte cez FTP'), (string)$v);
+    Nastavenie::$vynutCudzi = null; chmod(Nastavenie::d(), 0700); @unlink(Nastavenie::d('PRVY-KOD.txt')); @unlink(Nastavenie::d('OBNOVA-KOD.txt'));
+    t('späť v rovnakom režime: nový kód 0600', Pristup::vytvorKod('prvy') === null && $prava(Nastavenie::d('PRVY-KOD.txt')) === 0600);
+}
 $riadky = count(file(Nastavenie::d('dennik.jsonl')));
 Ulozisko::upravJson(Nastavenie::d('nastavenie.json'), function ($n) { unset($n['kod']); return $n; });
 for ($i = 0; $i < 20; $i++) Pristup::overKod('obnova', 'AAAA-BBBB-CCCC-DDDD');

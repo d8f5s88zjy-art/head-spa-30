@@ -1,6 +1,7 @@
 STAVEBNINY RICHTÁRIK – NAHRATIE WEBU NA HOSTING
 ================================================
-Tento súbor vyrobil nasadenie/balik.sh vedľa balíka. Platí pre hosting Forpsi (Linux odporúčaný, Windows funguje).
+Tento súbor vyrobil nasadenie/balik.sh vedľa balíka (režim bez FORPSI, pre programátora). Správa webu vyžaduje hosting
+s PHP (na Forpsi len Hosting Linux; Hosting Windows Forpsi PHP nemá). Pre laika a Forpsi je balík FORPSI=linux s NAVOD-FORPSI.
 Podrobnosti: README.md v repozitári, časti Nasadenie, Správa webu (Inštalácia na Forpsi) a HTTPS a presmerovania.
 
 ČO JE V TOMTO PRIEČINKU
@@ -12,7 +13,8 @@ Podrobnosti: README.md v repozitári, časti Nasadenie, Správa webu (Inštalác
   zoznam.txt                              zoznam všetkých súborov webu
   SHA256SUMS.txt                          odtlačky súborov webu (kontrola: v koreni webu sha256sum -c SHA256SUMS.txt)
   ku-korenu/.htaccess                     nastavenie servera pre Linux (Apache) – patrí do koreňa webu
-  ku-korenu/web.config                    to isté pre Windows (IIS) – na Linuxe ho nenahrávajte
+  ku-korenu/web.config                    to isté pre IIS – nikdy nebolo spustené na IIS (README, IIS-01 až IIS-11);
+                                          na Linuxe ho nenahrávajte
   web/                                    ten istý obsah rozbalený (na nahratie FTP klientom priamo)
 
 1. KAM
@@ -21,16 +23,16 @@ Podrobnosti: README.md v repozitári, časti Nasadenie, Správa webu (Inštalác
   koreňa webu domény. Na Forpsi je to priečinok www domény (README uvádza /<doména>/www; presnú cestu ukáže
   zákaznícky účet Forpsi alebo FTP – na skutočnom účte sme ju neoverovali).
   Odporúčaný spôsob: FTP klient (napr. FileZilla alebo WinSCP) – nahrať obsah web/ do www.
-  WebFTP (webftp.forpsi.com) sa hodí na rozbalenie menších ZIPov; celý ZIP má okolo 150 MB a limit nahratia
-  vo WebFTP nepoznáme – preto sú tu časti do {LIMIT} MB. Či WebFTP ZIP na serveri rozbalí, sme neoverili.
-  Potom ku-korenu/.htaccess nahrať do www ako .htaccess (Linux), na Windows hostingu ku-korenu/web.config ako web.config.
+  WebFTP (webftp.forpsi.com) berie podľa Forpsi súbor najviac 19 MB a beží najviac 90 sekúnd (kb/a2404, kb/a4093);
+  časti do {LIMIT} MB sú preto pre FTP klienta. Rozbalenie ZIPu vo WebFTP sme neoverili.
+  Potom ku-korenu/.htaccess nahrať do www ako .htaccess (Linux/Apache); na IIS ku-korenu/web.config ako web.config.
   (Bez neho nefungujú presmerovania starých adries .aspx, stránka 404 ani hlavičky rýchleho načítania.)
 
 2. ČO SA NESMIE PREPÍSAŤ ANI ZMAZAŤ (pri druhom a každom ďalšom nahratí)
 -----------------------------------------------------------------------
   img/s/ a pdf/s/       fotky a PDF, ktoré Mário nahral v správe (v balíku sú len ochranné súbory .htaccess
                         a web.config – tie prepísať smiete, nahrávky nie)
-  sprava-data/          priečinok vedľa www (na Windows www/sprava-data-<32 znakov>/): účet a heslo Mária,
+  sprava-data/          priečinok vedľa www (alebo www/sprava-data-<32 znakov>/, keď PHP nesmie zapisovať vedľa www): účet a heslo Mária,
                         všetky údaje správy, história a zálohy. Nikdy ho nemažte ani neprepisujte.
   .htaccess v koreni    ak ste ho na hostingu upravili (napr. zapnutá kanonická adresa https), nahrajte znova
                         upravenú verziu, nie pôvodnú z balíka.
@@ -42,12 +44,13 @@ Podrobnosti: README.md v repozitári, časti Nasadenie, Správa webu (Inštalác
 
 3. PRVÉ PRIHLÁSENIE DO SPRÁVY (spolu s Máriom)
 ---------------------------------------------
-  a) Doména musí mať zapnuté HTTPS (certifikát v zákazníckom účte Forpsi). Bez neho správa ukáže len návod.
+  a) Doména musí mať zapnuté HTTPS (Forpsi: Webhosting → web → SSL certifikát → Spravovať → Požiadať o certifikát;
+     zadarmo len pre doménu registrovanú vo Forpsi). Bez neho správa ukáže len tento postup.
   b) Otvorte https://www.stavebninyrichtarik.sk/sprava/ – správa najprv skontroluje server (HTTPS, PHP 8.1 – 8.5,
-     zápis do priečinkov, ochrana údajov). Ak hlási zápis, na Linuxe nastavte priečinkom webu práva 757
-     (FTP: pravé tlačidlo → Práva).
-  c) Ťuknite „Vytvoriť overovací kód“. Správa zapíše súbor PRVY-KOD.txt do priečinka sprava-data (vedľa www).
-     Otvorte ho cez FTP alebo webftp.forpsi.com, kód opíšte do správy (platí 24 hodín, 5 pokusov).
+     zápis do priečinkov, ochrana údajov). Ak hlási zápis alebo „priečinok údajov nie je dostupný“, nastavte priečinku
+     www a podpriečinkom práva 757 (FileZilla: pravé tlačidlo → Oprávnenia súborov, len priečinky).
+  c) Ťuknite „Vytvoriť overovací kód“. Správa zapíše súbor PRVY-KOD.txt do priečinka údajov a napíše, kde je
+     (sprava-data vedľa www, alebo www/sprava-data-…). Otvorte ho cez FTP (FileZilla alebo webftp.forpsi.com), kód opíšte do správy (platí 24 hodín, 5 pokusov).
   d) Mário si zvolí meno a heslo (aspoň 10 znakov). Žiadne predvolené heslo ani účet neexistuje.
      Zabudnuté heslo: „Zabudli ste heslo?“ → súbor OBNOVA-KOD.txt rovnakým spôsobom.
   e) Návod pre Mária k správe je v PDF navod-sprava.pdf (dostane ho od vás).

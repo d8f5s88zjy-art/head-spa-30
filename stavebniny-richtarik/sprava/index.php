@@ -22,7 +22,7 @@ try {
     Dennik::chyba($e);
     Pristup::hlavicky();
     http_response_code(500);
-    echo '<!doctype html><meta charset="utf-8"><title>Správa webu</title><p>Správa webu sa nedá spustiť: priečinok údajov nie je dostupný. Pozrite návod v README (časť Správa webu) alebo zavolajte programátora.</p>';
+    echo '<!doctype html><meta charset="utf-8"><title>Správa webu</title><p>Správa webu sa nedá spustiť: priečinok údajov nie je dostupný.</p><p>Server nesmie zapisovať do priečinkov webu. Kto má údaje k FTP, nastaví v programe FileZilla priečinku www a jeho podpriečinkom práva 757 (pravé tlačidlo na www → Oprávnenia súborov → číslo 757 → zaškrtnúť „Rekurzívne použiť aj na vnorené adresáre“ a „Použiť iba na adresáre“) a túto stránku načíta znova.</p><p>Ak to nepomôže: odfoťte túto stránku a pošlite ju tomu, kto vám web nahrával.</p>';
     exit;
 }
 
@@ -32,7 +32,7 @@ if (!Nastavenie::https() && !Nastavenie::lokalne()) {
     header('Content-Type: text/html; charset=utf-8');
     echo '<!doctype html><html lang="sk"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Správa webu</title>'
        . '<link rel="stylesheet" href="assets/sprava.css"><main id="obsah"><h1>Otvorte správu cez zabezpečené pripojenie</h1>'
-       . '<p class="vela">Správa webu funguje len cez <b>https://</b>. Ak adresa s https nejde, v zákazníckom účte Forpsi zapnite pre doménu certifikát SSL (Let’s Encrypt) a skúste to o hodinu znova.</p></main>';
+       . '<p class="vela">Správa webu funguje len cez <b>https://</b>. Ak adresa s https nejde: v zákazníckom účte Forpsi otvorte Webhosting → váš web → riadok SSL certifikát → Spravovať → Požiadať o certifikát. Býva hotový do niekoľkých minút; potom otvorte túto stránku s https:// na začiatku. Bezplatný certifikát dáva Forpsi len doméne, ktorá je registrovaná vo Forpsi.</p></main>';
     exit;
 }
 

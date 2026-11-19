@@ -4,10 +4,10 @@ defined('SPRAVA') || exit;
 
 function navod_kod(string $subor): string
 {
-    // celé meno priečinka údajov sa pred overením neukazuje (Windows: je vo webe a jeho meno je súčasť ochrany)
+    // celé meno priečinka údajov sa pred overením neukazuje (keď je vo webe, jeho meno je súčasť ochrany)
     $kde = Nastavenie::$vnutriWebu ? 'V priečinku webu (www) otvorte priečinok, ktorého meno sa začína <b>sprava-data-</b>' : 'Vedľa priečinka <b>www</b> otvorte priečinok <b>sprava-data</b>';
-    return '<ol class="kroky"><li>V počítači alebo v telefóne otvorte <b>webftp.forpsi.com</b> a prihláste sa údajmi k FTP (sú v zákazníckom účte Forpsi).</li>'
-         . '<li>' . $kde . '.</li><li>Otvorte súbor <b>' . Ui::e($subor) . '</b>. Je v ňom kód v tvare <b>ABCD-EFGH-JKLM-NPQR</b>.</li><li>Kód opíšte sem. Po použití sa súbor sám zmaže.</li></ol>';
+    return '<ol class="kroky"><li>Súbor otvorí ten, kto má údaje k FTP (sú v zákazníckom účte Forpsi): v počítači programom <b>FileZilla</b>, alebo v prehliadači na <b>webftp.forpsi.com</b>.</li>'
+         . '<li>' . $kde . '. Ak ho nevidíte, načítajte zoznam znova (FileZilla: kláves F5).</li><li>Otvorte súbor <b>' . Ui::e($subor) . '</b>. Je v ňom kód v tvare <b>ABCD-EFGH-JKLM-NPQR</b>.</li><li>Kód opíšte sem. Po použití sa súbor sám zmaže.</li></ol>';
 }
 
 function pole_kod(): string
@@ -37,7 +37,7 @@ function obrazovka_prve(): void
     $kod = Pristup::stavKodu();
     $h = '<p class="vela">Vitajte. Správa webu ešte nie je nastavená. Aby sme overili, že ste majiteľ hostingu, správa zapíše na hosting súbor s kódom. Otvoríte ho cez správcu súborov Forpsi a kód opíšete sem.</p>';
     if (!$suhrn['pripravene']) {
-        $h .= '<div class="hlaska chyba">Server ešte nie je pripravený: treba nastaviť ' . $suhrn['pocet'] . ' ' . ($suhrn['pocet'] == 1 ? 'vec' : ($suhrn['pocet'] < 5 ? 'veci' : 'vecí')) . '. Pošlite túto stránku programátorovi alebo pozrite návod v README.</div>';
+        $h .= '<div class="hlaska chyba">Server ešte nie je pripravený: treba nastaviť ' . $suhrn['pocet'] . ' ' . ($suhrn['pocet'] == 1 ? 'vec' : ($suhrn['pocet'] < 5 ? 'veci' : 'vecí')) . '. Odfoťte túto stránku a pošlite ju tomu, kto vám web nahrával.</div>';
         $h .= '<ul class="body">';
         foreach ($body as $b) if ($b['povinne'] && $b['stav'] === 'chyba') $h .= '<li class="chyba">' . Ui::e($b['nazov']) . '</li>';
         Ui::stranka('Prvé nastavenie', $h . '</ul>', 'domov', false);
@@ -131,7 +131,7 @@ function akcie_prihlasenie(string $a): void
         // kód sa zapíše len do priečinka, o ktorom je overené, že nie je dostupný z webu
         if (Nastavenie::$vnutriWebu) {
             $b = array_values(array_filter(Prostredie::kontroly(true), fn($x) => $x['id'] === 'sonda-data'));
-            if (!$b || $b[0]['stav'] !== 'ok') Ui::presmeruj('obnova', [], 'Kód sa teraz nedá bezpečne zapísať, server nevie overiť ochranu priečinka údajov. Zavolajte programátora.', 'chyba');
+            if (!$b || $b[0]['stav'] !== 'ok') Ui::presmeruj('obnova', [], 'Kód sa teraz nedá bezpečne zapísať, server nevie overiť ochranu priečinka údajov. Odfoťte túto stránku a pošlite ju tomu, kto vám web nahrával.', 'chyba');
         }
         $e = Pristup::vytvorKod('obnova');
         Ui::presmeruj('obnova', [], $e ?? 'Kód je zapísaný na hostingu v súbore ' . Pristup::KOD_SUBOR['obnova'] . '. Platí hodinu.', $e ? 'chyba' : 'ok');
